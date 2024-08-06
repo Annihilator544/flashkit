@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 /* overwrite colors for side-panel tabs */
 .bp5-dark .polotno-side-tabs-container .polotno-side-panel-tab:hover,
 .bp5-dark .polotno-side-tabs-container .polotno-side-panel-tab.active {
