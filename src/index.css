@@ -1,0 +1,45 @@
+/* overwrite colors for side-panel tabs */
+.bp5-dark .polotno-side-tabs-container .polotno-side-panel-tab:hover,
+.bp5-dark .polotno-side-tabs-container .polotno-side-panel-tab.active {
+  background-color: #ef8a80;
+  color: white !important;
+}
+.bp5-dark{
+    background-color: #f7e7e6;
+}
+.bp5-navbar.bp5-dark, .bp5-dark .bp5-navbar {
+    background-color: #f7e7e6;
+    color: #111111;
+}
+/* change hover style of all buttons */
+.bp5-dark .bp5-button:not([class*='bp5-intent-']):hover {
+  background-color: #ef8a80;
+}
+
+.bp5-dark .bp5-button.bp5-minimal{
+    color: #ef8a80;
+}
+.bp5-dark .bp5-control {
+    color: #000000;
+}
+.bp5-button:disabled::before, .bp5-button:disabled .bp5-icon, .bp5-button:disabled .bp5-icon-standard, .bp5-button:disabled .bp5-icon-large, .bp5-button.bp5-disabled::before, .bp5-button.bp5-disabled .bp5-icon, .bp5-button.bp5-disabled .bp5-icon-standard, .bp5-button.bp5-disabled .bp5-icon-large, .bp5-button[class*=bp5-intent-]::before, .bp5-button[class*=bp5-intent-] .bp5-icon, .bp5-button[class*=bp5-intent-] .bp5-icon-standard, .bp5-button[class*=bp5-intent-] .bp5-icon-large {
+    color: black !important;
+}
+.bp5-button-text{
+    color: black;
+}
+.bp5-dark .go820983500 .polotno-text-preview-plain {
+    filter: invert(0) !important; 
+}
+.bp5-dark {
+    color-scheme: white;
+}
+.bp5-dark .go3136444743 .fill {
+    fill: white !important;
+}
+.go3244416805 {
+    padding: 15px 5px;
+}
+.go1222219977{
+    padding-top: 20px;
+}
