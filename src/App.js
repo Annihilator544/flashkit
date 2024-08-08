@@ -35,20 +35,23 @@ import ru from './translations/ru';
 import ptBr from './translations/pt-br';
 
 import Topbar from './topbar/topbar';
+import { Button } from '@radix-ui/themes/dist/cjs/index.js';
+import { Sheet, SheetContent } from './customComponents/sheet.tsx';
+import { LogoSection } from './sections/logo-section.js';
 
 // load default translations
 setTranslations(en);
 
 // replace elements section with just shapes
-DEFAULT_SECTIONS.splice(3, 1, ShapesSection);
+//DEFAULT_SECTIONS.splice(3, 1, ShapesSection);
 // add icons
 DEFAULT_SECTIONS.splice(3, 0, IconsSection);
 // add two more sections
-DEFAULT_SECTIONS.push(QuotesSection, QrSection);
+// DEFAULT_SECTIONS.push(QuotesSection, QrSection);
 // DEFAULT_SECTIONS.unshift(UploadSection);
 DEFAULT_SECTIONS.unshift(MyDesignsSection);
-
-DEFAULT_SECTIONS.push(StableDiffusionSection);
+DEFAULT_SECTIONS.unshift(LogoSection);
+// DEFAULT_SECTIONS.push(StableDiffusionSection);
 // DEFAULT_SECTIONS.push(VideosSection);
 
 const isStandalone = () => {
@@ -97,7 +100,7 @@ const useHeight = () => {
 const App = observer(({ store }) => {
   const project = useProject();
   const height = useHeight();
-
+  const [sheetOpen, setSheetOpen] = React.useState(false);
   React.useEffect(() => {
     if (project.language.startsWith('fr')) {
       setTranslations(fr, { validate: true });
