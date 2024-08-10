@@ -10,6 +10,7 @@ import './index.css';
 import App from './App';
 import './logger';
 import { ErrorBoundary } from 'react-error-boundary';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 if (window.location.host !== 'studio.polotno.com') {
   console.log(
@@ -66,6 +67,16 @@ function Fallback({ error, resetErrorBoundary }) {
     </div>
   );
 }
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App  store={store} />,
+  },
+  {
+    path: "canvas",
+    element: <App  store={store} />,
+  },
+]);
 
 root.render(
   <ErrorBoundary
@@ -81,7 +92,9 @@ root.render(
   >
     <ProjectContext.Provider value={project}>
       <Auth0Provider domain={AUTH_DOMAIN} clientId={ID} redirectUri={REDIRECT}>
-        <App store={store} />
+        <RouterProvider router={router}>
+          <App store={store} />
+        </RouterProvider>
       </Auth0Provider>
     </ProjectContext.Provider>
   </ErrorBoundary>
