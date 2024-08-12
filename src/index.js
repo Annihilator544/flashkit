@@ -13,21 +13,21 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Landing from './Landing';
 
-if (window.location.host !== 'studio.polotno.com') {
-  console.log(
-    `%cWelcome to Polotno Studio! Thanks for your interest in the project!
-This repository has many customizations from the default version Polotno SDK.
-I don't recommend to use it as starting point. 
-Instead, you can start from any official demos, e.g.: https://polotno.com/docs/full-canvas-editor 
-or direct sandbox: https://codesandbox.io/s/github/polotno-project/polotno-site/tree/source/examples/polotno-demo?from-embed.
-But feel free to use this repository as a reference for your own project and to learn how to use Polotno SDK.`,
-    'background: rgba(54, 213, 67, 1); color: white; padding: 5px;'
-  );
-}
+// if (window.location.host !== 'studio.polotno.com') {
+//   console.log(
+//     `%cWelcome to Polotno Studio! Thanks for your interest in the project!
+// This repository has many customizations from the default version Polotno SDK.
+// I don't recommend to use it as starting point. 
+// Instead, you can start from any official demos, e.g.: https://polotno.com/docs/full-canvas-editor 
+// or direct sandbox: https://codesandbox.io/s/github/polotno-project/polotno-site/tree/source/examples/polotno-demo?from-embed.
+// But feel free to use this repository as a reference for your own project and to learn how to use Polotno SDK.`,
+//     'background: rgba(54, 213, 67, 1); color: white; padding: 5px;'
+//   );
+// }
 
 unstable_setAnimationsEnabled(true);
 
-const store = createStore({ key: 'nFA5H9elEytDyPyvKL7T' });
+const store = createStore({ key: 'iRIwFHCuH539pYGokN6n' });
 window.store = store;
 store.addPage();
 
@@ -45,7 +45,7 @@ const isLocalhost =
 const ID = isLocalhost ? LOCAL_ID : PRODUCTION_ID;
 const REDIRECT = isLocalhost
   ? 'http://localhost:3000'
-  : 'https://studio.polotno.com';
+  : 'https://canva-sable.vercel.app/';
 
 function Fallback({ error, resetErrorBoundary }) {
   // Call resetErrorBoundary() to reset the error boundary and retry the render.

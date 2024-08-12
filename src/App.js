@@ -35,6 +35,7 @@ import ru from './translations/ru';
 import ptBr from './translations/pt-br';
 import { LogoSection } from './sections/logo-section.js';
 import { AddNewSection } from './sections/add-new-section.js';
+import Topbar from 'topbar/topbar';
 
 // load default translations
 setTranslations(en);
@@ -141,7 +142,7 @@ const App = observer(({ store }) => {
       }}
       onDrop={handleDrop}
     >
-      {/* <Topbar store={store} /> */}
+      <Topbar store={store} />
       <div style={{ height: 'calc(100%)' }}>
         <PolotnoContainer className="polotno-app-container">
           <SidePanelWrap>
