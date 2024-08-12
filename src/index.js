@@ -11,6 +11,7 @@ import App from './App';
 import './logger';
 import { ErrorBoundary } from 'react-error-boundary';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Landing from './Landing';
 
 if (window.location.host !== 'studio.polotno.com') {
   console.log(
@@ -70,7 +71,7 @@ function Fallback({ error, resetErrorBoundary }) {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App  store={store} />,
+    element: <Landing />,
   },
   {
     path: "canvas",

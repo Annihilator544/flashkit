@@ -1,6 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer utilities{
+    .Inter{
+        font-family: 'Inter', sans-serif;
+    }
+    .Rethink{
+        font-family: 'Rethink', sans-serif;
+    }
+    body {
+        overflow-x: hidden;
+      }
+      
+}
+@font-face {
+    font-family: 'Inter';
+    src: url(./fonts/Inter.ttf) format('truetype');
+}
+@font-face {
+    font-family: 'Rethink';
+    src: url(./fonts/RethinkSans.ttf) format('truetype');
+}
 /* overwrite colors for side-panel tabs */
 
 .polotno-side-tabs-container .polotno-side-panel-tab:hover,
@@ -22,9 +42,9 @@
         background-color: #f7e7e6;
     }
     
-    .go806284747::-webkit-scrollbar{
+    /* .go806284747::-webkit-scrollbar{
         display: none;
-    }
+    } */
 }
 .go806284747 .polotno-side-tabs-container{
     background-color: #f7e7e6;
