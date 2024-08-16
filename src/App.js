@@ -142,13 +142,13 @@ const App = observer(({ store }) => {
       }}
       onDrop={handleDrop}
     >
-      <Topbar store={store} />
+      {/* <Topbar store={store} /> */}
       <div style={{ height: 'calc(100%)' }}>
         <PolotnoContainer className="polotno-app-container">
           <SidePanelWrap>
             <SidePanel store={store} sections={DEFAULT_SECTIONS} />
           </SidePanelWrap>
-          <div className='absolute z-[999999] h-4 w-40 bg-black'>
+          <div className='absolute z-[999999] h-4 w-60 bg-[#e8e8e8] bottom-0 right-0'>
 
           </div>
           <WorkspaceWrap>
