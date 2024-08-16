@@ -34,7 +34,6 @@ import id from './translations/id';
 import ru from './translations/ru';
 import ptBr from './translations/pt-br';
 import { LogoSection } from './sections/logo-section.js';
-import { AddNewSection } from './sections/add-new-section.js';
 import Topbar from 'topbar/topbar';
 
 // load default translations
@@ -48,7 +47,6 @@ DEFAULT_SECTIONS.splice(3, 0, IconsSection);
 // DEFAULT_SECTIONS.push(QuotesSection, QrSection);
 // DEFAULT_SECTIONS.unshift(UploadSection);
 DEFAULT_SECTIONS.unshift(MyDesignsSection);
-DEFAULT_SECTIONS.unshift(AddNewSection);
 DEFAULT_SECTIONS.unshift(LogoSection);
 // DEFAULT_SECTIONS.push(StableDiffusionSection);
 // DEFAULT_SECTIONS.push(VideosSection);
@@ -142,8 +140,8 @@ const App = observer(({ store }) => {
       }}
       onDrop={handleDrop}
     >
-      {/* <Topbar store={store} /> */}
-      <div style={{ height: 'calc(100%)' }}>
+      <Topbar store={store} />
+      <div style={{ height: 'calc(100% - 50px)' }}>
         <PolotnoContainer className="polotno-app-container">
           <SidePanelWrap>
             <SidePanel store={store} sections={DEFAULT_SECTIONS} />

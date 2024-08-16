@@ -195,12 +195,12 @@ export const DownloadButton = observer(({ store }) => {
           )}
           {type === 'mp4' && (
             <>
-              <div style={{ padding: '10px', maxWidth: '180px', opacity: 0.8 }}>
+              {/* <div style={{ padding: '10px', maxWidth: '180px', opacity: 0.8 }}>
                 <strong>Beta feature.</strong>{' '}
                 <a href="mailto:anton@polotno.com">
                   Let us know what you think!
                 </a>
-              </div>
+              </div> */}
               {saving && (
                 <div
                   style={{ padding: '10px', maxWidth: '180px', opacity: 0.8 }}
@@ -344,7 +344,8 @@ export const DownloadButton = observer(({ store }) => {
       <Button
         icon="import"
         text={t('toolbar.download')}
-        intent="primary"
+        intent=""
+        className='rounded-lg px-3 py-2'
         // loading={saving}
         onClick={() => {
           setQuality(1);

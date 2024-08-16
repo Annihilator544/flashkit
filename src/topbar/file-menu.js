@@ -93,13 +93,13 @@ export const FileMenu = observer(({ store, project }) => {
                 }}
               />
             </MenuItem>
-            <MenuItem
+            {/* <MenuItem
               text="About"
               icon="info-sign"
               onClick={() => {
                 toggleFaq(true);
               }}
-            />
+            /> */}
           </Menu>
         }
         position={Position.BOTTOM_RIGHT}

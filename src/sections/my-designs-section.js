@@ -16,6 +16,7 @@ import { SectionTab } from 'polotno/side-panel';
 import FaFolder from '@meronex/icons/fa/FaFolder';
 import { useProject } from '../project';
 import * as api from '../api';
+import { LucidePlus } from 'lucide-react';
 
 const DesignCard = observer(({ design, store, onDelete }) => {
   const [loading, setLoading] = React.useState(false);
@@ -210,10 +211,12 @@ export const MyDesignsPanel = observer(({ store }) => {
 
 // define the new custom section
 export const MyDesignsSection = {
-  name: 'my-designs',
+  name: 'Add Design',
   Tab: (props) => (
-    <SectionTab name="My Designs" {...props}>
-      <FaFolder />
+    <SectionTab name="Add Design" {...props}>
+      <div  className="bg-[#ef8a80] p-1 rounded-lg">
+        <LucidePlus size={20} fill="#fff"  color="#fff"/>
+      </div>
     </SectionTab>
   ),
   // we need observer to update component automatically on any store changes

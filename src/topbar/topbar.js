@@ -7,6 +7,7 @@ import {
   NavbarDivider,
   EditableText,
   Popover,
+  Classes,
 } from '@blueprintjs/core';
 
 import FaGithub from '@meronex/icons/fa/FaGithub';
@@ -90,19 +91,12 @@ export default observer(({ store }) => {
               maxWidth: '200px',
             }}
           >
-            <EditableText
-              value={window.project.name}
-              placeholder="Design name"
-              onChange={(name) => {
-                window.project.name = name;
-                window.project.requestSave();
-              }}
-            />
+            
           </div>
         </Navbar.Group>
         <Navbar.Group align={Alignment.RIGHT}>
-          <Status project={project} />
-
+          {/* <Status project={project} /> */}
+{/* 
           <AnchorButton
             href="https://polotno.com"
             target="_blank"
@@ -139,10 +133,18 @@ export default observer(({ store }) => {
             icon={
               <FaTwitter className="bp5-icon" style={{ fontSize: '20px' }} />
             }
-          ></AnchorButton>
-          <NavbarDivider />
+          ></AnchorButton> */}
+          <EditableText
+              value={window.project.name}
+              placeholder="Design name"
+              onChange={(name) => {
+                window.project.name = name;
+                window.project.requestSave();
+              }}
+              className={' mx-5 py-2 px-3 rounded-lg bg-gray-100 '+ Classes.FOCUS_STYLE_MANAGER_IGNORE}
+            />
           <DownloadButton store={store} />
-          <UserMenu store={store} project={project} />
+          {/* <UserMenu store={store} project={project} /> */}
           {/* <NavbarHeading>Polotno Studio</NavbarHeading> */}
         </Navbar.Group>
       </NavInner>
