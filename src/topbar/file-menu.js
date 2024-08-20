@@ -1,7 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import {
-  Button,
   Dialog,
   Classes,
   Position,
@@ -11,6 +10,16 @@ import {
   Popover,
 } from '@blueprintjs/core';
 import { downloadFile } from 'polotno/utils/download';
+import { Button } from '../components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../components/ui/dropdown-menu"
+import { LucidePlus } from 'lucide-react';
 
 export const FileMenu = observer(({ store, project }) => {
   const inputRef = React.useRef();
@@ -104,8 +113,23 @@ export const FileMenu = observer(({ store, project }) => {
         }
         position={Position.BOTTOM_RIGHT}
       >
-        <Button minimal text="File" />
+        <Button>
+          File
+        </Button>
       </Popover>
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <Button>File</Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="bg-white">
+          <DropdownMenuItem className="flex gap-2"><LucidePlus/> Create new design</DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>Profile</DropdownMenuItem>
+          <DropdownMenuItem>Billing</DropdownMenuItem>
+          <DropdownMenuItem>Team</DropdownMenuItem>
+          <DropdownMenuItem>Subscription</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
       <input
         type="file"
         id="load-project"

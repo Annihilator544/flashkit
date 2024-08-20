@@ -25,6 +25,7 @@ import { FileMenu } from './file-menu';
 import { DownloadButton } from './download-button';
 import { UserMenu } from './user-menu';
 import { CloudWarning } from '../cloud-warning';
+import { Input } from '../components/ui/input';
 
 const NavbarContainer = styled('div')`
   white-space: nowrap;
@@ -134,14 +135,15 @@ export default observer(({ store }) => {
               <FaTwitter className="bp5-icon" style={{ fontSize: '20px' }} />
             }
           ></AnchorButton> */}
-          <EditableText
+          <Input
               value={window.project.name}
               placeholder="Design name"
-              onChange={(name) => {
-                window.project.name = name;
+              onChange={(e) => {
+                window.project.name = e.target.value;
                 window.project.requestSave();
+                console.log(window.project.name);
               }}
-              className={' mx-5 py-2 px-3 rounded-lg bg-gray-100 '+ Classes.FOCUS_STYLE_MANAGER_IGNORE}
+              className={' bg-white '}
             />
           <DownloadButton store={store} />
           {/* <UserMenu store={store} project={project} /> */}
