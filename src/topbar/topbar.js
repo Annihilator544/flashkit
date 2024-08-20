@@ -135,6 +135,7 @@ export default observer(({ store }) => {
               <FaTwitter className="bp5-icon" style={{ fontSize: '20px' }} />
             }
           ></AnchorButton> */}
+          <div className='flex gap-4'>
           <Input
               value={window.project.name}
               placeholder="Design name"
@@ -146,6 +147,7 @@ export default observer(({ store }) => {
               className={' bg-white '}
             />
           <DownloadButton store={store} />
+          </div>
           {/* <UserMenu store={store} project={project} /> */}
           {/* <NavbarHeading>Polotno Studio</NavbarHeading> */}
         </Navbar.Group>

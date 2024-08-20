@@ -16,10 +16,14 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuPortal,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu"
-import { LucidePlus } from 'lucide-react';
+import { LucideFolderOpen, LucideLanguages, LucidePlus, LucideSave } from 'lucide-react';
 
 export const FileMenu = observer(({ store, project }) => {
   const inputRef = React.useRef();
@@ -27,10 +31,10 @@ export const FileMenu = observer(({ store, project }) => {
   const [faqOpened, toggleFaq] = React.useState(false);
   return (
     <>
-      <Popover
+      {/* <Popover
         content={
           <Menu>
-            {/* <MenuDivider title={t('toolbar.layering')} /> */}
+             <MenuDivider title={t('toolbar.layering')} /> 
             <MenuItem
               icon="plus"
               text="Create new design"
@@ -102,13 +106,13 @@ export const FileMenu = observer(({ store, project }) => {
                 }}
               />
             </MenuItem>
-            {/* <MenuItem
+             <MenuItem
               text="About"
               icon="info-sign"
               onClick={() => {
                 toggleFaq(true);
               }}
-            /> */}
+            /> 
           </Menu>
         }
         position={Position.BOTTOM_RIGHT}
@@ -116,18 +120,74 @@ export const FileMenu = observer(({ store, project }) => {
         <Button>
           File
         </Button>
-      </Popover>
+      </Popover> */}
       <DropdownMenu>
         <DropdownMenuTrigger>
           <Button>File</Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="bg-white">
-          <DropdownMenuItem className="flex gap-2"><LucidePlus/> Create new design</DropdownMenuItem>
+        <DropdownMenuContent className="bg-white mx-1">
+          <DropdownMenuItem className="flex gap-2"  onClick={() => {
+                project.createNewDesign();
+              }}>
+              <LucidePlus className='h-4'/> Create new design
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem>Billing</DropdownMenuItem>
-          <DropdownMenuItem>Team</DropdownMenuItem>
-          <DropdownMenuItem>Subscription</DropdownMenuItem>
+          <DropdownMenuItem className="flex gap-2" onClick={() => {
+                document.querySelector('#load-project').click();
+              }}>
+              <LucideFolderOpen className='h-4'/>Open
+          </DropdownMenuItem>
+          <DropdownMenuItem className="flex gap-2" onClick={() => {
+                const json = store.toJSON();
+
+                const url =
+                  'data:text/json;base64,' +
+                  window.btoa(
+                    unescape(encodeURIComponent(JSON.stringify(json)))
+                  );
+
+                downloadFile(url, 'polotno.json');
+              }}>
+              <LucideSave className='h-4'/>Save as JSON
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger className="gap-2"><LucideLanguages className='h-4'/>Language</DropdownMenuSubTrigger>
+            <DropdownMenuPortal>
+              <DropdownMenuSubContent>
+              <DropdownMenuItem className="flex p-2 gap-2" active={project.language.startsWith('en')}
+                onClick={() => {
+                  project.setLanguage('en');
+                }}>
+                English
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex p-2 gap-2" active={project.language.startsWith('pt')}
+                onClick={() => {
+                  project.setLanguage('pt');
+                }}>
+                Portugese
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex p-2 gap-2" active={project.language.startsWith('fr')}
+                onClick={() => {
+                  project.setLanguage('fr');
+                }}>
+                French
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex p-2 gap-2" active={project.language.startsWith('ru')}
+                onClick={() => {
+                  project.setLanguage('ru');
+                }}>
+                Russian
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex p-2 gap-2" active={project.language.startsWith('id')}
+                onClick={() => {
+                  project.setLanguage('id');
+                }}>
+                Indonesian
+              </DropdownMenuItem>
+              </DropdownMenuSubContent>
+            </DropdownMenuPortal>
+          </DropdownMenuSub>
         </DropdownMenuContent>
       </DropdownMenu>
       <input
