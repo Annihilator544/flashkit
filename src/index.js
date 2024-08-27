@@ -12,6 +12,7 @@ import './logger';
 import { ErrorBoundary } from 'react-error-boundary';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Landing from './Landing';
+import DashBoard from 'Dashboard';
 
 // if (window.location.host !== 'studio.polotno.com') {
 //   console.log(
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Landing />,
+  },
+  {
+    path: "dashboard",
+    element: <DashBoard store={store}/>,
   },
   {
     path: "canvas",

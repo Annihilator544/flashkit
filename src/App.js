@@ -35,6 +35,7 @@ import ru from './translations/ru';
 import ptBr from './translations/pt-br';
 import { LogoSection } from './sections/logo-section.js';
 import Topbar from 'topbar/topbar';
+import { useSearchParams } from 'react-router-dom';
 
 // load default translations
 setTranslations(en);
@@ -95,6 +96,11 @@ const useHeight = () => {
 };
 
 const App = observer(({ store }) => {
+  const [searchParams] = useSearchParams();
+  const designId = searchParams.get('id');
+  React.useEffect(() => {
+  window.project.loadById(designId);
+  }, [designId]);
   const project = useProject();
   const height = useHeight();
   React.useEffect(() => {
