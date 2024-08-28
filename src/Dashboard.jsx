@@ -85,7 +85,7 @@ const DashboardProjects = observer(({ store }) => {
     loadDesigns();
   }, [project.cloudEnabled, project.designsLength]);
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col flex-wrap">
       <Button
       className="w-1/2 my-8"
         onClick={async () => {
@@ -94,7 +94,7 @@ const DashboardProjects = observer(({ store }) => {
       >
         Create new design
       </Button>
-      <div className="flex">
+      <div className="grid grid-cols-7">
       {!designsLoadings && !designs.length && (
         <div style={{ paddingTop: '20px', textAlign: 'center', opacity: 0.6 }}>
           You have no designs yet.
@@ -136,8 +136,9 @@ const DashboardProjects = observer(({ store }) => {
   
     return (
       <Card
-        style={{ margin: '3px', padding: '3px', position: 'relative' }}
+        style={{  padding: '3px', position: 'relative' }}
         interactive
+        className="fit-content w-fit mb-auto mx-1"
         onClick={() => {
           handleSelect();
         }}
