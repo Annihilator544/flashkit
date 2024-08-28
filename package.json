@@ -9,6 +9,7 @@
     "@blueprintjs/core": "^5.11.0",
     "@blueprintjs/icons": "^5.11.0",
     "@meronex/icons": "^4.0.0",
+    "@radix-ui/react-avatar": "^1.1.0",
     "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-dropdown-menu": "^2.1.1",
     "@radix-ui/react-progress": "^1.1.0",

@@ -2,7 +2,6 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 import {
   Button,
-  Card,
   Menu,
   MenuItem,
   Position,
@@ -16,7 +15,10 @@ import { SectionTab } from 'polotno/side-panel';
 import FaFolder from '@meronex/icons/fa/FaFolder';
 import { useProject } from '../project';
 import * as api from '../api';
-import { LucidePlus } from 'lucide-react';
+import { LucideFolderOpen, LucideMoreHorizontal, LucidePlus, LucideTrash2 } from 'lucide-react';
+import { Card } from '../components/ui/card';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../components/ui/dropdown-menu";
+
 
 const DesignCard = observer(({ design, store, onDelete }) => {
   const [loading, setLoading] = React.useState(false);
@@ -38,7 +40,7 @@ const DesignCard = observer(({ design, store, onDelete }) => {
 
   return (
     <Card
-      style={{ margin: '3px', padding: '0px', position: 'relative' }}
+      style={{ margin: '3px', padding: '3px', position: 'relative' }}
       interactive
       onClick={() => {
         handleSelect();
@@ -73,38 +75,25 @@ const DesignCard = observer(({ design, store, onDelete }) => {
           e.stopPropagation();
         }}
       >
-        <Popover
-          content={
-            <Menu>
-              <MenuItem
-                icon="document-open"
-                text="Open"
-                onClick={() => {
-                  handleSelect();
-                }}
-              />
-              {/* <MenuItem
-                icon="duplicate"
-                text="Copy"
-                onClick={async () => {
-                  handleCopy();
-                }}
-              /> */}
-              <MenuItem
-                icon="trash"
-                text="Delete"
-                onClick={() => {
-                  if (window.confirm('Are you sure you want to delete it?')) {
-                    onDelete({ id: design.id });
-                  }
-                }}
-              />
-            </Menu>
-          }
-          position={Position.BOTTOM}
-        >
-          <Button icon="more" />
-        </Popover>
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <Button className="p-2"><LucideMoreHorizontal className="h-4"/></Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="bg-white mx-1">
+          <DropdownMenuItem className="flex gap-2" onClick={() => {
+                    handleSelect();
+                  }}>
+              <LucideFolderOpen className='h-4'/>Open
+          </DropdownMenuItem>
+          <DropdownMenuItem className="flex gap-2" onClick={() => {
+                    if (window.confirm('Are you sure you want to delete it?')) {
+                      onDelete({ id: design.id });
+                    }
+                  }}>
+              <LucideTrash2 className='h-4'/>Delete
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </Card>
   );

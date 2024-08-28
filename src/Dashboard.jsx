@@ -1,12 +1,18 @@
 import { TabsContent } from "@radix-ui/react-tabs";
 import { Tabs, TabsList, TabsTrigger } from "./components/ui/tabs";
-import { LucideChartLine, LucideCircleHelp, LucideCircleUser, LucideCrown, LucideLayoutDashboard, LucideLogOut, LucideTvMinimalPlay } from "lucide-react";
+import { LucideChartLine, LucideCircleHelp, LucideCircleUser, LucideCrown, LucideDelete, LucideFolderOpen, LucideLayoutDashboard, LucideLogOut, LucideMoreHorizontal, LucideMoreVertical, LucideTrash, LucideTrash2, LucideTvMinimalPlay, Slash } from "lucide-react";
 import React from "react";
 import { useProject } from "project";
 import { observer } from "mobx-react-lite";
 import * as api from "api";
-import { Card, MenuItem, Popover, Position, Spinner,Button } from "@blueprintjs/core";
+import { MenuItem, Popover, Position, Spinner } from "@blueprintjs/core";
 import { Menu } from "@blueprintjs/icons";
+import { Card } from "./components/ui/card";
+import { Button } from "./components/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./components/ui/dropdown-menu";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "./components/ui/breadcrumb";
+import { Avatar, AvatarFallback, AvatarImage } from "./components/ui/avatar";
+import image from "./assets/image.png";
 
 function DashBoard({ store }) {
   return (
@@ -22,8 +28,34 @@ function DashBoard({ store }) {
             <TabsTrigger value="7" className="aspect-square"><LucideLogOut/></TabsTrigger>
         </TabsList>
         <TabsContent value="1" className="flex-1">Tab 1 content</TabsContent>
-        <TabsContent value="2" className="flex-1">
+        <TabsContent value="2" className="flex-1 overflow-y-scroll">
           <div>
+            <div className="h-14 flex justify-between px-5 border-b  mb-3">
+            <Breadcrumb className= "my-auto">
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator>
+                  /
+                </BreadcrumbSeparator>
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator>
+                  /
+                </BreadcrumbSeparator>
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="/dashboard">Components</BreadcrumbLink>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+            <Avatar className= "my-auto">
+              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+            </div>
+            <img src={image} alt="Dashboard" className="w-full h-96 object-cover my-6"/>
             <DashboardProjects store={store} />
           </div>
         </TabsContent>
@@ -53,16 +85,16 @@ const DashboardProjects = observer(({ store }) => {
     loadDesigns();
   }, [project.cloudEnabled, project.designsLength]);
   return (
-    <div className="flex">
+    <div className="flex flex-col">
       <Button
-        fill
-        intent="primary"
+      className="w-1/2 my-8"
         onClick={async () => {
           window.location.href = `/canvas?id=create_new_design`;
         }}
       >
         Create new design
       </Button>
+      <div className="flex">
       {!designsLoadings && !designs.length && (
         <div style={{ paddingTop: '20px', textAlign: 'center', opacity: 0.6 }}>
           You have no designs yet.
@@ -80,6 +112,7 @@ const DashboardProjects = observer(({ store }) => {
           onDelete={handleProjectDelete}
         />
       ))}
+      </div>
     </div>
   );});
 
@@ -103,7 +136,7 @@ const DashboardProjects = observer(({ store }) => {
   
     return (
       <Card
-        style={{ margin: '3px', padding: '0px', position: 'relative' }}
+        style={{ margin: '3px', padding: '3px', position: 'relative' }}
         interactive
         onClick={() => {
           handleSelect();
@@ -138,38 +171,25 @@ const DashboardProjects = observer(({ store }) => {
             e.stopPropagation();
           }}
         >
-          <Popover
-            content={
-              <Menu>
-                <MenuItem
-                  icon="document-open"
-                  text="Open"
-                  onClick={() => {
+        <DropdownMenu>
+        <DropdownMenuTrigger>
+          <Button className="p-2"><LucideMoreHorizontal className="h-4"/></Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="bg-white mx-1">
+          <DropdownMenuItem className="flex gap-2" onClick={() => {
                     handleSelect();
-                  }}
-                />
-                {/* <MenuItem
-                  icon="duplicate"
-                  text="Copy"
-                  onClick={async () => {
-                    handleCopy();
-                  }}
-                /> */}
-                <MenuItem
-                  icon="trash"
-                  text="Delete"
-                  onClick={() => {
+                  }}>
+              <LucideFolderOpen className='h-4'/>Open
+          </DropdownMenuItem>
+          <DropdownMenuItem className="flex gap-2" onClick={() => {
                     if (window.confirm('Are you sure you want to delete it?')) {
                       onDelete({ id: design.id });
                     }
-                  }}
-                />
-              </Menu>
-            }
-            position={Position.BOTTOM}
-          >
-            <Button icon="more" />
-          </Popover>
+                  }}>
+              <LucideTrash2 className='h-4'/>Delete
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+        </DropdownMenu>
         </div>
       </Card>
     );
