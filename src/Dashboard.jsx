@@ -1,18 +1,21 @@
 import { TabsContent } from "@radix-ui/react-tabs";
 import { Tabs, TabsList, TabsTrigger } from "./components/ui/tabs";
-import { LucideChartLine, LucideCircleHelp, LucideCircleUser, LucideCrown, LucideDelete, LucideFolderOpen, LucideLayoutDashboard, LucideLogOut, LucideMoreHorizontal, LucideMoreVertical, LucideTrash, LucideTrash2, LucideTvMinimalPlay, Slash } from "lucide-react";
+import { Instagram, Linkedin, LucideChartLine, LucideCircleHelp, LucideCircleUser, LucideCrown, LucideDelete, LucideFolderOpen, LucideLayoutDashboard, LucideLogIn, LucideLogOut, LucideMoreHorizontal, LucideMoreVertical, LucideTrash, LucideTrash2, LucideTvMinimalPlay, Slash, Twitter, Youtube } from "lucide-react";
 import React from "react";
 import { useProject } from "project";
 import { observer } from "mobx-react-lite";
 import * as api from "api";
 import { MenuItem, Popover, Position, Spinner } from "@blueprintjs/core";
 import { Menu } from "@blueprintjs/icons";
-import { Card } from "./components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./components/ui/card";
 import { Button } from "./components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./components/ui/dropdown-menu";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "./components/ui/breadcrumb";
 import { Avatar, AvatarFallback, AvatarImage } from "./components/ui/avatar";
 import image from "./assets/image.png";
+import PieChartDisplay from "Charts/PieChartDisplay";
+import { AreaChartDisplay } from "Charts/AreaChartDisplay";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "./components/ui/select";
 
 function DashBoard({ store }) {
   return (
@@ -55,8 +58,38 @@ function DashBoard({ store }) {
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             </div>
-            <img src={image} alt="Dashboard" className="w-full h-96 object-cover my-6"/>
-            <DashboardProjects store={store} />
+            <div className="mx-5">
+              <div className="flex gap-5 ">
+                <PieChartDisplay/>
+                <AreaChartDisplay/>
+                <Card className="mb-auto">
+                  <CardHeader>
+                    <CardTitle>Social Accounts</CardTitle>
+                    <CardDescription>Choose a Social Account to Connect</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                  <Select>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Select an Account" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="Instagram"><div className="flex gap-2"><Instagram className="h-5"/>Instagram </div></SelectItem>
+                        <SelectItem value="Twitter"><div className="flex gap-2"><Twitter className="h-5"/>Twitter </div></SelectItem>
+                        <SelectItem value="Youtube"><div className="flex gap-2"><Youtube className="h-5"/>Youtube</div></SelectItem>
+                        <SelectItem value="LinkedIn"><div className="flex gap-2"><Linkedin className="h-5"/>LinkedIn </div></SelectItem>
+                        {/* <SelectItem value="TikTok"><div className="flex gap-2"><TikTok className="h-5"/>Instagram </div></SelectItem> */}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  </CardContent>
+                  <CardFooter className="mt-auto">
+                    <Button className="gap-2">Connect <LucideLogIn className="h-5"/></Button>
+                  </CardFooter>
+                </Card>
+              </div>
+              <DashboardProjects store={store} />
+            </div>
           </div>
         </TabsContent>
       </Tabs>
@@ -87,14 +120,14 @@ const DashboardProjects = observer(({ store }) => {
   return (
     <div className="flex flex-col flex-wrap">
       <Button
-      className="w-1/2 my-8"
+      className=" my-8"
         onClick={async () => {
           window.location.href = `/canvas?id=create_new_design`;
         }}
       >
         Create new design
       </Button>
-      <div className="grid grid-cols-7">
+      <div className="flex gap-5 flex-wrap">
       {!designsLoadings && !designs.length && (
         <div style={{ paddingTop: '20px', textAlign: 'center', opacity: 0.6 }}>
           You have no designs yet.
@@ -143,7 +176,9 @@ const DashboardProjects = observer(({ store }) => {
           handleSelect();
         }}
       >
+        <div className="rounded-lg overflow-hidden">
         <img src={previewURL} style={{ width: '100%' }} />
+        </div>
         <div
           style={{
             overflow: 'hidden',

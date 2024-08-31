@@ -46,7 +46,9 @@ const DesignCard = observer(({ design, store, onDelete }) => {
         handleSelect();
       }}
     >
-      <img src={previewURL} style={{ width: '100%' }} />
+      <div className="rounded-lg overflow-hidden">
+        <img src={previewURL} style={{ width: '100%' }} />
+      </div>
       <div
         style={{
           overflow: 'hidden',
