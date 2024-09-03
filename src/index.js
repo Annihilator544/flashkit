@@ -13,6 +13,9 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Landing from './Landing';
 import DashBoard from 'Dashboard';
+import Signup from 'Signup';
+import Login from 'Login';
+import Youtube from 'Youtube';
 
 // if (window.location.host !== 'studio.polotno.com') {
 //   console.log(
@@ -77,6 +80,18 @@ const router = createBrowserRouter([
   {
     path: "dashboard",
     element: <DashBoard store={store}/>,
+  },
+  {
+    path: "/youtube",
+    element: <Youtube />,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
   {
     path: "canvas",
