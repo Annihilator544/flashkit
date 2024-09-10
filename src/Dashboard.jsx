@@ -1,6 +1,6 @@
 import { TabsContent } from "@radix-ui/react-tabs";
 import { Tabs, TabsList, TabsTrigger } from "./components/ui/tabs";
-import { Instagram, Linkedin, LucideChartLine, LucideCircleHelp, LucideCircleUser, LucideCrown, LucideDelete, LucideFolderOpen, LucideLayoutDashboard, LucideLogIn, LucideLogOut, LucideMoreHorizontal, LucideMoreVertical, LucideTrash, LucideTrash2, LucideTvMinimalPlay, Slash, Twitter, Youtube } from "lucide-react";
+import { Instagram, Linkedin, LucideChartLine, LucideChevronDown, LucideCircleHelp, LucideCircleUser, LucideCrown, LucideDelete, LucideFolderOpen, LucideLayoutDashboard, LucideLogIn, LucideLogOut, LucideMoreHorizontal, LucideMoreVertical, LucideTrash, LucideTrash2, LucideTvMinimalPlay, Slash, Twitter, Youtube } from "lucide-react";
 import React from "react";
 import { useProject } from "project";
 import { observer } from "mobx-react-lite";
@@ -15,23 +15,40 @@ import { Avatar, AvatarFallback, AvatarImage } from "./components/ui/avatar";
 import image from "./assets/image.png";
 import PieChartDisplay from "Charts/PieChartDisplay";
 import { AreaChartDisplay } from "Charts/AreaChartDisplay";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "./components/ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from "./components/ui/select";
+import logo from "./assets/logo.png" 
+import { Badge } from "./components/ui/badge";
 
 function DashBoard({ store }) {
   return (
     <div className="h-screen flex">
-      <Tabs className="flex flex-1 " defaultValue="2" >
-        <TabsList className="flex flex-col p-3 gap-2">
-            <TabsTrigger value="1" className="aspect-square"><LucideCrown/></TabsTrigger>
-            <TabsTrigger value="2" className="aspect-square"><LucideLayoutDashboard/></TabsTrigger>
-            <TabsTrigger value="3" className="aspect-square"><LucideChartLine/></TabsTrigger>
-            <TabsTrigger value="4" className="aspect-square"><LucideTvMinimalPlay/></TabsTrigger>
-            <TabsTrigger value="5" className="aspect-square"><LucideCircleUser/></TabsTrigger>
-            <TabsTrigger value="6" className=" mt-auto aspect-square"><LucideCircleHelp/></TabsTrigger>
-            <TabsTrigger value="7" className="aspect-square"><LucideLogOut/></TabsTrigger>
+      <Tabs className="flex flex-1 " defaultValue="dashboard" >
+        <TabsList className="flex flex-col p-3 gap-2 bg-white border-r rounded-none">
+            <img src={logo} alt="logo" className=" aspect-video max-h-16 mx-auto"/>
+            <Card className="w-40">
+              <CardContent className="p-2">
+                <div>
+                  <Avatar className= "mx-auto">
+                    <AvatarImage src="https://github.com/shadcn.png" />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                  <p className=" font-bold mt-2 text-center">Sara Patter</p>
+                  <p className="text-yellow-400 text-center">Gold</p>
+                </div>
+                <SelectSeparator/>
+                <div className="flex justify-between"><p className="font-semibold">This Week </p><LucideChevronDown className="h-4 my-auto"/></div>
+                <div className="mt-2 text-muted-foreground"> EQS Score</div>
+                <div className="flex justify-between"><p className="font-semibold">79% </p><Badge variant="success">+3.4%</Badge> </div>
+              </CardContent>
+            </Card>
+            <TabsTrigger value="upgrade" className=""><LucideCrown/> Upgrade</TabsTrigger>
+            <TabsTrigger value="dashboard" className=""><LucideLayoutDashboard/> Dashboard</TabsTrigger>
+            <TabsTrigger value="analytics" className=""><LucideChartLine/> Analytics</TabsTrigger>
+            <TabsTrigger value="mediakit" className=""><LucideTvMinimalPlay/> Media Kit</TabsTrigger>
+            <TabsTrigger value="profile" className=""><LucideCircleUser/> Profile</TabsTrigger>
         </TabsList>
-        <TabsContent value="1" className="flex-1">Tab 1 content</TabsContent>
-        <TabsContent value="2" className="flex-1 overflow-y-scroll">
+        <TabsContent value="upgrade" className="flex-1">Tab 1 content</TabsContent>
+        <TabsContent value="dashboard" className="flex-1 overflow-y-scroll">
           <div>
             <div className="h-14 flex justify-between px-5 border-b  mb-3">
             <Breadcrumb className= "my-auto">
@@ -53,10 +70,7 @@ function DashBoard({ store }) {
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
-            <Avatar className= "my-auto">
-              <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
+            
             </div>
             <div className="mx-5">
               <div className="flex gap-5 ">
