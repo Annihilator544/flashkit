@@ -16,60 +16,48 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "../components/ui/chart"
-import { useYoutubeData } from "store/use-youtube-data"
 
 export const description = "A donut chart with text"
 
+const chartData = [
+  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
+  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
+  { browser: "firefox", visitors: 287, fill: "var(--color-firefox)" },
+  { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
+  { browser: "other", visitors: 190, fill: "var(--color-other)" },
+]
+
 const chartConfig = {
-  views: {
-    label: "views",
+  visitors: {
+    label: "Visitors",
   },
-  year2019: {
-    label: "2019",
+  chrome: {
+    label: "Chrome",
     color: "hsl(var(--chart-1))",
   },
-  year2020: {
-    label: "2020",
+  safari: {
+    label: "Safari",
     color: "hsl(var(--chart-2))",
   },
-  year2021: {
-    label: "2021",
+  firefox: {
+    label: "Firefox",
     color: "hsl(var(--chart-3))",
   },
-  year2022: {
-    label: "2022",
+  edge: {
+    label: "Edge",
     color: "hsl(var(--chart-4))",
   },
-  
-  year2023: {
-    label: "2023",
-    color: "hsl(var(--chart-1))",
-  },
-  year2024: {
-    label: "2024",
+  other: {
+    label: "Other",
     color: "hsl(var(--chart-5))",
   },
 }
 
 function PieChartDisplay() {
-  
-  const { data } = useYoutubeData();
-  function transformData(inputData) {
-  
-    return Object.entries(inputData).map(([dateString, data]) => {
-      const year = dateString;
-      console.log(year)
-      return {
-        year: year,
-        views: data.views,
-        fill: `var(--color-year${year})`,
-      };
-    });
-  }
-  const chartData = transformData(data.yearly);
   const totalVisitors = React.useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.views, 0)
+    return chartData.reduce((acc, curr) => acc + curr.visitors, 0)
   }, [])
+
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
@@ -88,8 +76,8 @@ function PieChartDisplay() {
             />
             <Pie
               data={chartData}
-              dataKey="views"
-              nameKey="year"
+              dataKey="visitors"
+              nameKey="browser"
               innerRadius={60}
               strokeWidth={5}
             >
@@ -115,7 +103,7 @@ function PieChartDisplay() {
                           y={(viewBox.cy || 0) + 24}
                           className="fill-muted-foreground"
                         >
-                          Views
+                          Visitors
                         </tspan>
                       </text>
                     )
@@ -131,7 +119,7 @@ function PieChartDisplay() {
           Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
         </div>
         <div className="leading-none text-muted-foreground">
-          Showing total views for the last 5 years
+          Showing total visitors for the last 6 months
         </div>
       </CardFooter>
     </Card>

@@ -18,8 +18,13 @@ import { AreaChartDisplay } from "Charts/AreaChartDisplay";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from "./components/ui/select";
 import logo from "./assets/logo.png" 
 import { Badge } from "./components/ui/badge";
+import ConnectAccount from "./components/ConnectAccount";
+import { YoutubeMonthly } from "Charts/YoutubeMonthly";
+import { useYoutubeData } from "store/use-youtube-data";
 
 function DashBoard({ store }) {
+  const { data } = useYoutubeData();
+  console.log(data);
   return (
     <div className="h-screen flex">
       <Tabs className="flex flex-1 " defaultValue="dashboard" >
@@ -70,40 +75,26 @@ function DashBoard({ store }) {
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
-            
             </div>
             <div className="mx-5">
               <div className="flex gap-5 ">
-                <PieChartDisplay/>
-                <AreaChartDisplay/>
-                <Card className="mb-auto">
-                  <CardHeader>
-                    <CardTitle>Social Accounts</CardTitle>
-                    <CardDescription>Choose a Social Account to Connect</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                  <Select>
-                    <SelectTrigger className="w-[180px]">
-                      <SelectValue placeholder="Select an Account" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="Instagram"><div className="flex gap-2"><Instagram className="h-5"/>Instagram </div></SelectItem>
-                        <SelectItem value="Twitter"><div className="flex gap-2"><Twitter className="h-5"/>Twitter </div></SelectItem>
-                        <SelectItem value="Youtube"><div className="flex gap-2"><Youtube className="h-5"/>Youtube</div></SelectItem>
-                        <SelectItem value="LinkedIn"><div className="flex gap-2"><Linkedin className="h-5"/>LinkedIn </div></SelectItem>
-                        {/* <SelectItem value="TikTok"><div className="flex gap-2"><TikTok className="h-5"/>Instagram </div></SelectItem> */}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                  </CardContent>
-                  <CardFooter className="mt-auto">
-                    <Button className="gap-2">Connect <LucideLogIn className="h-5"/></Button>
-                  </CardFooter>
-                </Card>
+              { data && typeof data === 'object' && Object.keys(data).length > 0 ?
+                <>
+                  <PieChartDisplay/>
+                  <YoutubeMonthly/>
+                </>
+                :<></>
+              } 
               </div>
               <DashboardProjects store={store} />
             </div>
+          </div>
+        </TabsContent>
+        <TabsContent value="analytics" className="flex-1">Tab 3 content</TabsContent>
+        <TabsContent value="mediakit" className="flex-1">Tab 4 content</TabsContent>
+        <TabsContent value="profile" className="flex-1">
+          <div className="m-5">
+            <ConnectAccount/>
           </div>
         </TabsContent>
       </Tabs>

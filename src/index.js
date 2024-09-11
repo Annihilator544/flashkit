@@ -15,7 +15,7 @@ import Landing from './Landing';
 import DashBoard from 'Dashboard';
 import Signup from 'Signup';
 import Login from 'Login';
-import Youtube from 'Youtube';
+import YoutubeOauth from 'Oauth/YoutubeOauth';
 
 // if (window.location.host !== 'studio.polotno.com') {
 //   console.log(
@@ -83,7 +83,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/youtube",
-    element: <Youtube />,
+    element: <YoutubeOauth />,
   },
   {
     path: "/signup",
