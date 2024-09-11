@@ -24,7 +24,9 @@ function Landing() {
                     <p className='my-auto'>About</p>
                     <p className='my-auto'>Plans</p>
                     <p className='my-auto'>Learn More ?</p>
-                    <button className='bg-[#ff847c] text-white px-4 py-[4px] rounded-full font-bold'>Sign in</button>
+                    <Link to='/login' className=' hover:no-underline'>
+                        <button className='bg-[#ff847c] text-white px-4 py-[4px] rounded-full font-bold'>Sign in</button>
+                    </Link>
                 </div>
             </div>
             <div className='grid grid-cols-2 p-36 max-w-[100vw] gap-10'>
@@ -32,7 +34,9 @@ function Landing() {
                     <p className=' font-bold text-6xl '>Create, Share, and Track Your Success</p>
                     <p className='text-lg my-10 '>Empower your content creation with our all-in-one social media kit, designed to help you craft visually stunning posts and monitor your performance instantly.</p>
                     <div className=' flex gap-7 my-2'>
-                        <button className='bg-[#ff847c] text-white px-4 border-transparent  py-2 rounded-full font-bold'>Create Account</button>
+                        <Link to='/signup' className=' hover:no-underline'>
+                            <button className='bg-[#ff847c] text-white px-4 border-transparent  py-2 rounded-full font-bold'>Create Account</button>
+                        </Link>
                         <Link to='/canvas' className=' hover:no-underline'>
                             <button className=' text-black px-4 border-[1px] border-black  py-2 rounded-full font-bold flex gap-2'><LucidePlayCircle/><p className='my-auto'>View Demo</p></button>
                         </Link>

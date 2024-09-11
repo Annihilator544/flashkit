@@ -3008,12 +3008,12 @@ a > .bp5-dark .bp5-running-text code{
 }
 
 :focus{
-  outline:rgba(33, 93, 176, 0.752) solid 2px;
+  outline:rgb(239, 138, 128) solid 2px;
   outline-offset:2px;
   -moz-outline-radius:6px;
 }
 .bp5-dark :focus{
-  outline-color:rgba(138, 187, 255, 0.752);
+  outline-color:rgb(239, 138, 128);
 }
 
 .bp5-focus-disabled :focus:not(.bp5-focus-style-manager-ignore *){

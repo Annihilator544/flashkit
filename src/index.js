@@ -78,7 +78,7 @@ const router = createBrowserRouter([
     element: <Landing />,
   },
   {
-    path: "dashboard",
+    path: "/dashboard",
     element: <DashBoard store={store}/>,
   },
   {
@@ -94,7 +94,7 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: "canvas",
+    path: "/canvas",
     element: <App  store={store} />,
   },
 ]);
