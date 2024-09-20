@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import { auth } from './firebase';
+import { auth, db } from './firebase';
 import logo from './assets/logo.png'
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -18,6 +18,8 @@ import { Input } from "./components/ui/input"
 import { Button } from './components/ui/button';
 import { SelectSeparator } from './components/ui/select';
 import SignUp from './assets/SignUp.svg';
+import { useAuthStore } from 'store/use-auth-data';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 const formSchema = z.object({
     email: z.string().email(),
@@ -35,6 +37,7 @@ const formSchema = z.object({
 
 const Signup = () => {
     const navigate = useNavigate();
+    const { signIn } = useAuthStore();
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -49,8 +52,14 @@ const Signup = () => {
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
             const user = userCredential.user;
+            await setDoc(doc(db, 'users', user.uid), {
+                email: user.email,
+                createdAt: new Date(),
+                // Add any other user data you want to save
+            });
+            await signIn(values.email, values.password);
             console.log(user);
-            navigate("/login")
+            navigate("/dashboard")
         } catch (error) {
             const errorCode = error.code;
             const errorMessage = error.message;
@@ -64,6 +73,17 @@ const Signup = () => {
             const result = await signInWithPopup(auth, provider);
             const user = result.user;
             console.log(user);
+            const userDoc = await getDoc(doc(db, 'users', user.uid));
+            if (!userDoc.exists()) {
+                // If new user, save their data to Firestore
+                await setDoc(doc(db, 'users', user.uid), {
+                    email: user.email,
+                    displayName: user.displayName,
+                    photoURL: user.photoURL,
+                    createdAt: new Date(),
+                });
+            }
+            await signIn(user.email, null, true);
             navigate("/dashboard"); // Redirect to dashboard or appropriate page after successful sign-in
         } catch (error) {
             const errorCode = error.code;

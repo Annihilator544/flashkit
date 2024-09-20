@@ -16,6 +16,7 @@ import DashBoard from 'Dashboard';
 import Signup from 'Signup';
 import Login from 'Login';
 import YoutubeOauth from 'Oauth/YoutubeOauth';
+import ProtectedRoute from 'ProtectedRoute';
 
 // if (window.location.host !== 'studio.polotno.com') {
 //   console.log(
@@ -114,7 +115,7 @@ root.render(
     <ProjectContext.Provider value={project}>
       <Auth0Provider domain={AUTH_DOMAIN} clientId={ID} redirectUri={REDIRECT}>
         <RouterProvider router={router}>
-          <App store={store} />
+          <ProtectedRoute children={<App store={store} />}/>
         </RouterProvider>
       </Auth0Provider>
     </ProjectContext.Provider>

@@ -18,6 +18,7 @@ import { Input } from "./components/ui/input"
 import { Button } from './components/ui/button';
 import { SelectSeparator } from './components/ui/select';
 import LogIn from './assets/LogIn.svg';
+import { useAuthStore } from 'store/use-auth-data';
 
 const formSchema = z.object({
     email: z.string().email(),
@@ -25,6 +26,7 @@ const formSchema = z.object({
   })
 
 const Login = () => {
+    const {  setUser } = useAuthStore();
     const navigate = useNavigate();
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -40,6 +42,7 @@ const Login = () => {
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
+            setUser(user)
             navigate("/dashboard")
             console.log(user);
         })
@@ -56,6 +59,7 @@ const Login = () => {
         try {
             const result = await signInWithPopup(auth, provider);
             const user = result.user;
+            setUser(user);
             console.log(user);
             navigate("/dashboard"); // Redirect to dashboard or appropriate page after successful sign-in
         } catch (error) {
