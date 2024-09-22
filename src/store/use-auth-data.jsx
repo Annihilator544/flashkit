@@ -3,7 +3,7 @@ import { persist } from 'zustand/middleware';
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase';
 
 // Create Zustand store
@@ -36,6 +36,8 @@ const useAuthStore = create(
           const userDoc = await getDoc(doc(db, 'users', user.uid));
           const userData = userDoc.data();
           set({ user: { ...user, ...userData }, isAuthenticated: true, isLoading: false });
+          console.log('Sign in success:', user);
+          Navigate('/dashboard');
           return userData;
         } catch (error) {
           console.error('Sign in error:', error);
@@ -47,6 +49,7 @@ const useAuthStore = create(
         try {
           await signOut(auth);
           set({ user: null, isAuthenticated: false, isLoading: false });
+          Navigate('/login');
         } catch (error) {
           console.error('Sign out error:', error);
         }
@@ -62,16 +65,15 @@ const useAuthStore = create(
 // Custom hook for auth-related redirects
 const useAuthRedirect = () => {
   const { user, isAuthenticated, isLoading } = useAuthStore();
-  console.log(user, isAuthenticated, isLoading);  
   const navigate = useNavigate();
   useEffect(() => {
     if (!isLoading) {
       if (!isAuthenticated) {
         // Redirect to sign in page if not authenticated
-        navigate('/signin');
+        navigate('/login');
       } else if (isAuthenticated && !user.username) {
         // Redirect to profile page if authenticated but no username
-        navigate('/profile');
+        
       }
     }
   }, [isAuthenticated, isLoading, user]);

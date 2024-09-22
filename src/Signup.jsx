@@ -1,9 +1,9 @@
 import React from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Navigate, NavLink, useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth, db } from './firebase';
 import logo from './assets/logo.png'
-import { z } from "zod"
+import { set, z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import {
@@ -37,7 +37,7 @@ const formSchema = z.object({
 
 const Signup = () => {
     const navigate = useNavigate();
-    const { signIn } = useAuthStore();
+    const { signIn, setUser } = useAuthStore();
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -48,21 +48,26 @@ const Signup = () => {
     })
 
     async function onSubmit(values) {
-        console.log(values)
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
             const user = userCredential.user;
-            await setDoc(doc(db, 'users', user.uid), {
-                email: user.email,
-                createdAt: new Date(),
-                // Add any other user data you want to save
-            });
-            await signIn(values.email, values.password);
+            // await setDoc(doc(db, 'users', user.uid), {
+            //     email: user.email,
+            //     createdAt: new Date(),
+            //     // Add any other user data you want to save
+            // });
+            setUser(user);
             console.log(user);
             navigate("/dashboard")
         } catch (error) {
             const errorCode = error.code;
             const errorMessage = error.message;
+            console.log(errorMessage);
+            if(errorMessage.includes("auth/email-already-in-use")) { 
+                alert("Email already exists")
+                // relocate to login page
+                navigate("/login")
+            }
             console.log(errorCode, errorMessage);
         }
     }
@@ -73,17 +78,18 @@ const Signup = () => {
             const result = await signInWithPopup(auth, provider);
             const user = result.user;
             console.log(user);
-            const userDoc = await getDoc(doc(db, 'users', user.uid));
-            if (!userDoc.exists()) {
-                // If new user, save their data to Firestore
-                await setDoc(doc(db, 'users', user.uid), {
-                    email: user.email,
-                    displayName: user.displayName,
-                    photoURL: user.photoURL,
-                    createdAt: new Date(),
-                });
-            }
-            await signIn(user.email, null, true);
+            // const userDoc = await getDoc(doc(db, 'users', user.uid));
+            // if (!userDoc.exists()) {
+            //     // If new user, save their data to Firestore
+            //     await setDoc(doc(db, 'users', user.uid), {
+            //         email: user.email,
+            //         displayName: user.displayName,
+            //         photoURL: user.photoURL,
+            //         createdAt: new Date(),
+            //     });
+            // }
+            setUser(user);
+            // await signIn(user.email, null, true);
             navigate("/dashboard"); // Redirect to dashboard or appropriate page after successful sign-in
         } catch (error) {
             const errorCode = error.code;

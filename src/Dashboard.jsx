@@ -21,10 +21,11 @@ import { Badge } from "./components/ui/badge";
 import ConnectAccount from "./components/ConnectAccount";
 import { YoutubeMonthly } from "Charts/YoutubeMonthly";
 import { useYoutubeData } from "store/use-youtube-data";
+import { useAuthStore } from "store/use-auth-data";
 
 function DashBoard({ store }) {
   const { data } = useYoutubeData();
-  console.log(data);
+  const { user, signOut } = useAuthStore();
   return (
     <div className="h-screen flex">
       <Tabs className="flex flex-1 " defaultValue="dashboard" >
@@ -34,10 +35,12 @@ function DashBoard({ store }) {
               <CardContent className="p-2">
                 <div>
                   <Avatar className= "mx-auto">
+                  {user&&user.photoURL ? <AvatarImage src={user.photoURL} /> :
                     <AvatarImage src="https://github.com/shadcn.png" />
+                  }
                     <AvatarFallback>CN</AvatarFallback>
                   </Avatar>
-                  <p className=" font-bold mt-2 text-center">Sara Patter</p>
+                  <p className=" font-bold mt-2 text-center">{user&&user.displayName ? user.displayName : "Set Up Profile"}</p>
                   <p className="text-yellow-400 text-center">Gold</p>
                 </div>
                 <SelectSeparator/>
@@ -51,6 +54,7 @@ function DashBoard({ store }) {
             <TabsTrigger value="analytics" className=""><LucideChartLine/> Analytics</TabsTrigger>
             <TabsTrigger value="mediakit" className=""><LucideTvMinimalPlay/> Media Kit</TabsTrigger>
             <TabsTrigger value="profile" className=""><LucideCircleUser/> Profile</TabsTrigger>
+            <Button className="w-full mt-auto" onClick={signOut}><LucideLogOut className="h-4"/>Logout</Button>
         </TabsList>
         <TabsContent value="upgrade" className="flex-1">Tab 1 content</TabsContent>
         <TabsContent value="dashboard" className="flex-1 overflow-y-scroll">
@@ -77,7 +81,7 @@ function DashBoard({ store }) {
             </Breadcrumb>
             </div>
             <div className="m-5  flex justify-between">
-              <p className="text-2xl font-semibold">Hello Sara!</p>
+              <p className="text-2xl font-semibold">Hello {user&&user.displayName ? user.displayName.split(" ")[0] : "sara" }!</p>
               <Select>
                     <SelectTrigger className="w-[180px]">
                       <SelectValue placeholder="Select an Account" />

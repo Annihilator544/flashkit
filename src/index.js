@@ -80,11 +80,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashBoard store={store}/>,
-  },
-  {
-    path: "/youtube",
-    element: <YoutubeOauth />,
+    element: <ProtectedRoute><DashBoard store={store}/></ProtectedRoute>,
   },
   {
     path: "/signup",
@@ -96,7 +92,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/canvas",
-    element: <App  store={store} />,
+    element: <ProtectedRoute><App  store={store} /></ProtectedRoute>,
   },
 ]);
 
@@ -115,7 +111,7 @@ root.render(
     <ProjectContext.Provider value={project}>
       <Auth0Provider domain={AUTH_DOMAIN} clientId={ID} redirectUri={REDIRECT}>
         <RouterProvider router={router}>
-          <ProtectedRoute children={<App store={store} />}/>
+          <App store={store} />
         </RouterProvider>
       </Auth0Provider>
     </ProjectContext.Provider>
