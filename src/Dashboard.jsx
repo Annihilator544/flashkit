@@ -1,6 +1,6 @@
 import { TabsContent } from "@radix-ui/react-tabs";
 import { Tabs, TabsList, TabsTrigger } from "./components/ui/tabs";
-import { Instagram, Linkedin, LucideBadge, LucideChartLine, LucideChevronDown, LucideCircleHelp, LucideCircleUser, LucideCrown, LucideDelete, LucideFolderOpen, LucideLayoutDashboard, LucideLogIn, LucideLogOut, LucideMoreHorizontal, LucideMoreVertical, LucidePlus, LucideTrash, LucideTrash2, LucideTrendingUp, LucideTvMinimalPlay, Slash, Twitter, Youtube } from "lucide-react";
+import { Instagram, Linkedin, LucideBadge, LucideBell, LucideChartLine, LucideChevronDown, LucideCircleHelp, LucideCircleUser, LucideCrown, LucideDelete, LucideFileText, LucideFolderOpen, LucideLayoutDashboard, LucideLogIn, LucideLogOut, LucideMoreHorizontal, LucideMoreVertical, LucidePieChart, LucidePlus, LucideSettings, LucideTrash, LucideTrash2, LucideTrendingUp, LucideTvMinimalPlay, Slash, Twitter, Youtube } from "lucide-react";
 import React from "react";
 import { useProject } from "project";
 import { observer } from "mobx-react-lite";
@@ -31,7 +31,7 @@ function DashBoard({ store }) {
       <Tabs className="flex flex-1 " defaultValue="dashboard" >
         <TabsList className="flex flex-col p-3 gap-2 bg-white border-r rounded-none">
             <img src={logo} alt="logo" className=" aspect-video max-h-16 mx-auto"/>
-            <Card className="w-40">
+            {/* <Card className="w-40">
               <CardContent className="p-2">
                 <div>
                   <Avatar className= "mx-auto">
@@ -48,15 +48,17 @@ function DashBoard({ store }) {
                 <div className="mt-2 text-muted-foreground"> EQS Score</div>
                 <div className="flex justify-between"><p className="font-semibold">79% </p><Badge variant="success">+3.4%</Badge> </div>
               </CardContent>
-            </Card>
-            <TabsTrigger value="upgrade" className="mt-5"><LucideCrown/> Upgrade</TabsTrigger>
-            <TabsTrigger value="dashboard" className=""><LucideLayoutDashboard/> Dashboard</TabsTrigger>
-            <TabsTrigger value="analytics" className=""><LucideChartLine/> Analytics</TabsTrigger>
+            </Card> */}
+            <p className="text-secondary font-semibold text-sm">Menu</p>
+            <TabsTrigger value="dashboard" className="mt-5"><LucideLayoutDashboard/> Dashboard</TabsTrigger>
+            <TabsTrigger value="analytics" className=""><LucidePieChart/> Analytics</TabsTrigger>
+            <TabsTrigger value="reports" className=""><LucideFileText/> reports</TabsTrigger>
             <TabsTrigger value="mediakit" className=""><LucideTvMinimalPlay/> Media Kit</TabsTrigger>
-            <TabsTrigger value="profile" className=""><LucideCircleUser/> Profile</TabsTrigger>
-            <Button className="w-full mt-auto" onClick={signOut}><LucideLogOut className="h-4"/>Logout</Button>
+            <TabsTrigger value="notification" className=""><LucideBell/> Notification</TabsTrigger>
+            <TabsTrigger value="settings" className=""><LucideSettings/> Settings</TabsTrigger>
+            <Button className="w-full mt-auto flex gap-2" onClick={signOut}>Logout <LucideLogOut className="h-4"/></Button>
         </TabsList>
-        <TabsContent value="upgrade" className="flex-1">Tab 1 content</TabsContent>
+        <TabsContent value="reports" className="flex-1">Tab 1 content</TabsContent>
         <TabsContent value="dashboard" className="flex-1 overflow-y-scroll">
           <div>
             <div className="h-14 flex justify-between px-5 border-b  mb-3">
@@ -166,7 +168,8 @@ function DashBoard({ store }) {
         </TabsContent>
         <TabsContent value="analytics" className="flex-1">Tab 3 content</TabsContent>
         <TabsContent value="mediakit" className="flex-1">Tab 4 content</TabsContent>
-        <TabsContent value="profile" className="flex-1">
+        <TabsContent value="notification" className="flex-1">Tab 5 content</TabsContent>
+        <TabsContent value="settings" className="flex-1">
           <div className="m-5">
             <ConnectAccount/>
           </div>
