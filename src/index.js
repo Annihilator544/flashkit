@@ -16,6 +16,7 @@ import DashBoard from 'Dashboard';
 import Signup from 'Signup';
 import Login from 'Login';
 import YoutubeOauth from 'Oauth/YoutubeOauth';
+import ProtectedRoute from 'ProtectedRoute';
 
 // if (window.location.host !== 'studio.polotno.com') {
 //   console.log(
@@ -79,11 +80,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashBoard store={store}/>,
-  },
-  {
-    path: "/youtube",
-    element: <YoutubeOauth />,
+    element: <ProtectedRoute><DashBoard store={store}/></ProtectedRoute>,
   },
   {
     path: "/signup",
@@ -95,7 +92,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/canvas",
-    element: <App  store={store} />,
+    element: <ProtectedRoute><App  store={store} /></ProtectedRoute>,
   },
 ]);
 
