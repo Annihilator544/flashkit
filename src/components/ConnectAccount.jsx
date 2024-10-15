@@ -9,6 +9,7 @@ import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
 import axios from "axios";
 import { useYoutubeData } from "store/use-youtube-data";
 import YoutubeOauth from "../Oauth/YoutubeOauth";
+import FacebookLogin from "Oauth/InstagramOauth";
 
 function ConnectAccount(){
     const [selectedAccount, setSelectedAccount] = useState('');
@@ -36,6 +37,7 @@ function ConnectAccount(){
                   </CardContent>
                   <CardFooter className="mt-auto">
                        {selectedAccount==='Youtube' && <YoutubeOauth/>}
+                       {selectedAccount==='Instagram' && <FacebookLogin/>}
                   </CardFooter>
                 </Card>
     )

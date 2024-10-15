@@ -22,14 +22,18 @@ import ConnectAccount from "./components/ConnectAccount";
 import { YoutubeMonthly } from "Charts/YoutubeMonthly";
 import { useYoutubeData } from "store/use-youtube-data";
 import { useAuthStore } from "store/use-auth-data";
+import BarChartDisplay from "Charts/BarChartDisplay";
+import RadarChartDisplay from "Charts/RadarChartDisplay";
+import RadialChartDisplay from "Charts/RadialChartDisplay";
+import LineChartDisplay from "Charts/LineChartDisplay";
 
 function DashBoard({ store }) {
   const { data } = useYoutubeData();
   const { user, signOut } = useAuthStore();
   return (
-    <div className="h-screen flex">
+    <div className=" flex">
       <Tabs className="flex flex-1 " defaultValue="dashboard" >
-        <TabsList className="flex flex-col p-3 gap-2 bg-white border-r rounded-none">
+        <TabsList className="flex flex-col p-3 gap-2 bg-white border-r rounded-none sticky top-0 h-screen">
             <img src={logo} alt="logo" className=" aspect-video max-h-16 mx-auto"/>
             {/* <Card className="w-40">
               <CardContent className="p-2">
@@ -166,7 +170,25 @@ function DashBoard({ store }) {
             </div>
           </div>
         </TabsContent>
-        <TabsContent value="analytics" className="flex-1">Tab 3 content</TabsContent>
+        <TabsContent value="analytics" className="flex-1 p-4 flex gap-4">{ data && typeof data === 'object' && Object.keys(data).length > 0 ?
+                <div className="flex-1">
+                  <div className="flex-1 p-4 flex gap-4">
+                    <PieChartDisplay/>
+                    <YoutubeMonthly/>
+                    
+                  </div>
+                  <div className="flex-1 p-4 flex gap-4 flex-wrap">
+                    <RadarChartDisplay/>
+                    <RadialChartDisplay/>
+                  </div>
+                  <div className="flex-1 p-4 flex gap-4 flex-wrap">
+                    <BarChartDisplay/>
+                    <LineChartDisplay/>
+                  </div>
+                </div>
+                :<></>
+              } 
+        </TabsContent>
         <TabsContent value="mediakit" className="flex-1">Tab 4 content</TabsContent>
         <TabsContent value="notification" className="flex-1">Tab 5 content</TabsContent>
         <TabsContent value="settings" className="flex-1">
