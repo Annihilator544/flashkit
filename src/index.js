@@ -17,6 +17,7 @@ import Signup from 'Signup';
 import Login from 'Login';
 import YoutubeOauth from 'Oauth/YoutubeOauth';
 import ProtectedRoute from 'ProtectedRoute';
+import PrivacyPolicy from 'PrivacyPolicy';
 
 // if (window.location.host !== 'studio.polotno.com') {
 //   console.log(
@@ -81,6 +82,10 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <ProtectedRoute><DashBoard store={store}/></ProtectedRoute>,
+  },
+  {
+    path: "/privacy",
+    element: <PrivacyPolicy />,
   },
   {
     path: "/signup",
