@@ -63,7 +63,7 @@ function DashBoard({ store }) {
             <Button className="w-full mt-auto flex gap-2" onClick={signOut}>Logout <LucideLogOut className="h-4"/></Button>
         </TabsList>
         <TabsContent value="reports" className="flex-1">Tab 1 content</TabsContent>
-        <TabsContent value="dashboard" className="flex-1 overflow-y-scroll">
+        <TabsContent value="dashboard" className="flex-1 overflow-y-auto">
           <div>
             <div className="h-14 flex justify-between px-5 border-b  mb-3">
             <Breadcrumb className= "my-auto">
@@ -170,7 +170,7 @@ function DashBoard({ store }) {
             </div>
           </div>
         </TabsContent>
-        <TabsContent value="analytics" className="flex-1 p-4 flex gap-4">{ data && typeof data === 'object' && Object.keys(data).length > 0 ?
+        <TabsContent value="analytics" className="flex-1 p-4 gap-4">{ data && typeof data === 'object' && Object.keys(data).length > 0 ?
                 <div className="flex-1">
                   <div className="flex-1 p-4 flex gap-4">
                     <PieChartDisplay/>
