@@ -10,25 +10,14 @@ import create from './assets/create.svg';
 import analyze from './assets/analyze.svg';
 import share from './assets/share.svg';
 import { Link } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 function Landing() {
 
     return (
         <div className="bg-[#feeae6] Inter">
-            <div className="flex h-[10vh] border-b-black border-b-[1px] px-20 justify-between">
-                <div className='flex gap-2 my-auto'>
-                    <img src={logo} alt="logo" className='w-[20px] h-[40px]' />
-                    <p className=' font-semibold text-3xl'>Flashkit</p>
-                </div>
-                <div className='Rethink flex gap-7 font-normal text-lg my-auto'>
-                    <p className='my-auto'>About</p>
-                    <p className='my-auto'>Plans</p>
-                    <p className='my-auto'>Learn More ?</p>
-                    <Link to='/login' className=' hover:no-underline'>
-                        <button className='bg-[#ff847c] text-white px-4 py-[4px] rounded-full font-bold'>Sign in</button>
-                    </Link>
-                </div>
-            </div>
+            <Navbar />
             <div className='grid grid-cols-2 p-36 max-w-[100vw] gap-10'>
                 <div className='my-auto flex-1'>
                     <p className=' font-bold text-6xl '>Create, Share, and Track Your Success</p>
@@ -111,46 +100,7 @@ function Landing() {
                     <img src={Landing3} alt="Landing1" className='ml-auto' />
                 </div>
             </div>
-            <div className=' grid grid-cols-3 p-24 bg-white'>
-                <div className=' text-lg'>
-                    <div className='flex gap-2 my-auto'>
-                        <img src={logo} alt="logo" className='w-[20px] h-[40px]' />
-                        <p className=' font-semibold text-3xl'>Flashkit</p>
-                    </div>
-                    <p className=' text-lg'>The Influencer kit, Trusted since 2018</p>
-                    <div className=' flex gap-4 mt-20'>
-                        <div className=' p-2 border-[#D4D4D8] border-2 rounded-full w-fit text-black hover:text-white hover:border-transparent hover:bg-[#ff847c]'>
-                            <LucideTwitter className='' />
-                        </div>
-                        <div className=' p-2 border-[#D4D4D8] border-2 rounded-full w-fit text-black hover:text-white hover:border-transparent hover:bg-[#ff847c]'>
-                            <LucideFacebook className='' />
-                        </div>
-                        <div className=' p-2 border-[#D4D4D8] border-2 rounded-full w-fit  hover:text-white hover:border-transparent hover:bg-[#ff847c]'>
-                            <LucideInstagram className='' />
-                        </div>
-                        <div className=' p-2 border-[#D4D4D8] border-2 rounded-full w-fit text-black hover:text-white hover:border-transparent hover:bg-[#ff847c]'>
-                            <LucideGithub className='' />
-                        </div>
-                    </div>
-                </div>
-                <div className=' grid grid-cols-2'>
-                    <div className=' flex flex-col gap-3'>
-                        <p className='text-[#ff847c] text-xl font-semibold'>Link</p>
-                        <p>About Us</p>
-                        <p>Career</p>
-                        <p>Contact</p>
-                        <p>Blog</p>
-                    </div>
-                    <div className=' flex flex-col gap-3'>
-                        <p className='text-[#ff847c] text-xl font-semibold'>Community</p>
-                        <p>Help Center</p>
-                        <p>Be Pro</p>
-                    </div>
-                </div>
-                <div className=' text-sm mt-auto text-[#71717A] ml-auto text-left'>
-                    © 2024 All Rights Reserved by LILA LLC
-                </div>
-            </div>
+            <Footer />         
         </div>
     );
 }
