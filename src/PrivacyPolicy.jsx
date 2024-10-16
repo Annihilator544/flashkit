@@ -201,9 +201,9 @@ function PrivacyPolicy() {
             <section>
             <h2 className="text-xl font-semibold">11. Children's Privacy</h2>
             <p className="mt-2">
-                Our services are not intended for individuals under the age of 16.
+                Our services are not intended for individuals under the age of 13.
                 We do not knowingly collect personal information from children under
-                16.
+                13.
             </p>
             </section>
 
