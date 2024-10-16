@@ -17,6 +17,7 @@ import Signup from 'Signup';
 import Login from 'Login';
 import ProtectedRoute from 'ProtectedRoute';
 import PrivacyPolicy from 'PrivacyPolicy';
+import TermsOfService from 'TermsOfService';
 
 // if (window.location.host !== 'studio.polotno.com') {
 //   console.log(
@@ -85,6 +86,10 @@ const router = createBrowserRouter([
   {
     path: "/privacy",
     element: <PrivacyPolicy />,
+  },
+  {
+    path: "/terms",
+    element: <TermsOfService />,
   },
   {
     path: "/signup",

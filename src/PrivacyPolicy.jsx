@@ -17,7 +17,7 @@ function PrivacyPolicy() {
         <Navbar />
         <Card className="flex flex-col p-6 mx-52 my-16">
         <CardHeader className="items-center pb-4">
-            <CardTitle className="text-2xl font-bold">
+            <CardTitle className="text-3xl font-bold">
             Flashkit Privacy Policy
             </CardTitle>
             <CardDescription className="text-sm text-muted-foreground">
