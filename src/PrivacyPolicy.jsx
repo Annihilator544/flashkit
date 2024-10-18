@@ -18,7 +18,7 @@ function PrivacyPolicy() {
         <Card className="flex flex-col p-6 mx-52 my-16">
         <CardHeader className="items-center pb-4">
             <CardTitle className="text-3xl font-bold">
-            Flashkit Privacy Policy
+            LiftCo Privacy Policy
             </CardTitle>
             <CardDescription className="text-sm text-muted-foreground">
             Effective Date: 15/10/2024
@@ -28,11 +28,11 @@ function PrivacyPolicy() {
             <section>
             <h2 className="text-xl font-semibold">1. Introduction</h2>
             <p className="mt-2">
-                Welcome to Flashkit ("we," "our," "us"). We are committed to
+                Welcome to LiftCo ("we," "our," "us"). We are committed to
                 protecting your privacy and ensuring the security of your personal
                 information. This Privacy Policy outlines how we collect, use,
                 disclose, and safeguard your data when you use our services.
-                Flashkit is a UK-based company that provides cutting-edge software
+                LiftCo is a UK-based company that provides cutting-edge software
                 for influencers, content creators, and social media managers,
                 enabling them to create and update their social media kits in
                 real-time using AI technology.
@@ -44,11 +44,11 @@ function PrivacyPolicy() {
                 not access or use our services.
             </p>
             <p className="mt-2">
-                Flashkit may change any of the terms and conditions in this Policy
+                LiftCo may change any of the terms and conditions in this Policy
                 at any time for any reason. A notice of material change will be
-                posted on Flashkit's website, and you are responsible for reviewing
+                posted on LiftCo's website, and you are responsible for reviewing
                 the changes. If you do not agree with them, do not continue to use
-                Flashkit's website, uninstall our apps, and refrain from using our
+                LiftCo's website, uninstall our apps, and refrain from using our
                 data.
             </p>
             </section>
@@ -118,7 +118,7 @@ function PrivacyPolicy() {
             <section>
             <h2 className="text-xl font-semibold">4. Public Information</h2>
             <p className="mt-2">
-                Much of the data collected and shown on Flashkit is public data. We
+                Much of the data collected and shown on LiftCo is public data. We
                 collect and display the same public data you'd see by visiting
                 social media sites directly, such as follower counts and other
                 publicly available metrics. If the information isn't shown publicly
@@ -130,7 +130,7 @@ function PrivacyPolicy() {
             <section>
             <h2 className="text-xl font-semibold">5. Data Sources</h2>
             <p className="mt-2">
-                In order to keep statistical data updated, Flashkit utilizes API
+                In order to keep statistical data updated, LiftCo utilizes API
                 services of third parties including but not limited to Facebook,
                 Instagram, YouTube, and other social media platforms. We only gather
                 publicly available data from each of the API services, not anything
@@ -182,7 +182,7 @@ function PrivacyPolicy() {
             <p className="mt-2">
                 If you post content on our platform or associated services, all the
                 information posted and the username you identify yourself with will
-                be available to the public. Flashkit cannot prevent your posting
+                be available to the public. LiftCo cannot prevent your posting
                 from being used in a manner that would violate this Policy, the law,
                 or your personal privacy.
             </p>
@@ -191,9 +191,9 @@ function PrivacyPolicy() {
             <section>
             <h2 className="text-xl font-semibold">10. Third-Party Links</h2>
             <p className="mt-2">
-                Flashkit's site includes links to third-party websites. Access to
+                LiftCo's site includes links to third-party websites. Access to
                 and use of linked websites is governed by those third-party
-                websites' privacy policies. Flashkit is not responsible for their
+                websites' privacy policies. LiftCo is not responsible for their
                 information practices.
             </p>
             </section>
@@ -223,11 +223,11 @@ function PrivacyPolicy() {
                 If you have any questions or concerns about this Privacy Policy or
                 our data practices, please contact us at:
             </p>
-            <p className="mt-2 font-medium">akua@flashkit.co.uk</p>
+            <p className="mt-2 font-medium">akua@LiftCo.co.uk</p>
             </section>
 
             <p className="mt-6">
-            This Privacy Policy outlines how Flashkit protects your personal data.
+            This Privacy Policy outlines how LiftCo protects your personal data.
             It is important to regularly review this document to stay informed of
             how your information is being handled.
             </p>

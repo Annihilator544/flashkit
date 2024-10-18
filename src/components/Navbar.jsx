@@ -6,7 +6,7 @@ function Navbar (){
         <div className="flex h-[10vh] border-b-black border-b-[1px] px-20 justify-between">
             <div className='flex gap-2 my-auto'>
                 <img src={logo} alt="logo" className='w-[20px] h-[40px]' />
-                <p className=' font-semibold text-3xl'>Flashkit</p>
+                <p className=' font-semibold text-3xl'>LiftCo</p>
             </div>
             <div className='Rethink flex gap-7 font-normal text-lg my-auto'>
                 <p className='my-auto'>About</p>

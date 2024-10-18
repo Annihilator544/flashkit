@@ -103,7 +103,7 @@ const Signup = () => {
         <div className='flex flex-col flex-1'>
             <img src={logo} alt='logo' className='aspect-video h-20 mr-auto'/>
             <div className='flex flex-col justify-center align-middle m-auto'>
-                <p className='text-4xl font-bold'>Welcome To flashkit</p>
+                <p className='text-4xl font-bold'>Welcome To LiftCo</p>
                 <p className='text-lg font-normal text-secondary mb-10'>create a new account</p>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">

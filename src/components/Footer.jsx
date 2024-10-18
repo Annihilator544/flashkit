@@ -8,7 +8,7 @@ function Footer ({className}) {
             <div className=' text-lg'>
                 <div className='flex gap-2 my-auto'>
                     <img src={logo} alt="logo" className='w-[20px] h-[40px]' />
-                    <p className=' font-semibold text-3xl'>Flashkit</p>
+                    <p className=' font-semibold text-3xl'>LiftCo</p>
                 </div>
                 <p className=' text-lg'>The Influencer kit, Trusted since 2018</p>
                 <div className=' flex gap-4 mt-20'>
