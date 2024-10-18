@@ -10,9 +10,9 @@ import { getFirestore } from 'firebase/firestore';
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyAE744QPg5QEKfDG9nTIQ5jnqbGn3V0jKY",
-  authDomain: "LiftCo-1f2ba.firebaseapp.com",
-  projectId: "LiftCo-1f2ba",
-  storageBucket: "LiftCo-1f2ba.appspot.com",
+  authDomain: "flashkit-1f2ba.firebaseapp.com",
+  projectId: "flashkit-1f2ba",
+  storageBucket: "flashkit-1f2ba.appspot.com",
   messagingSenderId: "466379310808",
   appId: "1:466379310808:web:9d5b78c8c8c7da4f4d79ad",
   measurementId: "G-1R5CPZR9C8"
