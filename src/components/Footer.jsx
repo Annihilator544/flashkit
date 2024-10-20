@@ -41,7 +41,7 @@ function Footer ({className}) {
                 </div>
             </div>
             <div className=' text-sm mt-auto text-[#71717A] ml-auto text-left'>
-                © 2024 All Rights Reserved by LILA LLC
+                © 2024 All Rights Reserved by LiftCo LLC
             </div>
         </div>
     </footer>
