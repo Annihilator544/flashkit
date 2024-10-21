@@ -279,3 +279,8 @@
     background-color: #303030;
     opacity: 8%;
   }
+
+  .top-Dashbord-calc{
+    top: calc(8vh + 1px);
+    height: calc(92vh - 1px);
+  }

@@ -107,7 +107,7 @@ const Signup = () => {
         <div className='flex flex-col flex-1 overflow-y-auto'>
             <div className='flex flex-col justify-center align-middle w-[50%] m-auto'>
                 <img src={logo} alt='logo' className='h-12 mr-auto mb-10'/>
-                <p className='text-2xl font-medium inter'>Get Started !</p>
+                <p className='text-2xl font-medium nter'>Get Started !</p>
                 <p className='text-base font-normal text-secondary mb-10'>Create a new account!</p>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">

@@ -1,5 +1,5 @@
 import { LucideFacebook, LucideGithub, LucideInstagram, LucideTwitter } from "lucide-react";
-import logo from '../assets/logo.svg';
+import logo from '../assets/logo.png';
 
 function Footer ({className}) {
   return (

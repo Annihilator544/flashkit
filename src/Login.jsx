@@ -78,7 +78,7 @@ const Login = () => {
         <div className='flex flex-col flex-1 overflow-y-auto'>
             <div className='flex flex-col justify-center align-middle w-[50%] m-auto'>
             <img src={logo} alt='logo' className=' h-12 mr-auto mb-10'/>
-                <p className='text-2xl font-medium inter'>Log In</p>
+                <p className='text-2xl font-medium Inter'>Log In</p>
                 <p className='text-base font-normal text-secondary mb-10'>Please login to continue to your account</p>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -120,8 +120,8 @@ const Login = () => {
                         <div class="gsi-material-button-icon">
                             <img src={GoogleButton} alt="GoogleButton" className='m-[2px]' />
                         </div>
-                        <span class="gsi-material-button-contents">Sign up with Google</span>
-                        <span style={{display: "none"}}>Sign up with Google</span>
+                        <span class="gsi-material-button-contents">Sign in with Google</span>
+                        <span style={{display: "none"}}>Sign in with Google</span>
                     </div>
                 </button>
                 <div className='mt-4'>
