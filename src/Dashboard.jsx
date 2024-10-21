@@ -12,7 +12,7 @@ import { Button } from "./components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./components/ui/dropdown-menu";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "./components/ui/breadcrumb";
 import { Avatar, AvatarFallback, AvatarImage } from "./components/ui/avatar";
-import image from "./assets/image.png";
+
 import PieChartDisplay from "Charts/PieChartDisplay";
 import { AreaChartDisplay } from "Charts/AreaChartDisplay";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from "./components/ui/select";
