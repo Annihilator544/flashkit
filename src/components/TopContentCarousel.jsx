@@ -20,7 +20,7 @@ export function TopContentCarousel() {
         className="w-full p-5"
         >
             <CardHeader className="flex-row justify-between">
-                <CardTitle>
+                <CardTitle className="text-lg">
                     Top Content By Reach
                 </CardTitle>
                 <div>
