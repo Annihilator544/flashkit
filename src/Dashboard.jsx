@@ -179,7 +179,13 @@ function DashBoard({ store }) {
               <TopContentCarousel />
           </div>
           </TabsContent>
-          <TabsContent value="mediakit" className="flex-1">Tab 4 content</TabsContent>
+          <TabsContent value="mediakit" className="flex-1 p-5 space-y-6">
+            <p className=" text-3xl font-semibold">Media Kit</p>
+            <div>
+              <p className="text-lg font-semibold">Templates for you</p>
+              <p className="text-secondary font-medium text-sm">Choose a template and craft eye-catching stats</p>
+            </div>
+          </TabsContent>
           <TabsContent value="profile" className="flex-1">Tab 5 content</TabsContent>
           <TabsContent value="settings" className="flex-1">
             <div className="m-5">
