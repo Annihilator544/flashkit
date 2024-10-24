@@ -1,5 +1,5 @@
 import { useYoutubeData } from "store/use-youtube-data";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
 import { BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts";
 import React from "react";
 import { useState } from "react";
@@ -62,6 +62,11 @@ export function InsightsChart() {
             )}
         </BarChart>
       </CardContent>
+      {chartData === dailyData ?
+      <CardFooter>
+        Connect Your Youtube Account to see insights
+      </CardFooter>
+      : <></>}
     </Card>
   );
 }

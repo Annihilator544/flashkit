@@ -6,7 +6,7 @@ import { useProject } from "plotNoFeatures/project";
 import { observer } from "mobx-react-lite";
 import * as api from "./plotNoFeatures/api";
 import { Spinner } from "@blueprintjs/core";
-import { Card } from "./components/ui/card";
+import { Card, CardContent } from "./components/ui/card";
 import { Button } from "./components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "./components/ui/avatar";
@@ -25,6 +25,7 @@ import LineChartDisplay from "./components/charts/LineChartDisplay";
 import { Separator } from "./components/ui/separator";
 import { InsightsChart } from "./components/charts/InsightsChart";
 import { MonthlyEngagementChart } from "./components/charts/MonthlyEngagementChart";
+import { TopContentCarousel } from "./components/TopContentCarousel";
 
 function DashBoard({ store }) {
   const { data } = useYoutubeData();
@@ -60,7 +61,7 @@ function DashBoard({ store }) {
           </TabsList>
           <TabsContent value="dashboard" className="flex-1 overflow-y-auto">
             <div>
-              <div className="m-5  flex justify-around">
+              <div className="m-5  flex justify-around flex-wrap">
                   <div className="flex gap-4">
                       <Avatar className= "m-auto">
                       {user&&user.photoURL ? <AvatarImage src={user.photoURL} /> :
@@ -120,24 +121,63 @@ function DashBoard({ store }) {
               </div>
             </div>
           </TabsContent>
-          <TabsContent value="analytics" className="flex-1 p-4 gap-4">{ data && typeof data === 'object' && Object.keys(data).length > 0 ?
-                  <div className="flex-1">
-                    <div className="flex-1 p-4 flex gap-4">
-                      <PieChartDisplay/>
-                      <YoutubeMonthly/>
-                      
+          <TabsContent value="analytics" className="flex-1 p-5 space-y-6">
+          <p className=" text-3xl font-semibold">Analytics</p>
+          <div>
+            <p className="text-secondary font-medium text-lg">Overview</p>
+            <div className="flex gap-5 mt-3">
+                <Card className="flex-1 shadow-md">
+                  <CardContent className="pt-6">
+                    <p className="text-lg font-semibold">Total Followers</p>
+                    <p className="text-3xl font-semibold">127K</p>
+                    <div className="flex text-sm font-medium gap-1 mt-6"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
+                  </CardContent>
+                </Card>
+                <Card className="flex-1 shadow-md">
+                  <CardContent className="pt-6">
+                    <p className="text-lg font-semibold">Total Engagement</p>
+                    <p className="text-3xl font-semibold">127K</p>
+                    <div className="flex text-sm font-medium gap-1 mt-6"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
+                  </CardContent>
+                </Card>
+                <Card className="flex-1 shadow-md">
+                  <CardContent className="pt-6">
+                    <p className="text-lg font-semibold">Daily Visitors</p>
+                    <p className="text-3xl font-semibold">5.3K</p>
+                    <div className="flex text-sm font-medium gap-1 mt-6"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
+                  </CardContent>
+                </Card>
+            </div>
+          </div>
+          <div>
+            <p className="text-secondary font-medium text-lg">Audience</p>
+            { data && typeof data === 'object' && Object.keys(data).length > 0 ?
+                    <div className="flex-1 mt-3">
+                      <div className="flex-1 p-4 flex gap-4">
+                        <PieChartDisplay/>
+                        <YoutubeMonthly/>
+                        
+                      </div>
+                      <div className="flex-1 p-4 flex gap-4 flex-wrap">
+                        <RadarChartDisplay/>
+                        <RadialChartDisplay/>
+                      </div>
+                      <div className="flex-1 p-4 flex gap-4 flex-wrap">
+                        <BarChartDisplay/>
+                        <LineChartDisplay/>
+                      </div>
                     </div>
-                    <div className="flex-1 p-4 flex gap-4 flex-wrap">
-                      <RadarChartDisplay/>
-                      <RadialChartDisplay/>
+                    :
+                    <div className="flex gap-5 mt-3">
+                      <InsightsChart/>
+                      <MonthlyEngagementChart/>
                     </div>
-                    <div className="flex-1 p-4 flex gap-4 flex-wrap">
-                      <BarChartDisplay/>
-                      <LineChartDisplay/>
-                    </div>
-                  </div>
-                  :<></>
-                } 
+              } 
+          </div>
+          <div>
+              <p className="text-secondary font-medium text-lg mb-3">Top Content</p>
+              <TopContentCarousel />
+          </div>
           </TabsContent>
           <TabsContent value="mediakit" className="flex-1">Tab 4 content</TabsContent>
           <TabsContent value="profile" className="flex-1">Tab 5 content</TabsContent>

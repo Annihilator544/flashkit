@@ -1,5 +1,5 @@
   import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
-  import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+  import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
   import { useYoutubeData } from "store/use-youtube-data";
   import { useEffect, useState } from "react";
 
@@ -64,6 +64,11 @@
               )}
           </LineChart>
         </CardContent>
+        {chartData === monthlyData ?
+        <CardFooter>
+          Connect Your Youtube Account to see insights
+        </CardFooter>
+        : <></>}
       </Card>
     );
   }
