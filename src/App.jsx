@@ -148,7 +148,7 @@ const App = observer(({ store }) => {
           <SidePanelWrap>
             <SidePanel store={store} sections={DEFAULT_SECTIONS} />
           </SidePanelWrap>
-          <div className='absolute z-[1] sm:h-4 sm:w-60 bg-[#e8e8e8] sm:bottom-0 sm:right-0 max-sm:bottom-[75px] max-sm:right-0 max-sm:h-5 max-sm:w-44'>
+          <div className='absolute z-[1] md:h-4 md:w-60 bg-[#e8e8e8] md:bottom-0 md:right-0 max-md:bottom-[75px] max-md:right-0 max-md:h-5 max-md:w-44'>
 
           </div>
           <WorkspaceWrap>

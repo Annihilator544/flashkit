@@ -57,7 +57,6 @@ function PieChartDisplay() {
   
     return Object.entries(inputData).map(([dateString, data]) => {
       const year = dateString;
-      console.log(year)
       return {
         year: year,
         views: data.views,

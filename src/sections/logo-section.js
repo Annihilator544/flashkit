@@ -26,8 +26,8 @@ export async function getQR(text) {
 export const LogoSection = {
   name: 'qr',
   Tab: (props) => (
-      <div className=' sm:py-4 max-sm:px-4 flex'>
-        <img src={logo} alt='logo' className='mx-auto mt-auto mb-1 sm:h-[42px] max-sm:h-[36px]'  />
+      <div className=' md:py-4 max-md:px-4 flex'>
+        <img src={logo} alt='logo' className='mx-auto mt-auto mb-1 md:h-[42px] max-md:h-[36px]'  />
       </div>
   ),
   // we need observer to update component automatically on any store changes

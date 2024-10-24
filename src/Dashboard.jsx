@@ -23,6 +23,8 @@ import RadarChartDisplay from "./components/charts/RadarChartDisplay";
 import RadialChartDisplay from "./components/charts/RadialChartDisplay";
 import LineChartDisplay from "./components/charts/LineChartDisplay";
 import { Separator } from "./components/ui/separator";
+import { InsightsChart } from "./components/charts/InsightsChart";
+import { MonthlyEngagementChart } from "./components/charts/MonthlyEngagementChart";
 
 function DashBoard({ store }) {
   const { data } = useYoutubeData();
@@ -95,13 +97,10 @@ function DashBoard({ store }) {
               </div>
               <Separator className="mx-8"/>
               <div className="mx-5 my-5">
-                { data && typeof data === 'object' && Object.keys(data).length > 0 ?
-                  <>
-                    {/* <PieChartDisplay/> */}
-                    <YoutubeMonthly/>
-                  </>
-                  :<></>
-                } 
+                  <div className="flex gap-4">
+                   <InsightsChart/> 
+                   <MonthlyEngagementChart/>
+                  </div>
                 <div className="justify-between flex flex-1 gap-5">
                 <div>
                 <p className=" text-lg font-semibold mt-10">Start Building</p>
@@ -207,7 +206,7 @@ const DashboardProjects = observer(({ store }) => {
         setPreviewURL(url);
       };
       load();
-    });
+    },[]);
   
     const handleSelect = async () => {
       setLoading(true);
