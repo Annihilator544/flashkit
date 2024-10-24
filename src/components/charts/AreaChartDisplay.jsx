@@ -1,4 +1,4 @@
-import { TrendingDown, TrendingUp, Twitter, Youtube } from "lucide-react"
+import { TrendingDown, TrendingUp } from "lucide-react"
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
 
 import {
@@ -8,15 +8,14 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../components/ui/card"
+} from "../ui/card"
 import {
-  ChartConfig,
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
-} from "../components/ui/chart"
+} from "../ui/chart"
 
 export const description = "An area chart with icons"
 

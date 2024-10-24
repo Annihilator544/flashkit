@@ -2,19 +2,14 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 import {
   Button,
-  Menu,
-  MenuItem,
-  Position,
   Spinner,
-  Popover,
 } from '@blueprintjs/core';
 
-import { CloudWarning } from '../cloud-warning';
+import { CloudWarning } from '../plotNoFeatures/cloud-warning';
 
 import { SectionTab } from 'polotno/side-panel';
-import FaFolder from '@meronex/icons/fa/FaFolder';
-import { useProject } from '../project';
-import * as api from '../api';
+import { useProject } from '../plotNoFeatures/project';
+import * as api from '../plotNoFeatures/api';
 import { LucideFolderOpen, LucideMoreHorizontal, LucidePlus, LucideTrash2 } from 'lucide-react';
 import { Card } from '../components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../components/ui/dropdown-menu";
@@ -30,7 +25,7 @@ const DesignCard = observer(({ design, store, onDelete }) => {
       setPreviewURL(url);
     };
     load();
-  }, []);
+  });
 
   const handleSelect = async () => {
     setLoading(true);
@@ -47,7 +42,7 @@ const DesignCard = observer(({ design, store, onDelete }) => {
       }}
     >
       <div className="rounded-lg overflow-hidden">
-        <img src={previewURL} style={{ width: '100%' }} />
+        <img src={previewURL} style={{ width: '100%' }} alt="URL" />
       </div>
       <div
         style={{
@@ -157,7 +152,7 @@ export const MyDesignsPanel = observer(({ store }) => {
       {project.cloudEnabled && (
         <div style={{ padding: '10px', textAlign: 'center' }}>
           Cloud data saving powered by{' '}
-          <a href="https://puter.com" target="_blank">
+          <a href="https://puter.com" target="_blank" rel="noreferrer">
             Puter.com
           </a>
         </div>
@@ -205,8 +200,9 @@ export const MyDesignsSection = {
   name: 'Add Design',
   Tab: (props) => (
     <SectionTab name="Add Design" {...props}>
-      <div  className="bg-[#ef8a80] p-1 rounded-lg">
-        <LucidePlus size={20} fill="#fff"  color="#fff"/>
+      <div  className="bg-[#ef8a80] max-sm:p-[2px] sm:p-1 max-sm:m-auto sm:rounded-lg max-sm:rounded-sm ">
+        <LucidePlus size={16} fill="#fff"  color="#fff" className='sm:hidden'/>
+        <LucidePlus size={20} fill="#fff"  color="#fff" className='max-sm:hidden'/>
       </div>
     </SectionTab>
   ),

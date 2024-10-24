@@ -1,13 +1,7 @@
-import { Instagram, Linkedin, LucideLogIn, Twitter, Youtube } from "lucide-react";
+import { Instagram, Linkedin, Twitter, Youtube } from "lucide-react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
-import { Button } from "./ui/button";
 import { useState } from "react";
-import { useEffect } from "react";
-import { useCallback } from "react";
-import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
-import axios from "axios";
-import { useYoutubeData } from "store/use-youtube-data";
 import YoutubeOauth from "../Oauth/YoutubeOauth";
 import FacebookLogin from "Oauth/InstagramOauth";
 

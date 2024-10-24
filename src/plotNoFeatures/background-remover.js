@@ -5,7 +5,6 @@ import { Button, Dialog, Classes } from '@blueprintjs/core';
 import { t } from 'polotno/utils/l10n';
 import { getKey } from 'polotno/utils/validate-key';
 import { useCredits } from './credits';
-import { useProject } from './project';
 import { getAPI } from 'polotno/utils/api';
 
 let removeBackgroundFunc = async (url) => {
@@ -29,7 +28,6 @@ let removeBackgroundFunc = async (url) => {
 
 export const RemoveBackgroundDialog = observer(
   ({ isOpen, onClose, element }) => {
-    const project = useProject();
     const [src, setSrc] = React.useState(element.src);
     const { credits, consumeCredits } = useCredits(
       'removeBackgroundCredits',
@@ -95,6 +93,7 @@ export const RemoveBackgroundDialog = observer(
           <img
             src={src}
             style={{ width: '100%', maxHeight: '400px', objectFit: 'contain' }}
+            alt="background"
           />
         </div>
         <div className={Classes.DIALOG_FOOTER} style={{ position: 'relative' }}>
@@ -152,7 +151,7 @@ export const ImageRemoveBackground = ({ element }) => {
       <Button
         text={t('toolbar.removeBackground')}
         minimal
-        onClick={(e) => {
+        onClick={() => {
           toggleDialog(true);
         }}
       />

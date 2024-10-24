@@ -16,12 +16,11 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../components/ui/card";
+} from "../ui/card";
 import {
   ChartContainer,
-  ChartTooltip,
   ChartTooltipContent,
-} from "../components/ui/chart";
+} from "../ui/chart";
 
 export const description = "A radar chart displaying YouTube channel statistics";
 

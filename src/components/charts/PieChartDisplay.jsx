@@ -9,13 +9,12 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../components/ui/card"
+} from "../ui/card"
 import {
-  ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "../components/ui/chart"
+} from "../ui/chart"
 import { useYoutubeData } from "store/use-youtube-data"
 
 export const description = "A donut chart with text"
@@ -69,7 +68,7 @@ function PieChartDisplay() {
   const chartData = transformData(data.yearly);
   const totalVisitors = React.useMemo(() => {
     return chartData.reduce((acc, curr) => acc + curr.views, 0)
-  }, [])
+  }, [chartData])
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">

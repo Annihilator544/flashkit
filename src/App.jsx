@@ -11,22 +11,18 @@ import { Tooltip } from 'polotno/canvas/tooltip';
 import { PagesTimeline } from 'polotno/pages-timeline';
 import { setTranslations } from 'polotno/config';
 
-import { loadFile } from './file';
+import { loadFile } from './plotNoFeatures/file';
 
-import { QrSection } from './sections/qr-section';
-import { QuotesSection } from './sections/quotes-section';
 import { IconsSection } from './sections/icons-section';
-import { ShapesSection } from './sections/shapes-section';
-import { StableDiffusionSection } from './sections/stable-diffusion-section';
 import { MyDesignsSection } from './sections/my-designs-section';
 
-import { AIWriteMenu } from './ai-text';
+import { AIWriteMenu } from './plotNoFeatures/ai-text';
 // import { VideosSection } from './sections/video-section';
 // import { UploadSection } from './sections/upload-section';
 
-import { useProject } from './project';
+import { useProject } from './plotNoFeatures/project';
 
-import { ImageRemoveBackground } from './background-remover';
+import { ImageRemoveBackground } from './plotNoFeatures/background-remover';
 
 import fr from './translations/fr';
 import en from './translations/en';
@@ -119,7 +115,7 @@ const App = observer(({ store }) => {
 
   React.useEffect(() => {
     project.firstLoad();
-  }, []);
+  }, [project]);
 
   const handleDrop = (ev) => {
     // Prevent default behavior (Prevent file from being opened)
@@ -152,7 +148,7 @@ const App = observer(({ store }) => {
           <SidePanelWrap>
             <SidePanel store={store} sections={DEFAULT_SECTIONS} />
           </SidePanelWrap>
-          <div className='absolute z-[999999] h-4 w-60 bg-[#e8e8e8] bottom-0 right-0'>
+          <div className='absolute z-[1] sm:h-4 sm:w-60 bg-[#e8e8e8] sm:bottom-0 sm:right-0 max-sm:bottom-[75px] max-sm:right-0 max-sm:h-5 max-sm:w-44'>
 
           </div>
           <WorkspaceWrap>

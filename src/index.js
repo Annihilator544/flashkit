@@ -4,11 +4,11 @@ import ReactDOM from 'react-dom/client';
 import { createStore } from 'polotno/model/store';
 import { unstable_setAnimationsEnabled } from 'polotno/config';
 import { Auth0Provider } from '@auth0/auth0-react';
-import { createProject, ProjectContext } from './project';
+import { createProject, ProjectContext } from './plotNoFeatures/project';
 
 import './index.css';
 import App from './App';
-import './logger';
+import './plotNoFeatures/logger';
 import { ErrorBoundary } from 'react-error-boundary';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Landing from './Landing';
@@ -47,7 +47,7 @@ const PRODUCTION_ID = process.env.REACT_APP_AUTH0_ID;
 const LOCAL_ID = process.env.REACT_APP_AUTH0_ID;
 
 const isLocalhost =
-  typeof window !== undefined && window.location.href.indexOf('localhost') >= 0;
+  typeof window !== "undefined" && window.location.href.indexOf('localhost') >= 0;
 const ID = isLocalhost ? LOCAL_ID : PRODUCTION_ID;
 const REDIRECT = isLocalhost
   ? 'http://localhost:3000'

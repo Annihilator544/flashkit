@@ -1,31 +1,27 @@
 import { TabsContent } from "@radix-ui/react-tabs";
 import { Tabs, TabsList, TabsTrigger } from "./components/ui/tabs";
-import { Instagram, Linkedin, LucideAward, LucideBadge, LucideBell, LucideChartLine, LucideChevronDown, LucideCircleHelp, LucideCircleUser, LucideCircleUserRound, LucideCrown, LucideDelete, LucideFileText, LucideFolderOpen, LucideGauge, LucideLayoutDashboard, LucideLogIn, LucideLogOut, LucideMoreHorizontal, LucideMoreVertical, LucidePieChart, LucidePlus, LucideSettings, LucideTrash, LucideTrash2, LucideTrendingUp, LucideTvMinimalPlay, LucideUsersRound, Slash, Twitter, Youtube } from "lucide-react";
+import { Instagram, Linkedin, LucideAward, LucideCircleUserRound, LucideFolderOpen, LucideGauge, LucideLayoutDashboard, LucideLogOut, LucideMoreHorizontal, LucidePieChart, LucidePlus, LucideSettings, LucideTrash2, LucideTvMinimalPlay, LucideUsersRound, Twitter, Youtube } from "lucide-react";
 import React from "react";
-import { useProject } from "project";
+import { useProject } from "plotNoFeatures/project";
 import { observer } from "mobx-react-lite";
-import * as api from "api";
-import { MenuItem, Popover, Position, Spinner } from "@blueprintjs/core";
-import { Menu } from "@blueprintjs/icons";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./components/ui/card";
+import * as api from "./plotNoFeatures/api";
+import { Spinner } from "@blueprintjs/core";
+import { Card } from "./components/ui/card";
 import { Button } from "./components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./components/ui/dropdown-menu";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "./components/ui/breadcrumb";
 import { Avatar, AvatarFallback, AvatarImage } from "./components/ui/avatar";
 
-import PieChartDisplay from "Charts/PieChartDisplay";
-import { AreaChartDisplay } from "Charts/AreaChartDisplay";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectSeparator, SelectTrigger, SelectValue } from "./components/ui/select";
+import PieChartDisplay from "./components/charts/PieChartDisplay";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectSeparator, SelectTrigger, SelectValue } from "./components/ui/select";
 import logo from "./assets/logo.svg" 
-import { Badge } from "./components/ui/badge";
 import ConnectAccount from "./components/ConnectAccount";
-import { YoutubeMonthly } from "Charts/YoutubeMonthly";
+import { YoutubeMonthly } from "./components/charts/YoutubeMonthly";
 import { useYoutubeData } from "store/use-youtube-data";
 import { useAuthStore } from "store/use-auth-data";
-import BarChartDisplay from "Charts/BarChartDisplay";
-import RadarChartDisplay from "Charts/RadarChartDisplay";
-import RadialChartDisplay from "Charts/RadialChartDisplay";
-import LineChartDisplay from "Charts/LineChartDisplay";
+import BarChartDisplay from "./components/charts/BarChartDisplay";
+import RadarChartDisplay from "./components/charts/RadarChartDisplay";
+import RadialChartDisplay from "./components/charts/RadialChartDisplay";
+import LineChartDisplay from "./components/charts/LineChartDisplay";
 import { Separator } from "./components/ui/separator";
 
 function DashBoard({ store }) {
@@ -211,7 +207,7 @@ const DashboardProjects = observer(({ store }) => {
         setPreviewURL(url);
       };
       load();
-    }, []);
+    });
   
     const handleSelect = async () => {
       setLoading(true);
@@ -229,7 +225,7 @@ const DashboardProjects = observer(({ store }) => {
         }}
       >
         <div className="rounded-lg overflow-hidden">
-        <img src={previewURL} style={{ width: '100%' }} />
+        <img src={previewURL} style={{ width: '100%' }} alt="url" />
         </div>
         <div
           style={{

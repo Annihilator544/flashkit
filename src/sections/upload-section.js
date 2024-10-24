@@ -11,7 +11,7 @@ import { dataURLtoBlob } from '../blob';
 
 import { CloudWarning } from '../cloud-warning';
 
-import { useProject } from '../project';
+import { useProject } from '../plotNoFeatures/project';
 import { listAssets, uploadAsset, deleteAsset } from '../api';
 
 function getType(file) {
