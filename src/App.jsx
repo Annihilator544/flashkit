@@ -32,6 +32,7 @@ import ptBr from './translations/pt-br';
 import { LogoSection } from './sections/logo-section.js';
 import Topbar from 'topbar/topbar';
 import { useSearchParams } from 'react-router-dom';
+import { useJsonData } from 'store/use-json-data';
 
 // load default translations
 setTranslations(en);
@@ -94,10 +95,21 @@ const useHeight = () => {
 const App = observer(({ store }) => {
   const [searchParams] = useSearchParams();
   const designId = searchParams.get('id');
+  const json = searchParams.get('json');
+  const project = useProject();
+  const { data } = useJsonData();
   React.useEffect(() => {
   window.project.loadById(designId);
   }, [designId]);
-  const project = useProject();
+  React.useEffect(()=>{
+    async function JsonDesign(json) {
+        if (!json) return;
+        await project.createNewDesign();
+        store.loadJSON(data);
+        project.save();
+    }
+    JsonDesign(json);
+  }, [json]);
   const height = useHeight();
   React.useEffect(() => {
     if (project.language.startsWith('fr')) {

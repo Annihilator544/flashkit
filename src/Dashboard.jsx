@@ -1,7 +1,7 @@
 import { TabsContent } from "@radix-ui/react-tabs";
 import { Tabs, TabsList, TabsTrigger } from "./components/ui/tabs";
 import { Instagram, Linkedin, LucideAward, LucideCircleUserRound, LucideFolderOpen, LucideGauge, LucideLayoutDashboard, LucideLogOut, LucideMoreHorizontal, LucidePieChart, LucidePlus, LucideSettings, LucideTrash2, LucideTvMinimalPlay, LucideUsersRound, Twitter, Youtube } from "lucide-react";
-import React from "react";
+import React, { use, useEffect } from "react";
 import { useProject } from "plotNoFeatures/project";
 import { observer } from "mobx-react-lite";
 import * as api from "./plotNoFeatures/api";
@@ -26,10 +26,21 @@ import { Separator } from "./components/ui/separator";
 import { InsightsChart } from "./components/charts/InsightsChart";
 import { MonthlyEngagementChart } from "./components/charts/MonthlyEngagementChart";
 import { TopContentCarousel } from "./components/TopContentCarousel";
+import TemplateCard from "./components/TemplateCard";
 
 function DashBoard({ store }) {
   const { data } = useYoutubeData();
   const { user, signOut } = useAuthStore();
+  const [mediaKitData, setMediaKitData] = React.useState([]);
+  async function err() {
+    await fetch("https://api.polotno.com/api/get-templates?size=1080x1080&query=&per_page=10&page=1&KEY=iRIwFHCuH539pYGokN6n").then((res) =>res.json()).then((res) => {
+      console.log(res);
+      setMediaKitData(res.items);
+    });
+  }
+  useEffect(() => {
+    err();
+  }, []);
   return (
     <>
       <div className="borber-b border-b-[1px] sticky top-0 bg-white z-50"><img src={logo} alt="logo" className=" aspect-video max-h-[8vh] mr-auto ml-4"/></div>
@@ -183,7 +194,16 @@ function DashBoard({ store }) {
             <p className=" text-3xl font-semibold">Media Kit</p>
             <div>
               <p className="text-lg font-semibold">Templates for you</p>
-              <p className="text-secondary font-medium text-sm">Choose a template and craft eye-catching stats</p>
+              <p className="text-secondary font-medium text-sm mb-5">Choose a template and craft eye-catching stats</p>
+              <div className="flex flex-wrap gap-3">
+              {
+                mediaKitData.map((item)=>{
+                  return(
+                    <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
+                  )
+                })
+              }
+              </div>
             </div>
           </TabsContent>
           <TabsContent value="profile" className="flex-1">Tab 5 content</TabsContent>
