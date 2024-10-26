@@ -32,14 +32,26 @@ function DashBoard({ store }) {
   const { data } = useYoutubeData();
   const { user, signOut } = useAuthStore();
   const [mediaKitData, setMediaKitData] = React.useState([]);
-  async function err() {
+  const [boldDesigns, setBoldDesigns] = React.useState([]);
+  const [minimalDesigns, setMinimalDesigns] = React.useState([]);
+  const [classicDesigns, setClassicDesigns] = React.useState([]);
+
+  async function getDesignTemplates() {
     await fetch("https://api.polotno.com/api/get-templates?size=1080x1080&query=&per_page=10&page=1&KEY=iRIwFHCuH539pYGokN6n").then((res) =>res.json()).then((res) => {
-      console.log(res);
       setMediaKitData(res.items);
+    });
+    await fetch("https://api.polotno.com/api/get-templates?size=851x315&query=&per_page=10&page=1&KEY=iRIwFHCuH539pYGokN6n").then((res) =>res.json()).then((res) => {
+      setBoldDesigns(res.items);
+    });
+    await fetch("https://api.polotno.com/api/get-templates?size=1080x1920&query=&per_page=10&page=1&KEY=iRIwFHCuH539pYGokN6n").then((res) =>res.json()).then((res) => {
+      setMinimalDesigns(res.items);
+    });
+    await fetch("https://api.polotno.com/api/get-templates?size=1280x720&query=&per_page=10&page=1&KEY=iRIwFHCuH539pYGokN6n").then((res)=>res.json()).then((res) => {
+      setClassicDesigns(res.items);
     });
   }
   useEffect(() => {
-    err();
+    getDesignTemplates();
   }, []);
   return (
     <>
@@ -198,6 +210,42 @@ function DashBoard({ store }) {
               <div className="flex flex-wrap gap-3">
               {
                 mediaKitData.map((item)=>{
+                  return(
+                    <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
+                  )
+                })
+              }
+              </div>
+            </div>
+            <div>
+              <p className="text-lg font-semibold mb-5">Bold</p>
+              <div className="flex flex-wrap gap-3">
+              {
+                boldDesigns.map((item)=>{
+                  return(
+                    <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
+                  )
+                })
+              }
+              </div>
+            </div>
+            <div>
+              <p className="text-lg font-semibold mb-5">Minimal</p>
+              <div className="flex flex-wrap gap-3">
+              {
+                minimalDesigns.map((item)=>{
+                  return(
+                    <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
+                  )
+                })
+              }
+              </div>
+            </div>
+            <div>
+              <p className="text-lg font-semibold mb-5">Classic</p>
+              <div className="flex flex-wrap gap-3">
+              {
+                classicDesigns.map((item)=>{
                   return(
                     <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
                   )
