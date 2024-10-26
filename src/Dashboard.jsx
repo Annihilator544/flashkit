@@ -1,7 +1,7 @@
 import { TabsContent } from "@radix-ui/react-tabs";
 import { Tabs, TabsList, TabsTrigger } from "./components/ui/tabs";
 import { Instagram, Linkedin, LucideAward, LucideCircleUserRound, LucideFolderOpen, LucideGauge, LucideLayoutDashboard, LucideLogOut, LucideMoreHorizontal, LucidePieChart, LucidePlus, LucideSettings, LucideTrash2, LucideTvMinimalPlay, LucideUsersRound, Twitter, Youtube } from "lucide-react";
-import React, { use, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useProject } from "plotNoFeatures/project";
 import { observer } from "mobx-react-lite";
 import * as api from "./plotNoFeatures/api";
@@ -320,6 +320,7 @@ const DashboardProjects = observer(({ store }) => {
         setPreviewURL(url);
       };
       load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
   
     const handleSelect = async () => {

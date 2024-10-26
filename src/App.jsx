@@ -109,6 +109,7 @@ const App = observer(({ store }) => {
         project.save();
     }
     JsonDesign(json);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [json]);
   const height = useHeight();
   React.useEffect(() => {
