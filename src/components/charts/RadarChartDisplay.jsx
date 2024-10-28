@@ -63,7 +63,7 @@ function RadarChartDisplay() {
         <CardTitle>Channel Performance Overview</CardTitle>
         <CardDescription>January - June 2024</CardDescription>
       </CardHeader>
-      <CardContent className="flex-1 pb-0">
+      <CardContent className="flex-1 p-0 pb-6">
         <ChartContainer config={chartConfig} className="mx-auto max-h-[400px]">
           <RadarChart
             cx="50%"
@@ -77,7 +77,7 @@ function RadarChartDisplay() {
             <PolarAngleAxis dataKey="month" />
             <PolarRadiusAxis angle={30} domain={[0, 5000]} />
             <Tooltip content={<ChartTooltipContent />} />
-            <Legend />
+            {/* <Legend /> */}
             <Radar
               name={chartConfig.views.label}
               dataKey="views"

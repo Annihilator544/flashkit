@@ -58,14 +58,14 @@ const chartConfig = {
 
 export function AreaChartDisplay() {
   return (
-    <Card className="flex-1">
+    <Card className="flex-1 ">
       <CardHeader>
         <CardTitle>Area Chart - Icons</CardTitle>
         <CardDescription>
           Showing total visitors for the last 6 months
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-0 pb-6">
         <ChartContainer config={chartConfig} className="w-full max-h-[250px]">
           <AreaChart
             accessibilityLayer
@@ -127,7 +127,7 @@ export function AreaChartDisplay() {
               stroke="var(--color-LinkedIn)"
               stackId="a"
             />
-            <ChartLegend content={<ChartLegendContent />} />
+            {/* <ChartLegend content={<ChartLegendContent />} /> */}
           </AreaChart>
         </ChartContainer>
       </CardContent>

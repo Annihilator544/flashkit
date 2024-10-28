@@ -57,7 +57,7 @@ function BarChartDisplay() {
         <CardTitle>Channel Engagement</CardTitle>
         <CardDescription>January - June 2024</CardDescription>
       </CardHeader>
-      <CardContent className="flex-1 pb-0">
+      <CardContent className="flex-1 p-0 pb-6">
         <ChartContainer
           config={chartConfig}
           className="mx-auto "
@@ -66,33 +66,33 @@ function BarChartDisplay() {
             width={600}
             height={300}
             data={dummyData}
-            margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+            margin={{ top: 20, right: 5, left: 5, bottom: 5 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="month" />
             <YAxis />
             <Tooltip content={<ChartTooltipContent />} />
-            <Legend />
+            {/* <Legend /> */}
             <Bar
               dataKey="views"
               fill={chartConfig.views.color}
               name={chartConfig.views.label}
             >
-              <LabelList dataKey="views" position="top" />
+              {/* <LabelList dataKey="views" position="top" /> */}
             </Bar>
             <Bar
               dataKey="likes"
               fill={chartConfig.likes.color}
               name={chartConfig.likes.label}
             >
-              <LabelList dataKey="likes" position="top" />
+              {/* <LabelList dataKey="likes" position="top" /> */}
             </Bar>
             <Bar
               dataKey="comments"
               fill={chartConfig.comments.color}
               name={chartConfig.comments.label}
             >
-              <LabelList dataKey="comments" position="top" />
+              {/* <LabelList dataKey="comments" position="top" /> */}
             </Bar>
           </BarChart>
         </ChartContainer>

@@ -2,6 +2,7 @@
   import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
   import { useYoutubeData } from "store/use-youtube-data";
   import { useEffect, useState } from "react";
+import { ChartContainer } from "../ui/chart";
 
   const monthlyData = [
     { month: "Jan", views: 100000, subscribers: 70000 },
@@ -31,6 +32,16 @@
   export function MonthlyEngagementChart() {
     const { data } = useYoutubeData();
     const [chartData, setChartData] = useState(monthlyData);
+    const chartConfig = {
+      views: {
+        label: "views",
+        color: "hsl(var(--chart-1))",
+      },
+      comments: {
+        label: "comments",
+        color: "hsl(var(--chart-3))",
+      },
+    }; 
     useEffect(() => {
       Object.keys(data).length ? setChartData(transformData(data.monthly).slice(-6)) : setChartData(monthlyData);
     },[data]);  
@@ -39,18 +50,22 @@
         <CardHeader>
           <CardTitle>Monthly Engagement</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0 pb-6">
+        <ChartContainer
+          config={chartConfig}
+          className="mx-auto "
+        >
           <LineChart
-            width={500}
+            width={600}
             height={300}
             data={chartData}
-            margin={{ top: 20, right: 20, left: 10, bottom: 10 }}
+            margin={{ top: 20, right: 5, left: 5, bottom: 10 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="month" />
             <YAxis />
             <Tooltip />
-            <Legend />
+            {/* <Legend /> */}
             {chartData === monthlyData ? (
               <>
                 <Line type="monotone" dataKey="views" stroke="#A9A9A9" name="Views" />
@@ -63,6 +78,7 @@
               </>
               )}
           </LineChart>
+        </ChartContainer>
         </CardContent>
         {chartData === monthlyData ?
         <CardFooter>

@@ -64,15 +64,15 @@ function LineChartDisplay() {
         <CardTitle>Monthly Performance Trends</CardTitle>
         <CardDescription>January - June 2024</CardDescription>
       </CardHeader>
-      <CardContent className="flex-1 pb-0">
+      <CardContent className="flex-1 p-0 pb-6">
         <ChartContainer config={chartConfig} className="mx-auto w-full h-80">
           <ResponsiveContainer>
-            <LineChart data={dummyData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+            <LineChart data={dummyData} margin={{ top: 20, right: 10, left: 5, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="month" />
               <YAxis />
               <Tooltip content={<ChartTooltipContent />} />
-              <Legend />
+              {/* <Legend /> */}
               <Line
                 type="monotone"
                 dataKey="views"

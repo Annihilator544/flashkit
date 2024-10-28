@@ -60,7 +60,7 @@ function RadialChartDisplay() {
         <CardTitle>Channel Metrics Overview</CardTitle>
         <CardDescription>As of June 2024</CardDescription>
       </CardHeader>
-      <CardContent className="flex-1 pb-0">
+      <CardContent className="flex-1 p-0 pb-6">
         <ChartContainer config={chartConfig} className="mx-auto max-h-[400px]">
           <RadialBarChart
             width={500}
@@ -86,12 +86,12 @@ function RadialChartDisplay() {
               clockWise
               dataKey="value"
             />
-            <Legend
+            {/* <Legend
               iconSize={10}
               layout="vertical"
               verticalAlign="middle"
               align="right"
-            />
+            /> */}
           </RadialBarChart>
         </ChartContainer>
       </CardContent>

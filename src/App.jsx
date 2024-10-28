@@ -33,6 +33,7 @@ import { LogoSection } from './sections/logo-section.js';
 import Topbar from 'topbar/topbar';
 import { useSearchParams } from 'react-router-dom';
 import { useJsonData } from 'store/use-json-data';
+import { ChartSection } from 'sections/chart-section';
 
 // load default translations
 setTranslations(en);
@@ -41,6 +42,7 @@ setTranslations(en);
 //DEFAULT_SECTIONS.splice(3, 1, ShapesSection);
 // add icons
 DEFAULT_SECTIONS.splice(3, 0, IconsSection);
+DEFAULT_SECTIONS.splice(4,0, ChartSection);
 // add two more sections
 // DEFAULT_SECTIONS.push(QuotesSection, QrSection);
 // DEFAULT_SECTIONS.unshift(UploadSection);

@@ -4,6 +4,7 @@ import { BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+import { ChartContainer } from "../ui/chart";
 
 const dailyData = [
   { year: "2018", views: 100000, comments: 70000 },
@@ -30,6 +31,16 @@ function transformData(inputData) {
 export function InsightsChart() {
     const { data } = useYoutubeData();
     const [chartData, setChartData] = useState(dailyData);
+    const chartConfig = {
+      views: {
+        label: "views",
+        color: "hsl(var(--chart-1))",
+      },
+      comments: {
+        label: "comments",
+        color: "hsl(var(--chart-3))",
+      },
+    };    
     useEffect(() => {
       Object.keys(data).length ? setChartData(transformData(data.yearly).slice(-6)): setChartData(dailyData) ;
       },[data]);  
@@ -38,12 +49,16 @@ export function InsightsChart() {
       <CardHeader>
         <CardTitle>Insights</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-0 pb-6">
+      <ChartContainer
+          config={chartConfig}
+          className="mx-auto "
+        >
         <BarChart
-          width={500}
+          width={600}
           height={300}
           data={chartData}
-          margin={{ top: 20, right: 20, left: 10, bottom: 10 }}
+          margin={{ top: 20, right: 5, left: 5, bottom: 5 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="year" />
@@ -61,6 +76,7 @@ export function InsightsChart() {
             </>
             )}
         </BarChart>
+      </ChartContainer>
       </CardContent>
       {chartData === dailyData ?
       <CardFooter>
