@@ -172,7 +172,7 @@
 }
 .LogIn{
   background-image: url(./assets/LogIn.svg), linear-gradient(to right,#A0D0EA, #6CC2F1);;
-  background-size: cover;
+  height: 100%;
   background-repeat: no-repeat;
   background-position: center;
 }
