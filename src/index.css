@@ -165,8 +165,8 @@
 }
 
 .SignUp{
-    background-image: url(./assets/SignUp.svg), linear-gradient(to right,#A0D0EA, #6CC2F1);;
-    background-size: cover;
+    background-image: url(./assets/SignUp.svg), linear-gradient(to right,#A0D0EA, #6CC2F1);
+    height: 100%;
     background-repeat: no-repeat;
     background-position: center;
 }

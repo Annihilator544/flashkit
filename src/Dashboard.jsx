@@ -85,7 +85,7 @@ function DashBoard({ store }) {
           </TabsList>
           <TabsContent value="dashboard" className="flex-1 overflow-y-auto">
             <div>
-              <div className="m-5  flex justify-around flex-wrap">
+              <div className="m-10  flex justify-around flex-wrap">
                   <div className="flex gap-4">
                       <Avatar className= "m-auto">
                       {user&&user.photoURL ? <AvatarImage src={user.photoURL} /> :
@@ -94,10 +94,10 @@ function DashBoard({ store }) {
                         <AvatarFallback>CN</AvatarFallback>
                       </Avatar>
                       <div className="my-auto space-y-1">
-                        <p className=" font-bold mt-2 text-center text-xl">@{user&&user.displayName ? user.displayName.replace(" ","") : "Set Up Profile"}</p>
+                        <p className=" font-bold mt-2 text-center text-xl mr-auto">@{user&&user.displayName ? user.displayName.replace(" ","") : "Set Up Profile"}</p>
                         <div className="flex justify-between">
                           <p className="text-[#6E7C87] font-medium text-sm">Profile Status</p>
-                          <div className="text-[#E1A100] bg-[#fdf5e1] text-center font-semibold flex pr-2 py-[2px] rounded-sm"><LucideAward className="h-4 my-auto"/>Gold</div>
+                          <div className="text-[#E1A100] bg-[#fdf5e1] text-center font-semibold flex pr-2 py-[2px] rounded-sm gap-2"><LucideAward className="h-4 my-auto"/>Gold</div>
                         </div>
                       </div>
                   </div>
@@ -121,8 +121,8 @@ function DashBoard({ store }) {
                 </div>
               </div>
               <Separator className="mx-8"/>
-              <div className="mx-5 my-5">
-                  <div className="flex gap-4">
+              <div className="m-10">
+                  <div className="flex gap-6">
                    <InsightsChart/> 
                    <MonthlyEngagementChart/>
                   </div>
@@ -134,7 +134,7 @@ function DashBoard({ store }) {
               </div>
             </div>
           </TabsContent>
-          <TabsContent value="analytics" className="flex-1 p-5 space-y-6">
+          <TabsContent value="analytics" className="flex-1 p-10 space-y-6">
           <p className=" text-3xl font-semibold">Analytics</p>
           <div>
             <p className="text-secondary font-medium text-lg">Overview</p>
@@ -192,7 +192,7 @@ function DashBoard({ store }) {
               <TopContentCarousel />
           </div>
           </TabsContent>
-          <TabsContent value="mediakit" className="flex-1 p-5 space-y-6">
+          <TabsContent value="mediakit" className="flex-1 p-10 space-y-6">
             <p className=" text-3xl font-semibold">Media Kit</p>
             <div>
               <p className="text-lg font-semibold">Templates for you</p>
@@ -246,7 +246,7 @@ function DashBoard({ store }) {
           </TabsContent>
           <TabsContent value="profile" className="flex-1">Tab 5 content</TabsContent>
           <TabsContent value="settings" className="flex-1">
-            <div className="m-5">
+            <div className="m-10">
               <ConnectAccount/>
             </div>
           </TabsContent>

@@ -58,7 +58,7 @@ const ChatWidget = () => {
       {/* Chat Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full shadow-lg"
+        className="bg-[#ff847c] hover:bg-[#ff847c]/90 text-white p-3 rounded-full shadow-lg"
       >
         {isOpen ? <X size={24} /> : <MessageCircle size={24} />}
       </button>
@@ -67,7 +67,7 @@ const ChatWidget = () => {
       {isOpen && (
         <div className="absolute bottom-16 right-0 w-96 h-[500px] bg-white rounded-lg shadow-xl flex flex-col">
           {/* Header */}
-          <div className="p-4 bg-blue-500 text-white rounded-t-lg">
+          <div className="p-4 bg-[#ff847c] text-white rounded-t-lg">
             <h3 className="font-medium">Chat with Claude</h3>
           </div>
 
@@ -81,7 +81,7 @@ const ChatWidget = () => {
                 <div
                   className={`max-w-[80%] p-3 rounded-lg ${
                     msg.role === 'user'
-                      ? 'bg-blue-500 text-white'
+                      ? 'bg-[#ff847c] text-white'
                       : 'bg-gray-100 text-gray-800'
                   }`}
                 >
@@ -107,12 +107,12 @@ const ChatWidget = () => {
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
                 placeholder="Type your message..."
-                className="flex-1 p-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                className="flex-1 p-2 border rounded-lg focus:outline-none focus:border-[#ff847c]"
               />
               <button
                 onClick={sendMessage}
                 disabled={isLoading}
-                className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-lg"
+                className="bg-[#ff847c] hover:bg-[#ff847c]/90 text-white p-2 rounded-lg"
               >
                 <Send size={20} className='m-auto' />
               </button>
