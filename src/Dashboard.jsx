@@ -27,6 +27,7 @@ import { InsightsChart } from "./components/charts/InsightsChart";
 import { MonthlyEngagementChart } from "./components/charts/MonthlyEngagementChart";
 import { TopContentCarousel } from "./components/TopContentCarousel";
 import TemplateCard from "./components/TemplateCard";
+import ChatWidget from "./components/ChatWidget";
 
 function DashBoard({ store }) {
   const { data } = useYoutubeData();
@@ -125,20 +126,9 @@ function DashBoard({ store }) {
                    <InsightsChart/> 
                    <MonthlyEngagementChart/>
                   </div>
-                <div className="justify-between flex flex-1 gap-5">
-                <div>
+                <div className="justify-between flex flex-col mb-10">
                 <p className=" text-lg font-semibold mt-10">Start Building</p>
                 <p className="text-[#6E7C87] font-medium text-sm">Choose a template and craft eye-catching stats</p>
-                </div>
-                  <Button
-                  variant="dotted"
-                  className=" my-8 px-10 py-8 "
-                    onClick={async () => {
-                      window.location.href = `/canvas?id=create_new_design`;
-                    }}
-                  >
-                    <LucidePlus className=" h-4"/>Create new project
-                  </Button>
                 </div>
                 <DashboardProjects store={store} />
               </div>
@@ -262,6 +252,7 @@ function DashBoard({ store }) {
           </TabsContent>
         </Tabs>
       </div>
+      <ChatWidget />
     </>
   );
 }
@@ -289,6 +280,15 @@ const DashboardProjects = observer(({ store }) => {
   return (
     <div className="flex flex-col flex-wrap">
       <div className="flex gap-5 flex-wrap">
+        <Button
+          variant="dotted"
+          className="px-10 py-8 aspect-square h-full"
+            onClick={async () => {
+              window.location.href = `/canvas?id=create_new_design`;
+            }}
+          >
+            <LucidePlus className=" h-4"/>Create new project
+        </Button>
       {!designsLoadings && !designs.length && (
         <div style={{ paddingTop: '20px', textAlign: 'center', opacity: 0.6 }}>
           You have no designs yet.
