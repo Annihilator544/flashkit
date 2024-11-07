@@ -26,16 +26,9 @@ const ChatWidget = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
+      const response = await fetch("https://y2dlmv2ulfhficgbftnz4pnqfe0qefyu.lambda-url.eu-west-2.on.aws/", {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': process.env.ANTHROPIC_API_KEY, // Replace with your Claude API key
-          'anthropic-version': '2023-06-01'
-        },
         body: JSON.stringify({
-          model: 'claude-3-5-sonnet-20241022',
-          max_tokens: 1024,
           messages: [userMessage]
         })
       });
@@ -43,10 +36,12 @@ const ChatWidget = () => {
       const data = await response.json();
       
       // Add Claude's response to chat
-      setMessages(prev => [...prev, { 
-        role: 'assistant', 
-        content: data.content[0].text
-      }]);
+      if (data.content && Array.isArray(data.content) && data.content.length > 0) {
+        setMessages(prev => [...prev, { 
+          role: 'assistant', 
+          content: data.content[0].text
+        }]);
+      }
     } catch (error) {
       console.error('Error:', error);
       setMessages(prev => [...prev, { 
