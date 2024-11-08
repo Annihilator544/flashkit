@@ -75,7 +75,7 @@ function Fallback({ error, resetErrorBoundary }) {
 }
 const ExternalRedirect = () => {
   useEffect(() => {
-    window.location.href = 'https://flashkit.co.uk';
+    window.location.href = 'https://simplest-transform-002186.framer.app/';
   }, []);
   return null;
 };
