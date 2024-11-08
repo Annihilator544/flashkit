@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './firebase';
 import logo from './assets/logo.svg'
 import { z } from "zod"
@@ -17,7 +17,6 @@ import {
 import { Input } from "./components/ui/input"
 import { Button } from './components/ui/button';
 import { SelectSeparator } from './components/ui/select';
-import LogIn from './assets/LogIn.svg';
 import GoogleButton from './assets/GoogleButton.svg';
 import { useAuthStore } from 'store/use-auth-data';
 

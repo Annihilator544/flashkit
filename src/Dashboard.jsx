@@ -28,6 +28,7 @@ import { MonthlyEngagementChart } from "./components/charts/MonthlyEngagementCha
 import { TopContentCarousel } from "./components/TopContentCarousel";
 import TemplateCard from "./components/TemplateCard";
 import ChatWidget from "./components/ChatWidget";
+import { useEngagementData } from "store/use-engagement-data";
 
 function DashBoard({ store }) {
   const { data } = useYoutubeData();
@@ -36,6 +37,28 @@ function DashBoard({ store }) {
   const [boldDesigns, setBoldDesigns] = React.useState([]);
   const [minimalDesigns, setMinimalDesigns] = React.useState([]);
   const [classicDesigns, setClassicDesigns] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
+  const { Engagement, setEngagement } = useEngagementData();
+  const getEQSScore = async (userData) => {
+    setLoading(true);
+
+    try {
+      const response = await fetch("https://uibtscb6a4mio6htt6rdpuqc640hbnof.lambda-url.eu-west-2.on.aws/", {
+        method: 'POST',
+        body: JSON.stringify({
+          data : userData
+        })
+      });
+
+      const data = await response.json();
+      console.log(data);
+      setEngagement(data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+
+    setLoading(false);
+  };
 
   async function getDesignTemplates() {
     await fetch("https://api.polotno.com/api/get-templates?size=1080x1080&query=&per_page=10&page=1&KEY=iRIwFHCuH539pYGokN6n").then((res) =>res.json()).then((res) => {
@@ -104,8 +127,9 @@ function DashBoard({ store }) {
                 <Separator orientation="vertical" className="mx-4"/>
                 <div className=" flex flex-col gap-2">
                     <div className=" text-base font-semibold Inter flex gap-2"><LucideGauge className="h-5 my-auto"/> EQS Score</div>
-                    <p className=" text-2xl font-semibold">79 %</p>
+                    <p className=" text-2xl font-semibold">{Engagement && typeof Engagement ==='object' && Object.keys(Engagement).length > 0 ? Engagement.engagementMetrics.score * 10 : 79} %</p>
                     <div className="flex text-sm font-medium gap-1"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
+                    {data && typeof data === 'object' && Object.keys(data).length > 0 ?<Button className={"w-full" + loading ? " opacity-90 ":""} onClick={()=>getEQSScore(data)}>{loading ? "Loading ...":" Generate EQS Score"}</Button> : <></>}
                 </div>
                 <Separator orientation="vertical" className="mx-4"/>
                 <div className=" flex flex-col gap-2">
@@ -116,7 +140,7 @@ function DashBoard({ store }) {
                 <Separator orientation="vertical" className="mx-4"/>
                 <div className=" flex flex-col gap-2">
                     <div className=" text-base font-semibold Inter flex gap-2"><LucideUsersRound className="h-5 my-auto"/> Engagement</div>
-                    <div className="flex text-sm font-medium gap-1"><p className=" text-2xl font-semibold">9.2</p><p className="text-secondary mt-auto mb-1"> / 10</p></div>
+                    <div className="flex text-sm font-medium gap-1"><p className=" text-2xl font-semibold">{Engagement && typeof Engagement ==='object' && Object.keys(Engagement).length > 0 ? Engagement.engagementMetrics.details.recentEngagementScore : 9.2}</p><p className="text-secondary mt-auto mb-1"> / 10</p></div>
                     <div className="flex text-sm font-medium gap-1"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
                 </div>
               </div>
@@ -244,7 +268,18 @@ function DashBoard({ store }) {
               </div>
             </div>
           </TabsContent>
-          <TabsContent value="profile" className="flex-1">Tab 5 content</TabsContent>
+          <TabsContent value="profile" className="flex-1">
+            <div className="m-10">
+            {Engagement && typeof Engagement ==='object' && Object.keys(Engagement).length > 0 ?
+              <Card className="flex gap-4">
+                <CardContent className="flex-1 p-6">
+                 <pre>{Engagement.analysis[0].text}</pre>
+                </CardContent>
+              </Card>
+              :<></>
+            }
+            </div>
+          </TabsContent>
           <TabsContent value="settings" className="flex-1">
             <div className="m-10">
               <ConnectAccount/>
