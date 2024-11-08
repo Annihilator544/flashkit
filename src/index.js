@@ -17,6 +17,7 @@ import Login from 'Login';
 import ProtectedRoute from 'ProtectedRoute';
 import PrivacyPolicy from 'PrivacyPolicy';
 import TermsOfService from 'TermsOfService';
+import Landing from 'Landing';
 
 // if (window.location.host !== 'studio.polotno.com') {
 //   console.log(
@@ -73,16 +74,16 @@ function Fallback({ error, resetErrorBoundary }) {
     </div>
   );
 }
-const ExternalRedirect = () => {
-  useEffect(() => {
-    window.location.href = 'https://simplest-transform-002186.framer.app/';
-  }, []);
-  return null;
-};
+// const ExternalRedirect = () => {
+//   useEffect(() => {
+//     window.location.href = 'https://simplest-transform-002186.framer.app/';
+//   }, []);
+//   return null;
+// };
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <ExternalRedirect />, // Redirect to external URL,
+    element: <Landing />, // Redirect to external URL,
   },
   {
     path: "/dashboard",
