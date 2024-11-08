@@ -3,7 +3,10 @@ import { MessageCircle, X, Send } from 'lucide-react';
 
 const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([{ 
+    role: 'assistant', 
+    content: "Hello I am Flashkit's AI assistant 🤖. How can I help you today?"
+  }]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const chatWindowRef = useRef(null);
@@ -68,7 +71,7 @@ const ChatWidget = () => {
         <div className="absolute bottom-16 right-0 w-96 h-[500px] bg-white rounded-lg shadow-xl flex flex-col">
           {/* Header */}
           <div className="p-4 bg-[#ff847c] text-white rounded-t-lg">
-            <h3 className="font-medium">Chat with Claude</h3>
+            <h3 className="font-medium">Flashkit AI</h3>
           </div>
 
           {/* Messages */}
