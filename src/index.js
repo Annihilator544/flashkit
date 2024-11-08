@@ -10,7 +10,7 @@ import './index.css';
 import App from './App';
 import './plotNoFeatures/logger';
 import { ErrorBoundary } from 'react-error-boundary';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
 import Landing from './Landing';
 import DashBoard from 'Dashboard';
 import Signup from 'Signup';
@@ -77,7 +77,7 @@ function Fallback({ error, resetErrorBoundary }) {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Landing />,
+    element: <Navigate to="https://flashkit.co.uk" replace />, // Redirect to external URL,
   },
   {
     path: "/dashboard",
