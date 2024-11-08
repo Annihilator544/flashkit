@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 
 import { createStore } from 'polotno/model/store';
@@ -74,10 +74,16 @@ function Fallback({ error, resetErrorBoundary }) {
     </div>
   );
 }
+const ExternalRedirect = () => {
+  useEffect(() => {
+    window.location.href = 'https://flashkit.co.uk';
+  }, []);
+  return null;
+};
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Navigate to="https://flashkit.co.uk" replace />, // Redirect to external URL,
+    element: <ExternalRedirect />, // Redirect to external URL,
   },
   {
     path: "/dashboard",
