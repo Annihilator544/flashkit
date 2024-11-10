@@ -74,16 +74,16 @@ function Fallback({ error, resetErrorBoundary }) {
     </div>
   );
 }
-// const ExternalRedirect = () => {
-//   useEffect(() => {
-//     window.location.href = 'https://simplest-transform-002186.framer.app/';
-//   }, []);
-//   return null;
-// };
+const ExternalRedirect = () => {
+  useEffect(() => {
+    window.location.href = 'https://www.flashkit.co.uk/';
+  }, []);
+  return null;
+};
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Landing />, // Redirect to external URL,
+    element: <ExternalRedirect />, // Redirect to external URL,
   },
   {
     path: "/dashboard",
