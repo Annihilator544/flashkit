@@ -117,10 +117,10 @@ function DashBoard({ store }) {
                         <AvatarFallback>CN</AvatarFallback>
                       </Avatar>
                       <div className="my-auto space-y-1">
-                        <p className=" font-bold mt-2 text-center text-xl mr-auto">@{user&&user.displayName ? user.displayName.replace(" ","") : "Set Up Profile"}</p>
-                        <div className="flex justify-between">
+                        <p className=" font-bold mt-2 text-xl mr-auto">@{user&&user.displayName ? user.displayName.replace(" ","") : "Set Up Profile"}</p>
+                        <div className="flex justify-between gap-2">
                           <p className="text-[#6E7C87] font-medium text-sm">Profile Status</p>
-                          <div className="text-[#E1A100] bg-[#fdf5e1] text-center font-semibold flex pr-2 py-[2px] rounded-sm gap-2"><LucideAward className="h-4 my-auto"/>Gold</div>
+                          <div className="text-[#E1A100] bg-[#fdf5e1] text-center font-semibold flex pr-2 py-[2px] rounded-sm"><LucideAward className="h-4 my-auto"/>Gold</div>
                         </div>
                       </div>
                   </div>

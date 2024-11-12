@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate, NavLink, useNavigate } from 'react-router-dom';
-import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, updateProfile } from 'firebase/auth';
 import { auth, db } from './firebase';
 import logo from './assets/logo.svg'
 import { set, z } from "zod"
@@ -23,6 +23,7 @@ import GoogleButton from './assets/GoogleButton.svg';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 const formSchema = z.object({
+    username: z.string().min(3,{message:"Username should be minimum 3 letters"}).max(100),
     email: z.string().email(),
     password: z.string().min(8,{message:"Password should be minimum 8 letters"}).max(100),
     confirmPassword: z.string().min(8,{message:"Password should be minimum 8 letters"}).max(100),
@@ -44,6 +45,7 @@ const Signup = () => {
         defaultValues: {
         email: "",
         password: "",
+        username: "",
         confirmPassword: "",
         },
     })
@@ -57,6 +59,9 @@ const Signup = () => {
             //     createdAt: new Date(),
             //     // Add any other user data you want to save
             // });
+            await updateProfile(user, {
+                displayName: values.username,
+            });
             setUser(user);
             console.log(user);
             navigate("/dashboard")
@@ -111,6 +116,19 @@ const Signup = () => {
                 <p className='text-base font-normal text-secondary mb-10'>Create a new account!</p>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                        <FormField
+                        control={form.control}
+                        name="username"
+                        render={({ field }) => (
+                            <FormItem>
+                            <FormLabel>Username</FormLabel>
+                            <FormControl>
+                                <Input placeholder="choose a username" type="text" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                            </FormItem>
+                        )}
+                        />
                         <FormField
                         control={form.control}
                         name="email"
