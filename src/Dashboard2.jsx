@@ -29,10 +29,11 @@ import { TopContentCarousel } from "./components/TopContentCarousel";
 import TemplateCard from "./components/TemplateCard";
 import ChatWidget from "./components/ChatWidget";
 import { useEngagementData } from "store/use-engagement-data";
+import SidebarLayout from "layouts/SideBarLayout";
 
-function DashBoard({ store }) {
+function DashBoard2({ store }) {
   const { data } = useYoutubeData();
-  const { user, signOut } = useAuthStore();
+  const { user } = useAuthStore();
   const [mediaKitData, setMediaKitData] = React.useState([]);
   const [boldDesigns, setBoldDesigns] = React.useState([]);
   const [minimalDesigns, setMinimalDesigns] = React.useState([]);
@@ -79,33 +80,9 @@ function DashBoard({ store }) {
   }, []);
   return (
     <>
-      <div className="borber-b border-b-[1px] sticky top-0 bg-white z-50"><img src={logo} alt="logo" className=" aspect-video max-h-[8vh] mr-auto ml-4"/></div>
+    <Tabs className="flex flex-1 " defaultValue="home" >
+      <SidebarLayout>
       <div className=" flex">
-        <Tabs className="flex flex-1 " defaultValue="home" >
-          <TabsList className="flex flex-col p-3 gap-2 bg-[#f6f8f9] border-r rounded-none sticky top-Dashbord-calc">
-              <p className="text-secondary Inter text-xs">Choose an social account</p>
-              <Select>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Select an Account" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="Instagram"><div className="flex gap-2"><Instagram className="h-5"/>Instagram </div></SelectItem>
-                    <SelectItem value="Twitter"><div className="flex gap-2"><Twitter className="h-5"/>Twitter </div></SelectItem>
-                    <SelectItem value="Youtube"><div className="flex gap-2"><Youtube className="h-5"/>Youtube</div></SelectItem>
-                    <SelectItem value="LinkedIn"><div className="flex gap-2"><Linkedin className="h-5"/>LinkedIn </div></SelectItem>
-                    {/* <SelectItem value="TikTok"><div className="flex gap-2"><TikTok className="h-5"/>Instagram </div></SelectItem> */}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-              <SelectSeparator/>
-              <TabsTrigger value="home" className=""><LucideLayoutDashboard className="h-5"/> Home</TabsTrigger>
-              <TabsTrigger value="analytics" className=""><LucidePieChart className="h-5"/> Analytics</TabsTrigger>
-              <TabsTrigger value="mediakit" className=""><LucideTvMinimalPlay className="h-5"/> Media Kit</TabsTrigger>
-              <TabsTrigger value="profile" className=""><LucideCircleUserRound className="h-5"/> Profile</TabsTrigger>
-              <TabsTrigger value="settings" className=""><LucideSettings className="h-5"/> Settings</TabsTrigger>
-              <Button className="w-full mt-auto flex gap-2" onClick={signOut}>Logout <LucideLogOut className="h-4"/></Button>
-          </TabsList>
           <TabsContent value="home" className="flex-1 overflow-y-auto">
             <div>
               <div className="m-10  flex justify-around flex-wrap">
@@ -158,8 +135,8 @@ function DashBoard({ store }) {
               </div>
             </div>
           </TabsContent>
-          <TabsContent value="analytics" className="flex-1 p-10 space-y-6">
-          <p className=" text-3xl font-semibold">Analytics</p>
+          <TabsContent value="youtube" className="flex-1 p-10 space-y-6">
+          <p className=" text-3xl font-semibold">Youtube Analytics</p>
           <div>
             <p className="text-secondary font-medium text-lg">Overview</p>
             <div className="flex gap-5 mt-3">
@@ -285,8 +262,9 @@ function DashBoard({ store }) {
               <ConnectAccount/>
             </div>
           </TabsContent>
-        </Tabs>
       </div>
+      </SidebarLayout>
+      </Tabs>
       <ChatWidget />
     </>
   );
@@ -428,4 +406,4 @@ const DashboardProjects = observer(({ store }) => {
     );
   });
 
-export default DashBoard;
+export default DashBoard2;
