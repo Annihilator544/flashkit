@@ -17,8 +17,8 @@ import Login from 'Login';
 import ProtectedRoute from 'layouts/ProtectedRoute';
 import PrivacyPolicy from 'PrivacyPolicy';
 import TermsOfService from 'TermsOfService';
-import Landing from 'Landing';
 import DashBoard2 from 'Dashboard2';
+import Secret from 'Secret';
 
 // if (window.location.host !== 'studio.polotno.com') {
 //   console.log(
@@ -90,7 +90,6 @@ const router = createBrowserRouter([
     path: "/dashboard",
     element: <ProtectedRoute><DashBoard store={store}/></ProtectedRoute>,
   },
-  
   {
     path: "/dashboard2",
     element: <ProtectedRoute><DashBoard2 store={store}/></ProtectedRoute>,
@@ -115,6 +114,10 @@ const router = createBrowserRouter([
     path: "/canvas",
     element: <ProtectedRoute><App  store={store} /></ProtectedRoute>,
   },
+  {
+    path: "/secret",
+    element: <Secret />,
+  }
 ]);
 
 root.render(

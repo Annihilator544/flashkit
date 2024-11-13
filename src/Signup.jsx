@@ -63,8 +63,12 @@ const Signup = () => {
                 displayName: values.username,
             });
             setUser(user);
-            console.log(user);
-            navigate("/dashboard")
+            if(localStorage.getItem("valid")){
+                navigate("/dashboard")
+            }
+            else{
+                navigate("/secret")
+            }
         } catch (error) {
             const errorCode = error.code;
             const errorMessage = error.message;
@@ -83,7 +87,6 @@ const Signup = () => {
         try {
             const result = await signInWithPopup(auth, provider);
             const user = result.user;
-            console.log(user);
             // const userDoc = await getDoc(doc(db, 'users', user.uid));
             // if (!userDoc.exists()) {
             //     // If new user, save their data to Firestore
@@ -96,7 +99,12 @@ const Signup = () => {
             // }
             setUser(user);
             // await signIn(user.email, null, true);
-            navigate("/dashboard"); // Redirect to dashboard or appropriate page after successful sign-in
+            if(localStorage.getItem("valid")){
+                navigate("/dashboard")
+            }
+            else{
+                navigate("/secret")
+            } // Redirect to dashboard or appropriate page after successful sign-in
         } catch (error) {
             const errorCode = error.code;
             const errorMessage = error.message;

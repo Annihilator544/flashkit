@@ -43,13 +43,21 @@ const Login = () => {
             // Signed in
             const user = userCredential.user;
             setUser(user)
-            navigate("/dashboard")
-            console.log(user);
+            if(localStorage.getItem("valid")){
+                navigate("/dashboard")
+            }
+            else{
+                navigate("/secret")
+            }
         })
         .catch((error) => {
             const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode, errorMessage)
+            if(errorCode === "auth/user-not-found"){
+                form.setError("email", { type: "manual", message: "User not found" });
+            }
+            else if(errorCode === "auth/invalid-credential"){
+                form.setError("password", { type: "manual", message: "Invalid password" });
+            }
         });
 
     }
@@ -60,8 +68,12 @@ const Login = () => {
             const result = await signInWithPopup(auth, provider);
             const user = result.user;
             setUser(user);
-            console.log(user);
-            navigate("/dashboard"); // Redirect to dashboard or appropriate page after successful sign-in
+            if(localStorage.getItem("valid")){
+                navigate("/dashboard")
+            }
+            else{
+                navigate("/secret")
+            } // Redirect to dashboard or appropriate page after successful sign-in
         } catch (error) {
             const errorCode = error.code;
             const errorMessage = error.message;
@@ -103,7 +115,7 @@ const Login = () => {
                             <FormControl>
                                 <Input placeholder="password" type="password" {...field} />
                             </FormControl>
-                            <FormMessage />
+                            <FormMessage error = {"hello"} />
                             </FormItem>
                         )}
                         />
