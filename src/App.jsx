@@ -13,12 +13,9 @@ import { setTranslations } from 'polotno/config';
 
 import { loadFile } from './plotNoFeatures/file';
 
-import { IconsSection } from './sections/icons-section';
 import { MyDesignsSection } from './sections/my-designs-section';
 
 import { AIWriteMenu } from './plotNoFeatures/ai-text';
-// import { VideosSection } from './sections/video-section';
-// import { UploadSection } from './sections/upload-section';
 
 import { useProject } from './plotNoFeatures/project';
 
@@ -34,23 +31,23 @@ import Topbar from 'topbar/topbar';
 import { useSearchParams } from 'react-router-dom';
 import { useJsonData } from 'store/use-json-data';
 import { ChartSection } from 'sections/chart-section';
+import { QrSection } from 'sections/qr-section';
+import { ElementsSection } from 'sections/element-section';
 
 // load default translations
 setTranslations(en);
-
+let DEFAULT_SECTIONS2 = [...DEFAULT_SECTIONS];
 // replace elements section with just shapes
 //DEFAULT_SECTIONS.splice(3, 1, ShapesSection);
 // add icons
-DEFAULT_SECTIONS.splice(3, 0, IconsSection);
-DEFAULT_SECTIONS.splice(4,0, ChartSection);
+DEFAULT_SECTIONS2.splice(1, 5);
+DEFAULT_SECTIONS2.push(ChartSection);
 // add two more sections
-// DEFAULT_SECTIONS.push(QuotesSection, QrSection);
-// DEFAULT_SECTIONS.unshift(UploadSection);
-DEFAULT_SECTIONS.unshift(MyDesignsSection);
-DEFAULT_SECTIONS.unshift(LogoSection);
+DEFAULT_SECTIONS2.push( QrSection);
+DEFAULT_SECTIONS2.unshift(MyDesignsSection);
+DEFAULT_SECTIONS2.unshift(LogoSection);
 // DEFAULT_SECTIONS.push(StableDiffusionSection);
-// DEFAULT_SECTIONS.push(VideosSection);
-
+DEFAULT_SECTIONS2.push(ElementsSection)
 const isStandalone = () => {
   return (
     window.matchMedia('(display-mode: standalone)').matches ||
@@ -162,7 +159,7 @@ const App = observer(({ store }) => {
       <div style={{ height: 'calc(100% - 50px)' }}>
         <PolotnoContainer className="polotno-app-container">
           <SidePanelWrap>
-            <SidePanel store={store} sections={DEFAULT_SECTIONS} />
+            <SidePanel store={store} sections={DEFAULT_SECTIONS2} />
           </SidePanelWrap>
           {localStorage.getItem("flashkitPlan") !== "FLASHKITUNLIMITED" ? 
           <div className='absolute z-[1] md:h-4 md:w-60 bg-[#e8e8e8] md:bottom-0 md:right-0 max-md:bottom-[75px] max-md:right-0 max-md:h-5 max-md:w-44'>

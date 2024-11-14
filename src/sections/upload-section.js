@@ -7,12 +7,12 @@ import {
 } from 'polotno/side-panel';
 import { getImageSize, getCrop } from 'polotno/utils/image';
 import { getVideoSize, getVideoPreview } from 'polotno/utils/video';
-import { dataURLtoBlob } from '../blob';
+import { dataURLtoBlob } from '../plotNoFeatures/blob';
 
-import { CloudWarning } from '../cloud-warning';
+import { CloudWarning } from '../plotNoFeatures/cloud-warning';
 
 import { useProject } from '../plotNoFeatures/project';
-import { listAssets, uploadAsset, deleteAsset } from '../api';
+import { listAssets, uploadAsset, deleteAsset } from '../plotNoFeatures/api';
 
 function getType(file) {
   const { type } = file;
