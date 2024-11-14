@@ -171,7 +171,7 @@ function DashBoard({ store }) {
                   </CardContent>
                 </Card>
                 <Card className="flex-1 shadow-md">
-                  <CardContent className="pt-6">
+                  <CardContent className="pt-6"> 
                     <p className="text-lg font-semibold">Total Engagement</p>
                     <p className="text-3xl font-semibold">127K</p>
                     <div className="flex text-sm font-medium gap-1 mt-6"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>

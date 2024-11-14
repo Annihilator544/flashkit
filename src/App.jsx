@@ -148,13 +148,14 @@ const App = observer(({ store }) => {
   };
 
   return (
+    <div className='flex'>
     <div
       style={{
-        width: '100vw',
         height: height + 'px',
         display: 'flex',
         flexDirection: 'column',
       }}
+      className='flex-1'
       onDrop={handleDrop}
     >
       <Topbar store={store} />
@@ -163,9 +164,13 @@ const App = observer(({ store }) => {
           <SidePanelWrap>
             <SidePanel store={store} sections={DEFAULT_SECTIONS} />
           </SidePanelWrap>
+          {localStorage.getItem("flashkitPlan") !== "FLASHKITUNLIMITED" ? 
           <div className='absolute z-[1] md:h-4 md:w-60 bg-[#e8e8e8] md:bottom-0 md:right-0 max-md:bottom-[75px] max-md:right-0 max-md:h-5 max-md:w-44'>
 
           </div>
+          : <div className='absolute z-[1] md:h-4 md:w-60 bg-[#e8e8e8] md:bottom-0 md:right-[15%] max-md:bottom-[75px] max-md:right-0 max-md:h-5 max-md:w-44'>
+
+          </div>}
           <WorkspaceWrap>
             <Toolbar
               store={store}
@@ -208,6 +213,12 @@ const App = observer(({ store }) => {
           </div>
         </div>
       )}
+    </div>
+    {localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ? 
+        <div className="w-[15%] border-2 border-black ">
+            <p className="my-auto">Ad Space</p>
+        </div>
+        : <></>}
     </div>
   );
 });

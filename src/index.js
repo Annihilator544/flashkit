@@ -19,6 +19,7 @@ import PrivacyPolicy from 'PrivacyPolicy';
 import TermsOfService from 'TermsOfService';
 import DashBoard2 from 'Dashboard2';
 import Secret from 'Secret';
+import Billing from 'Billing';
 
 // if (window.location.host !== 'studio.polotno.com') {
 //   console.log(
@@ -88,11 +89,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <ProtectedRoute><DashBoard store={store}/></ProtectedRoute>,
+    element: <ProtectedRoute><DashBoard2 store={store}/></ProtectedRoute>,
   },
   {
     path: "/dashboard2",
-    element: <ProtectedRoute><DashBoard2 store={store}/></ProtectedRoute>,
+    element: <ProtectedRoute><DashBoard store={store}/></ProtectedRoute>,
   },
   {
     path: "/privacy",
@@ -113,6 +114,10 @@ const router = createBrowserRouter([
   {
     path: "/canvas",
     element: <ProtectedRoute><App  store={store} /></ProtectedRoute>,
+  },
+  {
+    path: "/billing",
+    element: <Billing />,
   },
   {
     path: "/secret",

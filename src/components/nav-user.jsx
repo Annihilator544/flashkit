@@ -87,7 +87,7 @@ export function NavUser() {
                 <BadgeCheck className="h-4" />
                 Account
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={()=>window.location.href="/billing"}>
                 <CreditCard className="h-4" />
                 Billing
               </DropdownMenuItem>

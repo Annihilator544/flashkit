@@ -11,6 +11,9 @@ import { useProject } from '../plotNoFeatures/project';
 import { FileMenu } from './file-menu';
 import { DownloadButton } from './download-button';
 import { Input } from '../components/ui/input';
+import { LucideGem } from 'lucide-react';
+import { Button } from '../components/ui/button';
+import { Badge } from '../components/ui/badge';
 
 const NavbarContainer = styled('div')`
   white-space: nowrap;
@@ -120,6 +123,12 @@ export default observer(({ store }) => {
               <FaTwitter className="bp5-icon" style={{ fontSize: '20px' }} />
             }
           ></AnchorButton> */}
+          { localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ?
+                                <Button className="font-semibold flex gap-1 mr-4" onClick={()=>window.location.href="/billing"}>
+                                    <LucideGem className="h-5"/> Upgrade to <Badge className="bg-[#ffeae9] text-[#F56B63] rounded-sm hover:bg-[#ffeae9]">Pro</Badge>
+                                </Button>
+                            : 
+                            <></>}
           <div className='flex gap-4'>
           <Input
               value={window.project.name}

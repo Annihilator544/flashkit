@@ -42,7 +42,6 @@ function DashBoard2({ store }) {
   const { Engagement, setEngagement } = useEngagementData();
   const getEQSScore = async (userData) => {
     setLoading(true);
-
     try {
       const response = await fetch("https://uibtscb6a4mio6htt6rdpuqc640hbnof.lambda-url.eu-west-2.on.aws/", {
         method: 'POST',
@@ -80,192 +79,310 @@ function DashBoard2({ store }) {
   }, []);
   return (
     <>
-    <Tabs className="flex flex-1 " defaultValue="home" >
-      <SidebarLayout>
-      <div className=" flex">
-          <TabsContent value="home" className="flex-1 overflow-y-auto">
+      <div className="flex">
+        <Tabs className="flex flex-1 " defaultValue="home" >
+        <SidebarLayout>
+        <div className=" flex">
+            <TabsContent value="home" className="flex-1 overflow-y-auto">
+              <div>
+                {localStorage.getItem("flashkitPlan") === "FLASHKITSOCIAL" ? 
+                <>
+                <div className="m-10  flex justify-around flex-wrap">
+                    <div className="flex gap-4">
+                        <Avatar className= "m-auto">
+                        {user&&user.photoURL ? <AvatarImage src={user.photoURL} /> :
+                          <AvatarImage src="https://github.com/shadcn.png" />
+                        }
+                          <AvatarFallback>CN</AvatarFallback>
+                        </Avatar>
+                        <div className="my-auto space-y-1">
+                          <p className=" font-bold mt-2 text-xl mr-auto">@{user&&user.displayName ? user.displayName.replace(" ","") : "Set Up Profile"}</p>
+                          <div className="flex justify-between gap-2">
+                            <p className="text-[#6E7C87] font-medium text-sm">Profile Status</p>
+                            <div className="text-[#E1A100] bg-[#fdf5e1] text-center font-semibold flex pr-2 py-[2px] rounded-sm"><LucideAward className="h-4 my-auto"/>Gold</div>
+                          </div>
+                        </div>
+                    </div>
+                  <Separator orientation="vertical" className="mx-4"/>
+                  <div className=" flex flex-col gap-2">
+                      <div className=" text-base font-semibold Inter flex gap-2"><LucideGauge className="h-5 my-auto"/> EQS Score</div>
+                      <p className=" text-2xl font-semibold">{Engagement && typeof Engagement ==='object' && Object.keys(Engagement).length > 0 ? Engagement.engagementMetrics.score * 10 : 79} %</p>
+                      <div className="flex text-sm font-medium gap-1"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
+                      {data && typeof data === 'object' && Object.keys(data).length > 0 ?<Button className={"w-full" + loading ? " opacity-90 ":""} onClick={()=>getEQSScore(data)}>{loading ? "Loading ...":" Generate EQS Score"}</Button> : <></>}
+                  </div>
+                  <Separator orientation="vertical" className="mx-4"/>
+                  <div className=" flex flex-col gap-2">
+                      <div className=" text-base font-semibold Inter flex gap-2"><LucideUsersRound className="h-5 my-auto"/> Followers</div>
+                      <p className=" text-2xl font-semibold">23000</p>
+                      <div className="flex text-sm font-medium gap-1"><p className="text-[#FF9500]">-0.4%</p><p className="text-secondary"> than last week</p></div>
+                  </div>
+                  <Separator orientation="vertical" className="mx-4"/>
+                  <div className=" flex flex-col gap-2">
+                      <div className=" text-base font-semibold Inter flex gap-2"><LucideUsersRound className="h-5 my-auto"/> Engagement</div>
+                      <div className="flex text-sm font-medium gap-1"><p className=" text-2xl font-semibold">{Engagement && typeof Engagement ==='object' && Object.keys(Engagement).length > 0 ? Engagement.engagementMetrics.details.recentEngagementScore : 9.2}</p><p className="text-secondary mt-auto mb-1"> / 10</p></div>
+                      <div className="flex text-sm font-medium gap-1"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
+                  </div>
+                </div>
+                <Separator className="mx-8"/>
+                <div className="m-10">
+                    <div className="flex gap-6">
+                    <InsightsChart/> 
+                    <MonthlyEngagementChart/>
+                    </div>
+                </div>
+                </> 
+                : <></>}
+                <div className="m-10">
+                  <div className="justify-between flex flex-col mb-10">
+                  <p className=" text-lg font-semibold mt-10">Start Building</p>
+                  <p className="text-[#6E7C87] font-medium text-sm">Choose a template and craft eye-catching stats</p>
+                  </div>
+                  <DashboardProjects store={store} />
+                </div>
+              </div>
+            </TabsContent>
+            <TabsContent value="youtube" className="flex-1 p-10 space-y-6">
+            <p className=" text-3xl font-semibold">Youtube Analytics</p>
             <div>
-              <div className="m-10  flex justify-around flex-wrap">
-                  <div className="flex gap-4">
-                      <Avatar className= "m-auto">
-                      {user&&user.photoURL ? <AvatarImage src={user.photoURL} /> :
-                        <AvatarImage src="https://github.com/shadcn.png" />
-                      }
-                        <AvatarFallback>CN</AvatarFallback>
-                      </Avatar>
-                      <div className="my-auto space-y-1">
-                        <p className=" font-bold mt-2 text-xl mr-auto">@{user&&user.displayName ? user.displayName.replace(" ","") : "Set Up Profile"}</p>
-                        <div className="flex justify-between gap-2">
-                          <p className="text-[#6E7C87] font-medium text-sm">Profile Status</p>
-                          <div className="text-[#E1A100] bg-[#fdf5e1] text-center font-semibold flex pr-2 py-[2px] rounded-sm"><LucideAward className="h-4 my-auto"/>Gold</div>
+              <p className="text-secondary font-medium text-lg">Overview</p>
+              <div className="flex gap-5 mt-3">
+                  <Card className="flex-1 shadow-md">
+                    <CardContent className="pt-6">
+                      <p className="text-lg font-semibold">Total Followers</p>
+                      <p className="text-3xl font-semibold">127K</p>
+                      <div className="flex text-sm font-medium gap-1 mt-6"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
+                    </CardContent>
+                  </Card>
+                  <Card className="flex-1 shadow-md">
+                    <CardContent className="pt-6">
+                      <p className="text-lg font-semibold">Total Engagement</p>
+                      <p className="text-3xl font-semibold">127K</p>
+                      <div className="flex text-sm font-medium gap-1 mt-6"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
+                    </CardContent>
+                  </Card>
+                  <Card className="flex-1 shadow-md">
+                    <CardContent className="pt-6">
+                      <p className="text-lg font-semibold">Daily Visitors</p>
+                      <p className="text-3xl font-semibold">5.3K</p>
+                      <div className="flex text-sm font-medium gap-1 mt-6"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
+                    </CardContent>
+                  </Card>
+              </div>
+            </div>
+            <div>
+              <p className="text-secondary font-medium text-lg">Audience</p>
+              { data && typeof data === 'object' && Object.keys(data).length > 0 ?
+                      <div className="flex-1 mt-3">
+                        <div className="flex-1 p-4 flex gap-4">
+                          <PieChartDisplay/>
+                          <YoutubeMonthly/>
+                          
+                        </div>
+                        <div className="flex-1 p-4 flex gap-4 flex-wrap">
+                          <RadarChartDisplay/>
+                          <RadialChartDisplay/>
+                        </div>
+                        <div className="flex-1 p-4 flex gap-4 flex-wrap">
+                          <BarChartDisplay/>
+                          <LineChartDisplay/>
                         </div>
                       </div>
-                  </div>
-                <Separator orientation="vertical" className="mx-4"/>
-                <div className=" flex flex-col gap-2">
-                    <div className=" text-base font-semibold Inter flex gap-2"><LucideGauge className="h-5 my-auto"/> EQS Score</div>
-                    <p className=" text-2xl font-semibold">{Engagement && typeof Engagement ==='object' && Object.keys(Engagement).length > 0 ? Engagement.engagementMetrics.score * 10 : 79} %</p>
-                    <div className="flex text-sm font-medium gap-1"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
-                    {data && typeof data === 'object' && Object.keys(data).length > 0 ?<Button className={"w-full" + loading ? " opacity-90 ":""} onClick={()=>getEQSScore(data)}>{loading ? "Loading ...":" Generate EQS Score"}</Button> : <></>}
-                </div>
-                <Separator orientation="vertical" className="mx-4"/>
-                <div className=" flex flex-col gap-2">
-                    <div className=" text-base font-semibold Inter flex gap-2"><LucideUsersRound className="h-5 my-auto"/> Followers</div>
-                    <p className=" text-2xl font-semibold">23000</p>
-                    <div className="flex text-sm font-medium gap-1"><p className="text-[#FF9500]">-0.4%</p><p className="text-secondary"> than last week</p></div>
-                </div>
-                <Separator orientation="vertical" className="mx-4"/>
-                <div className=" flex flex-col gap-2">
-                    <div className=" text-base font-semibold Inter flex gap-2"><LucideUsersRound className="h-5 my-auto"/> Engagement</div>
-                    <div className="flex text-sm font-medium gap-1"><p className=" text-2xl font-semibold">{Engagement && typeof Engagement ==='object' && Object.keys(Engagement).length > 0 ? Engagement.engagementMetrics.details.recentEngagementScore : 9.2}</p><p className="text-secondary mt-auto mb-1"> / 10</p></div>
-                    <div className="flex text-sm font-medium gap-1"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
+                      :
+                      <div className="flex gap-5 mt-3">
+                        <InsightsChart/>
+                        <MonthlyEngagementChart/>
+                      </div>
+                } 
+            </div>
+            <div>
+                <p className="text-secondary font-medium text-lg mb-3">Top Content</p>
+                <TopContentCarousel />
+            </div>
+            </TabsContent>
+            <TabsContent value="mediakit" className="flex-1 p-10 space-y-6">
+              <p className=" text-3xl font-semibold">Media Kit</p>
+              <div>
+                <p className="text-lg font-semibold">Templates for you</p>
+                <p className="text-secondary font-medium text-sm mb-5">Choose a template and craft eye-catching stats</p>
+                <div className="flex flex-wrap gap-3">
+                {
+                  mediaKitData.map((item)=>{
+                    return(
+                      <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
+                    )
+                  })
+                }
                 </div>
               </div>
-              <Separator className="mx-8"/>
+              <div>
+                <p className="text-lg font-semibold mb-5">Bold</p>
+                <div className="flex flex-wrap gap-3">
+                {
+                  boldDesigns.map((item)=>{
+                    return(
+                      <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
+                    )
+                  })
+                }
+                </div>
+              </div>
+              <div>
+                <p className="text-lg font-semibold mb-5">Minimal</p>
+                <div className="flex flex-wrap gap-3">
+                {
+                  minimalDesigns.map((item)=>{
+                    return(
+                      <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
+                    )
+                  })
+                }
+                </div>
+              </div>
+              <div>
+                <p className="text-lg font-semibold mb-5">Classic</p>
+                <div className="flex flex-wrap gap-3">
+                {
+                  classicDesigns.map((item)=>{
+                    return(
+                      <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
+                    )
+                  })
+                }
+                </div>
+              </div>
+            </TabsContent>
+            <TabsContent value="profile" className="flex-1">
               <div className="m-10">
-                  <div className="flex gap-6">
-                   <InsightsChart/> 
-                   <MonthlyEngagementChart/>
-                  </div>
-                <div className="justify-between flex flex-col mb-10">
-                <p className=" text-lg font-semibold mt-10">Start Building</p>
-                <p className="text-[#6E7C87] font-medium text-sm">Choose a template and craft eye-catching stats</p>
+                <ConnectAccount/>
+              </div>
+              <div className="m-10">
+              {Engagement && typeof Engagement ==='object' && Object.keys(Engagement).length > 0 ?
+                <Card className="flex gap-4">
+                  <CardContent className="flex-1 p-6">
+                  <pre>{Engagement.analysis[0].text}</pre>
+                  </CardContent>
+                </Card>
+                :<></>
+              }
+              </div>
+            </TabsContent>
+            <TabsContent value="templates" className="flex-1 p-10 space-y-6">
+            <p className=" text-3xl font-semibold">Templates</p>
+              <div>
+                <p className="text-lg font-semibold">Templates for you</p>
+                <p className="text-secondary font-medium text-sm mb-5">Choose a template and craft eye-catching stats</p>
+                <div className="flex flex-wrap gap-3">
+                {
+                  mediaKitData.map((item)=>{
+                    return(
+                      <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
+                    )
+                  })
+                }
                 </div>
-                <DashboardProjects store={store} />
               </div>
-            </div>
-          </TabsContent>
-          <TabsContent value="youtube" className="flex-1 p-10 space-y-6">
-          <p className=" text-3xl font-semibold">Youtube Analytics</p>
-          <div>
-            <p className="text-secondary font-medium text-lg">Overview</p>
-            <div className="flex gap-5 mt-3">
-                <Card className="flex-1 shadow-md">
-                  <CardContent className="pt-6">
-                    <p className="text-lg font-semibold">Total Followers</p>
-                    <p className="text-3xl font-semibold">127K</p>
-                    <div className="flex text-sm font-medium gap-1 mt-6"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
-                  </CardContent>
-                </Card>
-                <Card className="flex-1 shadow-md">
-                  <CardContent className="pt-6">
-                    <p className="text-lg font-semibold">Total Engagement</p>
-                    <p className="text-3xl font-semibold">127K</p>
-                    <div className="flex text-sm font-medium gap-1 mt-6"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
-                  </CardContent>
-                </Card>
-                <Card className="flex-1 shadow-md">
-                  <CardContent className="pt-6">
-                    <p className="text-lg font-semibold">Daily Visitors</p>
-                    <p className="text-3xl font-semibold">5.3K</p>
-                    <div className="flex text-sm font-medium gap-1 mt-6"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
-                  </CardContent>
-                </Card>
-            </div>
-          </div>
-          <div>
-            <p className="text-secondary font-medium text-lg">Audience</p>
-            { data && typeof data === 'object' && Object.keys(data).length > 0 ?
-                    <div className="flex-1 mt-3">
-                      <div className="flex-1 p-4 flex gap-4">
-                        <PieChartDisplay/>
-                        <YoutubeMonthly/>
-                        
-                      </div>
-                      <div className="flex-1 p-4 flex gap-4 flex-wrap">
-                        <RadarChartDisplay/>
-                        <RadialChartDisplay/>
-                      </div>
-                      <div className="flex-1 p-4 flex gap-4 flex-wrap">
-                        <BarChartDisplay/>
-                        <LineChartDisplay/>
-                      </div>
-                    </div>
-                    :
-                    <div className="flex gap-5 mt-3">
-                      <InsightsChart/>
-                      <MonthlyEngagementChart/>
-                    </div>
-              } 
-          </div>
-          <div>
-              <p className="text-secondary font-medium text-lg mb-3">Top Content</p>
-              <TopContentCarousel />
-          </div>
-          </TabsContent>
-          <TabsContent value="mediakit" className="flex-1 p-10 space-y-6">
-            <p className=" text-3xl font-semibold">Media Kit</p>
-            <div>
-              <p className="text-lg font-semibold">Templates for you</p>
-              <p className="text-secondary font-medium text-sm mb-5">Choose a template and craft eye-catching stats</p>
-              <div className="flex flex-wrap gap-3">
-              {
-                mediaKitData.map((item)=>{
-                  return(
-                    <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
-                  )
-                })
-              }
+              <div>
+                <p className="text-lg font-semibold mb-5">Bold</p>
+                <div className="flex flex-wrap gap-3">
+                {
+                  boldDesigns.map((item)=>{
+                    return(
+                      <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
+                    )
+                  })
+                }
+                </div>
               </div>
-            </div>
-            <div>
-              <p className="text-lg font-semibold mb-5">Bold</p>
-              <div className="flex flex-wrap gap-3">
-              {
-                boldDesigns.map((item)=>{
-                  return(
-                    <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
-                  )
-                })
-              }
+              <div>
+                <p className="text-lg font-semibold mb-5">Minimal</p>
+                <div className="flex flex-wrap gap-3">
+                {
+                  minimalDesigns.map((item)=>{
+                    return(
+                      <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
+                    )
+                  })
+                }
+                </div>
               </div>
-            </div>
-            <div>
-              <p className="text-lg font-semibold mb-5">Minimal</p>
-              <div className="flex flex-wrap gap-3">
-              {
-                minimalDesigns.map((item)=>{
-                  return(
-                    <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
-                  )
-                })
-              }
+              <div>
+                <p className="text-lg font-semibold mb-5">Classic</p>
+                <div className="flex flex-wrap gap-3">
+                {
+                  classicDesigns.map((item)=>{
+                    return(
+                      <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
+                    )
+                  })
+                }
+                </div>
               </div>
-            </div>
-            <div>
-              <p className="text-lg font-semibold mb-5">Classic</p>
-              <div className="flex flex-wrap gap-3">
-              {
-                classicDesigns.map((item)=>{
-                  return(
-                    <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
-                  )
-                })
-              }
+            </TabsContent>
+            <TabsContent value="projects" className="flex-1 p-10 space-y-6">
+            <p className=" text-3xl font-semibold">Projects</p>
+              <div>
+                <p className="text-lg font-semibold">Recent Projects for you</p>
+                <p className="text-secondary font-medium text-sm mb-5">Choose a template and craft eye-catching stats</p>
+                <div className="flex flex-wrap gap-3">
+                {
+                  mediaKitData.map((item)=>{
+                    return(
+                      <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
+                    )
+                  })
+                }
+                </div>
               </div>
-            </div>
-          </TabsContent>
-          <TabsContent value="profile" className="flex-1">
-            <div className="m-10">
-            {Engagement && typeof Engagement ==='object' && Object.keys(Engagement).length > 0 ?
-              <Card className="flex gap-4">
-                <CardContent className="flex-1 p-6">
-                 <pre>{Engagement.analysis[0].text}</pre>
-                </CardContent>
-              </Card>
-              :<></>
-            }
-            </div>
-          </TabsContent>
-          <TabsContent value="settings" className="flex-1">
-            <div className="m-10">
-              <ConnectAccount/>
-            </div>
-          </TabsContent>
+              <div>
+                <p className="text-lg font-semibold mb-5">Bold</p>
+                <div className="flex flex-wrap gap-3">
+                {
+                  boldDesigns.map((item)=>{
+                    return(
+                      <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
+                    )
+                  })
+                }
+                </div>
+              </div>
+              <div>
+                <p className="text-lg font-semibold mb-5">Minimal</p>
+                <div className="flex flex-wrap gap-3">
+                {
+                  minimalDesigns.map((item)=>{
+                    return(
+                      <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
+                    )
+                  })
+                }
+                </div>
+              </div>
+              <div>
+                <p className="text-lg font-semibold mb-5">Classic</p>
+                <div className="flex flex-wrap gap-3">
+                {
+                  classicDesigns.map((item)=>{
+                    return(
+                      <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
+                    )
+                  })
+                }
+                </div>
+              </div>
+            </TabsContent>
+        </div>
+        </SidebarLayout>
+        </Tabs>
+        {localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ? 
+        <div className="w-[15%] border-2 border-black my-2 mr-4">
+            <p className="my-auto">Ad Space</p>
+        </div>
+        : <></>}
       </div>
-      </SidebarLayout>
-      </Tabs>
-      <ChatWidget />
+      {localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ? 
+        <></>
+        : 
+        <ChatWidget />}
     </>
   );
 }

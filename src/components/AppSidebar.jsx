@@ -1,6 +1,8 @@
 import {
     ChevronRight,
     LucideCircleUserRound,
+    LucideDiamond,
+    LucideGem,
     LucideHome,
     LucideLayoutDashboard,
     LucidePieChart,
@@ -27,6 +29,7 @@ import {
 import { TabsList, TabsTrigger } from "./ui/tabs"
 import { Collapsible, CollapsibleTrigger } from "./ui/collapsible"
 import { CollapsibleContent } from "@radix-ui/react-collapsible"
+import { Badge } from "./ui/badge"
 
   export function AppSidebar({
     ...props
@@ -129,6 +132,13 @@ import { CollapsibleContent } from "@radix-ui/react-collapsible"
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
                         </TabsTrigger>
+                            { localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ?<SidebarMenuItem>
+                                <SidebarMenuButton className="font-semibold" onClick={()=>window.location.href="/billing"}>
+                                    <LucideGem className="h-5"/> Upgrade to <Badge className="bg-[#ffeae9] text-[#F56B63] rounded-sm">Pro</Badge>
+                                </SidebarMenuButton>
+                            </SidebarMenuItem> 
+                            : 
+                            <></>}
                     </SidebarMenu>
                 </SidebarGroup>
                 </SidebarContent>
