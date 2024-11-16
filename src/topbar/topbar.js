@@ -125,7 +125,7 @@ export default observer(({ store }) => {
           ></AnchorButton> */}
           { localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ?
                                 <Button className="font-semibold flex gap-1 mr-4" onClick={()=>window.location.href="/billing"}>
-                                    <LucideGem className="h-5"/> Upgrade to <Badge className="bg-[#ffeae9] text-[#F56B63] rounded-sm hover:bg-[#ffeae9]">Pro</Badge>
+                                    <LucideGem className="h-5"/> Upgrade<Badge className="bg-[#ffeae9] text-[#F56B63] rounded-sm hover:bg-[#ffeae9]">Pro</Badge>
                                 </Button>
                             : 
                             <></>}

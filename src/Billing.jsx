@@ -50,7 +50,8 @@ function Billing() {
             </div>
             </CardContent>
             <CardFooter className="mt-auto">
-                <Button className="w-full py-2 rounded-md" onClick={()=>onClickButton("FLASHKITUNLIMITED")}>Subscribe</Button>
+                {localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ? <Button className="w-full py-2 rounded-md" variant="outline" onClick={()=>window.location.href="/dashboard"}>Current Plan</Button> : 
+                <Button className="w-full py-2 rounded-md" onClick={()=>onClickButton("FLASHKITUNLIMITED")}>Subscribe</Button>}
             </CardFooter>
         </Card>
         <Card className="basis-1/3 flex flex-col">
@@ -75,7 +76,8 @@ function Billing() {
             </div>
             </CardContent>
             <CardFooter className="mt-auto">
-                <Button className="w-full py-2 rounded-md" onClick={()=>onClickButton("FLASHKITPRO")}>Subscribe</Button>
+            {localStorage.getItem("flashkitPlan") === "FLASHKITPRO" ? <Button className="w-full py-2 rounded-md" variant="outline" onClick={()=>window.location.href="/dashboard"}>Current Plan</Button> : 
+                <Button className="w-full py-2 rounded-md" onClick={()=>onClickButton("FLASHKITPRO")}>Subscribe</Button>}
             </CardFooter>
         </Card>
         <Card className="basis-1/3 flex flex-col">
@@ -100,7 +102,8 @@ function Billing() {
             </div>
             </CardContent>
             <CardFooter className="mt-auto">
-                <Button className="w-full py-2 rounded-md" onClick={()=>onClickButton("FLASHKITSOCIAL")}>Subscribe</Button>
+            {localStorage.getItem("flashkitPlan") === "FLASHKITSOCIAL" ? <Button className="w-full py-2 rounded-md" variant="outline" onClick={()=>window.location.href="/dashboard"}>Current Plan</Button> : 
+                <Button className="w-full py-2 rounded-md" onClick={()=>onClickButton("FLASHKITSOCIAL")}>Subscribe</Button>}
             </CardFooter>
         </Card>
     </div>

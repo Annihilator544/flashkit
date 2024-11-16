@@ -16,9 +16,9 @@ export const ElementsPanel = ({ store }) => {
     const UploadSection = DEFAULT_SECTIONS[4];
     const backgroundSection = DEFAULT_SECTIONS[5];
   return (
-    <Tabs defaultValue="videos" className="sidePanelHeight flex flex-col">
+    <Tabs defaultValue="images" className="sidePanelHeight flex flex-col">
         <TabsList className="flex flex-wrap gap-1">
-            <TabsTrigger value="videos">Videos</TabsTrigger>
+            {/* <TabsTrigger value="videos">Videos</TabsTrigger> */}
             <TabsTrigger value="icons">Icons</TabsTrigger>
             <TabsTrigger value="texts">Texts</TabsTrigger>
             <TabsTrigger value="images">Images</TabsTrigger>
@@ -26,7 +26,7 @@ export const ElementsPanel = ({ store }) => {
             <TabsTrigger value="uploads">Uploads</TabsTrigger>
             <TabsTrigger value="backgrounds">Backgrounds</TabsTrigger>
         </TabsList>
-        <TabsContent value="videos" className="flex-1 overflow-hidden"><VideosSection.Panel store={store} /></TabsContent>
+        {/* <TabsContent value="videos" className="flex-1 overflow-hidden"><VideosSection.Panel store={store} /></TabsContent> */}
         <TabsContent value="icons" className="flex-1 overflow-hidden"><IconsSection.Panel store={store} /></TabsContent>
         <TabsContent value="texts" className="flex-1 overflow-hidden"><TextSection.Panel store={store} /></TabsContent>
         <TabsContent value="images" className="flex-1 overflow-hidden"><ImageSection.Panel store={store} /></TabsContent>

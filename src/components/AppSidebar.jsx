@@ -6,6 +6,7 @@ import {
     LucideHome,
     LucideLayoutDashboard,
     LucidePieChart,
+    LucidePlus,
     LucideScroll,
     LucideTvMinimalPlay,
   } from "lucide-react"
@@ -50,6 +51,14 @@ import { Badge } from "./ui/badge"
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
                         </TabsTrigger>
+                        <SidebarMenuItem>
+                                <SidebarMenuButton className="font-semibold" onClick={()=>window.location.href="/canvas?id=create_new_design"}>
+                                <div  className="bg-[#ef8a80] p-[2px] rounded-sm ">
+                                    <LucidePlus size={14} fill="#fff"  color="#fff" className=''/>
+                                </div>
+                                Create New
+                                </SidebarMenuButton>
+                        </SidebarMenuItem> 
                         <TabsTrigger value="templates" className="p-0">
                             <SidebarMenuItem>
                                 <SidebarMenuButton>
@@ -57,7 +66,7 @@ import { Badge } from "./ui/badge"
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
                         </TabsTrigger>
-                            <SidebarMenu>
+                        { localStorage.getItem("flashkitPlan") === "FLASHKITSOCIAL" ? <SidebarMenu>
                                 <Collapsible
                                     asChild
                                     defaultOpen={true}
@@ -110,14 +119,14 @@ import { Badge } from "./ui/badge"
                                     </CollapsibleContent>
                                     </SidebarMenuItem>
                                 </Collapsible>
-                            </SidebarMenu>
-                        <TabsTrigger value="mediakit" className="p-0">
+                            </SidebarMenu> : <></> }
+                        { localStorage.getItem("flashkitPlan") === "FLASHKITSOCIAL" ? <TabsTrigger value="mediakit" className="p-0">
                             <SidebarMenuItem>
                                 <SidebarMenuButton>
                                 <LucideTvMinimalPlay className="h-5"/> Media Kit
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
-                        </TabsTrigger>
+                        </TabsTrigger> : <></> }
                         <TabsTrigger value="projects" className="p-0">
                             <SidebarMenuItem>
                                 <SidebarMenuButton>
@@ -134,7 +143,7 @@ import { Badge } from "./ui/badge"
                         </TabsTrigger>
                             { localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ?<SidebarMenuItem>
                                 <SidebarMenuButton className="font-semibold" onClick={()=>window.location.href="/billing"}>
-                                    <LucideGem className="h-5"/> Upgrade to <Badge className="bg-[#ffeae9] text-[#F56B63] rounded-sm">Pro</Badge>
+                                    <LucideGem className="h-5"/> Upgrade<Badge className="bg-[#ffeae9] text-[#F56B63] rounded-sm">Pro</Badge>
                                 </SidebarMenuButton>
                             </SidebarMenuItem> 
                             : 

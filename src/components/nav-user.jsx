@@ -76,10 +76,20 @@ export function NavUser() {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
+            {localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ? 
               <DropdownMenuItem>
                 <Sparkles className="h-4" />
                 Upgrade to Pro
               </DropdownMenuItem>
+              : localStorage.getItem("flashkitPlan") === "FLASHKITPRO" ?
+              <DropdownMenuItem>
+                <Sparkles className="h-4" />
+                Upgrade to Social
+              </DropdownMenuItem>
+              : <DropdownMenuItem>
+                <Sparkles className="h-4" />
+                Social
+              </DropdownMenuItem>}
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
