@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 // Replace with your Facebook App details
-const FB_APP_ID = '1036920114742559'; // Replace with your app's Facebook App ID
+const FB_APP_ID = '849578353662455'; // Replace with your app's Facebook App ID
 const REDIRECT_URI = 'http://localhost:3000/dashboard'; // Replace with your app's redirect URI
 
 const FacebookLogin = () => {
