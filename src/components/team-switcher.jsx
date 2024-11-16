@@ -12,9 +12,9 @@ export function TeamSwitcher() {
       <SidebarMenuItem>
         <SidebarMenuButton
           size="lg"
-          className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground gap-0">
+          className="data-[state=open]:bg-sidebar-accent  data-[state=open]:text-sidebar-accent-foreground gap-0">
           <div
-            className="flex aspect-square size-8 items-center justify-center rounded-lg text-sidebar-primary-foreground">
+            className="flex aspect-square size-8 items-center group-data-[collapsible=icon]:justify-center justify-end rounded-lg text-sidebar-primary-foreground">
             <img src={logo} alt="Logo" className="h-6" />
           </div>
           <div className="grid flex-1 text-left text-sm leading-tight">
