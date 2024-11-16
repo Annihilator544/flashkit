@@ -14,7 +14,7 @@ export const loadJSONFile = (file, store) => {
     }
   };
   reader.onerror = function () {
-    alert('Can not load Polotno project file.');
+    alert('Can not load flashkit project file.');
   };
   reader.readAsText(file);
 };
