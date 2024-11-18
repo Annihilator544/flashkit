@@ -155,8 +155,7 @@ const App = observer(({ store }) => {
       className='flex-1'
       onDrop={handleDrop}
     >
-      <Topbar store={store} />
-      <div style={{ height: 'calc(100% - 50px)' }}>
+      <div style={{ height: 'calc(100% )' }}>
         <PolotnoContainer className="polotno-app-container">
           <SidePanelWrap>
             <SidePanel store={store} sections={DEFAULT_SECTIONS2} />
@@ -169,6 +168,7 @@ const App = observer(({ store }) => {
 
           </div>}
           <WorkspaceWrap>
+          <Topbar store={store} />
             <Toolbar
               store={store}
               components={{

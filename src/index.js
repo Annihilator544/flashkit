@@ -17,7 +17,6 @@ import Login from 'Login';
 import ProtectedRoute from 'layouts/ProtectedRoute';
 import PrivacyPolicy from 'PrivacyPolicy';
 import TermsOfService from 'TermsOfService';
-import DashBoard2 from 'Dashboard2';
 import Secret from 'Secret';
 import Billing from 'Billing';
 
@@ -89,10 +88,6 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <ProtectedRoute><DashBoard2 store={store}/></ProtectedRoute>,
-  },
-  {
-    path: "/dashboard2",
     element: <ProtectedRoute><DashBoard store={store}/></ProtectedRoute>,
   },
   {
