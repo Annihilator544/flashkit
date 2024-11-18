@@ -65,7 +65,7 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                     <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton
-                        className="data-[state=open]:bg-sidebar-accent  data-[state=open]:text-sidebar-accent-foreground group-data-[collapsible=icon]:gap-0 my-3">
+                        className="data-[state=open]:bg-sidebar-accent  data-[state=open]:text-sidebar-accent-foreground group-data-[collapsible=icon]:gap-0">
                         <div
                             className="flex items-center group-data-[collapsible=icon]:justify-center justify-end rounded-lg text-sidebar-primary-foreground">
                             <img src={logo} alt="Logo" className="h-6 " />
