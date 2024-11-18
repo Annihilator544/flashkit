@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva } from "class-variance-authority";
-import { PanelLeft } from "lucide-react"
+import { PanelLeft, PanelRightClose, PanelRightOpen } from "lucide-react"
 
 import { useIsMobile } from "../../hooks/use-mobile"
 import { cn } from "../../lib/utils.ts"
@@ -218,6 +218,7 @@ Sidebar.displayName = "Sidebar"
 
 const SidebarTrigger = React.forwardRef(({ className, onClick, ...props }, ref) => {
   const { toggleSidebar } = useSidebar()
+  const [isToggled, setIsToggled] = React.useState(false);
 
   return (
     (<Button
@@ -229,9 +230,10 @@ const SidebarTrigger = React.forwardRef(({ className, onClick, ...props }, ref) 
       onClick={(event) => {
         onClick?.(event)
         toggleSidebar()
+        setIsToggled((isToggled) => !isToggled)
       }}
       {...props}>
-      <PanelLeft />
+      {isToggled ? <PanelRightClose /> : <PanelRightOpen />}
       <span className="sr-only">Toggle Sidebar</span>
     </Button>)
   );

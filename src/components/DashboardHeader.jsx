@@ -15,7 +15,7 @@ const DashboardHeader = () => {
   return (
     <div className="flex flex-col m-10">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-[#ef8a80] to-[#ff9b88] p-8 rounded-lg mb-6">
+      <div className="bg-gradient-to-r from-[#f35b53] to-[#ff9b88] p-8 rounded-lg mb-6">
         <h1 className="text-4xl font-bold text-white mb-4">Explore Flashkit</h1>
         <Button variant="secondary" className="bg-white text-primary hover:bg-gray-100">
           Check out latest features

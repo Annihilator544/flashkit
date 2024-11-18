@@ -1,18 +1,16 @@
 import {
     ChevronRight,
     LucideCircleUserRound,
-    LucideDiamond,
+    LucideFileText,
+    LucideFolder,
     LucideGem,
     LucideHome,
     LucideLayoutDashboard,
     LucidePieChart,
     LucidePlus,
-    LucideScroll,
-    LucideTvMinimalPlay,
   } from "lucide-react"
   
   import { NavUser } from "components/nav-user"
-  import { TeamSwitcher } from "components/team-switcher"
   import {
     Sidebar,
     SidebarContent,
@@ -31,6 +29,10 @@ import { TabsList, TabsTrigger } from "./ui/tabs"
 import { Collapsible, CollapsibleTrigger } from "./ui/collapsible"
 import { CollapsibleContent } from "@radix-ui/react-collapsible"
 import { Badge } from "./ui/badge"
+import logo from "../assets/logo.png"
+import flashkit from "../assets/flashkit.png"
+import flashkitPro from "../assets/flashkitPro.png"
+import flashkitSocial from "../assets/flashkitSocial.png"
 
   export function AppSidebar({
     ...props
@@ -39,7 +41,25 @@ import { Badge } from "./ui/badge"
         <TabsList className=" bg-[#f6f8f9] border-r rounded-none sticky p-0">
             <Sidebar collapsible="icon" {...props}>
                 <SidebarHeader>
-                <TeamSwitcher />
+                <SidebarMenu>
+                    <SidebarMenuItem>
+                        <SidebarMenuButton
+                        size="lg"
+                        className="data-[state=open]:bg-sidebar-accent  data-[state=open]:text-sidebar-accent-foreground gap-0">
+                        <div
+                            className="flex aspect-square size-8 items-center group-data-[collapsible=icon]:justify-center justify-end rounded-lg text-sidebar-primary-foreground">
+                            <img src={logo} alt="Logo" className="h-6" />
+                        </div>
+                        <div className="grid flex-1 text-left text-sm leading-tight">
+                            {localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ? 
+                            <img src={flashkit} alt="flashkit logo" className="h-8" />
+                            : localStorage.getItem("flashkitPlan") === "FLASHKITSOCIAL" ?
+                            <img src={flashkitSocial} alt="flashkit logo" className="h-8" />
+                            : <img src={flashkitPro} alt="flashkit logo" className="h-8" /> }
+                        </div>
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
+                </SidebarMenu>
                 </SidebarHeader>
                 <SidebarContent>
                 <SidebarGroup>
@@ -123,14 +143,14 @@ import { Badge } from "./ui/badge"
                         { localStorage.getItem("flashkitPlan") === "FLASHKITSOCIAL" ? <TabsTrigger value="mediakit" className="p-0">
                             <SidebarMenuItem>
                                 <SidebarMenuButton>
-                                <LucideTvMinimalPlay className="h-5"/> Media Kit
+                                <LucideFileText className="h-5"/> Media Kit
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
                         </TabsTrigger> : <></> }
                         <TabsTrigger value="projects" className="p-0">
                             <SidebarMenuItem>
                                 <SidebarMenuButton>
-                                <LucideScroll className="h-5"/> Projects
+                                <LucideFolder className="h-5"/> Projects
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
                         </TabsTrigger>
