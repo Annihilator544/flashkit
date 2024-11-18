@@ -141,7 +141,20 @@ function DashBoard2({ store }) {
                   </div>
                   <DashboardProjects store={store} />
                 </div>
-              </div>
+                <div className="m-10">
+                  <p className="text-lg font-semibold">Templates for you</p>
+                  <p className="text-secondary font-medium text-sm mb-5">Choose a template and craft eye-catching stats</p>
+                  <div className="flex  gap-3">
+                  {
+                    mediaKitData.slice(1,6).map((item)=>{
+                      return(
+                        <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
+                      )
+                    })
+                  }
+                  </div>
+                </div>
+                </div>
             </TabsContent>
             <TabsContent value="youtube" className="flex-1 p-10 space-y-6">
             <p className=" text-3xl font-semibold">Youtube Analytics</p>
