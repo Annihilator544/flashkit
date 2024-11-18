@@ -40,11 +40,10 @@ import flashkitSocial from "../assets/flashkitSocial.png"
     return (
         <TabsList className=" bg-[#f6f8f9] border-r rounded-none sticky p-0">
             <Sidebar collapsible="icon" {...props}>
-                <SidebarHeader>
+                {/* <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton
-                        size="lg"
                         className="data-[state=open]:bg-sidebar-accent  data-[state=open]:text-sidebar-accent-foreground gap-0">
                         <div
                             className="flex aspect-square size-8 items-center group-data-[collapsible=icon]:justify-center justify-end rounded-lg text-sidebar-primary-foreground">
@@ -60,10 +59,26 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                 </SidebarMenu>
-                </SidebarHeader>
+                </SidebarHeader> */}
                 <SidebarContent>
                 <SidebarGroup>
                     <SidebarMenu>
+                    <SidebarMenuItem>
+                        <SidebarMenuButton
+                        className="data-[state=open]:bg-sidebar-accent  data-[state=open]:text-sidebar-accent-foreground group-data-[collapsible=icon]:gap-0 my-3">
+                        <div
+                            className="flex items-center group-data-[collapsible=icon]:justify-center justify-end rounded-lg text-sidebar-primary-foreground">
+                            <img src={logo} alt="Logo" className="h-6 " />
+                        </div>
+                        <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
+                            {localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ? 
+                            <img src={flashkit} alt="flashkit logo" className="h-8" />
+                            : localStorage.getItem("flashkitPlan") === "FLASHKITSOCIAL" ?
+                            <img src={flashkitSocial} alt="flashkit logo" className="h-8" />
+                            : <img src={flashkitPro} alt="flashkit logo" className="h-8" /> }
+                        </div>
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
                         <TabsTrigger value="home" className="p-0">
                             <SidebarMenuItem>
                                 <SidebarMenuButton>
