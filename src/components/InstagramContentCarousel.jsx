@@ -21,7 +21,7 @@ export function InstagramContentCarousel({CarouselItems}) {
         >
             <CardHeader className="flex-row justify-between">
                 <CardTitle className="text-lg">
-                    Top Content By Reach
+                    Recent Posts
                 </CardTitle>
                 <div>
                     <CarouselPrevious />
@@ -39,12 +39,10 @@ export function InstagramContentCarousel({CarouselItems}) {
                         </div>
                         <div className="p-2 flex flex-col justify-between">
                             <p className=" text-sm text-ellipsis font-semibold">{carouselItem.caption}</p>
-                            <p className="text-secondary text-sm">{carouselItem.timestamp.split('T')[0]}</p>
+                            <p className="text-secondary text-sm mt-auto mb-1">{carouselItem.timestamp.split('T')[0]}</p>
                             <div className="grid grid-cols-2">
                                 <div className="flex gap-1"><LucideHeart className="h-4 w-4 my-auto"/> <p>{carouselItem.like_count}</p></div>
-                                <div className="flex gap-1"><LucideTrendingUp className="h-4 w-4 my-auto"/> <p>1.3k</p></div>
                                 <div className="flex gap-1"><LucideMessageSquare className="h-4 w-4 my-auto"/> <p>{carouselItem.comments_count}</p></div>
-                                <div className="flex gap-1"><LucideSend className="h-4 w-4 my-auto"/> <p>435</p></div>
                             </div>
                         </div>
                     </CardContent>

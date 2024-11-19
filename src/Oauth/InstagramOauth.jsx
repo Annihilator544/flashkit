@@ -18,7 +18,7 @@ const SCOPES = [
 ];
 
 const FacebookLogin = () => {
-  const { setInstagramData } = useInstagramData();
+  const { setPostData, setUserData  } = useInstagramData();
   const fetchInstagramBusinessAccount = async (userAccessToken) => {
     try {
       // Step 1: Get the user's Facebook Pages
@@ -52,7 +52,14 @@ const FacebookLogin = () => {
             const mediaData = await mediaResponse.json();
 
             console.log('Media Data:', mediaData);
-            setInstagramData(mediaData.data);
+            setPostData(mediaData.data);
+
+            // Step 5: Fetch Instagram user data using the Page Access Token
+            const userDataResponse = await fetch(
+              `https://graph.facebook.com/${instagramBusinessAccountId}?fields=biography,followers_count,follows_count,ig_id,media_count,name,profile_picture_url,username,website&access_token=${pageAccessToken}`
+            );
+            const userData = await userDataResponse.json();
+            setUserData(userData);
 
             // Exit loop after finding the first Instagram business account
             break;

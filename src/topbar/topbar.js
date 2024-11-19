@@ -11,7 +11,7 @@ import { useProject } from '../plotNoFeatures/project';
 import { FileMenu } from './file-menu';
 import { DownloadButton } from './download-button';
 import { Input } from '../components/ui/input';
-import { LucideGem } from 'lucide-react';
+import { LucideGem, LucideUpload } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 
@@ -70,7 +70,7 @@ export default observer(({ store }) => {
   const project = useProject();
 
   return (
-    <NavbarContainer className="bp5-navbar">
+    <NavbarContainer className="bp5-navbar bg-gradient-to-r from-[#f35b53] to-[#ff9b88]">
       <NavInner>
         <Navbar.Group align={Alignment.LEFT}>
           <FileMenu store={store} project={project} />
@@ -140,6 +140,7 @@ export default observer(({ store }) => {
               }}
               className={' bg-white '}
             />
+            <Button><LucideUpload className='h-4 mr-2'/>Share</Button>
           <DownloadButton store={store} />
           </div>
           {/* <UserMenu store={store} project={project} /> */}

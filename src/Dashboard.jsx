@@ -6,7 +6,7 @@ import { useProject } from "plotNoFeatures/project";
 import { observer } from "mobx-react-lite";
 import * as api from "./plotNoFeatures/api";
 import { Spinner } from "@blueprintjs/core";
-import { Card, CardContent } from "./components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
 import { Button } from "./components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "./components/ui/avatar";
@@ -150,9 +150,9 @@ function DashBoard({ store }) {
                   <p className="text-secondary font-medium text-sm mb-5">Choose a template and craft eye-catching stats</p>
                   <div className="flex  gap-3">
                   {
-                    mediaKitData.slice(1,6).map((item)=>{
+                    mediaKitData.slice(1,6).map((item,index)=>{
                       return(
-                        <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
+                        <TemplateCard key={index} url={item.preview} jsonURL={item.json} store={store}/>
                       )
                     })
                   }
@@ -220,59 +220,54 @@ function DashBoard({ store }) {
             </TabsContent>
             <TabsContent value="instagram" className="flex-1 p-10 space-y-6">
             <p className=" text-3xl font-semibold">Instagram Analytics</p>
+            {instagramData && instagramData.userData.id ?
+            <Card>
+              <CardHeader className="flex-row justify-between">
+                <CardTitle className="text-lg">
+                    Connected Accounts
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="flex gap-4">
+                <Avatar className="h-12 w-12 rounded-lg">
+                  <AvatarImage src={instagramData.userData.profile_picture_url} />
+                  <AvatarFallback>IG</AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col">
+                  <p className="font-semibold text-lg">@{instagramData.userData.username}</p>
+                  <p className="text-secondary text-sm">{instagramData.userData.biography}</p>
+                </div>
+                </CardContent>
+            </Card>
+            : <></> }
             <div>
               <p className="text-secondary font-medium text-lg">Overview</p>
               <div className="flex gap-5 mt-3">
                   <Card className="flex-1 shadow-md">
                     <CardContent className="pt-6">
                       <p className="text-lg font-semibold">Total Followers</p>
-                      <p className="text-3xl font-semibold">127K</p>
+                      <p className="text-3xl font-semibold">{instagramData.userData.followers_count}</p>
                       <div className="flex text-sm font-medium gap-1 mt-6"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
                     </CardContent>
                   </Card>
                   <Card className="flex-1 shadow-md">
                     <CardContent className="pt-6">
-                      <p className="text-lg font-semibold">Total Engagement</p>
-                      <p className="text-3xl font-semibold">127K</p>
+                      <p className="text-lg font-semibold">Total Follows</p>
+                      <p className="text-3xl font-semibold">{instagramData.userData.follows_count}</p>
                       <div className="flex text-sm font-medium gap-1 mt-6"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
                     </CardContent>
                   </Card>
                   <Card className="flex-1 shadow-md">
                     <CardContent className="pt-6">
-                      <p className="text-lg font-semibold">Daily Visitors</p>
-                      <p className="text-3xl font-semibold">5.3K</p>
+                      <p className="text-lg font-semibold">Post Count</p>
+                      <p className="text-3xl font-semibold">{instagramData.userData.media_count}</p>
                       <div className="flex text-sm font-medium gap-1 mt-6"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
                     </CardContent>
                   </Card>
               </div>
             </div>
             <div>
-              <p className="text-secondary font-medium text-lg">Audience</p>
-              { data && typeof data === 'object' && Object.keys(data).length > 0 ?
-                      <div className="flex-1 mt-3">
-                        <div className="flex-1 p-4 flex gap-4">
-                          <PieChartDisplay/>
-                          <YoutubeMonthly/>
-                        </div>
-                        <div className="flex-1 p-4 flex gap-4 flex-wrap">
-                          <RadarChartDisplay/>
-                          <RadialChartDisplay/>
-                        </div>
-                        <div className="flex-1 p-4 flex gap-4 flex-wrap">
-                          <BarChartDisplay/>
-                          <LineChartDisplay/>
-                        </div>
-                      </div>
-                      :
-                      <div className="flex gap-5 mt-3">
-                        <InsightsChart/>
-                        <MonthlyEngagementChart/>
-                      </div>
-                } 
-            </div>
-            <div>
                 <p className="text-secondary font-medium text-lg mb-3">Top Content</p>
-                {instagramData && <InstagramContentCarousel CarouselItems={instagramData} />}
+                {instagramData && <InstagramContentCarousel CarouselItems={instagramData.posts} />}
             </div>
             </TabsContent>
             {/* <TabsContent value="mediakit" className="flex-1 p-10 space-y-6">

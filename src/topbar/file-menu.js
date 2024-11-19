@@ -123,7 +123,7 @@ export const FileMenu = observer(({ store, project }) => {
       </Popover> */}
       <DropdownMenu>
         <DropdownMenuTrigger>
-          <Button>File</Button>
+          <Button className="hover:bg-[#ff9b88]">File</Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="bg-white mx-1">
           <DropdownMenuItem className="flex gap-2"  onClick={() => {
