@@ -97,7 +97,7 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                         <TabsTrigger value="templates" className="p-0">
                             <SidebarMenuItem>
                                 <SidebarMenuButton>
-                                    <LucideLayoutDashboard className="h-5"/> Templates
+                                    <LucideLayoutDashboard className="h-5"/> Template Hub
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
                         </TabsTrigger>
@@ -155,13 +155,13 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                                     </SidebarMenuItem>
                                 </Collapsible>
                             </SidebarMenu> : <></> }
-                        { localStorage.getItem("flashkitPlan") === "FLASHKITSOCIAL" ? <TabsTrigger value="mediakit" className="p-0">
+                        {/* { localStorage.getItem("flashkitPlan") === "FLASHKITSOCIAL" ? <TabsTrigger value="mediakit" className="p-0">
                             <SidebarMenuItem>
                                 <SidebarMenuButton>
                                 <LucideFileText className="h-5"/> Media Kit
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
-                        </TabsTrigger> : <></> }
+                        </TabsTrigger> : <></> } */}
                         <TabsTrigger value="projects" className="p-0">
                             <SidebarMenuItem>
                                 <SidebarMenuButton>

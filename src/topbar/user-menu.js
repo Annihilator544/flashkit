@@ -7,13 +7,13 @@ import { useProject } from '../plotNoFeatures/project';
 export const UserMenu = observer(({ store }) => {
   const project = useProject();
   const [user, setUser] = React.useState(null);
-  React.useEffect(() => {
-    if (project.cloudEnabled) {
-      window.puter.auth.getUser().then((user) => {
-        setUser(user);
-      });
-    }
-  }, [project.cloudEnabled]);
+  // React.useEffect(() => {
+  //   if (project.cloudEnabled) {
+  //     window.puter.auth.getUser().then((user) => {
+  //       setUser(user);
+  //     });
+  //   }
+  // }, [project.cloudEnabled]);
   return (
     <>
       <Popover
@@ -40,7 +40,7 @@ export const UserMenu = observer(({ store }) => {
                 }}
               />
             )} */}
-            {project.cloudEnabled && (
+            {/* {project.cloudEnabled && (
               <MenuItem
                 text="Logout"
                 icon="log-out"
@@ -49,7 +49,7 @@ export const UserMenu = observer(({ store }) => {
                   // logout({ returnTo: window.location.origin, localOnly: true });
                 }}
               />
-            )}
+            )} */}
           </Menu>
         }
         position={Position.BOTTOM_RIGHT}

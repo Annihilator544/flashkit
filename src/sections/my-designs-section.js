@@ -144,19 +144,19 @@ export const MyDesignsPanel = observer(({ store }) => {
           You have no saved designs yet...
         </div>
       )}
-      {!project.cloudEnabled && (
+      {/* {!project.cloudEnabled && (
         <div style={{ padding: '15px' }}>
           <CloudWarning />
         </div>
-      )}
-      {project.cloudEnabled && (
+      )} */}
+      {/* {project.cloudEnabled && (
         <div style={{ padding: '10px', textAlign: 'center' }}>
           Cloud data saving powered by{' '}
           <a href="https://puter.com" target="_blank" rel="noreferrer">
             Puter.com
           </a>
         </div>
-      )}
+      )} */}
       {designsLoadings && (
         <div style={{ padding: '30px' }}>
           <Spinner />

@@ -31,8 +31,10 @@ import ChatWidget from "./components/ChatWidget";
 import { useEngagementData } from "store/use-engagement-data";
 import SidebarLayout from "layouts/SideBarLayout";
 import DashboardHeader from "./components/DashboardHeader";
+import { InstagramContentCarousel } from "./components/InstagramContentCarousel";
+import { useInstagramData } from "store/use-instagram-data";
 
-function DashBoard2({ store }) {
+function DashBoard({ store }) {
   const { data } = useYoutubeData();
   const { user } = useAuthStore();
   const [mediaKitData, setMediaKitData] = React.useState([]);
@@ -41,6 +43,8 @@ function DashBoard2({ store }) {
   const [classicDesigns, setClassicDesigns] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const { Engagement, setEngagement } = useEngagementData();
+  const {instagramData} = useInstagramData();
+  console.log(instagramData);
   const getEQSScore = async (userData) => {
     setLoading(true);
     try {
@@ -214,7 +218,64 @@ function DashBoard2({ store }) {
                 <TopContentCarousel />
             </div>
             </TabsContent>
-            <TabsContent value="mediakit" className="flex-1 p-10 space-y-6">
+            <TabsContent value="instagram" className="flex-1 p-10 space-y-6">
+            <p className=" text-3xl font-semibold">Instagram Analytics</p>
+            <div>
+              <p className="text-secondary font-medium text-lg">Overview</p>
+              <div className="flex gap-5 mt-3">
+                  <Card className="flex-1 shadow-md">
+                    <CardContent className="pt-6">
+                      <p className="text-lg font-semibold">Total Followers</p>
+                      <p className="text-3xl font-semibold">127K</p>
+                      <div className="flex text-sm font-medium gap-1 mt-6"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
+                    </CardContent>
+                  </Card>
+                  <Card className="flex-1 shadow-md">
+                    <CardContent className="pt-6">
+                      <p className="text-lg font-semibold">Total Engagement</p>
+                      <p className="text-3xl font-semibold">127K</p>
+                      <div className="flex text-sm font-medium gap-1 mt-6"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
+                    </CardContent>
+                  </Card>
+                  <Card className="flex-1 shadow-md">
+                    <CardContent className="pt-6">
+                      <p className="text-lg font-semibold">Daily Visitors</p>
+                      <p className="text-3xl font-semibold">5.3K</p>
+                      <div className="flex text-sm font-medium gap-1 mt-6"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
+                    </CardContent>
+                  </Card>
+              </div>
+            </div>
+            <div>
+              <p className="text-secondary font-medium text-lg">Audience</p>
+              { data && typeof data === 'object' && Object.keys(data).length > 0 ?
+                      <div className="flex-1 mt-3">
+                        <div className="flex-1 p-4 flex gap-4">
+                          <PieChartDisplay/>
+                          <YoutubeMonthly/>
+                        </div>
+                        <div className="flex-1 p-4 flex gap-4 flex-wrap">
+                          <RadarChartDisplay/>
+                          <RadialChartDisplay/>
+                        </div>
+                        <div className="flex-1 p-4 flex gap-4 flex-wrap">
+                          <BarChartDisplay/>
+                          <LineChartDisplay/>
+                        </div>
+                      </div>
+                      :
+                      <div className="flex gap-5 mt-3">
+                        <InsightsChart/>
+                        <MonthlyEngagementChart/>
+                      </div>
+                } 
+            </div>
+            <div>
+                <p className="text-secondary font-medium text-lg mb-3">Top Content</p>
+                {instagramData && <InstagramContentCarousel CarouselItems={instagramData} />}
+            </div>
+            </TabsContent>
+            {/* <TabsContent value="mediakit" className="flex-1 p-10 space-y-6">
               <p className=" text-3xl font-semibold">Media Kit</p>
               <div>
                 <p className="text-lg font-semibold">Templates for you</p>
@@ -265,7 +326,7 @@ function DashBoard2({ store }) {
                 }
                 </div>
               </div>
-            </TabsContent>
+            </TabsContent> */}
             <TabsContent value="profile" className="flex-1">
               <div className="m-10">
                 <ConnectAccount/>
@@ -538,4 +599,4 @@ const DashboardProjects = observer(({ store }) => {
     );
   });
 
-export default DashBoard2;
+export default DashBoard;

@@ -42,11 +42,11 @@ class Project {
       this.requestSave();
     });
 
-    setInterval(() => {
-      mobx.runInAction(() => {
-        this.cloudEnabled = window.puter?.auth?.isSignedIn();
-      });
-    }, 100);
+    // setInterval(() => {
+    //   mobx.runInAction(() => {
+    //     this.cloudEnabled = window.puter?.auth?.isSignedIn();
+    //   });
+    // }, 100);
   }
 
   setLanguage(lang) {
@@ -161,10 +161,10 @@ class Project {
     console.log('saving done');
   }
 
-  async signIn() {
-    await window.puter.auth.signIn();
-    this.designsLength = await api.backupFromLocalToCloud();
-  }
+  // async signIn() {
+  //   await window.puter.auth.signIn();
+  //   this.designsLength = await api.backupFromLocalToCloud();
+  // }
 }
 
 export const createProject = (...args) => new Project(...args);
