@@ -1,6 +1,7 @@
 import {
     ChevronRight,
     LucideCircleUserRound,
+    LucideFileChartColumn,
     LucideFileSearch,
     LucideFileText,
     LucideFolder,
@@ -110,7 +111,7 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                                     <SidebarMenuItem>
                                     <CollapsibleTrigger asChild>
                                         <SidebarMenuButton className=" font-semibold">
-                                        <LucideFileSearch className="h-5"/> Insights
+                                        <LucideFileChartColumn className="h-5"/> Insights
                                         <ChevronRight
                                             className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                                         </SidebarMenuButton>

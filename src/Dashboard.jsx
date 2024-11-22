@@ -130,12 +130,12 @@ function DashBoard({ store }) {
                   </div>
                 </div>
                 <Separator className="mx-8"/>
-                <div className="m-10">
+                {/* <div className="m-10">
                     <div className="flex gap-6">
                     <InsightsChart/> 
                     <MonthlyEngagementChart/>
                     </div>
-                </div>
+                </div> */}
                 </> 
                 : <></>}
                 <div className="m-10">
