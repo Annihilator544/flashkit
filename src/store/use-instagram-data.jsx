@@ -1,6 +1,8 @@
 import {create} from 'zustand';
+import { persist } from 'zustand/middleware';
 
-export const useInstagramData = create((set) => ({
+export const useInstagramData = create(
+    persist((set) => ({
     instagramData: {
         posts:[],
         userData: {
@@ -23,4 +25,4 @@ export const useInstagramData = create((set) => ({
     storage: sessionStorage, // optional, defaults to localStorage
     serialize: (state) => JSON.stringify(state), // Convert state to JSON string
     deserialize: (str) => JSON.parse(str), // Parse JSON string back to object
-});
+}));

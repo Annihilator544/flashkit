@@ -90,13 +90,6 @@ const FacebookLogin = () => {
     )}&response_type=token&scope=${SCOPES.join(',')}`;
 
     window.location.href = oauthUrl;
-    const hash = window.location.hash;
-    if (hash && hash.includes('access_token')) {
-      const token = extractAccessToken(hash);
-      console.log('Access Token:', token);
-      localStorage.setItem('fb_access_token', token);
-      await fetchInstagramBusinessAccount(token);
-    }
   };
 
   // Extract access token from the URL hash

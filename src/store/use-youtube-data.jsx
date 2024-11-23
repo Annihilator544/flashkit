@@ -1,6 +1,8 @@
 import {create} from 'zustand';
+import { persist } from 'zustand/middleware';
 
-export const useYoutubeData = create((set) => ({
+export const useYoutubeData = create(
+    persist((set) => ({
     data: {},
     setData: (data) => set({data: data})
 }),{
@@ -8,4 +10,4 @@ export const useYoutubeData = create((set) => ({
     storage: sessionStorage, // optional, defaults to localStorage
     serialize: (state) => JSON.stringify(state), // Convert state to JSON string
     deserialize: (str) => JSON.parse(str), // Parse JSON string back to object
-});
+}));
