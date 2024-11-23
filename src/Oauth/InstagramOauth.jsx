@@ -84,12 +84,19 @@ const FacebookLogin = () => {
   }, []);
 
   // Redirect the user to Facebook OAuth login page
-  const loginWithFacebook = () => {
+  const loginWithFacebook = async () => {
     const oauthUrl = `https://www.facebook.com/v17.0/dialog/oauth?client_id=${FB_APP_ID}&redirect_uri=${encodeURIComponent(
       REDIRECT_URI
     )}&response_type=token&scope=${SCOPES.join(',')}`;
 
     window.location.href = oauthUrl;
+    const hash = window.location.hash;
+    if (hash && hash.includes('access_token')) {
+      const token = extractAccessToken(hash);
+      console.log('Access Token:', token);
+      localStorage.setItem('fb_access_token', token);
+      await fetchInstagramBusinessAccount(token);
+    }
   };
 
   // Extract access token from the URL hash

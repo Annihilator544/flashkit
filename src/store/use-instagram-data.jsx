@@ -17,4 +17,10 @@ export const useInstagramData = create((set) => ({
     },
     setPostData: (posts) => set((state) => ({ instagramData: { ...state.instagramData, posts : posts } })),
     setUserData: (userData) => set((state) => ({ instagramData: { ...state.instagramData, userData : userData } })),
-}));
+}),
+{
+    name: 'InstagramStorage', // required, this is the key used in storage
+    storage: sessionStorage, // optional, defaults to localStorage
+    serialize: (state) => JSON.stringify(state), // Convert state to JSON string
+    deserialize: (str) => JSON.parse(str), // Parse JSON string back to object
+});
