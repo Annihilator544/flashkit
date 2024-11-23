@@ -322,7 +322,7 @@ function DashBoard({ store }) {
                 </div>
               </div>
             </TabsContent> */}
-            <TabsContent value="profile" className="flex-1">
+            {/* <TabsContent value="profile" className="flex-1">
               <div className="m-10">
                 <ConnectAccount/>
               </div>
@@ -336,7 +336,7 @@ function DashBoard({ store }) {
                 :<></>
               }
               </div>
-            </TabsContent>
+            </TabsContent> */}
             <TabsContent value="templates" className="flex-1 p-10 space-y-6">
             <p className=" text-3xl font-semibold">Templates</p>
               <div>

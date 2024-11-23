@@ -93,7 +93,7 @@ export function NavUser() {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={()=>window.location.href="/account"}>
                 <BadgeCheck className="h-4" />
                 Account Settings
               </DropdownMenuItem>

@@ -22,7 +22,7 @@ export const useInstagramData = create(
 }),
 {
     name: 'InstagramStorage', // required, this is the key used in storage
-    storage: sessionStorage, // optional, defaults to localStorage
+    storage: localStorage, // optional, defaults to localStorage
     serialize: (state) => JSON.stringify(state), // Convert state to JSON string
     deserialize: (str) => JSON.parse(str), // Parse JSON string back to object
 }));

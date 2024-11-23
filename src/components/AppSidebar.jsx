@@ -157,24 +157,10 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                                     </SidebarMenuItem>
                                 </Collapsible>
                             </SidebarMenu> : <></> }
-                        {/* { localStorage.getItem("flashkitPlan") === "FLASHKITSOCIAL" ? <TabsTrigger value="mediakit" className="p-0">
-                            <SidebarMenuItem>
-                                <SidebarMenuButton>
-                                <LucideFileText className="h-5"/> Media Kit
-                                </SidebarMenuButton>
-                            </SidebarMenuItem>
-                        </TabsTrigger> : <></> } */}
                         <TabsTrigger value="projects" className="p-0">
                             <SidebarMenuItem>
                                 <SidebarMenuButton>
                                 <LucideFolder className="h-5"/> Projects
-                                </SidebarMenuButton>
-                            </SidebarMenuItem>
-                        </TabsTrigger>
-                        <TabsTrigger value="profile" className="p-0">
-                            <SidebarMenuItem>
-                                <SidebarMenuButton>
-                                <LucideCircleUserRound className="h-5"/> Profile
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
                         </TabsTrigger>
