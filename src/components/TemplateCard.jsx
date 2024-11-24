@@ -1,10 +1,11 @@
 import { useJsonData } from "store/use-json-data";
 import { Card, CardContent } from "./ui/card";
 
-function TemplateCard({ url , jsonURL}){
+function TemplateCard({ url , jsonURL, json}){
     const { setData } = useJsonData();
     async function ParseJson(jsonURL){
         await fetch(jsonURL).then(response => response.json()).then(data => setData(data));
+        json && setData(json);
         window.location.href = `/canvas?json=TRUE`;
     }
     return (

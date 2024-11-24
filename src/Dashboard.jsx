@@ -33,6 +33,7 @@ import SidebarLayout from "layouts/SideBarLayout";
 import DashboardHeader from "./components/DashboardHeader";
 import { InstagramContentCarousel } from "./components/InstagramContentCarousel";
 import { useInstagramData } from "store/use-instagram-data";
+import S3FileManager from "./components/S3MarketPlace";
 
 function DashBoard({ store }) {
   const { data } = useYoutubeData();
@@ -351,6 +352,10 @@ function DashBoard({ store }) {
                   })
                 }
                 </div>
+              </div>
+              <div>
+                <p className="text-lg font-semibold mb-5">MarketPlace</p>
+                <S3FileManager store={store}/>
               </div>
               <div>
                 <p className="text-lg font-semibold mb-5">Bold</p>
