@@ -33,6 +33,8 @@ import { useJsonData } from 'store/use-json-data';
 import { ChartSection } from 'sections/chart-section';
 import { QrSection } from 'sections/qr-section';
 import { ElementsSection } from 'sections/element-section';
+import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 // load default translations
 setTranslations(en);
@@ -95,8 +97,19 @@ const App = observer(({ store }) => {
   const [searchParams] = useSearchParams();
   const designId = searchParams.get('id');
   const json = searchParams.get('json');
+  const awsKey = searchParams.get('awsKey');
   const project = useProject();
   const { data } = useJsonData();
+  const bucketName = 'flashkitmarketplace';
+
+  const s3Client = new S3Client({
+    region: 'eu-west-2', // e.g., 'us-east-1'
+    credentials: {
+      accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+      secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+    }
+  });
+
   React.useEffect(() => {
   window.project.loadById(designId);
   }, [designId]);
@@ -110,6 +123,26 @@ const App = observer(({ store }) => {
     JsonDesign(json);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [json]);
+  React.useEffect(()=>{
+    async function AwsDesign(awsKey) {
+        if (!awsKey) return;
+        //fetch data from aws whose key is awsKey
+        awsKey = awsKey + '.json';
+        const command = new GetObjectCommand({
+          Bucket: bucketName,
+          Key: awsKey,
+        });
+        const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
+        const response = await fetch(url);
+        const dataJSON = await response.json();
+        console.log(dataJSON);
+        await project.createNewDesign();
+        store.loadJSON(dataJSON.json);
+        project.save();
+    }
+    AwsDesign(awsKey);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [awsKey]);
   const height = useHeight();
   React.useEffect(() => {
     if (project.language.startsWith('fr')) {
