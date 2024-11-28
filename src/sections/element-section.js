@@ -20,18 +20,18 @@ export const ElementsPanel = ({ store }) => {
         <TabsList className="flex flex-wrap gap-1">
             {/* <TabsTrigger value="videos">Videos</TabsTrigger> */}
             <TabsTrigger value="icons">Icons</TabsTrigger>
-            <TabsTrigger value="texts">Texts</TabsTrigger>
+            {/* <TabsTrigger value="texts">Texts</TabsTrigger> */}
             <TabsTrigger value="images">Images</TabsTrigger>
             <TabsTrigger value="shapes">Shapes</TabsTrigger>
-            <TabsTrigger value="uploads">Uploads</TabsTrigger>
+            {/* <TabsTrigger value="uploads">Uploads</TabsTrigger> */}
             <TabsTrigger value="backgrounds">Backgrounds</TabsTrigger>
         </TabsList>
         {/* <TabsContent value="videos" className="flex-1 overflow-hidden"><VideosSection.Panel store={store} /></TabsContent> */}
         <TabsContent value="icons" className="flex-1 overflow-hidden"><IconsSection.Panel store={store} /></TabsContent>
-        <TabsContent value="texts" className="flex-1 overflow-hidden"><TextSection.Panel store={store} /></TabsContent>
+        {/* <TabsContent value="texts" className="flex-1 overflow-hidden"><TextSection.Panel store={store} /></TabsContent> */}
         <TabsContent value="images" className="flex-1 overflow-hidden"><ImageSection.Panel store={store} /></TabsContent>
         <TabsContent value="shapes" className="flex-1 overflow-hidden"><ShapesSection.Panel store={store} /></TabsContent>
-        <TabsContent value="uploads" className="flex-1 overflow-hidden"><UploadSection.Panel store={store} /></TabsContent>
+        {/* <TabsContent value="uploads" className="flex-1 overflow-hidden"><UploadSection.Panel store={store} /></TabsContent> */}
         <TabsContent value="backgrounds" className="flex-1 overflow-hidden"><backgroundSection.Panel store={store} /></TabsContent>
     </Tabs>
   );
