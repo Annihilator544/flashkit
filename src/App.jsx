@@ -102,7 +102,7 @@ const App = observer(({ store }) => {
   const awsKey = searchParams.get('awsKey');
   const project = useProject();
   const { data } = useJsonData();
-  const bucketName = 'flashkitmarketplace';
+  const bucketName = 'flashkitpersonalsharebucket';
 
   const s3Client = new S3Client({
     region: 'eu-west-2', // e.g., 'us-east-1'
@@ -129,7 +129,6 @@ const App = observer(({ store }) => {
     async function AwsDesign(awsKey) {
         if (!awsKey) return;
         //fetch data from aws whose key is awsKey
-        awsKey = awsKey + '.json';
         const command = new GetObjectCommand({
           Bucket: bucketName,
           Key: awsKey,

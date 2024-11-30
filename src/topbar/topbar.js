@@ -14,6 +14,7 @@ import { Input } from '../components/ui/input';
 import { LucideGem, LucideUpload } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
+import Share from '../components/Share';
 
 const NavbarContainer = styled('div')`
   white-space: nowrap;
@@ -140,7 +141,7 @@ export default observer(({ store }) => {
               }}
               className={' bg-white '}
             />
-            <Button><LucideUpload className='h-4 mr-2'/>Share</Button>
+          <Share store={store}/>
           <DownloadButton store={store} />
           </div>
           {/* <UserMenu store={store} project={project} /> */}
