@@ -8,6 +8,7 @@ import { VideosSection } from './video-section';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
 import { IconsSection } from './icons-section';
 import { DEFAULT_SECTIONS } from 'polotno/side-panel';
+import { QrSection } from './qr-section';
 
 export const ElementsPanel = ({ store }) => {
     const TextSection = DEFAULT_SECTIONS[1];
@@ -23,16 +24,18 @@ export const ElementsPanel = ({ store }) => {
             {/* <TabsTrigger value="texts">Texts</TabsTrigger> */}
             <TabsTrigger value="images">Images</TabsTrigger>
             <TabsTrigger value="shapes">Shapes</TabsTrigger>
-            {/* <TabsTrigger value="uploads">Uploads</TabsTrigger> */}
+            <TabsTrigger value="uploads">Uploads</TabsTrigger>
             <TabsTrigger value="backgrounds">Backgrounds</TabsTrigger>
+            <TabsTrigger value="qr">QR</TabsTrigger>
         </TabsList>
         {/* <TabsContent value="videos" className="flex-1 overflow-hidden"><VideosSection.Panel store={store} /></TabsContent> */}
         <TabsContent value="icons" className="flex-1 overflow-hidden"><IconsSection.Panel store={store} /></TabsContent>
         {/* <TabsContent value="texts" className="flex-1 overflow-hidden"><TextSection.Panel store={store} /></TabsContent> */}
         <TabsContent value="images" className="flex-1 overflow-hidden"><ImageSection.Panel store={store} /></TabsContent>
         <TabsContent value="shapes" className="flex-1 overflow-hidden"><ShapesSection.Panel store={store} /></TabsContent>
-        {/* <TabsContent value="uploads" className="flex-1 overflow-hidden"><UploadSection.Panel store={store} /></TabsContent> */}
+        <TabsContent value="uploads" className="flex-1 overflow-hidden"><UploadSection.Panel store={store} /></TabsContent>
         <TabsContent value="backgrounds" className="flex-1 overflow-hidden"><backgroundSection.Panel store={store} /></TabsContent>
+        <TabsContent value="qr" className="flex-1 overflow-hidden"><QrSection.Panel store={store} /></TabsContent>
     </Tabs>
   );
 };

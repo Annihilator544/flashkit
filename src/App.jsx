@@ -31,7 +31,6 @@ import Topbar from 'topbar/topbar';
 import { useSearchParams } from 'react-router-dom';
 import { useJsonData } from 'store/use-json-data';
 import { ChartSection } from 'sections/chart-section';
-import { QrSection } from 'sections/qr-section';
 import { ElementsSection } from 'sections/element-section';
 import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
@@ -45,9 +44,7 @@ let DEFAULT_SECTIONS2 = [...DEFAULT_SECTIONS];
 DEFAULT_SECTIONS2.splice(1, 5);
 DEFAULT_SECTIONS2.push(ChartSection);
 DEFAULT_SECTIONS2.push(DEFAULT_SECTIONS[1]);
-DEFAULT_SECTIONS2.push(DEFAULT_SECTIONS[4]);
 // add two more sections
-DEFAULT_SECTIONS2.push( QrSection);
 DEFAULT_SECTIONS2.unshift(MyDesignsSection);
 DEFAULT_SECTIONS2.unshift(LogoSection);
 // DEFAULT_SECTIONS.push(StableDiffusionSection);
