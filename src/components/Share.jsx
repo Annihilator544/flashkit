@@ -127,7 +127,7 @@ const Share = observer(({ store }) => {
                 {isUploadedPersonal && (
                   <>
                     <p className="mt-5 text-green-500">File uploaded successfully! Could be accesssed on the following link: </p>
-                    <a href={`https://app.flashkit.co.uk/canvas?awsKey=${window.project.name}`} target="_blank" rel="noreferrer" className="text-blue-500">{`https://app.flashkit.co.uk/canvas?awsKey=${window.project.name}`}</a>
+                    <a href={`https://app.flashkit.co.uk/canvas?awsKey=${user.uid}/${window.project.name.trim()}.json`} target="_blank" rel="noreferrer" className="text-blue-500">{`https://app.flashkit.co.uk/canvas?awsKey=${window.project.name}`}</a>
                   </>
                 )}
             </DialogDescription>
