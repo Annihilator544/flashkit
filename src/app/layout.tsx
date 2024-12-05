@@ -9,8 +9,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Flashkit",
-  description: "Free online design editor. Create images for social media, Instagram, youtube previews, facebook covers",
+  title: "Flashkit | Sign up today for exclusive early access!",
+  description: "AI-powered tools for creators to design stunning videos, graphics, and templates. Optimise content and engagement effortlessly. Launching soon!",
 };
 
 export default function RootLayout({
@@ -24,7 +24,6 @@ export default function RootLayout({
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/flashkitLogo.svg" />
-        <title>Flashkit</title>
       </head>
       <body
         className={`${inter.className}  antialiased`}
