@@ -11367,6 +11367,7 @@ button.bp5-menu-item{
   display:flex;
   flex-wrap:nowrap;
   min-width:0;
+  /* width: auto !important; */
 }
 
 .bp5-overflow-list-spacer{

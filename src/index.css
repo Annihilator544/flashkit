@@ -304,3 +304,18 @@
   .sidePanelHeight{
     height: calc(100vh - 60px);
   }
+  /* .go529282772{
+    display: flex;
+  }
+  .go3144864827{
+    width: auto !important;
+  }
+  .polotno-toolbar{
+    position: absolute !important;
+    width: auto !important;
+    border-radius: 24px !important;
+    height: 40px !important;
+  }
+  .go529282772>.bp5-navbar-group {
+    height: 40px !important;
+  } */

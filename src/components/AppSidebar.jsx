@@ -73,11 +73,12 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                             <img src={logo} alt="Logo" className="h-6 " />
                         </div>
                         <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
-                            {localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ? 
+                            {/* {localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ? 
                             <img src={flashkit} alt="flashkit logo" className="h-8" />
                             : localStorage.getItem("flashkitPlan") === "FLASHKITSOCIAL" ?
                             <img src={flashkitSocial} alt="flashkit logo" className="h-8" />
-                            : <img src={flashkitPro} alt="flashkit logo" className="h-8" /> }
+                            : <img src={flashkitPro} alt="flashkit logo" className="h-8" /> } */}
+                            <img src={flashkitSocial} alt="flashkit logo" className="h-8" />
                         </div>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
@@ -103,7 +104,7 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
                         </TabsTrigger>
-                        { localStorage.getItem("flashkitPlan") === "FLASHKITSOCIAL" ? <SidebarMenu>
+                            <SidebarMenu>
                                 <Collapsible
                                     asChild
                                     defaultOpen={true}
@@ -156,7 +157,7 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                                     </CollapsibleContent>
                                     </SidebarMenuItem>
                                 </Collapsible>
-                            </SidebarMenu> : <></> }
+                            </SidebarMenu>
                         <TabsTrigger value="projects" className="p-0">
                             <SidebarMenuItem>
                                 <SidebarMenuButton>
@@ -164,13 +165,13 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
                         </TabsTrigger>
-                            { localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ?<SidebarMenuItem>
+                            {/* { localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ?<SidebarMenuItem>
                                 <SidebarMenuButton className="font-semibold" onClick={()=>window.location.href="/billing"}>
                                     <LucideGem className="h-5"/> Upgrade<Badge className="bg-[#ffeae9] text-[#F56B63] rounded-sm">Pro</Badge>
                                 </SidebarMenuButton>
                             </SidebarMenuItem> 
                             : 
-                            <></>}
+                            <></>} */}
                     </SidebarMenu>
                 </SidebarGroup>
                 </SidebarContent>

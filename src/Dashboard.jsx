@@ -92,8 +92,8 @@ function DashBoard({ store }) {
             <TabsContent value="home" className="flex-1 overflow-y-auto">
               <DashboardHeader/>
               <div>
-                {localStorage.getItem("flashkitPlan") === "FLASHKITSOCIAL" ? 
-                <>
+                {/* {localStorage.getItem("flashkitPlan") === "FLASHKITSOCIAL" ? 
+                <> */}
                 <div className="m-10  flex justify-around flex-wrap">
                     <div className="flex gap-4">
                         <Avatar className= "m-auto">
@@ -137,8 +137,8 @@ function DashBoard({ store }) {
                     <MonthlyEngagementChart/>
                     </div>
                 </div> */}
-                </> 
-                : <></>}
+                {/* </> 
+                : <></>} */}
                 <div className="m-10">
                   <div className="justify-between flex flex-col mb-10">
                   <p className=" text-lg font-semibold mt-10">Start Building</p>
@@ -449,16 +449,17 @@ function DashBoard({ store }) {
         </div>
         </SidebarLayout>
         </Tabs>
-        {localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ? 
+        {/* {localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ? 
         <div className="w-[15%] border-2 border-black my-2 mr-4">
             <p className="my-auto">Ad Space</p>
         </div>
-        : <></>}
+        : <></>} */}
       </div>
-      {localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ? 
+      {/* {localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ? 
         <></>
         : 
-        <ChatWidget />}
+        <ChatWidget />} */}
+        <ChatWidget />
     </>
   );
 }
@@ -536,6 +537,7 @@ const DashboardProjects = observer(({ store }) => {
     };
   
     return (
+      <div className="flex flex-col">
       <Card
         style={{  padding: '3px', position: 'relative' }}
         interactive
@@ -546,16 +548,6 @@ const DashboardProjects = observer(({ store }) => {
       >
         <div className="rounded-lg overflow-hidden">
         <img src={previewURL} style={{ width: '100%' }} alt="url" />
-        </div>
-        <div
-          style={{
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
-            padding: '3px',
-          }}
-        >
-          {design.name || 'Untitled'}
         </div>
         {loading && (
           <div
@@ -596,6 +588,20 @@ const DashboardProjects = observer(({ store }) => {
         </DropdownMenu>
         </div>
       </Card>
+      
+      <div
+          style={{
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            padding: '3px',
+            marginLeft: "auto",
+            marginRight: "5px",
+          }}
+        >
+          {design.name || 'Untitled'}
+        </div>
+      </div>
     );
   });
 

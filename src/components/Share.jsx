@@ -22,6 +22,7 @@ const Share = observer(({ store }) => {
   const [isUploaded, setIsUploaded] = useState(false);
   const [uploadingPersonal, setUploadingPersonal] = useState(false);
   const [isUploadedPersonal, setIsUploadedPersonal] = useState(false);
+  const [image, setImage] = useState(null);
   const { user } = useAuthStore();
   const bucketName = 'flashkitmarketplace';
   const bucketNamePersonal = 'flashkitpersonalsharebucket';
@@ -87,7 +88,18 @@ const Share = observer(({ store }) => {
       setIsUploadedPersonal(true);
     }
   };
+  useEffect(() => {
+    const fetchImage = async () => {
+      try {
+        const imageData = await store.toDataURL({ mimeType: 'image/jpeg' });
+        setImage(imageData); // Update the state with the image data
+      } catch (error) {
+        console.error('Error generating image:', error);
+      }
+    };
 
+    fetchImage(); // Call the function to fetch the image
+  }, [store]); // Dependency array ensures it runs when `store` changes
   return (
     <Dialog>
         <DialogTrigger>
@@ -102,6 +114,7 @@ const Share = observer(({ store }) => {
             <DialogDescription>
                 Share your design with the world by uploading it to our servers. 
                 <br />
+                {image && <img src={image} alt="Design" className="mt-5 h-60 mx-auto" />}
                 <p className="mt-5 text-black font-bold">Design Name</p>
                 {window.project.name ? (
                     <Input
@@ -127,13 +140,13 @@ const Share = observer(({ store }) => {
                 {isUploadedPersonal && (
                   <>
                     <p className="mt-5 text-green-500">File uploaded successfully! Could be accesssed on the following link: </p>
-                    <a href={`https://app.flashkit.co.uk/canvas?awsKey=${user.uid}/${window.project.name.trim()}.json`} target="_blank" rel="noreferrer" className="text-blue-500">{`https://app.flashkit.co.uk/canvas?awsKey=${window.project.name}`}</a>
+                    <a href={`https://app.flashkit.co.uk/canvas?awsKey=${user.uid}/${window.project.name.trim()}.json`} target="_blank" rel="noreferrer" className="text-blue-500">{`https://app.flashkit.co.uk/canvas?awsKey=${user.uid}/${window.project.name.trim()}.json`}</a>
                   </>
                 )}
             </DialogDescription>
             </DialogHeader>
             <DialogFooter>
-            {uploading ? 
+            {/* {uploading ? 
                 <Button className="mt-5" disabled>
                   <Loader2 className="animate-spin h-4 mr-2" />
                     Uploading
@@ -149,7 +162,7 @@ const Share = observer(({ store }) => {
                     {isUploaded ? <></>: <LucideUpload className="h-4 mr-2" />}
                     {isUploaded ? "Uploaded": "Share to Marketplace"}
                 </Button>
-            }
+            } */}
             {uploadingPersonal ? 
                 <Button className="mt-5" disabled>
                   <Loader2 className="animate-spin h-4 mr-2" />

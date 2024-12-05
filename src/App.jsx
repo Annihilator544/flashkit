@@ -42,13 +42,14 @@ let DEFAULT_SECTIONS2 = [...DEFAULT_SECTIONS];
 //DEFAULT_SECTIONS.splice(3, 1, ShapesSection);
 // add icons
 DEFAULT_SECTIONS2.splice(1, 5);
-DEFAULT_SECTIONS2.push(ChartSection);
-DEFAULT_SECTIONS2.push(DEFAULT_SECTIONS[1]);
 // add two more sections
 DEFAULT_SECTIONS2.unshift(MyDesignsSection);
 DEFAULT_SECTIONS2.unshift(LogoSection);
+//add elements section at postion 3
+DEFAULT_SECTIONS2.splice(3, 0, ElementsSection);
+DEFAULT_SECTIONS2.splice(4, 0, DEFAULT_SECTIONS[1]);
+DEFAULT_SECTIONS2.splice(5 , 0, ChartSection);
 // DEFAULT_SECTIONS.push(StableDiffusionSection);
-DEFAULT_SECTIONS2.push(ElementsSection)
 const isStandalone = () => {
   return (
     window.matchMedia('(display-mode: standalone)').matches ||
@@ -110,8 +111,18 @@ const App = observer(({ store }) => {
   });
 
   React.useEffect(() => {
-  window.project.loadById(designId);
+    async function NewDesign() {
+      await project.createNewDesign();
+      project.save();
+    }
+    if (designId === 'create_new_design'){
+      NewDesign();
+    }
+    else if (designId) {
+    window.project.loadById(designId);
+    }
   }, [designId]);
+
   React.useEffect(()=>{
     async function JsonDesign(json) {
         if (!json) return;
@@ -122,6 +133,7 @@ const App = observer(({ store }) => {
     JsonDesign(json);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [json]);
+
   React.useEffect(()=>{
     async function AwsDesign(awsKey) {
         if (!awsKey) return;
@@ -242,11 +254,11 @@ const App = observer(({ store }) => {
         </div>
       )}
     </div>
-    {localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ? 
+    {/* {localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ? 
         <div className="w-[15%] border-2 border-black ">
             <p className="my-auto">Ad Space</p>
         </div>
-        : <></>}
+        : <></>} */}
     </div>
   );
 });

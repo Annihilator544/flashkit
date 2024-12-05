@@ -74,7 +74,7 @@ export function NavUser() {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuGroup>
+            {/* <DropdownMenuGroup>
             {localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ? 
               <DropdownMenuItem>
                 <Sparkles className="h-4" />
@@ -90,7 +90,7 @@ export function NavUser() {
                 Social
               </DropdownMenuItem>}
             </DropdownMenuGroup>
-            <DropdownMenuSeparator />
+            <DropdownMenuSeparator /> */}
             <DropdownMenuGroup>
               <DropdownMenuItem onClick={()=>window.location.href="/account"}>
                 <BadgeCheck className="h-4" />
