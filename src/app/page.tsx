@@ -69,7 +69,7 @@ export default function Home() {
         </div>
       </div>
       <div className=" justify-center items-center radial-gradient md:hidden p-5 rounded-b-2xl">
-        <Image src={flashkitLogo} alt="Flashkit" className="h-6 w-6 mr-auto mb-2" />
+        <Image src={flashkitLogo} alt="Flashkit" className="h-6 w-6 mr-auto mb-2 mt-4" />
         <div className="text-[#383838] font-medium text-sm">Discover <span className="font-bold italic">AI-powered tools</span> {' to'}   create, optimise and share stunning social media content while simplifying your journey to maximise monetisation opportunities.</div>
       </div>
       <div className="rounded-lg p-8 max-w-[80%] max-md:max-w-[100%] max-md:p-4 mx-auto h-5/6 max-md:h-auto mt-auto flex flex-col">
