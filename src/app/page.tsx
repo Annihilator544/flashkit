@@ -141,7 +141,7 @@ export default function Home() {
         </form>
 
         {/* Footer */}
-        <p className="text-xs text-gray-500 mt-20 text-center max-md:text-[10px]">
+        <p className="text-xs text-gray-500 mt-auto text-center max-md:text-[10px]">
           At Flashkit, your privacy is our priority. We comply with GDPR regulations to ensure your
           personal details are secure. By signing up, you agree that your information will be used
           exclusively for Flashkit&apos;s marketing purposes and will not be shared with third parties
