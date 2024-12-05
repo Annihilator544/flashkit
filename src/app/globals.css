@@ -73,6 +73,6 @@ body {
 
 @layer utilities {
   .radial-gradient {
-    background: radial-gradient(circle at top left, #ff7e87, #c184c9, #7883e7, #5ec8ff);
+    background: radial-gradient(circle at top left, #f58a86, #b3a6d0, #a2a5e9, #a281ff);
   }
 }
