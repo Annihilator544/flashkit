@@ -1,10 +1,10 @@
-"use client"
+"use client";
 import Image from "next/image";
 import flashkit from "@/../public/flashkit.svg";
 import flashkitLogo from "@/../public/flashkitLogo.svg";
 import { Roboto } from "next/font/google";
 import { useState } from "react";
-
+import AWS from "aws-sdk";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -12,7 +12,6 @@ const roboto = Roboto({
 });
 
 export default function Home() {
-
   const [formData, setFormData] = useState({ name: "", email: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -34,26 +33,39 @@ export default function Home() {
     setFormData((prevFormData: FormData) => ({ ...prevFormData, [name]: value }));
   };
 
-  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSuccess(false);
 
     try {
-      const response = await fetch("https://script.google.com/macros/s/AKfycbwCU3DYcLnTltz1PM36pySuaWjiWlg3_dZtXpn4P8do7pIoccs7fr3iDVejzFzvOGnAcA/exec", {
-        method: "POST",
-        mode: "no-cors",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+      // Configure AWS SDK
+      AWS.config.update({
+        region: "eu-west-2", // Replace with your AWS region
+        accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY
       });
 
-      const result = await response.json();
-      if (result.status === "success") {
-        setSuccess(true);
-      }
+      // Initialize DynamoDB client
+      const dynamodb = new AWS.DynamoDB.DocumentClient();
+      const tableName = "flashkitResponses";
+      const item = formData;
+
+      // DynamoDB put parameters
+      const params = {
+        TableName: tableName,
+        Item: item
+      };
+
+      // Save item to DynamoDB
+      console.log("Saving item:", params);
+      await dynamodb.put(params).promise(); // Use promise-based method
+
+      // Update state on success
+      setSuccess(true);
+      console.log("Item saved successfully!");
     } catch (error) {
-      console.error("Error submitting the form:", error);
+      console.error("Error saving item:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -61,58 +73,69 @@ export default function Home() {
 
   return (
     <div className="md:grid md:grid-cols-2 h-screen max-md:h-svh">
+      {/* Left section */}
       <div className="flex justify-center items-center radial-gradient max-md:hidden">
         <div className="mx-16 bg-[#FFFFFF10] w-full h-2/3 border-[#FFFFFF50] border-[1px] rounded-2xl p-10 flex flex-col justify-center gap-5 relative">
-          <p className="text-[#383838] font-bold text-4xl">FlashKit is a game-changing platform made to empower content creators</p>
-          <p className="text-[#383838] font-medium text-lg">Discover AI-powered tools to create, optimise and share stunning social media content while simplifying your journey to maximise monetisation opportunities.</p>
-          <Image src={flashkitLogo} alt="Flashkit" className="h-16 absolute top-0 left-0 z-10 w-16 -translate-y-1/2 translate-x-1/2" />
+          <p className="text-[#383838] font-bold text-4xl">Flashkit Is a Game-Changing Platform Made to Empower Content Creators</p>
+          <p className="text-[#383838] font-medium text-lg">
+            Discover AI-powered tools to effortlessly create, optimise and share stunning social
+            media content. Simplify your journey and unlock new monetisation opportunities with
+            ease.
+          </p>
+          <Image
+            src={flashkitLogo}
+            alt="Flashkit"
+            className="h-16 absolute top-0 left-5 z-10 w-16 -translate-y-1/2 translate-x-full animate-bounce-long"
+          />
         </div>
       </div>
-      <div className=" justify-center items-center radial-gradient md:hidden p-5 rounded-b-2xl">
-        <Image src={flashkitLogo} alt="Flashkit" className="h-6 w-6 mr-auto mb-2 mt-4" />
-        <div className="text-[#383838] font-medium text-sm">Discover <span className="font-bold italic">AI-powered tools</span> {' to'}   create, optimise and share stunning social media content while simplifying your journey to maximise monetisation opportunities.</div>
-      </div>
-      <div className="rounded-lg p-8 max-w-[80%] max-md:max-w-[100%] max-md:p-4 mx-auto h-5/6 max-md:h-auto mt-auto flex flex-col">
+
+      {/* Right section */}
+      <div className="rounded-lg p-8 max-w-[80%] max-md:max-w-[100%] max-md:p-6 mx-auto h-5/6 max-md:h-auto mt-auto flex flex-col overflow-y-auto">
         {/* Logo */}
-        <div className="flex justify-center mb-4">
+        <div className="flex justify-center max-md:mt-4">
           <Image src={flashkit} alt="Flashkit" className="md:h-16 max-md:h-10" />
         </div>
 
         {/* Header */}
-        <h1 className="text-2xl font-bold text-center mb-2 mt-10 max-md:mt-4 max-md:text-lg">Sign Up for Early Access!</h1>
-        <p className={`${roboto.className} text-[#767676] text-center text-lg mb-6 max-md:text-sm`}>Don&apos;t miss out - we&apos;re launching soon!</p>
+        <h1 className="text-2xl font-bold text-center mb-2 mt-10 max-md:mt-4 max-md:text-lg">
+          Sign Up for Early Access!
+        </h1>
+        <p className={`${roboto.className} text-[#767676] text-center text-lg mb-6 max-md:text-sm`}>
+          Don&apos;t miss out - we&apos;re launching soon!
+        </p>
 
         {/* Form */}
-        <form className="space-y-4 mt-10 max-md:mt-5" onSubmit={handleSubmit}>
-      <div>
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={formData.name}
-          onChange={handleChange}
-          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
-      <div>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
-      <button
-        type="submit"
-        className="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition"
-        disabled={isSubmitting}
-      >
-        {isSubmitting ? "Submitting..." : "I’m in!"}
-      </button>
-      {success && <p className="text-green-500 mt-2">Form submitted successfully!</p>}
-    </form>
+        <form className="space-y-4 mt-5 max-md:mt-5" onSubmit={handleSubmit}>
+          <div>
+            <input
+              type="text"
+              name="name"
+              placeholder="Name"
+              value={formData.name}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Submitting..." : "I’m in!"}
+          </button>
+          {success && <p className="text-green-500 mt-2">Form submitted successfully!</p>}
+        </form>
 
         {/* Footer */}
         <p className="text-xs text-gray-500 mt-20 text-center max-md:text-[10px]">

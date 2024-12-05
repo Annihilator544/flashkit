@@ -55,7 +55,16 @@ export default {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}
+  		},
+		animation: {
+			'bounce-long': 'bounce 2s ease-in infinite',
+		},
+		keyframes: {
+			bounce: {
+			'0%, 100%': { transform: 'translateY(-55%)', animationTimingFunction: 'ease-in' },
+			'50%': { transform: 'translateY(-50%)', animationTimingFunction: 'ease-in' },
+			},
+		}
   	}
   },
   plugins: [require("tailwindcss-animate")],
