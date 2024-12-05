@@ -72,7 +72,7 @@ export default function Home() {
   };
 
   return (
-    <div className="md:grid md:grid-cols-2 h-screen max-md:h-svh">
+    <div className="md:grid md:grid-cols-2 h-screen max-md:h-svh max-md:flex max-md:flex-col">
       {/* Left section */}
       <div className="flex justify-center items-center radial-gradient max-md:hidden">
         <div className="mx-16 bg-[#FFFFFF10] w-full h-2/3 border-[#FFFFFF50] border-[1px] rounded-2xl p-10 flex flex-col justify-center gap-5 relative">
@@ -95,7 +95,7 @@ export default function Home() {
       </div>
 
       {/* Right section */}
-      <div className="rounded-lg p-8 max-w-[80%] max-md:max-w-[100%] max-md:p-6 mx-auto h-5/6 max-md:h-auto mt-auto flex flex-col overflow-y-auto">
+      <div className="rounded-lg p-8 max-w-[80%] max-md:max-w-[100%] max-md:p-6 mx-auto md:h-5/6 max-md:flex-1 mt-auto flex flex-col overflow-y-auto">
         {/* Logo */}
         <div className="flex justify-center max-md:mt-4">
           <Image src={flashkit} alt="Flashkit" className="md:h-16 max-md:h-10" />
