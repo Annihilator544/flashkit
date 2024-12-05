@@ -136,16 +136,15 @@ export default function Home() {
             className="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition"
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Submitting..." : "I’m in!"}
+            {isSubmitting ? "Submitting..." : success ? "Form submitted successfully!":  "I'm in!"}
           </button>
-          {success && <p className="text-green-500 mt-2">Form submitted successfully!</p>}
         </form>
 
         {/* Footer */}
         <p className="text-xs text-gray-500 mt-20 text-center max-md:text-[10px]">
           At Flashkit, your privacy is our priority. We comply with GDPR regulations to ensure your
           personal details are secure. By signing up, you agree that your information will be used
-          exclusively for Flashkit’s marketing purposes and will not be shared with third parties
+          exclusively for Flashkit&apos;s marketing purposes and will not be shared with third parties
           without your explicit consent.
         </p>
       </div>
