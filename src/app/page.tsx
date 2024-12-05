@@ -60,7 +60,7 @@ export default function Home() {
   };
 
   return (
-    <div className="md:grid md:grid-cols-2 h-screen">
+    <div className="grid grid-cols-2 h-screen max-md:h-svh">
       <div className="flex justify-center items-center radial-gradient max-md:hidden">
         <div className="mx-16 bg-[#FFFFFF10] w-full h-2/3 border-[#FFFFFF50] border-[1px] rounded-2xl p-10 flex flex-col justify-center gap-5 relative">
           <p className="text-[#383838] font-bold text-4xl">FlashKit is a game-changing platform made to empower content creators</p>
