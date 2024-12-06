@@ -67,10 +67,10 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                     <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton
-                        className="data-[state=open]:bg-sidebar-accent  data-[state=open]:text-sidebar-accent-foreground group-data-[collapsible=icon]:gap-0">
+                        className="data-[state=open]:bg-sidebar-accent  data-[state=open]:text-sidebar-accent-foreground group-data-[collapsible=icon]:gap-0 gap-1">
                         <div
                             className="flex items-center group-data-[collapsible=icon]:justify-center justify-end rounded-lg text-sidebar-primary-foreground">
-                            <img src={logo} alt="Logo" className="h-6 " />
+                            <img src={logo} alt="Logo" className="h-5 w-5 group-data-[collapsible=icon]:h-4 group-data-[collapsible=icon]:w-4" />
                         </div>
                         <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
                             {/* {localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ? 
@@ -78,7 +78,7 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                             : localStorage.getItem("flashkitPlan") === "FLASHKITSOCIAL" ?
                             <img src={flashkitSocial} alt="flashkit logo" className="h-5" />
                             : <img src={flashkitPro} alt="flashkit logo" className="h-5" /> } */}
-                            <img src={flashkitSocial} alt="flashkit logo" className="h-5" />
+                            <img src={flashkit} alt="flashkit logo" className="h-3" />
                         </div>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
