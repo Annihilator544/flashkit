@@ -339,6 +339,12 @@ function DashBoard({ store }) {
               </div>
             </TabsContent> */}
             <TabsContent value="templates" className="flex-1 p-10 space-y-6">
+            <div className="bg-gradient-to-r from-[#E4F0FA00] to-[#E9FF92]  p-8 rounded-lg mb-6">
+              <h1 className="text-4xl font-light text-black mb-4">Template Hub</h1>
+              <Button variant="secondary" className="bg-white text-black hover:bg-gray-100 drop-shadow-2xl">
+                Explore New Templates
+              </Button>
+            </div>
             <p className=" text-3xl font-semibold">Templates</p>
               <div>
                 <p className="text-lg font-semibold">Templates for you</p>
@@ -395,6 +401,12 @@ function DashBoard({ store }) {
               </div>
             </TabsContent>
             <TabsContent value="projects" className="flex-1 p-10 space-y-6">
+            <div className="bg-gradient-to-r from-[#E4F0FA00] to-[#DEABFF] p-8 rounded-lg mb-6">
+              <h1 className="text-4xl font-light text-black mb-4">Projects</h1>
+              <Button variant="secondary" className="bg-white text-black hover:bg-gray-100 drop-shadow-2xl">
+                Explore New Project
+              </Button>
+            </div>
             <p className=" text-3xl font-semibold">Projects</p>
               <div>
                 <p className="text-lg font-semibold">Recent Projects for you</p>

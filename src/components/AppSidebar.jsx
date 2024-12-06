@@ -74,11 +74,11 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                         </div>
                         <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
                             {/* {localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ? 
-                            <img src={flashkit} alt="flashkit logo" className="h-8" />
+                            <img src={flashkit} alt="flashkit logo" className="h-5" />
                             : localStorage.getItem("flashkitPlan") === "FLASHKITSOCIAL" ?
-                            <img src={flashkitSocial} alt="flashkit logo" className="h-8" />
-                            : <img src={flashkitPro} alt="flashkit logo" className="h-8" /> } */}
-                            <img src={flashkitSocial} alt="flashkit logo" className="h-8" />
+                            <img src={flashkitSocial} alt="flashkit logo" className="h-5" />
+                            : <img src={flashkitPro} alt="flashkit logo" className="h-5" /> } */}
+                            <img src={flashkitSocial} alt="flashkit logo" className="h-5" />
                         </div>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
