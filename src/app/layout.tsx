@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: "Flashkit | Sign up today for exclusive early access!",
   description: "AI-powered tools for creators to design stunning videos, graphics, and templates. Optimise content and engagement effortlessly. Launching soon!",
 };
-
+  
 export default function RootLayout({
   children,
 }: Readonly<{

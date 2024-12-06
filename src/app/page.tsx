@@ -15,6 +15,7 @@ export default function Home() {
   const [formData, setFormData] = useState({ name: "", email: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
 
   interface FormData {
     name: string;
@@ -57,13 +58,15 @@ export default function Home() {
         Item: item
       };
 
-      // Save item to DynamoDB
+      if(formData.name === "" || formData.email === "") {
+        setError("Please fill in all fields.");
+        return
+      }
       console.log("Saving item:", params);
-      await dynamodb.put(params).promise(); // Use promise-based method
-
-      // Update state on success
+      await dynamodb.put(params).promise(); // Save item to DynamoDB
       setSuccess(true);
       console.log("Item saved successfully!");
+      setError("");
     } catch (error) {
       console.error("Error saving item:", error);
     } finally {
@@ -76,11 +79,9 @@ export default function Home() {
       {/* Left section */}
       <div className="flex justify-center items-center radial-gradient max-md:hidden">
         <div className="mx-16 bg-[#FFFFFF10] w-full h-2/3 border-[#FFFFFF50] border-[1px] rounded-2xl p-10 flex flex-col justify-center gap-5 relative">
-          <p className="text-[#383838] font-bold text-4xl">Flashkit Is a Game-Changing Platform Made to Empower Content Creators</p>
+          <p className="text-[#383838] font-bold text-4xl">Flashkit: Empowering Content Creators</p>
           <p className="text-[#383838] font-medium text-lg">
-            Discover AI-powered tools to effortlessly create, optimise and share stunning social
-            media content. Simplify your journey and unlock new monetisation opportunities with
-            ease.
+          Transform your social media game with Flashkit&apos;s <span className="font-bold italic">AI-powered tools</span>. Create, optimise and share stunning content effortlessly. Simplify your workflow and unlock new ways to monetise your creativity.
           </p>
           <Image
             src={flashkitLogo}
@@ -90,8 +91,8 @@ export default function Home() {
         </div>
       </div>
       <div className=" justify-center items-center radial-gradient md:hidden p-5 rounded-b-2xl">
-        <Image src={flashkitLogo} alt="Flashkit" className="h-6 w-6 mr-auto mb-2 " />
-        <div className="text-[#383838] font-medium text-sm">Discover <span className="font-bold italic">AI-powered tools</span> {' to'}   effortlessly create, optimise and share stunning social media content. Simplify your journey and unlock new monetisation opportunities with ease.</div>
+        {/* <Image src={flashkitLogo} alt="Flashkit" className="h-6 w-6 mr-auto mb-2 " /> */}
+        <div className="text-[#383838] font-medium text-sm">          Transform your social media game with Flashkit&apos;s <span className="font-bold italic">AI-powered tools</span>. Create, optimise and share stunning content effortlessly. Simplify your workflow and unlock new ways to monetise your creativity.        </div>
       </div>
 
       {/* Right section */}
@@ -131,6 +132,7 @@ export default function Home() {
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
+          {error && <p className="text-red-500 text-xs font-bold">{error}</p>}
           <button
             type="submit"
             className="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition"
