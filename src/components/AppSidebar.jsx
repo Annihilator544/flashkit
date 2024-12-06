@@ -91,7 +91,7 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                         </TabsTrigger>
                         <SidebarMenuItem>
                                 <SidebarMenuButton className="font-semibold" onClick={()=>window.location.href="/canvas?id=create_new_design"}>
-                                <div  className="bg-[#ef8a80] p-[2px] rounded-sm ">
+                                <div  className="bg-[#d14d4d] p-[2px] rounded-sm ">
                                     <LucidePlus size={14} fill="#fff"  color="#fff" className=''/>
                                 </div>
                                 Create New
