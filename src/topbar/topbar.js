@@ -71,7 +71,7 @@ export default observer(({ store }) => {
   const project = useProject();
 
   return (
-    <NavbarContainer className="bp5-navbar bg-gradient-to-r from-[#f35b53] to-[#ff9b88]">
+    <NavbarContainer className="bp5-navbar bg-white">
       <NavInner>
         <Navbar.Group align={Alignment.LEFT}>
           <FileMenu store={store} project={project} />

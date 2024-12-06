@@ -90,7 +90,7 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                             </SidebarMenuItem>
                         </TabsTrigger>
                         <SidebarMenuItem>
-                                <SidebarMenuButton className="font-semibold" onClick={()=>window.location.href="/canvas?id=create_new_design"}>
+                                <SidebarMenuButton className="font-normal" onClick={()=>window.location.href="/canvas?id=create_new_design"}>
                                 <div  className="bg-[#d14d4d] p-[2px] rounded-sm ">
                                     <LucidePlus size={14} fill="#fff"  color="#fff" className=''/>
                                 </div>
@@ -111,7 +111,7 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                                     className="group/collapsible">
                                     <SidebarMenuItem>
                                     <CollapsibleTrigger asChild>
-                                        <SidebarMenuButton className=" font-semibold">
+                                        <SidebarMenuButton className=" font-normal">
                                         <LucideFileChartColumn className="h-5"/> Insights
                                         <ChevronRight
                                             className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
