@@ -78,7 +78,7 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                             : localStorage.getItem("flashkitPlan") === "FLASHKITSOCIAL" ?
                             <img src={flashkitSocial} alt="flashkit logo" className="h-5" />
                             : <img src={flashkitPro} alt="flashkit logo" className="h-5" /> } */}
-                            <img src={flashkit} alt="flashkit logo" className="h-3" />
+                            <img src={flashkit} alt="flashkit logo" className="h-[14px]" />
                         </div>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
