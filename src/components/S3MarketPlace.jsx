@@ -55,8 +55,8 @@ const S3FileManager = ( {store}) => {
 
   return (
         <div className="flex flex-wrap gap-3">
-          {files.map((file) => (
-            <TemplateCard key={file.Key} url={file.preview} store={store} />
+          {files.map((file,index) => (
+            <TemplateCard key={index} url={file.preview} json={file.json} store={store} />
           ))}
         </div>
   );

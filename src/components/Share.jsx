@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import { S3Client, ListObjectsV2Command, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
@@ -8,6 +8,7 @@ import { observer } from 'mobx-react-lite';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
 import { useProject } from 'plotNoFeatures/project';
 import { useAuthStore } from 'store/use-auth-data';
+import { Skeleton } from './ui/skeleton';
 
 const s3Client = new S3Client({
   region: 'eu-west-2', // e.g., 'us-east-1'
@@ -27,6 +28,7 @@ const Share = observer(({ store }) => {
   const bucketName = 'flashkitmarketplace';
   const bucketNamePersonal = 'flashkitpersonalsharebucket';
   const project = useProject();
+  
 
   const handleFileUpload = async (event) => {
     const file = store.toJSON();
@@ -63,7 +65,7 @@ const Share = observer(({ store }) => {
     const file = store.toJSON();
     const fileName = `${user.uid}/${window.project.name.trim()}.json`;
     const Shareable = JSON.stringify({json: file});
-
+    
     setUploadingPersonal(true);
     try {
       const command = new PutObjectCommand({
@@ -88,7 +90,6 @@ const Share = observer(({ store }) => {
       setIsUploadedPersonal(true);
     }
   };
-  useEffect(() => {
     const fetchImage = async () => {
       try {
         const imageData = await store.toDataURL({ mimeType: 'image/jpeg' });
@@ -98,25 +99,32 @@ const Share = observer(({ store }) => {
       }
     };
 
-    fetchImage(); // Call the function to fetch the image
-  }, [store]); // Dependency array ensures it runs when `store` changes
+    fetchImage(); 
   return (
     <Dialog>
-        <DialogTrigger>
+        
+        {window.project.name&&window.project.name!==''&&window.project.name!=='Untitled Design' ? 
+          <DialogTrigger>
             <Button className="my-auto">
             <LucideUpload className="h-4 mr-2" />
-            Share
+              Share
             </Button>
         </DialogTrigger>
+            :
+            <Button className="my-auto" disabled>
+            <LucideUpload className="h-4 mr-2" />
+              Share
+            </Button>
+        }
         <DialogContent>
             <DialogHeader>
             <DialogTitle>Share Your Design !!!</DialogTitle>
             <DialogDescription>
                 Share your design with the world by uploading it to our servers. 
                 <br />
-                {image && <img src={image} alt="Design" className="mt-5 h-60 mx-auto" />}
-                <p className="mt-5 text-black font-bold">Design Name</p>
-                {window.project.name ? (
+                {image ? <img src={image} alt="Design" className="mt-5 h-60 mx-auto" /> : <Skeleton className="mt-5 h-60 mx-auto w-[250px] rounded-xl"/>}
+                {window.project.name === "Untitled Design" ?<p className="mt-5 text-black font-bold">Please Name your file</p> : <></>}
+                {window.project.name === "Untitled Design" ? (
                     <Input
                     className="mt-2"
                     value={window.project.name}
@@ -126,17 +134,7 @@ const Share = observer(({ store }) => {
                     }}
                     label="File Name"
                     />
-                ) : (
-                    <Input
-                    className="mt-2"
-                    value={window.project.name}
-                    onChange={(e) => {
-                        window.project.name = e.target.value;
-                        window.project.requestSave();
-                    }}
-                    label="File Name"
-                    />
-                )}
+                ) : <></>}
                 {isUploadedPersonal && (
                   <>
                     <p className="mt-5 text-green-500">File uploaded successfully! Could be accesssed on the following link: </p>
@@ -169,7 +167,7 @@ const Share = observer(({ store }) => {
                     Uploading
                 </Button>
                 :
-                window.project.name&&window.project.name!=='' ?
+                window.project.name&&window.project.name!==''&&window.project.name!=='Untitled Design' ?
                 <Button className="mt-5" onClick={()=>handleFileUploadPersonal()} >
                     {isUploadedPersonal ? <></>: <LucideUpload className="h-4 mr-2" />}
                     {isUploadedPersonal ? "Uploaded": "Share Via Link"}
