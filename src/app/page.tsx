@@ -90,9 +90,9 @@ export default function Home() {
           />
         </div>
       </div>
-      <div className=" justify-center items-center radial-gradient md:hidden p-5 rounded-b-2xl">
+      <div className=" justify-center items-center radial-gradient-mobile md:hidden p-5 rounded-b-2xl">
         {/* <Image src={flashkitLogo} alt="Flashkit" className="h-6 w-6 mr-auto mb-2 " /> */}
-        <div className="text-[#383838] font-medium text-sm">          Transform your social media game with Flashkit&apos;s <span className="font-bold italic">AI-powered tools</span>. Create, optimise and share stunning content effortlessly. Simplify your workflow and unlock new ways to monetise your creativity.        </div>
+        <div className="text-black font-medium text-sm">          Transform your social media game with Flashkit&apos;s <span className="font-bold italic">AI-powered tools</span>. Create, optimise and share stunning content effortlessly. Simplify your workflow and unlock new ways to monetise your creativity.        </div>
       </div>
 
       {/* Right section */}

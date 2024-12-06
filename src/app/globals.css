@@ -75,4 +75,7 @@ body {
   .radial-gradient {
     background: radial-gradient(circle at top left, #f58a86, #b3a6d0, #a2a5e9, #a281ff);
   }
+  .radial-gradient-mobile {
+    background: radial-gradient(circle at top left, #d59da8, #bfa8c0, #a2a5e9, #a4aee3);
+  }
 }
