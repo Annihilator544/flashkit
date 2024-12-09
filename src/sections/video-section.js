@@ -7,6 +7,7 @@ import { useInfiniteAPI } from 'polotno/utils/use-api';
 import { t } from 'polotno/utils/l10n';
 import { Video } from '@blueprintjs/icons';
 import { selectVideo } from 'polotno/side-panel/select-video';
+import VideosVector from '../assets/VideosVector.svg';
 
 // this is a demo key just for that project
 // (!) please don't use it in your projects
@@ -97,7 +98,7 @@ export const VideosSection = {
   name: 'videos',
   Tab: (props) => (
     <SectionTab name="Videos" {...props}>
-      <Video />
+      <img src={VideosVector} alt="Videos" className="w-6 h-6" />
     </SectionTab>
   ),
   // we need observer to update component automatically on any store changes

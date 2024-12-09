@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Spinner } from '@blueprintjs/core';
 
@@ -34,6 +34,11 @@ import { ChartSection } from 'sections/chart-section';
 import { ElementsSection } from 'sections/element-section';
 import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { LayersSection } from 'sections/layers-section';
+import { ResizeSection } from 'sections/resize-section';
+import { TemplatesSection } from 'sections/template-section';
+import { TextSection } from 'sections/text-section';
+import { VideosSection } from 'sections/video-section';
 
 // load default translations
 setTranslations(en);
@@ -46,9 +51,10 @@ DEFAULT_SECTIONS2.splice(1, 5);
 DEFAULT_SECTIONS2.unshift(MyDesignsSection);
 DEFAULT_SECTIONS2.unshift(LogoSection);
 //add elements section at postion 3
-DEFAULT_SECTIONS2.splice(3, 0, ElementsSection);
-DEFAULT_SECTIONS2.splice(4, 0, DEFAULT_SECTIONS[1]);
-DEFAULT_SECTIONS2.splice(5 , 0, ChartSection);
+DEFAULT_SECTIONS2.splice(3 , 0 , ElementsSection);
+DEFAULT_SECTIONS2.splice(4 , 0 , DEFAULT_SECTIONS[1]);
+DEFAULT_SECTIONS2.splice(5 , 0 , ChartSection);
+DEFAULT_SECTIONS2.splice(5 , 0 , VideosSection);
 // DEFAULT_SECTIONS.push(StableDiffusionSection);
 const isStandalone = () => {
   return (
@@ -202,6 +208,7 @@ const App = observer(({ store }) => {
       }
     }
   });
+
   const handleDrop = (ev) => {
     // Prevent default behavior (Prevent file from being opened)
     ev.preventDefault();
@@ -231,7 +238,7 @@ const App = observer(({ store }) => {
       <div style={{ height: 'calc(100% )' }}>
         <PolotnoContainer className="polotno-app-container">
           <SidePanelWrap>
-            <SidePanel store={store} sections={DEFAULT_SECTIONS2} />
+            <SidePanel store={store} sections={DEFAULT_SECTIONS2} defaultSection="templates"  />
           </SidePanelWrap>
           {/* {localStorage.getItem("flashkitPlan") !== "FLASHKITUNLIMITED" ? 
           <div className='absolute z-[1] md:h-4 md:w-60 bg-[#e8e8e8] md:bottom-0 md:right-0 max-md:bottom-[75px] max-md:right-0 max-md:h-5 max-md:w-44'>

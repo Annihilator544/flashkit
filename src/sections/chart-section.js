@@ -11,6 +11,7 @@ import { MonthlyEngagementChart } from '../components/charts/MonthlyEngagementCh
 import RadarChartDisplay from '../components/charts/RadarChartDisplay';
 import RadialChartDisplay from '../components/charts/RadialChartDisplay';
 import html2canvas from 'html2canvas';
+import ChartsVector from '../assets/ChartsVector.svg'
 
 const ChartWrapper = observer(({ children, store, name }) => {
   const chartRef = useRef(null);
@@ -68,7 +69,7 @@ export const ChartSection = {
   name: 'chart',
   Tab: (props) => (
     <SectionTab name="Charts" {...props}>
-      <LucideChartArea />
+      <img src={ChartsVector} alt= "Charts" className="w-6 h-6"/>
     </SectionTab>
   ),
   Panel: observer(({ store }) => {

@@ -2,13 +2,13 @@
 import { observer } from 'mobx-react-lite';
 import { SectionTab } from 'polotno/side-panel';
 import { Shapes } from 'polotno/side-panel/elements-panel';
-import FaShapes from '@meronex/icons/fa/FaShapes';
 import { t } from 'polotno/utils/l10n';
 import { VideosSection } from './video-section';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
 import { IconsSection } from './icons-section';
 import { DEFAULT_SECTIONS } from 'polotno/side-panel';
 import { QrSection } from './qr-section';
+import ElementsVector from '../assets/ElementsVector.svg';
 
 export const ElementsPanel = ({ store }) => {
     const TextSection = DEFAULT_SECTIONS[1];
@@ -45,7 +45,7 @@ export const ElementsSection = {
   name: 'Elements',
   Tab: observer((props) => (
     <SectionTab name={t('sidePanel.elements')} {...props}>
-      <FaShapes />
+      <img src={ElementsVector} alt="Elements" className="w-6 h-6" />
     </SectionTab>
   )),
   // we need observer to update component automatically on any store changes
