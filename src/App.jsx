@@ -98,6 +98,7 @@ const App = observer(({ store }) => {
   const designId = searchParams.get('id');
   const json = searchParams.get('json');
   const awsKey = searchParams.get('awsKey');
+  const awsKeyMarket = searchParams.get('awsKeyMarket');
   const project = useProject();
   const { data } = useJsonData();
   const bucketName = 'flashkitpersonalsharebucket';
@@ -153,6 +154,25 @@ const App = observer(({ store }) => {
     AwsDesign(awsKey);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [awsKey]);
+
+  React.useEffect(()=>{
+    async function AwsDesignMarket(awsKeyMarket) {
+        if (!awsKeyMarket) return;
+        //fetch data from aws whose key is awsKey
+        const command = new GetObjectCommand({
+          Bucket: 'flashkitmarketplace',
+          Key: awsKeyMarket,
+        });
+        const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
+        const response = await fetch(url);
+        const dataJSON = await response.json();
+        await project.createNewDesign();
+        store.loadJSON(dataJSON.json);
+        project.save();
+    }
+    AwsDesignMarket(awsKeyMarket);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [awsKeyMarket]);
   const height = useHeight();
   React.useEffect(() => {
     if (project.language.startsWith('fr')) {

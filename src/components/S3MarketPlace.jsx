@@ -15,12 +15,13 @@ const s3Client = new S3Client({
 const S3FileManager = ( {store}) => {
   const [files, setFiles] = useState([]);
   const bucketName = 'flashkitmarketplace';
+  const folderPath = 'Image/';
 
   const listFiles = async () => {
     try {
-      // Get list of objects and their signed URLs
       const command = new ListObjectsV2Command({
         Bucket: bucketName,
+        Prefix: folderPath,
       });
       const { Contents = [] } = await s3Client.send(command);
       const filesWithUrls = await Promise.all(
@@ -33,15 +34,13 @@ const S3FileManager = ( {store}) => {
           return { ...file, url };
         })
       );
-  
       const filesWithContent = await Promise.all(
         filesWithUrls.map(async (file) => {
           const response = await fetch(file.url);
-          return response.json();
+          const json = await response.json();
+          return { ...file, ...json };
         })
       );
-  
-      console.log(filesWithContent);
       setFiles(filesWithContent);
     } catch (error) {
       console.error('Error listing or fetching files:', error);
@@ -55,8 +54,8 @@ const S3FileManager = ( {store}) => {
 
   return (
         <div className="flex flex-wrap gap-3">
-          {files.map((file,index) => (
-            <TemplateCard key={index} url={file.preview} json={file.json} store={store} />
+          {files.map((file) => (
+            <TemplateCard key={file.Key} url={file.preview} BucketKey={file.Key} />
           ))}
         </div>
   );

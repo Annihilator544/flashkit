@@ -38,7 +38,7 @@ export function InstagramContentCarousel({CarouselItems}) {
                             <img src={carouselItem.media_url} alt="placeholder" className="" />
                         </div>
                         <div className="p-2 flex flex-col justify-between">
-                            <p className=" text-sm text-ellipsis font-semibold">{carouselItem.caption}</p>
+                            <p className=" text-xs text-ellipsis line-clamp-2 font-semibold">{carouselItem.caption}</p>
                             <p className="text-secondary text-sm mt-auto mb-1">{carouselItem.timestamp.split('T')[0]}</p>
                             <div className="grid grid-cols-2">
                                 <div className="flex gap-1"><LucideHeart className="h-4 w-4 my-auto"/> <p>{carouselItem.like_count}</p></div>

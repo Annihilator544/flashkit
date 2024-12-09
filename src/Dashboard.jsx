@@ -45,7 +45,6 @@ function DashBoard({ store }) {
   const [loading, setLoading] = React.useState(false);
   const { Engagement, setEngagement } = useEngagementData();
   const {instagramData} = useInstagramData();
-  console.log(instagramData);
   const getEQSScore = async (userData) => {
     setLoading(true);
     try {
@@ -243,21 +242,21 @@ function DashBoard({ store }) {
             <div>
               <p className="text-secondary font-medium text-lg">Overview</p>
               <div className="flex gap-5 mt-3">
-                  <Card className="flex-1 shadow-md">
+                  <Card className="flex shadow-md">
                     <CardContent className="pt-6">
                       <p className="text-lg font-semibold">Total Followers</p>
                       <p className="text-3xl font-semibold">{instagramData.userData.followers_count}</p>
                       <div className="flex text-sm font-medium gap-1 mt-6"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
                     </CardContent>
                   </Card>
-                  <Card className="flex-1 shadow-md">
+                  <Card className="flex shadow-md">
                     <CardContent className="pt-6">
                       <p className="text-lg font-semibold">Total Follows</p>
                       <p className="text-3xl font-semibold">{instagramData.userData.follows_count}</p>
                       <div className="flex text-sm font-medium gap-1 mt-6"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
                     </CardContent>
                   </Card>
-                  <Card className="flex-1 shadow-md">
+                  <Card className="flex shadow-md">
                     <CardContent className="pt-6">
                       <p className="text-lg font-semibold">Post Count</p>
                       <p className="text-3xl font-semibold">{instagramData.userData.media_count}</p>
