@@ -115,7 +115,7 @@ class Project {
   async save() {
     this.status = 'saving';
     const storeJSON = this.store.toJSON();
-    const maxWidth = 200;
+    const maxWidth = 500;
     const canvas = await this.store._toCanvas({
       pixelRatio: maxWidth / this.store.activePage?.computedWidth,
       pageId: this.store.activePage?.id,
@@ -138,6 +138,30 @@ class Project {
       console.error(e);
     }
     this.status = 'saved';
+  }
+
+  async getUploadJSON({ json }){
+    this.status = 'saving';
+    const lastModified = new Date().toISOString();
+    this.status = 'saved';
+    return JSON.stringify({
+      name: this.name,
+      id: this.id,
+      lastModified: lastModified,
+      json: json,
+    });
+  }
+
+  async getUploadImage(){
+    const maxWidth = 1080;
+    const canvas = await this.store._toCanvas({
+      pixelRatio: maxWidth / this.store.activePage?.computedWidth,
+      pageId: this.store.activePage?.id,
+    });
+    const blob = await new Promise((resolve) => {
+      canvas.toBlob(resolve, 'image/jpeg', 0.9);
+    });
+    return blob;
   }
 
   async duplicate() {

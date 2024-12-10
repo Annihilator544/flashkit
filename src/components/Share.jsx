@@ -3,7 +3,7 @@ import React, { useState, useEffect, use } from 'react';
 import { S3Client, ListObjectsV2Command, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
-import { Loader2, LucideUpload } from 'lucide-react';
+import { Loader2, LucideGlobe, LucideUpload } from 'lucide-react';
 import { observer } from 'mobx-react-lite';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
 import { useProject } from 'plotNoFeatures/project';
@@ -30,20 +30,24 @@ const Share = observer(({ store }) => {
   const project = useProject();
   
 
-  const handleFileUpload = async (event) => {
+  const handleFileUploadPublic = async (event) => {
     const file = store.toJSON();
-    const fileName = `${window.project.name.trim()}.json`;
-    //save image as well
-    const image = await store.toDataURL({ mimeType: 'image/jpeg' });
-    const Shareable = JSON.stringify({json: file, preview: image});
-
+    const Shareable = await project.getUploadJSON({ json: file });
+    const preview = await project.getUploadImage();
+    
     setUploading(true);
     try {
       const command = new PutObjectCommand({
-        Bucket: bucketName,
-        Key: fileName,
+        Bucket: bucketNamePersonal,
+        Key: `${user.uid}/shared/${project.id}.json`,
         Body: Shareable,
         ContentType: 'application/json',
+      });
+      const commandImage = new PutObjectCommand({
+        Bucket: bucketNamePersonal,
+        Key: `${user.uid}/shared/${project.id}.jpg`,
+        Body: preview,
+        ContentType: 'image/jpeg',
       });
       console.log('Uploading file:', command);
         if (window.project.name&&window.project.name==='') {
@@ -52,6 +56,8 @@ const Share = observer(({ store }) => {
         }
         else{
             await s3Client.send(command);
+            await s3Client.send(commandImage);
+            console.log('File uploaded successfully! Could be accesssed on the following link: ', `https://app.flashkit.co.uk/public?awsKey=${user.uid}/${project.id}.json`);
         }
     } catch (error) {
       console.error('Error uploading file:', error);
@@ -63,25 +69,32 @@ const Share = observer(({ store }) => {
 
   const handleFileUploadPersonal = async (event) => {
     const file = store.toJSON();
-    const fileName = `${user.uid}/${window.project.name.trim()}.json`;
-    const Shareable = JSON.stringify({json: file});
-    
+    const Shareable = await project.getUploadJSON({ json: file })
+    const preview = await project.getUploadImage();
+
     setUploadingPersonal(true);
     try {
       const command = new PutObjectCommand({
         Bucket: bucketNamePersonal,
-        Key: fileName,
+        Key: `${user.uid}/shared/${project.id}.json`,
         Body: Shareable,
         ContentType: 'application/json',
       });
-      console.log('Uploading file:', command);
+      const commandImage = new PutObjectCommand({
+        Bucket: bucketNamePersonal,
+        Key: `${user.uid}/shared/${project.id}.jpg`,
+        Body: preview,
+        ContentType: 'image/jpeg',
+      });
+        console.log('Uploading file:', command, commandImage);
         if (window.project.name&&window.project.name==='') {
             console.log('Please select a file to upload');
             return;
         }
         else{
             await s3Client.send(command);
-            console.log('File uploaded successfully! Could be accesssed on the following link: ', `https://app.flashkit.co.uk/canvas?awsKey=${fileName}`);
+            await s3Client.send(commandImage);
+            console.log('File uploaded successfully! Could be accesssed on the following link: ', `https://app.flashkit.co.uk/canvas?awsKey=${user.uid}/${project.id}.json`);
         }
     } catch (error) {
       console.error('Error uploading file:', error);
@@ -138,7 +151,13 @@ const Share = observer(({ store }) => {
                 {isUploadedPersonal && (
                   <>
                     <p className="mt-5 text-green-500">File uploaded successfully! Could be accesssed on the following link: </p>
-                    <a href={`https://app.flashkit.co.uk/canvas?awsKey=${user.uid}/${window.project.name.trim()}.json`} target="_blank" rel="noreferrer" className="text-blue-500">{`https://app.flashkit.co.uk/canvas?awsKey=${user.uid}/${window.project.name.trim()}.json`}</a>
+                    <a href={`https://app.flashkit.co.uk/canvas?awsKey=${user.uid}/shared/${project.id}.json`} target="_blank" rel="noreferrer" className="text-blue-500">{`https://app.flashkit.co.uk/canvas?awsKey=${user.uid}/shared/${project.id}.json`}</a>
+                  </>
+                )}
+                {isUploaded && (
+                  <>
+                    <p className="mt-5 text-green-500">File uploaded successfully! Could be accesssed on the following link: </p>
+                    <a href={`https://app.flashkit.co.uk/public?awsKey=${user.uid}/shared/${project.id}.jpg`} target="_blank" rel="noreferrer" className="text-blue-500">{`https://app.flashkit.co.uk/public?awsKey=${user.uid}/shared/${project.id}.jpg`}</a>
                   </>
                 )}
             </DialogDescription>
@@ -176,6 +195,23 @@ const Share = observer(({ store }) => {
                 <Button className="mt-5" disabled >
                     {isUploadedPersonal ? <></>: <LucideUpload className="h-4 mr-2" />}
                     {isUploadedPersonal ? "Uploaded": "Share Via Link"}
+                </Button>
+            }
+            {uploading ? 
+                <Button className="mt-5" disabled>
+                  <Loader2 className="animate-spin h-4 mr-2" />
+                    Uploading
+                </Button>
+                :
+                window.project.name&&window.project.name!==''&&window.project.name!=='Untitled Design' ?
+                <Button className="mt-5" onClick={()=>handleFileUploadPublic()} >
+                    {isUploaded ? <></>: <LucideGlobe className="h-4 mr-2" />}
+                    {isUploaded ? "Uploaded": "Public Link"}
+                </Button>
+                :
+                <Button className="mt-5" disabled >
+                    {isUploaded ? <></>: <LucideGlobe className="h-4 mr-2" />}
+                    {isUploaded ? "Uploaded": "Public Link"}
                 </Button>
             }
             </DialogFooter>
