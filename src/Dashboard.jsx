@@ -1,6 +1,6 @@
 import { TabsContent } from "@radix-ui/react-tabs";
 import { Tabs, TabsList, TabsTrigger } from "./components/ui/tabs";
-import { Instagram, Linkedin, LucideAward, LucideCircleUserRound, LucideFolderOpen, LucideGauge, LucideLayoutDashboard, LucideLogOut, LucideMoreHorizontal, LucidePieChart, LucidePlus, LucideSettings, LucideTrash2, LucideTvMinimalPlay, LucideUsersRound, Twitter, Youtube } from "lucide-react";
+import { Instagram, Linkedin, LucideAward, LucideCircleUserRound, LucideCopy, LucideFolderOpen, LucideGauge, LucideLayoutDashboard, LucideLogOut, LucideMoreHorizontal, LucidePieChart, LucidePlus, LucideSettings, LucideTrash2, LucideTvMinimalPlay, LucideUsersRound, Twitter, Youtube } from "lucide-react";
 import React, { useEffect } from "react";
 import { useProject } from "plotNoFeatures/project";
 import { observer } from "mobx-react-lite";
@@ -492,6 +492,11 @@ const DashboardProjects = observer(({ store }) => {
     api.deleteDesign({ id });
   };
 
+  const handleProjectDuplicate = async({ id }) => {
+    await api.duplicateDesign({ id: id});
+    await loadDesigns();
+  } 
+
   React.useEffect(() => {
     loadDesigns();
   }, [project.cloudEnabled, project.designsLength]);
@@ -522,13 +527,14 @@ const DashboardProjects = observer(({ store }) => {
           key={design.id}
           design={design}
           onDelete={handleProjectDelete}
+          onDuplicate={handleProjectDuplicate}
         />
       ))}
       </div>
     </div>
   );});
 
-  const DesignCard = observer(({ design, store, onDelete }) => {
+  const DesignCard = observer(({ design, store, onDelete, onDuplicate }) => {
     const [loading, setLoading] = React.useState(false);
     const [previewURL, setPreviewURL] = React.useState(design.previewURL);
   
@@ -589,11 +595,14 @@ const DashboardProjects = observer(({ store }) => {
               <LucideFolderOpen className='h-4'/>Open
           </DropdownMenuItem>
           <DropdownMenuItem className="flex gap-2" onClick={() => {
-                    if (window.confirm('Are you sure you want to delete it?')) {
                       onDelete({ id: design.id });
-                    }
                   }}>
               <LucideTrash2 className='h-4'/>Delete
+          </DropdownMenuItem>
+          <DropdownMenuItem className="flex gap-2" onClick={() => {
+                      onDuplicate({ id: design.id });
+                  }}>
+              <LucideCopy className='h-4'/>Duplicate
           </DropdownMenuItem>
         </DropdownMenuContent>
         </DropdownMenu>

@@ -196,6 +196,8 @@ const App = observer(({ store }) => {
 
   React.useEffect(() => {
     project.firstLoad();
+    console.log('first load');
+    console.log(project);
   }, [project]);
 
   React.useEffect(() => {

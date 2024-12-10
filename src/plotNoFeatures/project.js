@@ -155,7 +155,7 @@ class Project {
     await this.clear();
     this.name = 'Untitled Design';
     this.id = '';
-    this.store.openSidePanel('photos');
+    this.store.openSidePanel('templates');
     console.log('saving');
     await this.save();
     console.log('saving done');

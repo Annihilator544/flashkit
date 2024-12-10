@@ -39,7 +39,7 @@ async function readKv(key) {
 
 async function writeKv(key, value) {
   if (isSignedIn()) {
-    return await window.puter.kv.set(key, value);
+    // return await window.puter.kv.set(key, value);
   } else {
     return await localforage.setItem(key, value);
   }
@@ -90,6 +90,24 @@ export async function loadById({ id }) {
   return { storeJSON, name: design?.name };
 }
 
+export async function duplicateDesign({ id }) {
+  const newId = nanoid(10);
+  const previewPath = `designs/${newId}.jpg`;
+  const storePath = `designs/${newId}.json`;
+  const storeJSON = await readFile(`designs/${id}.json`);
+  const preview = await readFile(`designs/${id}.jpg`);
+
+  await writeFile(previewPath, preview);
+  await writeFile(storePath, JSON.stringify(storeJSON));
+
+  let list = await listDesigns();
+  const name = 'duplicate '+ list.find((design)=> design.id === id).name;
+  const lastModified = new Date().toISOString();
+  list.push({ id : newId, name, lastModified });
+  await writeKv('designs-list', list);
+  return { newId, status: 'saved' };
+}
+
 export async function saveDesign({ storeJSON, preview, name, id }) {
   console.log('saving');
   if (!id) {
@@ -105,10 +123,11 @@ export async function saveDesign({ storeJSON, preview, name, id }) {
 
   let list = await listDesigns();
   const existing = list.find((design) => design.id === id);
+  let lastModified = new Date().toISOString();
   if (existing) {
     existing.name = name;
   } else {
-    list.push({ id, name });
+    list.push({ id, name, lastModified });
   }
 
   await writeKv('designs-list', list);

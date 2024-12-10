@@ -11,7 +11,7 @@ import { useProject } from '../plotNoFeatures/project';
 import { FileMenu } from './file-menu';
 import { DownloadButton } from './download-button';
 import { Input } from '../components/ui/input';
-import { LucideGem, LucideUpload } from 'lucide-react';
+import { LucideCloud, LucideCloudUpload, LucideGem, LucideLoader, LucideLoader2, LucideUpload } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import Share from '../components/Share';
@@ -75,13 +75,14 @@ export default observer(({ store }) => {
       <NavInner>
         <Navbar.Group align={Alignment.LEFT}>
           <FileMenu store={store} project={project} />
-          <div
-            style={{
-              paddingLeft: '20px',
-              maxWidth: '200px',
-            }}
-          >
-            
+          <div className='ml-3'>
+          {project.status === "saved" ?
+          <LucideCloud className="h-8 w-8 text-[#F56B63]"/> :
+          <div className='flex'>
+          <LucideCloudUpload className="h-8 w-8 text-[#F56B63]"/>
+          <LucideLoader2 className="h-2 w-2 text-[#F56B63] animate-spin"/>
+          </div>
+          }
           </div>
         </Navbar.Group>
         <Navbar.Group align={Alignment.RIGHT}>
@@ -124,12 +125,12 @@ export default observer(({ store }) => {
               <FaTwitter className="bp5-icon" style={{ fontSize: '20px' }} />
             }
           ></AnchorButton> */}
-          { localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ?
+          {/* { localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ?
                                 <Button className="font-semibold flex gap-1 mr-4" onClick={()=>window.location.href="/billing"}>
                                     <LucideGem className="h-5"/> Upgrade<Badge className="bg-[#ffeae9] text-[#F56B63] rounded-sm hover:bg-[#ffeae9]">Pro</Badge>
                                 </Button>
                             : 
-                            <></>}
+                            <></>} */}
           <div className='flex gap-4'>
           <Input
               value={window.project.name}
