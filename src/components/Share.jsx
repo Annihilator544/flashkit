@@ -137,7 +137,6 @@ const Share = observer(({ store }) => {
                 <br />
                 <div className='overflow-x-auto flex gap-2 my-5'>
                 {project.imagesList.length > 0 ? project.imagesList.map((image,index)=> <img src={image} key={index} alt="Design" className="mt-5 h-60 mx-auto" /> ) : <Skeleton className="h-60 w-60 mx-auto" />}
-                {/* {images.map((image,index)=> <img src={image} key={index} alt="Design" className="mt-5 h-60 mx-auto" />)} */}
                 </div>
                 {window.project.name === "Untitled Design" ?<p className="mt-5 text-black font-bold">Please Name your file</p> : <></>}
                 {window.project.name === "Untitled Design" ? (
@@ -160,7 +159,7 @@ const Share = observer(({ store }) => {
                 {isUploaded && (
                   <>
                     <p className="mt-5 text-green-500">File uploaded successfully! Could be accesssed on the following link: </p>
-                    <a href={`https://app.flashkit.co.uk/public?awsKey=${user.uid}/shared/${project.id}.jpg`} target="_blank" rel="noreferrer" className="text-blue-500">{`https://app.flashkit.co.uk/public?awsKey=${user.uid}/shared/${project.id}.jpg`}</a>
+                    <a href={`https://app.flashkit.co.uk/public?awsKey=${user.uid}/shared/${project.id}.json`} target="_blank" rel="noreferrer" className="text-blue-500">{`https://app.flashkit.co.uk/public?awsKey=${user.uid}/shared/${project.id}.json`}</a>
                   </>
                 )}
             </DialogDescription>

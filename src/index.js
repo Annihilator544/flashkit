@@ -20,6 +20,7 @@ import TermsOfService from 'TermsOfService';
 import Secret from 'Secret';
 import Billing from 'Billing';
 import AccountSettings from 'AccountSettings';
+import PublicView from 'PublicView';
 
 // if (window.location.host !== 'studio.polotno.com') {
 //   console.log(
@@ -114,6 +115,10 @@ const router = createBrowserRouter([
   {
     path: "/canvas",
     element: <ProtectedRoute><App  store={store} /></ProtectedRoute>,
+  },
+  {
+    path: "/public",
+    element: <PublicView  store={store} />,
   },
   {
     path: "/billing",
