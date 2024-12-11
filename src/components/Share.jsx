@@ -23,12 +23,10 @@ const Share = observer(({ store }) => {
   const [isUploaded, setIsUploaded] = useState(false);
   const [uploadingPersonal, setUploadingPersonal] = useState(false);
   const [isUploadedPersonal, setIsUploadedPersonal] = useState(false);
-  const [image, setImage] = useState(null);
   const { user } = useAuthStore();
-  const bucketName = 'flashkitmarketplace';
   const bucketNamePersonal = 'flashkitpersonalsharebucket';
   const project = useProject();
-  
+
 
   const handleFileUploadPublic = async (event) => {
     const file = store.toJSON();
@@ -71,7 +69,6 @@ const Share = observer(({ store }) => {
     const file = store.toJSON();
     const Shareable = await project.getUploadJSON({ json: file })
     const preview = await project.getUploadImage();
-
     setUploadingPersonal(true);
     try {
       const command = new PutObjectCommand({
@@ -103,20 +100,23 @@ const Share = observer(({ store }) => {
       setIsUploadedPersonal(true);
     }
   };
-    const fetchImage = async () => {
-      try {
-        const imageData = await store.toDataURL({ mimeType: 'image/jpeg' });
-        setImage(imageData); // Update the state with the image data
-      } catch (error) {
-        console.error('Error generating image:', error);
-      }
-    };
+  const fetchImage = async () => {
+    try {
+      await project.getPreviewImages();
+    } catch (error) {
+      console.error('Error generating image:', error);
+    }
+  };
+  useEffect(() => {
+    if (project.status === 'saving')
+    fetchImage();
+    else
+    return;
+  }, [project.status]);
 
-    fetchImage(); 
   return (
     <Dialog>
-        
-        {window.project.name&&window.project.name!==''&&window.project.name!=='Untitled Design' ? 
+        {window.project.status==="saved"&&window.project.name&&window.project.name!==''&&window.project.name!=='Untitled Design' ? 
           <DialogTrigger>
             <Button className="my-auto">
             <LucideUpload className="h-4 mr-2" />
@@ -135,7 +135,10 @@ const Share = observer(({ store }) => {
             <DialogDescription>
                 Share your design with the world by uploading it to our servers. 
                 <br />
-                {image ? <img src={image} alt="Design" className="mt-5 h-60 mx-auto" /> : <Skeleton className="mt-5 h-60 mx-auto w-[250px] rounded-xl"/>}
+                <div className='overflow-x-auto flex gap-2 my-5'>
+                {project.imagesList.length > 0 ? project.imagesList.map((image,index)=> <img src={image} key={index} alt="Design" className="mt-5 h-60 mx-auto" /> ) : <Skeleton className="h-60 w-60 mx-auto" />}
+                {/* {images.map((image,index)=> <img src={image} key={index} alt="Design" className="mt-5 h-60 mx-auto" />)} */}
+                </div>
                 {window.project.name === "Untitled Design" ?<p className="mt-5 text-black font-bold">Please Name your file</p> : <></>}
                 {window.project.name === "Untitled Design" ? (
                     <Input

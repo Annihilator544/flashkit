@@ -30,6 +30,7 @@ class Project {
   user = {};
   skipSaving = false;
   cloudEnabled = false;
+  imagesList = [];
   status = 'saved'; // or 'has-changes' or 'saving' or 'loading'
   language = getFromStorage('polotno-language') || navigator.language || 'en';
   designsLength = 0;
@@ -68,6 +69,7 @@ class Project {
 
   async firstLoad() {
     const deprecatedDesign = await localforage.getItem('polotno-state');
+    this.imagesList = [];
     if (deprecatedDesign) {
       this.store.loadJSON(deprecatedDesign);
       await localforage.removeItem('polotno-state');
@@ -138,6 +140,18 @@ class Project {
       console.error(e);
     }
     this.status = 'saved';
+  }
+
+  async getPreviewImages(){
+      this.imagesList = [];
+        try{
+        this.store.pages.forEach(async (page) => {
+          const img = await this.store.toDataURL({ pageId: page.id, mimeType: 'image/jpeg', pixelRatio: 2, quickMode: true });
+          this.imagesList.push(img);
+        });
+      }catch(e){
+        console.log(e);
+      }
   }
 
   async getUploadJSON({ json }){
