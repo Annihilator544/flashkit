@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import { Thumb } from './EmblaCarouselThumbsButton'
 import './embla.css'
+import ReactPanZoom from 'react-image-pan-zoom-rotate'
 
 const EmblaCarousel = (props) => {
   const { slides, options } = props
@@ -40,7 +41,10 @@ const EmblaCarousel = (props) => {
           {slides.map((image,index) => (
             <div className="embla__slide" key={index}>
               <div className="embla__slide__number">
-                <img src={image} alt="" />
+              <ReactPanZoom
+                  image={image}
+                  alt='Image alt text'
+                />
               </div>
             </div>
           ))}

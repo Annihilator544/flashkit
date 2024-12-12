@@ -49,6 +49,7 @@
     "react-error-boundary": "^4.0.11",
     "react-hook-form": "^7.53.0",
     "react-icons": "^4.11.0",
+    "react-image-pan-zoom-rotate": "^1.6.0",
     "react-router-dom": "^6.26.0",
     "react-scripts": "5.0.1",
     "recharts": "^2.12.7",
