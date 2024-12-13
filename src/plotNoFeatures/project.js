@@ -3,6 +3,7 @@ import { createContext, useContext } from 'react';
 import localforage from 'localforage';
 
 import * as api from './api';
+import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 
 window.localforage = localforage;
 
@@ -40,7 +41,7 @@ class Project {
     this.store = store;
 
     store.on('change', () => {
-      this.requestSave();
+      this.requestSave(null);
     });
 
     // setInterval(() => {
@@ -73,7 +74,7 @@ class Project {
     if (deprecatedDesign) {
       this.store.loadJSON(deprecatedDesign);
       await localforage.removeItem('polotno-state');
-      await this.save();
+      await this.save(null);
       return;
     }
     const lastDesignId = await localforage.getItem('polotno-last-design-id');
@@ -116,8 +117,18 @@ class Project {
 
   async save() {
     this.status = 'saving';
+    const bucketNamePersonal = 'flashkitpersonalsharebucket';
     const storeJSON = this.store.toJSON();
-    const maxWidth = 500;
+    const maxWidth = 1080;
+    const s3Client = new S3Client({
+      region: 'eu-west-2', // e.g., 'us-east-1'
+      credentials: {
+        accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+      }
+    });
+    const Shareable = await this.getUploadJSON({ json: storeJSON })
+    const preview = await this.getUploadImage();
     const canvas = await this.store._toCanvas({
       pixelRatio: maxWidth / this.store.activePage?.computedWidth,
       pageId: this.store.activePage?.id,
@@ -125,7 +136,32 @@ class Project {
     const blob = await new Promise((resolve) => {
       canvas.toBlob(resolve, 'image/jpeg', 0.9);
     });
+    const authStorage = localStorage.getItem('auth-storage');
+
+    // Since localStorage returns a string, we need to parse it as JSON
+    const authObject = JSON.parse(authStorage);
+    
+    // Now you can safely access the UID
+    const uid = authObject?.state?.user?.uid;
+    console.log(uid)
     try {
+      if(uid){
+      console.log("saving to cloud")
+      const command = new PutObjectCommand({
+        Bucket: bucketNamePersonal,
+        Key: `${uid}/shared/${this.id}.json`,
+        Body: Shareable,
+        ContentType: 'application/json',
+      });
+      const commandImage = new PutObjectCommand({
+        Bucket: bucketNamePersonal,
+        Key: `${uid}/shared/${this.id}.jpg`,
+        Body: preview,
+        ContentType: 'image/jpeg',
+      });
+      await s3Client.send(command);
+      await s3Client.send(commandImage);
+    }
       const res = await api.saveDesign({
         storeJSON,
         preview: blob,
@@ -180,7 +216,7 @@ class Project {
 
   async duplicate() {
     this.id = '';
-    this.save();
+    this.save(null);
   }
 
   async clear() {
@@ -195,7 +231,7 @@ class Project {
     this.id = '';
     this.store.openSidePanel('templates');
     console.log('saving');
-    await this.save();
+    await this.save(null);
     console.log('saving done');
   }
 

@@ -66,6 +66,7 @@ function DashBoard({ store }) {
   };
 
   async function getDesignTemplates() {
+    try{
     await fetch("https://api.polotno.com/api/get-templates?size=1080x1080&query=&per_page=10&page=1&KEY=iRIwFHCuH539pYGokN6n").then((res) =>res.json()).then((res) => {
       setMediaKitData(res.items);
     });
@@ -78,6 +79,10 @@ function DashBoard({ store }) {
     await fetch("https://api.polotno.com/api/get-templates?size=1280x720&query=&per_page=10&page=1&KEY=iRIwFHCuH539pYGokN6n").then((res)=>res.json()).then((res) => {
       setClassicDesigns(res.items);
     });
+  }
+    catch(e){
+      console.log(e);
+    }
   }
   useEffect(() => {
     getDesignTemplates();
@@ -564,7 +569,7 @@ const DashboardProjects = observer(({ store }) => {
         }}
       >
         <div className="rounded-lg overflow-hidden">
-        <img src={previewURL} style={{ width: '100%' }} alt="url" />
+        <img src={previewURL} style={{ width: '200px' }} alt="url" />
         </div>
         {loading && (
           <div

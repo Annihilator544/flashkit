@@ -14,10 +14,9 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import Navbar from './components/Navbar';
 import { Skeleton } from './components/ui/skeleton';
 import EmblaCarousel from './components/EmblaCarousel/EmblaCarousel';
+import { LucideLoader2 } from 'lucide-react';
 
 const OPTIONS = {}
-const SLIDE_COUNT = 10
-const SLIDES = Array.from(Array(SLIDE_COUNT).keys())
 
 // load default translations
 setTranslations(en);
@@ -69,7 +68,7 @@ const PublicView = observer(({ store }) => {
         {project.imagesList.length > 0 ?
         <EmblaCarousel slides={project.imagesList} options={OPTIONS} />
         : 
-        <Skeleton className="h-60 w-60 mx-auto" />}
+        <LucideLoader2 className="h-10 w-10 m-auto text-[#F56B63] animate-spin" />}
         </div>
     </div>
   );
