@@ -102,7 +102,9 @@ const Share = observer(({ store }) => {
   };
   const fetchImage = async () => {
     try {
+      console.log("fetching image")
       await project.getPreviewImages();
+      console.log("fetching donre")
     } catch (error) {
       console.error('Error generating image:', error);
     }

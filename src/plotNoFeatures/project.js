@@ -143,10 +143,8 @@ class Project {
     
     // Now you can safely access the UID
     const uid = authObject?.state?.user?.uid;
-    console.log(uid)
     try {
       if(uid){
-      console.log("saving to cloud")
       const command = new PutObjectCommand({
         Bucket: bucketNamePersonal,
         Key: `${uid}/shared/${this.id}.json`,
@@ -174,6 +172,11 @@ class Project {
       }
     } catch (e) {
       console.error(e);
+    }
+    finally{
+      if(this.id !== ''){
+      this.getPreviewImages()
+      }
     }
     this.status = 'saved';
   }
