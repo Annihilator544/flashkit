@@ -6,6 +6,8 @@ import { LucideBell, LucideSearch, LucideSettings } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "components/ui/avatar"
 import { useAuthStore } from "store/use-auth-data"
 import { Input } from "components/ui/input"
+import logo from '../assets/logo.svg';
+import { Link } from "react-router-dom"
  
 export default function SidebarLayout({ children }) {
   const { user } = useAuthStore();
@@ -13,11 +15,11 @@ export default function SidebarLayout({ children }) {
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 justify-between">
+        {/* <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 justify-between">
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="mr-2 h-4" />
-            {/* <Breadcrumb>
+            <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
                   <BreadcrumbLink href="#">
@@ -29,7 +31,7 @@ export default function SidebarLayout({ children }) {
                   <BreadcrumbPage>Dashboard</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
-            </Breadcrumb> */}
+            </Breadcrumb>
           </div>
           <search className=" min-w-80 flex">
           <div className="relative flex flex-1 items-center">
@@ -53,7 +55,7 @@ export default function SidebarLayout({ children }) {
             </Avatar>
 
           </div>
-        </header>
+        </header> */}
         <div className="">
           {children}
         </div>

@@ -10,16 +10,18 @@ import {
   Upload,
   MoreHorizontal,
 } from "lucide-react";
+import headerSvg from '../assets/header.svg'
 
 const DashboardHeader = () => {
   return (
     <div className="flex flex-col m-10">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-[#E4F0FA00] to-[#9DD3FF] stops-[#9DD3FF] p-8 rounded-lg mb-6">
-        <h1 className="text-4xl font-light text-black mb-4">Explore Flashkit</h1>
+      <div className="bg-gradient-to-r relative overflow-hidden from-[#e55785] to-[#a764c6] stops-[#686cfb] p-8 rounded-lg mb-6">
+        <h1 className="text-4xl font-semibold text-white mb-4">Welcome to Flashkit! Let's grow together</h1>
         <Button variant="secondary" className="bg-white text-black hover:bg-gray-100 drop-shadow-2xl">
-          Check out latest features
+          Explore Flashkit
         </Button>
+        <img src={headerSvg} alt="header" className="absolute right-0 -bottom-10 w-64 h-64" />
       </div>
 
       {/* Tools Grid */}

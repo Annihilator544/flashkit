@@ -65,7 +65,7 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                 <SidebarContent>
                 <SidebarGroup>
                     <SidebarMenu>
-                    <SidebarMenuItem>
+                    {/* <SidebarMenuItem>
                         <SidebarMenuButton
                         className="data-[state=open]:bg-sidebar-accent  data-[state=open]:text-sidebar-accent-foreground group-data-[collapsible=icon]:gap-0 gap-1">
                         <div
@@ -73,15 +73,23 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                             <img src={logo} alt="Logo" className="h-5 w-5 group-data-[collapsible=icon]:h-4 group-data-[collapsible=icon]:w-4" />
                         </div>
                         <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
-                            {/* {localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ? 
+                             {localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ? 
                             <img src={flashkit} alt="flashkit logo" className="h-5" />
                             : localStorage.getItem("flashkitPlan") === "FLASHKITSOCIAL" ?
                             <img src={flashkitSocial} alt="flashkit logo" className="h-5" />
                             : <img src={flashkitPro} alt="flashkit logo" className="h-5" /> } */}
-                            <img src={flashkit} alt="flashkit logo" className="h-[14px]" />
+                          {/*  <img src={flashkit} alt="flashkit logo" className="h-[14px]" />
                         </div>
                         </SidebarMenuButton>
-                    </SidebarMenuItem>
+                    </SidebarMenuItem> */}
+                    <SidebarMenuItem className="">
+                                <SidebarMenuButton className="font-normal bg-[#fe5655] text-white" onClick={()=>window.location.href="/canvas?id=create_new_design"}>
+                                <div  className=" p-[2px] rounded-sm ">
+                                    <LucidePlus size={14} fill="#fff"  color="#fff" className=''/>
+                                </div>
+                                Create New
+                                </SidebarMenuButton>
+                        </SidebarMenuItem> 
                         <TabsTrigger value="home" className="p-0">
                             <SidebarMenuItem>
                                 <SidebarMenuButton>
@@ -89,14 +97,6 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
                         </TabsTrigger>
-                        <SidebarMenuItem>
-                                <SidebarMenuButton className="font-normal" onClick={()=>window.location.href="/canvas?id=create_new_design"}>
-                                <div  className="bg-[#d14d4d] p-[2px] rounded-sm ">
-                                    <LucidePlus size={14} fill="#fff"  color="#fff" className=''/>
-                                </div>
-                                Create New
-                                </SidebarMenuButton>
-                        </SidebarMenuItem> 
                         <TabsTrigger value="templates" className="p-0">
                             <SidebarMenuItem>
                                 <SidebarMenuButton>

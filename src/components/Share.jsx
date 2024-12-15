@@ -35,26 +35,25 @@ const Share = observer(({ store }) => {
     
     setUploading(true);
     try {
-      const command = new PutObjectCommand({
-        Bucket: bucketNamePersonal,
-        Key: `${user.uid}/shared/${project.id}.json`,
-        Body: Shareable,
-        ContentType: 'application/json',
-      });
-      const commandImage = new PutObjectCommand({
-        Bucket: bucketNamePersonal,
-        Key: `${user.uid}/shared/${project.id}.jpg`,
-        Body: preview,
-        ContentType: 'image/jpeg',
-      });
-      console.log('Uploading file:', command);
+      // const command = new PutObjectCommand({
+      //   Bucket: bucketNamePersonal,
+      //   Key: `${user.uid}/shared/${project.id}.json`,
+      //   Body: Shareable,
+      //   ContentType: 'application/json',
+      // });
+      // const commandImage = new PutObjectCommand({
+      //   Bucket: bucketNamePersonal,
+      //   Key: `${user.uid}/shared/${project.id}.jpg`,
+      //   Body: preview,
+      //   ContentType: 'image/jpeg',
+      // });
         if (window.project.name&&window.project.name==='') {
             console.log('Please select a file to upload');
             return;
         }
         else{
-            await s3Client.send(command);
-            await s3Client.send(commandImage);
+            // await s3Client.send(command);
+            // await s3Client.send(commandImage);
             console.log('File uploaded successfully! Could be accesssed on the following link: ', `https://app.flashkit.co.uk/public?awsKey=${user.uid}/${project.id}.json`);
         }
     } catch (error) {
@@ -71,26 +70,25 @@ const Share = observer(({ store }) => {
     const preview = await project.getUploadImage();
     setUploadingPersonal(true);
     try {
-      const command = new PutObjectCommand({
-        Bucket: bucketNamePersonal,
-        Key: `${user.uid}/shared/${project.id}.json`,
-        Body: Shareable,
-        ContentType: 'application/json',
-      });
-      const commandImage = new PutObjectCommand({
-        Bucket: bucketNamePersonal,
-        Key: `${user.uid}/shared/${project.id}.jpg`,
-        Body: preview,
-        ContentType: 'image/jpeg',
-      });
-        console.log('Uploading file:', command, commandImage);
+      // const command = new PutObjectCommand({
+      //   Bucket: bucketNamePersonal,
+      //   Key: `${user.uid}/shared/${project.id}.json`,
+      //   Body: Shareable,
+      //   ContentType: 'application/json',
+      // });
+      // const commandImage = new PutObjectCommand({
+      //   Bucket: bucketNamePersonal,
+      //   Key: `${user.uid}/shared/${project.id}.jpg`,
+      //   Body: preview,
+      //   ContentType: 'image/jpeg',
+      // });
         if (window.project.name&&window.project.name==='') {
             console.log('Please select a file to upload');
             return;
         }
         else{
-            await s3Client.send(command);
-            await s3Client.send(commandImage);
+            // await s3Client.send(command);
+            // await s3Client.send(commandImage);
             console.log('File uploaded successfully! Could be accesssed on the following link: ', `https://app.flashkit.co.uk/canvas?awsKey=${user.uid}/${project.id}.json`);
         }
     } catch (error) {
