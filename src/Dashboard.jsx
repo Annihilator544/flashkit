@@ -119,9 +119,9 @@ function DashBoard({ store }) {
         <Tabs className="flex flex-1 " defaultValue="home" >
         <SidebarLayout>
         <div className=" flex">
-            <TabsContent value="home" className="flex-1 pt-0 space-y-6 overflow-y-auto">
+            <TabsContent value="home" className="flex-1 p-6 pt-2 space-y-6 overflow-y-auto">
               <DashboardHeader title={"Welcome to Flashkit! Let's grow together"} buttonText={"Explore Flashkit"} bottomSection={true}/>
-              <div className=" text-[#252C32] flex justify-between mx-10">
+              <div className=" text-[#252C32] flex justify-between">
                 <div>
                   <p className=" font-semibold text-2xl">Welcome back {user.displayName&&user.displayName.split(" ")[0]} !</p>
                   <p className=" font-normal text-base ">Your latest social media performance </p>
@@ -143,7 +143,7 @@ function DashBoard({ store }) {
               </div>
                 {/* {localStorage.getItem("flashkitPlan") === "FLASHKITSOCIAL" ? 
                 <> */}
-                <div className="flex justify-around flex-wrap pt-10 mx-10">
+                <div className="flex justify-around flex-wrap pt-10">
                     <div className="flex gap-4">
                         <Avatar className= "m-auto">
                         {user&&user.photoURL ? <AvatarImage src={user.photoURL} /> :
@@ -179,7 +179,7 @@ function DashBoard({ store }) {
                       <div className="flex text-sm font-medium gap-1"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
                   </div>
                 </div>
-                <div className="py-10 mx-10">
+                <div className="py-10">
                 <ShineBorder
                   className="relative flex w-full py-5 flex-1 flex-col overflow-hidden rounded-lg border bg-background md:shadow-xl"
                   color={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
@@ -189,20 +189,20 @@ function DashBoard({ store }) {
                   <p className="text-[#252C32] text-base mr-auto">Post on Thursdays at 5-7 PM for better reach. Use hashtags like #Inspiration and #Style!</p>
                 </ShineBorder>
                 </div>
-                <div className="mx-10">
+                <div className="">
                     <div className="flex gap-6">
                     <InsightsChart/> 
                     <MonthlyEngagementChart/>
                     </div>
                 </div>
-                <div className="mx-10">
+                <div className="">
                   <div className="justify-between flex flex-col mb-10">
                   <p className=" text-lg font-semibold mt-10">Start Building</p>
                   <p className="text-[#6E7C87] font-medium text-sm">Choose a template and craft eye-catching stats</p>
                   </div>
                   <DashboardProjects store={store} />
                 </div>
-                <div className="mx-10">
+                <div className="">
                   <p className="text-lg font-semibold">Templates for you</p>
                   <p className="text-secondary font-medium text-sm mb-5">Choose a template and craft eye-catching stats</p>
                   <div className="flex  gap-3">
@@ -216,7 +216,7 @@ function DashBoard({ store }) {
                   </div>
                 </div>
             </TabsContent>
-            <TabsContent value="youtube" className="flex-1 mx-10 space-y-6">
+            <TabsContent value="youtube" className="flex-1 p-6 space-y-6">
             <p className=" text-3xl font-semibold">Youtube Analytics</p>
             <div>
               <p className="text-secondary font-medium text-lg">Overview</p>
@@ -274,7 +274,7 @@ function DashBoard({ store }) {
                 <TopContentCarousel />
             </div>
             </TabsContent>
-            <TabsContent value="instagram" className="flex-1 mx-10 space-y-6">
+            <TabsContent value="instagram" className="flex-1 p-6 space-y-6">
             <p className=" text-3xl font-semibold">Instagram Analytics</p>
             {instagramData && instagramData.userData.id ?
             <Card>
@@ -326,9 +326,9 @@ function DashBoard({ store }) {
                 {instagramData && <InstagramContentCarousel CarouselItems={instagramData.posts} />}
             </div>
             </TabsContent>
-            <TabsContent value="templates" className="flex-1 pt-0 space-y-6">
+            <TabsContent value="templates" className="flex-1 p-6 pt-2 space-y-6">
               <DashboardHeader title={"Design Stunning Content Effortlessly!"} buttonText={"Explore Templates"} bottomSection={false}/>
-            <div className="flex flex-col gap-4 mx-10">
+            <div className="flex flex-col gap-4">
             <div className="relative flex flex-1 items-center">
               <Input
                 type="search"
@@ -348,10 +348,10 @@ function DashBoard({ store }) {
                 ))}
               </div>
             </div>
-                <div className="mx-10">
+                <div>
                 <p className="text-lg font-semibold">Choose your template</p>
                 </div>
-              <div className="mx-10">
+              <div>
                 <p className="text-lg font-semibold">Templates for you</p>
                 <p className="text-secondary font-medium text-sm mb-5">Choose a template and craft eye-catching stats</p>
                 <div className="flex flex-wrap gap-3">
@@ -364,11 +364,11 @@ function DashBoard({ store }) {
                 }
                 </div>
               </div>
-              <div className="mx-10">
+              <div>
                 <p className="text-lg font-semibold mb-5">MarketPlace</p>
                 <S3FileManager store={store}/>
               </div>
-              <div className="mx-10">
+              <div>
                 <p className="text-lg font-semibold mb-5">Bold</p>
                 <div className="flex flex-wrap gap-3">
                 {
@@ -380,7 +380,7 @@ function DashBoard({ store }) {
                 }
                 </div>
               </div>
-              <div className="mx-10">
+              <div>
                 <p className="text-lg font-semibold mb-5">Minimal</p>
                 <div className="flex flex-wrap gap-3">
                 {
@@ -392,7 +392,7 @@ function DashBoard({ store }) {
                 }
                 </div>
               </div>
-              <div className="mx-10">
+              <div>
                 <p className="text-lg font-semibold mb-5">Classic</p>
                 <div className="flex flex-wrap gap-3">
                 {
@@ -405,7 +405,7 @@ function DashBoard({ store }) {
                 </div>
               </div>
             </TabsContent>
-            <TabsContent value="projects" className="flex-1 pt-0 space-y-6">
+            <TabsContent value="projects" className="flex-1 p-6 pt-2 space-y-6">
                 <ProjectSection store={store} />
             </TabsContent>
         </div>

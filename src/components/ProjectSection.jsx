@@ -171,71 +171,69 @@ function ProjectSection({ store }) {
     const [popoverOpen, setPopoverOpen] = useState(false)
     return (
         <div className="flex flex-col">
-            <DashboardHeader title={"Project"} buttonText={"Explore Project"} bottomSection={false}/>
-            <div className="mx-10">
-                <div className="flex items-center justify-between py-4 rounded-md">
-                    <div className="relative flex flex-1 items-center">
-                    <Input
-                        type="search"
-                        placeholder="Search Templates ..."
-                        className="rounded-full w-1/2"
-                    />
-                    <div className="absolute right-[51%] text-gray-400">
-                        <LucideSearch className="h-5"/>
-                    </div>
-                </div>
-                <div className="flex items-center space-x-2">
-                    {/* <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
-                    <PopoverTrigger asChild> */}
-                        <Button variant="outline"><LucideFilter className="h-4 my-auto mr-2"/>Filters</Button>
-                    {/* </PopoverTrigger>
-                    <PopoverContent className="p-4 w-48">
-                        <p>Filter options</p>
-                    </PopoverContent>
-                    </Popover> */}
-                    <Dialog open={open} onOpenChange={setOpen}>
-                    <DialogTrigger asChild>
-                        <Button variant="outline">
-                            <div  className=" p-[2px] rounded-sm bg-[#fe5655] mr-2 ">
-                                    <LucidePlus size={14} fill="#fff"  color="#fff" className=''/>
-                            </div>Add New
-                        </Button>
-                    </DialogTrigger>
-                    <DialogContent className="p-4">
-                        <DialogHeader>
-                        <DialogTitle>Add New Template</DialogTitle>
-                        </DialogHeader>
-                        <p>Content for adding a new template.</p>
-                    </DialogContent>
-                    </Dialog>
-                </div>
-                </div>
-                <div className="flex gap-2 overflow-x-auto">
-                    {categories.map((cat, i) => (
-                        <Button key={i} variant="outline" className="whitespace-nowrap rounded-full">
-                        {cat.icon && <span className="mr-1">{cat.icon}</span>}
-                        {cat.label}
-                        </Button>
-                    ))}
-                </div>
-            </div>
-            <div className="max-w-[80vw] m-10">
-            <p className="text-lg font-semibold mb-3">Recent Designs</p>
-            <DashboardProjects store={store}/>
-            </div>
-            <div className="mx-10">
-            <p className=" text-lg font-semibold">Projects</p>
-                <div className="flex flex-wrap gap-3">
-                {/* {
-                  mediaKitData.map((item)=>{
-                    return(
-                      <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
-                    )
-                  })
-                } */}
-                </div>
-            </div>
-            </div>
+          <DashboardHeader title={"Project"} buttonText={"Explore Project"} bottomSection={false}/>
+          <div>
+              <div className="flex items-center justify-between py-4 rounded-md">
+                  <div className="relative flex flex-1 items-center">
+                  <Input
+                      type="search"
+                      placeholder="Search Templates ..."
+                      className="rounded-full w-1/2"
+                  />
+                  <div className="absolute right-[51%] text-gray-400">
+                      <LucideSearch className="h-5"/>
+                  </div>
+              </div>
+              <div className="flex items-center space-x-2">
+                  {/* <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
+                  <PopoverTrigger asChild> */}
+                      <Button variant="outline"><LucideFilter className="h-4 my-auto mr-2"/>Filters</Button>
+                  {/* </PopoverTrigger>
+                  <PopoverContent className="p-4 w-48">
+                      <p>Filter options</p>
+                  </PopoverContent>
+                  </Popover> */}
+                  <Dialog open={open} onOpenChange={setOpen}>
+                  <DialogTrigger asChild>
+                      <Button variant="outline">
+                          <div  className=" p-[2px] rounded-sm bg-[#fe5655] mr-2 ">
+                                  <LucidePlus size={14} fill="#fff"  color="#fff" className=''/>
+                          </div>Add New
+                      </Button>
+                  </DialogTrigger>
+                  <DialogContent className="p-4">
+                      <DialogHeader>
+                      <DialogTitle>Add New Template</DialogTitle>
+                      </DialogHeader>
+                      <p>Content for adding a new template.</p>
+                  </DialogContent>
+                  </Dialog>
+              </div>
+              </div>
+              <div className="flex gap-2 overflow-x-auto">
+                  {categories.map((cat, i) => (
+                      <Button key={i} variant="outline" className="whitespace-nowrap rounded-full">
+                      {cat.icon && <span className="mr-1">{cat.icon}</span>}
+                      {cat.label}
+                      </Button>
+                  ))}
+              </div>
+          </div>
+          <div className="max-w-[80vw] my-10">
+          <p className="text-lg font-semibold mb-3">Recent Designs</p>
+          <DashboardProjects store={store}/>
+          </div>
+          <p className=" text-lg font-semibold">Projects</p>
+              <div className="flex flex-wrap gap-3">
+              {/* {
+                mediaKitData.map((item)=>{
+                  return(
+                    <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
+                  )
+                })
+              } */}
+              </div>
+        </div>
     )
 }
 
