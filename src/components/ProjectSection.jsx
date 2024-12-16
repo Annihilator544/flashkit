@@ -1,14 +1,13 @@
 import { Button } from "./ui/button";
+import projectSvg from '../assets/project.svg'
 
 function ProjectSection(){
 
     return (
         <>
-            <div className="bg-gradient-to-r from-[#E4F0FA00] to-[#DEABFF] p-8 rounded-lg mb-6">
-              <h1 className="text-4xl font-light text-black mb-4">Projects</h1>
-              <Button variant="secondary" className="bg-white text-black hover:bg-gray-100 drop-shadow-2xl">
-                Explore New Project
-              </Button>
+            <div className="bg-gradient-to-r relative from-[#584eff] to-[#e365d7] stops-[#e185a9] p-8 rounded-lg mb-6">
+              <h1 className="text-4xl font-semibold text-white mb-4">Projects</h1>
+              <img src={projectSvg} alt="header" className="absolute right-5 -bottom-16 w-60 h-60" />
             </div>
             <p className=" text-3xl font-semibold">Projects</p>
               <div>
