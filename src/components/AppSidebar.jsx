@@ -90,8 +90,8 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                             </SidebarMenuItem>
                         </TabsTrigger>
                         <SidebarMenuItem className="">
-                                <SidebarMenuButton className="font-normal bg-[#fe5655] text-white hover:bg-[#fe5655]/90 hover:text-white" onClick={()=>window.location.href="/canvas?id=create_new_design"}>
-                                <div  className=" p-[2px] rounded-sm ">
+                                <SidebarMenuButton className="text-black" onClick={()=>window.location.href="/canvas?id=create_new_design"}>
+                                <div  className=" p-[2px] rounded-sm bg-[#fe5655]">
                                     <LucidePlus size={14} fill="#fff"  color="#fff" className=''/>
                                 </div>
                                 Create New
