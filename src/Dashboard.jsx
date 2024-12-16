@@ -415,7 +415,7 @@ function DashBoard({ store }) {
               </div>
             </TabsContent>
             <TabsContent value="projects" className="flex-1 p-10 space-y-6">
-                <ProjectSection />
+                <ProjectSection store={store} />
             </TabsContent>
         </div>
         </SidebarLayout>
