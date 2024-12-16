@@ -46,7 +46,7 @@ const categories = [
       loadDesigns();
     }, [project.cloudEnabled, project.designsLength]);
     return (
-      <div className="flex flex-col flex-wrap">
+      <div className="flex flex-col flex-wrap w-full">
         <div className="flex gap-5 flex-wrap">
         {!designsLoadings && !designs.length && (
           <div style={{ paddingTop: '20px', textAlign: 'center', opacity: 0.6 }}>
@@ -169,10 +169,12 @@ function ProjectSection({ store }) {
     const [open, setOpen] = useState(false)
     const [popoverOpen, setPopoverOpen] = useState(false)
     return (
-        <>
-            <div className="bg-gradient-to-r relative from-[#584eff] to-[#e365d7] stops-[#e185a9] p-8 rounded-lg mb-6 overflow-hidden">
-              <h1 className="text-4xl font-semibold text-white mb-4">Projects</h1>
-              <img src={projectSvg} alt="header" className="absolute right-5 -bottom-16 w-60 h-60" />
+        <div className="flex flex-col">
+            <div className="bg-gradient-to-r from-[#E4F0FA00] to-[#DEABFF] p-8 rounded-lg mb-6 overflow-hidden">
+              <h1 className="text-4xl font-light text-black mb-4">Projects</h1>
+              <Button variant="secondary" className="bg-white text-black hover:bg-gray-100 drop-shadow-2xl">
+                        Explore Flashkit
+                </Button>
             </div>
             <div>
                 <div className="flex items-center justify-between py-4 rounded-md">
@@ -221,8 +223,10 @@ function ProjectSection({ store }) {
                     ))}
                 </div>
             </div>
-            <p className="text-lg font-semibold">Recent Designs</p>
+            <div className="max-w-[80vw] my-10">
+            <p className="text-lg font-semibold mb-3">Recent Designs</p>
             <DashboardProjects store={store}/>
+            </div>
             <p className=" text-lg font-semibold">Projects</p>
                 <div className="flex flex-wrap gap-3">
                 {/* {
@@ -233,7 +237,7 @@ function ProjectSection({ store }) {
                   })
                 } */}
                 </div>
-            </>
+            </div>
     )
 }
 

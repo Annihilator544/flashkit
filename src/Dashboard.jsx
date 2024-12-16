@@ -106,23 +106,22 @@ function DashBoard({ store }) {
   }, []);
   return (
     <div className="flex flex-col">
-      <header>
+      {/* <header>
         <div className="flex h-[7vh] fixed z-10 w-full bg-white top-0 left-0 border-b-[1px] px-6 justify-between">
             <Link to='/' className=' hover:no-underline my-auto'>
                 <div className='flex gap-2 my-auto'>
                     <img src={logo} alt="logo" className=' h-8' />
-                    {/* <p className=' font-semibold text-3xl'>FlashKit</p> */}
                 </div>
             </Link>
         </div>
-      </header>
-      <div className="flex h-[93vh] mt-[7vh]">
+      </header> */}
+      <div className="flex">
         <Tabs className="flex flex-1 " defaultValue="home" >
         <SidebarLayout>
         <div className=" flex">
-            <TabsContent value="home" className="flex-1 overflow-y-auto">
+            <TabsContent value="home" className="flex-1 p-6 space-y-6 overflow-y-auto">
               <DashboardHeader/>
-              <div className="m-10 text-[#252C32] flex justify-between">
+              <div className=" text-[#252C32] flex justify-between">
                 <div>
                   <p className=" font-semibold text-2xl">Welcome back {user.displayName&&user.displayName.split(" ")[0]} !</p>
                   <p className=" font-normal text-base ">Your latest social media performance </p>
@@ -142,10 +141,9 @@ function DashBoard({ store }) {
                     </SelectContent>
                   </Select>
               </div>
-              <div>
                 {/* {localStorage.getItem("flashkitPlan") === "FLASHKITSOCIAL" ? 
                 <> */}
-                <div className="m-10  flex justify-around flex-wrap">
+                <div className="flex justify-around flex-wrap pt-10">
                     <div className="flex gap-4">
                         <Avatar className= "m-auto">
                         {user&&user.photoURL ? <AvatarImage src={user.photoURL} /> :
@@ -181,7 +179,7 @@ function DashBoard({ store }) {
                       <div className="flex text-sm font-medium gap-1"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
                   </div>
                 </div>
-                <div className="m-10">
+                <div className="py-10">
                 <ShineBorder
                   className="relative flex w-full py-5 flex-1 flex-col overflow-hidden rounded-lg border bg-background md:shadow-xl"
                   color={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
@@ -191,20 +189,20 @@ function DashBoard({ store }) {
                   <p className="text-[#252C32] text-base mr-auto">Post on Thursdays at 5-7 PM for better reach. Use hashtags like #Inspiration and #Style!</p>
                 </ShineBorder>
                 </div>
-                <div className="m-10">
+                <div className="">
                     <div className="flex gap-6">
                     <InsightsChart/> 
                     <MonthlyEngagementChart/>
                     </div>
                 </div>
-                <div className="m-10">
+                <div className="">
                   <div className="justify-between flex flex-col mb-10">
                   <p className=" text-lg font-semibold mt-10">Start Building</p>
                   <p className="text-[#6E7C87] font-medium text-sm">Choose a template and craft eye-catching stats</p>
                   </div>
                   <DashboardProjects store={store} />
                 </div>
-                <div className="m-10">
+                <div className="">
                   <p className="text-lg font-semibold">Templates for you</p>
                   <p className="text-secondary font-medium text-sm mb-5">Choose a template and craft eye-catching stats</p>
                   <div className="flex  gap-3">
@@ -217,9 +215,8 @@ function DashBoard({ store }) {
                   }
                   </div>
                 </div>
-                </div>
             </TabsContent>
-            <TabsContent value="youtube" className="flex-1 p-10 space-y-6">
+            <TabsContent value="youtube" className="flex-1 p-6 space-y-6">
             <p className=" text-3xl font-semibold">Youtube Analytics</p>
             <div>
               <p className="text-secondary font-medium text-lg">Overview</p>
@@ -277,7 +274,7 @@ function DashBoard({ store }) {
                 <TopContentCarousel />
             </div>
             </TabsContent>
-            <TabsContent value="instagram" className="flex-1 p-10 space-y-6">
+            <TabsContent value="instagram" className="flex-1 p-6 space-y-6">
             <p className=" text-3xl font-semibold">Instagram Analytics</p>
             {instagramData && instagramData.userData.id ?
             <Card>
@@ -329,13 +326,12 @@ function DashBoard({ store }) {
                 {instagramData && <InstagramContentCarousel CarouselItems={instagramData.posts} />}
             </div>
             </TabsContent>
-            <TabsContent value="templates" className="flex-1 p-10 space-y-6">
-            <div className="bg-gradient-to-r relative overflow-hidden from-[#036a84] to-[#469098] stops-[#93bfaf] p-8 rounded-lg mb-6">
-              <h1 className="text-4xl font-semibold text-white mb-4">Design Stunning Content Effortlessly!</h1>
+            <TabsContent value="templates" className="flex-1 p-6 space-y-6">
+            <div className="bg-gradient-to-r from-[#E4F0FA00] to-[#E9FF92] p-8 rounded-lg mb-6">
+              <h1 className="text-4xl font-light text-black mb-4">Design Stunning Content Effortlessly!</h1>
               <Button variant="secondary" className="bg-white text-black hover:bg-gray-100 drop-shadow-2xl">
                 Explore Templates
               </Button>
-              <img src={headerSvg} alt="header" className="absolute right-5 -bottom-10 w-64 h-64" />
             </div>
             <div className="flex flex-col gap-4">
             <div className="relative flex flex-1 items-center">
@@ -414,7 +410,7 @@ function DashBoard({ store }) {
                 </div>
               </div>
             </TabsContent>
-            <TabsContent value="projects" className="flex-1 p-10 space-y-6">
+            <TabsContent value="projects" className="flex-1 p-6 space-y-6">
                 <ProjectSection store={store} />
             </TabsContent>
         </div>
