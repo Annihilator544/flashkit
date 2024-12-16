@@ -15,11 +15,11 @@ export default function SidebarLayout({ children }) {
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        {/* <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 justify-between">
+        <header className="flex h-10 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 justify-between">
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="mr-2 h-4" />
-            <Breadcrumb>
+            {/* <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
                   <BreadcrumbLink href="#">
@@ -31,13 +31,14 @@ export default function SidebarLayout({ children }) {
                   <BreadcrumbPage>Dashboard</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
-            </Breadcrumb>
+            </Breadcrumb> */}
           </div>
           <search className=" min-w-80 flex">
           <div className="relative flex flex-1 items-center">
             <Input
               type="search"
               placeholder="Search ..."
+              className="py-1"
             />
             <div className="absolute right-3 text-gray-400">
               <LucideSearch className="h-5"/>
@@ -55,7 +56,7 @@ export default function SidebarLayout({ children }) {
             </Avatar>
 
           </div>
-        </header> */}
+        </header>
         <div className="">
           {children}
         </div>

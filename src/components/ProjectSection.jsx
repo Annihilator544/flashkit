@@ -172,7 +172,7 @@ function ProjectSection({ store }) {
     return (
         <div className="flex flex-col">
             <DashboardHeader title={"Project"} buttonText={"Explore Project"} bottomSection={false}/>
-            <div>
+            <div className="mx-10">
                 <div className="flex items-center justify-between py-4 rounded-md">
                     <div className="relative flex flex-1 items-center">
                     <Input
@@ -219,10 +219,11 @@ function ProjectSection({ store }) {
                     ))}
                 </div>
             </div>
-            <div className="max-w-[80vw] my-10">
+            <div className="max-w-[80vw] m-10">
             <p className="text-lg font-semibold mb-3">Recent Designs</p>
             <DashboardProjects store={store}/>
             </div>
+            <div className="mx-10">
             <p className=" text-lg font-semibold">Projects</p>
                 <div className="flex flex-wrap gap-3">
                 {/* {
@@ -233,6 +234,7 @@ function ProjectSection({ store }) {
                   })
                 } */}
                 </div>
+            </div>
             </div>
     )
 }

@@ -233,7 +233,7 @@ const SidebarTrigger = React.forwardRef(({ className, onClick, ...props }, ref) 
         setIsToggled((isToggled) => !isToggled)
       }}
       {...props}>
-      {isToggled ? <PanelRightClose /> : <PanelRightOpen />}
+      {isToggled ? <PanelRightClose className="h-4" /> : <PanelRightOpen className="h-4" />}
       <span className="sr-only">Toggle Sidebar</span>
     </Button>)
   );
