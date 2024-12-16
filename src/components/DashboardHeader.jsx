@@ -21,7 +21,7 @@ const DashboardHeader = () => {
         <Button variant="secondary" className="bg-white text-black hover:bg-gray-100 drop-shadow-2xl">
           Explore Flashkit
         </Button>
-        <img src={headerSvg} alt="header" className="absolute right-0 -bottom-10 w-64 h-64" />
+        <img src={headerSvg} alt="header" className="absolute right-5 -bottom-10 w-64 h-64" />
       </div>
 
       {/* Tools Grid */}

@@ -1,6 +1,6 @@
 import { TabsContent } from "@radix-ui/react-tabs";
 import { Tabs, TabsList, TabsTrigger } from "./components/ui/tabs";
-import { Instagram, Linkedin, LucideAward, LucideCircleUserRound, LucideCopy, LucideFolderOpen, LucideGauge, LucideLayoutDashboard, LucideLogOut, LucideMoreHorizontal, LucideMoreVertical, LucidePieChart, LucidePlus, LucideSettings, LucideSparkles, LucideTrash2, LucideTvMinimalPlay, LucideUsersRound, Twitter, Youtube } from "lucide-react";
+import { Instagram, Linkedin, LucideAward, LucideCircleUserRound, LucideCopy, LucideFolderOpen, LucideGauge, LucideLayoutDashboard, LucideLogOut, LucideMoreHorizontal, LucideMoreVertical, LucidePieChart, LucidePlus, LucideSearch, LucideSettings, LucideSparkles, LucideTrash2, LucideTvMinimalPlay, LucideUsersRound, Twitter, Youtube } from "lucide-react";
 import React, { useEffect } from "react";
 import { useProject } from "plotNoFeatures/project";
 import { observer } from "mobx-react-lite";
@@ -36,6 +36,21 @@ import { useInstagramData } from "store/use-instagram-data";
 import S3FileManager from "./components/S3MarketPlace";
 import { Link } from "react-router-dom";
 import ShineBorder from "./components/ui/shine-border";
+import headerSvg from "./assets/header.svg";
+import { Input } from "./components/ui/input"
+import ProjectSection from "./components/ProjectSection";
+
+const categories = [
+  { label: "Starred", icon: "⭐" },
+  { label: "New!", icon: "✨" },
+  { label: "Trending!", icon: "🔥" },
+  { label: "All" },
+  { label: "Media Kit" },
+  { label: "Education" },
+  { label: "Marketing" },
+  { label: "Cards & Invitation" },
+  { label: "Social Media" },
+]
 
 function DashBoard({ store }) {
   const { data } = useYoutubeData();
@@ -91,8 +106,8 @@ function DashBoard({ store }) {
   }, []);
   return (
     <div className="flex flex-col">
-    <header>
-        <div className="flex h-[7vh] border-b-[1px] px-6 justify-between">
+      <header>
+        <div className="flex h-[7vh] fixed z-10 w-full bg-white top-0 left-0 border-b-[1px] px-6 justify-between">
             <Link to='/' className=' hover:no-underline my-auto'>
                 <div className='flex gap-2 my-auto'>
                     <img src={logo} alt="logo" className=' h-8' />
@@ -100,8 +115,8 @@ function DashBoard({ store }) {
                 </div>
             </Link>
         </div>
-        </header>
-      <div className="flex h-[93vh]">
+      </header>
+      <div className="flex h-[93vh] mt-[7vh]">
         <Tabs className="flex flex-1 " defaultValue="home" >
         <SidebarLayout>
         <div className=" flex">
@@ -109,7 +124,7 @@ function DashBoard({ store }) {
               <DashboardHeader/>
               <div className="m-10 text-[#252C32] flex justify-between">
                 <div>
-                  <p className=" font-semibold text-2xl">Welcome back {user.displayName.split(" ")[0]} !</p>
+                  <p className=" font-semibold text-2xl">Welcome back {user.displayName&&user.displayName.split(" ")[0]} !</p>
                   <p className=" font-normal text-base ">Your latest social media performance </p>
                 </div>
                 <Select>
@@ -314,81 +329,37 @@ function DashBoard({ store }) {
                 {instagramData && <InstagramContentCarousel CarouselItems={instagramData.posts} />}
             </div>
             </TabsContent>
-            {/* <TabsContent value="mediakit" className="flex-1 p-10 space-y-6">
-              <p className=" text-3xl font-semibold">Media Kit</p>
-              <div>
-                <p className="text-lg font-semibold">Templates for you</p>
-                <p className="text-secondary font-medium text-sm mb-5">Choose a template and craft eye-catching stats</p>
-                <div className="flex flex-wrap gap-3">
-                {
-                  mediaKitData.map((item)=>{
-                    return(
-                      <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
-                    )
-                  })
-                }
-                </div>
-              </div>
-              <div>
-                <p className="text-lg font-semibold mb-5">Bold</p>
-                <div className="flex flex-wrap gap-3">
-                {
-                  boldDesigns.map((item)=>{
-                    return(
-                      <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
-                    )
-                  })
-                }
-                </div>
-              </div>
-              <div>
-                <p className="text-lg font-semibold mb-5">Minimal</p>
-                <div className="flex flex-wrap gap-3">
-                {
-                  minimalDesigns.map((item)=>{
-                    return(
-                      <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
-                    )
-                  })
-                }
-                </div>
-              </div>
-              <div>
-                <p className="text-lg font-semibold mb-5">Classic</p>
-                <div className="flex flex-wrap gap-3">
-                {
-                  classicDesigns.map((item)=>{
-                    return(
-                      <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
-                    )
-                  })
-                }
-                </div>
-              </div>
-            </TabsContent> */}
-            {/* <TabsContent value="profile" className="flex-1">
-              <div className="m-10">
-                <ConnectAccount/>
-              </div>
-              <div className="m-10">
-              {Engagement && typeof Engagement ==='object' && Object.keys(Engagement).length > 0 ?
-                <Card className="flex gap-4">
-                  <CardContent className="flex-1 p-6">
-                  <pre>{Engagement.analysis[0].text}</pre>
-                  </CardContent>
-                </Card>
-                :<></>
-              }
-              </div>
-            </TabsContent> */}
             <TabsContent value="templates" className="flex-1 p-10 space-y-6">
-            <div className="bg-gradient-to-r from-[#E4F0FA00] to-[#E9FF92]  p-8 rounded-lg mb-6">
-              <h1 className="text-4xl font-light text-black mb-4">Template Hub</h1>
+            <div className="bg-gradient-to-r relative overflow-hidden from-[#036a84] to-[#469098] stops-[#93bfaf] p-8 rounded-lg mb-6">
+              <h1 className="text-4xl font-semibold text-white mb-4">Design Stunning Content Effortlessly!</h1>
               <Button variant="secondary" className="bg-white text-black hover:bg-gray-100 drop-shadow-2xl">
-                Explore New Templates
+                Explore Templates
               </Button>
+              <img src={headerSvg} alt="header" className="absolute right-5 -bottom-10 w-64 h-64" />
             </div>
-            <p className=" text-3xl font-semibold">Templates</p>
+            <div className="flex flex-col gap-4">
+            <div className="relative flex flex-1 items-center">
+              <Input
+                type="search"
+                placeholder="Search Templates ..."
+                className="rounded-full w-1/2"
+              />
+              <div className="absolute right-[51%] text-gray-400">
+                <LucideSearch className="h-5"/>
+              </div>
+            </div>
+              <div className="flex gap-2 overflow-x-auto">
+                {categories.map((cat, i) => (
+                  <Button key={i} variant="outline" className="whitespace-nowrap rounded-full">
+                    {cat.icon && <span className="mr-1">{cat.icon}</span>}
+                    {cat.label}
+                  </Button>
+                ))}
+              </div>
+            </div>
+                <div>
+                <p className="text-lg font-semibold">Choose your template</p>
+                </div>
               <div>
                 <p className="text-lg font-semibold">Templates for you</p>
                 <p className="text-secondary font-medium text-sm mb-5">Choose a template and craft eye-catching stats</p>
@@ -444,62 +415,7 @@ function DashBoard({ store }) {
               </div>
             </TabsContent>
             <TabsContent value="projects" className="flex-1 p-10 space-y-6">
-            <div className="bg-gradient-to-r from-[#E4F0FA00] to-[#DEABFF] p-8 rounded-lg mb-6">
-              <h1 className="text-4xl font-light text-black mb-4">Projects</h1>
-              <Button variant="secondary" className="bg-white text-black hover:bg-gray-100 drop-shadow-2xl">
-                Explore New Project
-              </Button>
-            </div>
-            <p className=" text-3xl font-semibold">Projects</p>
-              <div>
-                <p className="text-lg font-semibold">Recent Projects for you</p>
-                <p className="text-secondary font-medium text-sm mb-5">Choose a template and craft eye-catching stats</p>
-                <div className="flex flex-wrap gap-3">
-                {
-                  mediaKitData.map((item)=>{
-                    return(
-                      <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
-                    )
-                  })
-                }
-                </div>
-              </div>
-              <div>
-                <p className="text-lg font-semibold mb-5">Bold</p>
-                <div className="flex flex-wrap gap-3">
-                {
-                  boldDesigns.map((item)=>{
-                    return(
-                      <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
-                    )
-                  })
-                }
-                </div>
-              </div>
-              <div>
-                <p className="text-lg font-semibold mb-5">Minimal</p>
-                <div className="flex flex-wrap gap-3">
-                {
-                  minimalDesigns.map((item)=>{
-                    return(
-                      <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
-                    )
-                  })
-                }
-                </div>
-              </div>
-              <div>
-                <p className="text-lg font-semibold mb-5">Classic</p>
-                <div className="flex flex-wrap gap-3">
-                {
-                  classicDesigns.map((item)=>{
-                    return(
-                      <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
-                    )
-                  })
-                }
-                </div>
-              </div>
+                <ProjectSection />
             </TabsContent>
         </div>
         </SidebarLayout>
@@ -630,7 +546,7 @@ const DashboardProjects = observer(({ store }) => {
         >
         <DropdownMenu>
         <DropdownMenuTrigger>
-          <Button className="p-2 bg-transparent"><LucideMoreVertical className="h-4"/></Button>
+          <Button className="p-2 bg-transparent hover:bg-primary border "><LucideMoreVertical className="h-4"/></Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="bg-white mx-1">
           <DropdownMenuItem className="flex gap-2" onClick={() => {
@@ -653,18 +569,13 @@ const DashboardProjects = observer(({ store }) => {
         </div>
       </Card>
       
-      <div
-          style={{
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
-            padding: '3px',
-            marginLeft: "auto",
-            marginRight: "5px",
-          }}
-        >
-          {design.name || 'Untitled'}
+      <div className="mx-2">
+        <p className="text-sm font-semibold">{design.name}</p>
+        <div className="flex justify-between">
+        <p className="text-xs text-secondary">{design.lastModified&&design.lastModified.split("T")[0]}</p>
+        <p className="text-xs text-secondary">{design.lastModified&&design.lastModified.replace(/^[^:]*([0-2]\d:[0-5]\d).*$/, "$1")}</p>
         </div>
+      </div>
       </div>
     );
   });
