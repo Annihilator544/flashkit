@@ -12,18 +12,19 @@ import {
 } from "lucide-react";
 import headerSvg from '../assets/header.svg'
 
-const DashboardHeader = () => {
+const DashboardHeader = ({ title, buttonText, bottomSection }) => {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-[#E4F0FA00] to-[#9DD3FF] stops-[#9DD3FF] p-8 rounded-lg mb-6">
-        <h1 className="text-4xl font-light text-black mb-4">Welcome to Flashkit! Let's grow together</h1>
+      <div className="bg-gradient-to-r from-[#E4F0FA00] to-[#9DD3FF] stops-[#9DD3FF] p-6 rounded-lg mb-6">
+        <h1 className="text-4xl font-light text-black mb-4">{title}</h1>
         <Button variant="secondary" className="bg-white text-black hover:bg-gray-100 drop-shadow-2xl">
-          Explore Flashkit
+          {buttonText}
         </Button>
       </div>
 
       {/* Tools Grid */}
+      {bottomSection ?
       <div className="grid grid-cols-5 gap-4 mb-8 md:grid-cols-10">
         <ToolButton icon={<FileText />} label="Doc" color="text-cyan-500" />
         <ToolButton icon={<Layout />} label="Canvas" color="text-green-500" />
@@ -36,6 +37,8 @@ const DashboardHeader = () => {
         <ToolButton icon={<Upload />} label="Upload" color="text-slate-500" />
         <ToolButton icon={<MoreHorizontal />} label="More" color="text-gray-700" />
       </div>
+      :
+      <></>}
     </div>
   );
 };

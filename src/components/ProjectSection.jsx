@@ -13,6 +13,7 @@ import { observer } from "mobx-react-lite"
 import { useProject } from "plotNoFeatures/project"
 import * as api from "../plotNoFeatures/api";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./ui/carousel"
+import DashboardHeader from "./DashboardHeader"
 
 const categories = [
     { label: "All" },
@@ -170,12 +171,7 @@ function ProjectSection({ store }) {
     const [popoverOpen, setPopoverOpen] = useState(false)
     return (
         <div className="flex flex-col">
-            <div className="bg-gradient-to-r from-[#E4F0FA00] to-[#DEABFF] p-8 rounded-lg mb-6 overflow-hidden">
-              <h1 className="text-4xl font-light text-black mb-4">Projects</h1>
-              <Button variant="secondary" className="bg-white text-black hover:bg-gray-100 drop-shadow-2xl">
-                        Explore Flashkit
-                </Button>
-            </div>
+            <DashboardHeader title={"Project"} buttonText={"Explore Project"} bottomSection={false}/>
             <div>
                 <div className="flex items-center justify-between py-4 rounded-md">
                     <div className="relative flex flex-1 items-center">

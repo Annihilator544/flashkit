@@ -67,7 +67,7 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                     <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton
-                        className="data-[state=open]:bg-sidebar-accent  data-[state=open]:text-sidebar-accent-foreground group-data-[collapsible=icon]:gap-0 gap-1">
+                        className="data-[state=open]:bg-sidebar-accent hover:bg-inherit data-[state=open]:text-sidebar-accent-foreground group-data-[collapsible=icon]:gap-0 gap-1">
                         <div
                             className="flex items-center group-data-[collapsible=icon]:justify-center justify-end rounded-lg text-sidebar-primary-foreground">
                             <img src={logo} alt="Logo" className="h-5 w-5 group-data-[collapsible=icon]:h-4 group-data-[collapsible=icon]:w-4" />
@@ -85,22 +85,24 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                         <TabsTrigger value="home" className="p-0">
                             <SidebarMenuItem>
                                 <SidebarMenuButton>
-                                    <LucideHome className="h-5"/> <p className="text-black">Home</p>
+                                    <LucideHome className="h-5"/> <p className="text-sidebar-foreground">Home</p>
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
                         </TabsTrigger>
                         <SidebarMenuItem className="">
-                                <SidebarMenuButton className="text-black" onClick={()=>window.location.href="/canvas?id=create_new_design"}>
+                                <SidebarMenuButton onClick={()=>window.location.href="/canvas?id=create_new_design"}>
                                 <div  className=" p-[2px] rounded-sm bg-[#fe5655]">
                                     <LucidePlus size={14} fill="#fff"  color="#fff" className=''/>
                                 </div>
+                                <p className="text-sidebar-foreground Inter">
                                 Create New
+                                </p>
                                 </SidebarMenuButton>
                         </SidebarMenuItem> 
                         <TabsTrigger value="templates" className="p-0">
                             <SidebarMenuItem>
                                 <SidebarMenuButton>
-                                    <LucideLayoutDashboard className="h-5"/> <p className="text-black">Template Hub</p>
+                                    <LucideLayoutDashboard className="h-5"/> <p className="text-sidebar-foreground">Template Hub</p>
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
                         </TabsTrigger>
@@ -112,7 +114,7 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                                     <SidebarMenuItem>
                                     <CollapsibleTrigger asChild>
                                         <SidebarMenuButton className=" font-normal">
-                                        <LucideFileChartColumn className="h-5"/> <p className="text-black">Insights</p>
+                                        <LucideFileChartColumn className="h-5"/> <p className="text-sidebar-foreground Inter">Insights</p>
                                         <ChevronRight
                                             className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                                         </SidebarMenuButton>
@@ -161,7 +163,7 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                         <TabsTrigger value="projects" className="p-0">
                             <SidebarMenuItem>
                                 <SidebarMenuButton>
-                                <LucideFolder className="h-5"/> <p className="text-black"> Projects</p>
+                                <LucideFolder className="h-5"/> <p className="text-sidebar-foreground"> Projects</p>
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
                         </TabsTrigger>
