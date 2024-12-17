@@ -9,52 +9,58 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { useProject } from 'plotNoFeatures/project';
 import { useAuthStore } from 'store/use-auth-data';
 import { Skeleton } from './ui/skeleton';
+import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+import { DynamoDBDocumentClient, GetCommand, PutCommand, UpdateCommand } from '@aws-sdk/lib-dynamodb';
 
-const s3Client = new S3Client({
-  region: 'eu-west-2', // e.g., 'us-east-1'
-  credentials: {
-    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
-  }
-});
+const region = "eu-west-2";
+const credentials = {
+  accessKeyId: process.env.REACT_APP_DYNAMO_DB_AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.REACT_APP_DYNAMO_DB_AWS_SECRET_ACCESS_KEY
+};
 
 const Share = observer(({ store }) => {
   const [uploading, setUploading] = useState(false);
   const [isUploaded, setIsUploaded] = useState(false);
   const [uploadingPersonal, setUploadingPersonal] = useState(false);
   const [isUploadedPersonal, setIsUploadedPersonal] = useState(false);
+  const [sharedIdPublic, setSharedIdPublic] = useState(new Set());
+  const [sharedIdPersonal, setSharedIdPersonal] = useState(new Set());
   const { user } = useAuthStore();
-  const bucketNamePersonal = 'flashkitpersonalsharebucket';
+  const ddbClient = new DynamoDBClient({ region, credentials });
+  const docClient = DynamoDBDocumentClient.from(ddbClient);
+  const tableName = "flashkitUserData";
   const project = useProject();
 
 
   const handleFileUploadPublic = async (event) => {
-    const file = store.toJSON();
-    const Shareable = await project.getUploadJSON({ json: file });
-    const preview = await project.getUploadImage();
     
     setUploading(true);
     try {
-      // const command = new PutObjectCommand({
-      //   Bucket: bucketNamePersonal,
-      //   Key: `${user.uid}/shared/${project.id}.json`,
-      //   Body: Shareable,
-      //   ContentType: 'application/json',
-      // });
-      // const commandImage = new PutObjectCommand({
-      //   Bucket: bucketNamePersonal,
-      //   Key: `${user.uid}/shared/${project.id}.jpg`,
-      //   Body: preview,
-      //   ContentType: 'image/jpeg',
-      // });
-        if (window.project.name&&window.project.name==='') {
-            console.log('Please select a file to upload');
-            return;
+      const params = {
+        TableName: tableName,
+        Key: { uid: user.uid },
+      };
+        const result = await docClient.send(new GetCommand(params));
+        if (result.Item && result.Item.sharedDesignsPublic) {
+          setSharedIdPublic(new Set(result.Item.sharedDesignsPublic));
+        } else {
+          setSharedIdPublic(new Set());
         }
-        else{
-            // await s3Client.send(command);
-            // await s3Client.send(commandImage);
-            console.log('File uploaded successfully! Could be accesssed on the following link: ', `https://app.flashkit.co.uk/public?awsKey=${user.uid}/${project.id}.json`);
+        setSharedIdPublic(sharedIdPublic.add(project.id));
+        const params2 = {
+          TableName: tableName,
+          Key: { uid: user.uid },
+          UpdateExpression: 'SET sharedDesignsPublic = :new_items',
+          ExpressionAttributeValues: {
+            ':new_items': Array.from(sharedIdPublic),
+          },
+          ReturnValues: 'ALL_NEW',
+        };
+       try {
+          await docClient.send(new UpdateCommand (params2));
+          console.log("Shared Files saved successfully!");
+        } catch (error) {
+          console.error("Error saving file directory:", error);
         }
     } catch (error) {
       console.error('Error uploading file:', error);
@@ -65,31 +71,33 @@ const Share = observer(({ store }) => {
   };
 
   const handleFileUploadPersonal = async (event) => {
-    const file = store.toJSON();
-    const Shareable = await project.getUploadJSON({ json: file })
-    const preview = await project.getUploadImage();
     setUploadingPersonal(true);
     try {
-      // const command = new PutObjectCommand({
-      //   Bucket: bucketNamePersonal,
-      //   Key: `${user.uid}/shared/${project.id}.json`,
-      //   Body: Shareable,
-      //   ContentType: 'application/json',
-      // });
-      // const commandImage = new PutObjectCommand({
-      //   Bucket: bucketNamePersonal,
-      //   Key: `${user.uid}/shared/${project.id}.jpg`,
-      //   Body: preview,
-      //   ContentType: 'image/jpeg',
-      // });
-        if (window.project.name&&window.project.name==='') {
-            console.log('Please select a file to upload');
-            return;
+      const params = {
+        TableName: tableName,
+        Key: { uid: user.uid },
+      };
+        const result = await docClient.send(new GetCommand(params));
+        if (result.Item && result.Item.sharedDesignsPersonal) {
+          setSharedIdPersonal(new Set(result.Item.sharedDesignsPersonal)) 
+        } else {
+          setSharedIdPersonal(new Set());
         }
-        else{
-            // await s3Client.send(command);
-            // await s3Client.send(commandImage);
-            console.log('File uploaded successfully! Could be accesssed on the following link: ', `https://app.flashkit.co.uk/canvas?awsKey=${user.uid}/${project.id}.json`);
+        setSharedIdPersonal(sharedIdPersonal.add(project.id));
+        const params2 = {
+          TableName: tableName,
+          Key: { uid: user.uid },
+          UpdateExpression: 'SET sharedDesignsPersonal = :new_items',
+          ExpressionAttributeValues: {
+            ':new_items': Array.from(sharedIdPersonal),
+          },
+          ReturnValues: 'ALL_NEW',
+        };
+       try {
+          await docClient.send(new UpdateCommand(params2));
+          console.log("Shared Files saved successfully!");
+        } catch (error) {
+          console.error("Error saving file directory:", error);
         }
     } catch (error) {
       console.error('Error uploading file:', error);
