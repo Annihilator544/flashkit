@@ -1,6 +1,7 @@
 import { nanoid } from 'nanoid';
 import localforage from 'localforage';
 import { dataURLtoBlob } from './blob';
+import { DeleteObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 
 const isSignedIn = () => {
   // return window.puter?.auth?.isSignedIn();
@@ -69,6 +70,29 @@ export async function listDesigns() {
 }
 
 export async function deleteDesign({ id }) {
+  const authStorage = localStorage.getItem('auth-storage');
+  const authObject = JSON.parse(authStorage);
+  const uid = authObject?.state?.user?.uid;
+  const bucketNamePersonal = 'flashkitpersonalsharebucket';
+  const s3Client = new S3Client({
+        region: 'eu-west-2', // e.g., 'us-east-1'
+        credentials: {
+          accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+          secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+        }
+      });
+  if(uid){
+      const command = new DeleteObjectCommand({
+        Bucket: bucketNamePersonal,
+        Key: `${uid}/shared/${id}.json`,
+      });
+      const commandImage = new DeleteObjectCommand({
+        Bucket: bucketNamePersonal,
+        Key: `${uid}/shared/${id}.jpg`,
+      });
+      await s3Client.send(command);
+      await s3Client.send(commandImage);
+    }
   const list = await listDesigns();
   const newList = list.filter((design) => design.id !== id);
   await writeKv('designs-list', newList);
@@ -89,7 +113,6 @@ export async function loadById({ id }) {
 
   return { storeJSON, name: design?.name };
 }
-
 export async function duplicateDesign({ id }) {
   const newId = nanoid(10);
   const previewPath = `designs/${newId}.jpg`;
@@ -104,6 +127,39 @@ export async function duplicateDesign({ id }) {
   const name = 'duplicate '+ list.find((design)=> design.id === id).name;
   const lastModified = new Date().toISOString();
   list.push({ id : newId, name, lastModified });
+  const authStorage = localStorage.getItem('auth-storage');
+  const authObject = JSON.parse(authStorage);
+  const uid = authObject?.state?.user?.uid;
+  const bucketNamePersonal = 'flashkitpersonalsharebucket';
+  const s3Client = new S3Client({
+        region: 'eu-west-2', // e.g., 'us-east-1'
+        credentials: {
+          accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+          secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+        }
+      });
+      const Shareable =  JSON.stringify({
+        name: name,
+        id: newId,
+        lastModified: lastModified,
+        json: storeJSON,
+      });
+  if(uid){
+      const command = new PutObjectCommand({
+              Bucket: bucketNamePersonal,
+              Key: `${uid}/shared/${newId}.json`,
+              Body: Shareable,
+              ContentType: 'application/json',
+            });
+      const commandImage = new PutObjectCommand({
+              Bucket: bucketNamePersonal,
+              Key: `${uid}/shared/${newId}.jpg`,
+              Body: preview,
+              ContentType: 'image/jpeg',
+            });
+      await s3Client.send(command);
+      await s3Client.send(commandImage);
+    }
   await writeKv('designs-list', list);
   return { newId, status: 'saved' };
 }
