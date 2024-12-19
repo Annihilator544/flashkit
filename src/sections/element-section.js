@@ -9,12 +9,12 @@ import { IconsSection } from './icons-section';
 import { DEFAULT_SECTIONS } from 'polotno/side-panel';
 import { QrSection } from './qr-section';
 import ElementsVector from '../assets/ElementsVector.svg';
+import { UploadSection } from './upload-section';
 
 export const ElementsPanel = ({ store }) => {
     const TextSection = DEFAULT_SECTIONS[1];
     const ImageSection = DEFAULT_SECTIONS[2];
     const ShapesSection = DEFAULT_SECTIONS[3];
-    const UploadSection = DEFAULT_SECTIONS[4];
     const backgroundSection = DEFAULT_SECTIONS[5];
   return (
     <Tabs defaultValue="images" className="sidePanelHeight flex flex-col">

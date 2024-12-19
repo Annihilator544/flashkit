@@ -247,51 +247,93 @@ export const getPreview = async ({ id }) => {
 //   return subdomain;
 // });
 
-// export const listAssets = async () => {
-//   const list = (await readKv('assets-list')) || [];
-//   for (const asset of list) {
-//     asset.src = await getAssetSrc({ id: asset.id });
-//     asset.preview = await getAssetPreviewSrc({ id: asset.id });
-//   }
-//   return list;
-// };
+export const listAssets = async () => {
+  const list = (await readKv('assets-list')) || [];
+  for (const asset of list) {
+    asset.src = await getAssetSrc({ id: asset.id });
+    asset.preview = await getAssetPreviewSrc({ id: asset.id });
+  }
+  return list;
+};
 
-// export const getAssetSrc = async ({ id }) => {
-//   if (window.puter.auth.isSignedIn()) {
-//     const subdomain = await getPublicSubDomain();
-//     return `https://${subdomain}.puter.site/${id}`;
-//   } else {
-//     const file = await readFile(`uploads/${id}`);
-//     return URL.createObjectURL(file);
-//   }
-// };
+export const getAssetSrc = async ({ id }) => {
+    const file = await readFile(`uploads/${id}`);
+    console.log('file', file);
+    return URL.createObjectURL(file);
+};
 
-// export const getAssetPreviewSrc = async ({ id }) => {
-//   if (window.puter.auth.isSignedIn()) {
-//     const subdomain = await getPublicSubDomain();
-//     return `https://${subdomain}.puter.site/${id}-preview`;
-//   } else {
-//     const file = await readFile(`uploads/${id}-preview`);
-//     console.log('file', file);
-//     return URL.createObjectURL(file);
-//   }
-// };
+export const getAssetPreviewSrc = async ({ id }) => {
+    const file = await readFile(`uploads/${id}-preview`);
+    console.log('file', file);
+    return URL.createObjectURL(file);
+};
 
-// export const uploadAsset = async ({ file, preview, type }) => {
-//   const list = await listAssets();
-//   const id = nanoid(10);
-//   await writeFile(`uploads/${id}`, file);
-//   await writeFile(`uploads/${id}-preview`, preview);
-//   list.push({ id, type });
-//   await writeKv('assets-list', list);
+export const uploadAsset = async ({ file, preview, type }) => {
+  const list = await listAssets();
+  const id = nanoid(10);
+  await writeFile(`uploads/${id}`, file);
+  await writeFile(`uploads/${id}-preview`, preview);
+  list.push({ id, type });
+  await writeKv('assets-list', list);
 
-//   const src = await getAssetSrc({ id });
-//   const previewSrc = await getAssetPreviewSrc({ id });
-//   return { id, src, preview: previewSrc };
-// };
+  const src = await getAssetSrc({ id });
+  const previewSrc = await getAssetPreviewSrc({ id });
+  const authStorage = localStorage.getItem('auth-storage');
+  const authObject = JSON.parse(authStorage);
+  const uid = authObject?.state?.user?.uid;
+  const bucketNamePersonal = 'flashkitpersonalsharebucket';
+  const s3Client = new S3Client({
+        region: 'eu-west-2', // e.g., 'us-east-1'
+        credentials: {
+          accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+          secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+        }
+      });
+      if(uid){
+        const commandImage = new PutObjectCommand({
+          Bucket: bucketNamePersonal,
+          Key: `${uid}/uploads/${id}.${type === 'video' ? 'mp4' : 'png'}`,
+          Body: file,
+          ContentType: type,
+        });
+        const commandImagePreview = new PutObjectCommand({
+            Bucket: bucketNamePersonal,
+            Key: `${uid}/uploads/${id}-preview.png`,
+            Body: preview,
+            ContentType: type,
+          });
+        await s3Client.send(commandImagePreview);
+        await s3Client.send(commandImage);
+      }
+  return { id, src, preview: previewSrc };
+};
 
-// export const deleteAsset = async ({ id }) => {
-//   const list = await listAssets();
-//   const newList = list.filter((asset) => asset.id !== id);
-//   await writeKv('assets-list', newList);
-// };
+export const deleteAsset = async ({ id }) => {
+  const list = await listAssets();
+  let type = list.find((asset) => asset.id === id).type;
+  const newList = list.filter((asset) => asset.id !== id);
+  const authStorage = localStorage.getItem('auth-storage');
+  const authObject = JSON.parse(authStorage);
+  const uid = authObject?.state?.user?.uid;
+  const bucketNamePersonal = 'flashkitpersonalsharebucket';
+  const s3Client = new S3Client({
+        region: 'eu-west-2', // e.g., 'us-east-1'
+        credentials: {
+          accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+          secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+        }
+      });
+  if(uid){
+      const deleteImage = new DeleteObjectCommand({
+        Bucket: bucketNamePersonal,
+        Key: `${uid}/uploads/${id}.${type === 'video' ? 'mp4' : 'png'}`,
+      });
+      const deleteImagePreview = new DeleteObjectCommand({
+        Bucket: bucketNamePersonal,
+        Key: `${uid}/uploads/${id}-preview.png`,
+      });
+      await s3Client.send(deleteImage);
+      await s3Client.send(deleteImagePreview);
+    }
+  await writeKv('assets-list', newList);
+};

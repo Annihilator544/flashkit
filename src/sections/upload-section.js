@@ -1,6 +1,5 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { Button } from '@blueprintjs/core';
 import {
   ImagesGrid,
   UploadSection as DefaultUploadSection,
@@ -13,6 +12,8 @@ import { CloudWarning } from '../plotNoFeatures/cloud-warning';
 
 import { useProject } from '../plotNoFeatures/project';
 import { listAssets, uploadAsset, deleteAsset } from '../plotNoFeatures/api';
+import { Button } from '../components/ui/button';
+import { LucideTrash } from 'lucide-react';
 
 function getType(file) {
   const { type } = file;
@@ -82,11 +83,9 @@ export const UploadPanel = observer(({ store }) => {
   };
 
   const handleDelete = async (image) => {
-    if (window.confirm('Are you sure you want to delete the image?')) {
       setImages(images.filter((i) => i.id !== image.id));
       await deleteAsset({ id: image.id });
       await load();
-    }
   };
 
   React.useEffect(() => {
@@ -107,21 +106,19 @@ export const UploadPanel = observer(({ store }) => {
             onClick={() => {
               document.querySelector('#input-file')?.click();
             }}
-            loading={isUploading}
-            intent="primary"
           >
             Upload
           </Button>
           <input
             type="file"
             id="input-file"
+            accept='image/*,video/*,.svg'
             style={{ display: 'none' }}
             onChange={handleFileInput}
             multiple
           />
         </label>
       </div>
-      <CloudWarning />
       <ImagesGrid
         images={images}
         getPreview={(image) => image.preview}
@@ -129,7 +126,7 @@ export const UploadPanel = observer(({ store }) => {
         isLoading={isLoading}
         getCredit={(image) => (
           <div>
-            <Button icon="trash" onClick={() => handleDelete(image)}></Button>
+            <Button onClick={() => handleDelete(image)}><LucideTrash className='h-4'/></Button>
           </div>
         )}
         onSelect={async (item, pos, element) => {
@@ -154,7 +151,7 @@ export const UploadPanel = observer(({ store }) => {
             element &&
             element.type === 'image' &&
             element.contentEditable &&
-            type == 'image'
+            type === 'image'
           ) {
             const crop = getCrop(element, {
               width,
