@@ -9,7 +9,7 @@ import localforage from 'localforage';
 const ConnectButton = ({ onSuccess, afterSuccess }) => {
   const [isConnected, setIsConnected] = useState(false);
   const { setData } = useYoutubeData();
-
+  const endDate = new Date().toISOString().split('T')[0];
 
   const fetchYouTubeAnalytics = useCallback(async (accessToken) => {
     try {
@@ -18,7 +18,7 @@ const ConnectButton = ({ onSuccess, afterSuccess }) => {
           params: {
             "ids": "channel==MINE",
             startDate: '2019-01-01',
-            endDate: '2024-12-31',
+            endDate: endDate,
             metrics: 'comments,likes,dislikes,shares,views',
             dimensions: 'day',
             sort: 'day'
@@ -38,7 +38,6 @@ const ConnectButton = ({ onSuccess, afterSuccess }) => {
 
   const login = useGoogleLogin({
     onSuccess: tokenResponse => {
-      console.log(tokenResponse);
       setIsConnected(true);
       onSuccess(tokenResponse.access_token);
       fetchYouTubeAnalytics(tokenResponse.access_token);

@@ -78,8 +78,10 @@ function Fallback({ error, resetErrorBoundary }) {
   );
 }
 const ExternalRedirect = () => {
+const isLocalhost =
+typeof window !== "undefined" && window.location.href.indexOf('localhost') >= 0;
   useEffect(() => {
-    window.location.href = 'https://www.flashkit.co.uk/';
+    window.location.href =isLocalhost? '/dashboard' : 'https://www.flashkit.co.uk/';
   }, []);
   return null;
 };
