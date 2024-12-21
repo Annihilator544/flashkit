@@ -90,7 +90,7 @@ function HomeSection({ store , mediaKitData }) {
             <div className="p-2 flex-col flex gap-10">
               <div className=" text-[#252C32] flex justify-between">
                 <div>
-                  <p className=" font-semibold text-2xl">Welcome back {user.displayName&&user.displayName.split(" ")[0]} !</p>
+                  <p className=" font-semibold text-2xl">Welcome back {user&&user.displayName&&user.displayName.split(" ")[0]} !</p>
                   <p className=" font-normal text-base ">Your latest social media performance </p>
                 </div>
                 <Select>
