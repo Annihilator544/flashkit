@@ -245,8 +245,7 @@ function HomeSection({ store , mediaKitData }) {
                 </Card>
                 <div className="">
                   <div className="justify-between flex flex-col mb-10">
-                  <p className=" text-lg font-semibold mt-10">Start Building</p>
-                  <p className="text-[#6E7C87] font-medium text-sm">Choose a template and craft eye-catching stats</p>
+                  <p className=" text-lg font-semibold mt-10">Recent Projects</p>
                   </div>
                   <DashboardProjects store={store} />
                 </div>
