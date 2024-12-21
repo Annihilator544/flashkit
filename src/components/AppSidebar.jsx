@@ -113,7 +113,7 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                             <SidebarMenu>
                                 <Collapsible
                                     asChild
-                                    defaultOpen={true}
+                                    defaultOpen={false}
                                     className="group/collapsible">
                                     <SidebarMenuItem>
                                     <CollapsibleTrigger asChild>

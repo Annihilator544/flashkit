@@ -48,11 +48,11 @@ const ToolButton = ({ icon, label, color }) => {
     <div className="flex flex-col items-center gap-2">
       <Button
         variant="ghost"
-        className={`w-12 h-12 rounded-full ${color} hover:bg-gray-100`}
+        className={` aspect-square flex flex-col p-4 h-20 w-20 ${color} hover:bg-gray-100`}
       >
-        {icon}
+        <div>{icon}</div>
+        <span className="text-xs text-gray-600">{label}</span>
       </Button>
-      <span className="text-xs text-gray-600">{label}</span>
     </div>
   );
 };

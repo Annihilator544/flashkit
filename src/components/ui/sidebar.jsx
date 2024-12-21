@@ -419,7 +419,7 @@ const sidebarMenuButtonVariants = cva(
   {
     variants: {
       variant: {
-        default: "hover:bg-[#ffffff] hover:drop-shadow-lg data-[state=open]:drop-shadow-xl hover:text-[#fe5655] focus:outline-none focus-visible:outline-none focus-visible:ring-0",
+        default: "hover:bg-[#ffffff] data-[state=open]:drop-shadow data-[state=open]:hover:drop-shadow-md hover:drop-shadow-md hover:text-[#fe5655] focus:outline-none focus-visible:outline-none focus-visible:ring-0",
         outline:
           "bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]",
       },

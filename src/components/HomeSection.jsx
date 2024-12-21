@@ -52,7 +52,7 @@ function HomeSection({ store , mediaKitData }) {
       };
     return (
         <>  
-            <header className="flex shrink-0 h-10 items-center gap-2 transition-[width,height] ease-linear justify-between mb-1">
+            <header className="flex shrink-0 h-10 items-center gap-2 transition-[width,height] ease-linear justify-between mb-2">
             {/* <div className="flex items-center gap-2 px-4">
                 <Breadcrumb>
                 <BreadcrumbList>
@@ -134,7 +134,7 @@ function HomeSection({ store , mediaKitData }) {
                     <Card className= " flex flex-1 p-0 ">
                         <CardContent className="grid grid-cols-2 grid-rows-2 gap-1 p-1 flex-1">
                         <Card className=" bg-gradient-to-r from-[#E2F2FF] to-[#FFF3F3] rounded-lg">
-                            <CardContent className="flex gap-2 p-2 flex-col flex-1">
+                            <CardContent className="flex gap-2 p-4 flex-col flex-1">
                             <div className=" text-xs text-secondary font-semibold Inter flex gap-2">Total Followers</div>
                             <div className="flex justify-between">
                             <p className=" text-2xl font-semibold my-auto">23K</p>
@@ -145,7 +145,7 @@ function HomeSection({ store , mediaKitData }) {
                             </CardContent>
                         </Card>
                         <Card className=" bg-gradient-to-r from-[#E2F2FF] to-[#FFF3F3] rounded-lg">
-                            <CardContent className="flex gap-2 p-2 flex-col flex-1">
+                            <CardContent className="flex gap-2 p-4 flex-col flex-1">
                             <div className=" text-xs text-secondary font-semibold Inter flex gap-2">Daily Engagements</div>
                             <div className="flex justify-between">
                             <p className=" text-2xl font-semibold my-auto">23K</p>
@@ -156,7 +156,7 @@ function HomeSection({ store , mediaKitData }) {
                             </CardContent>
                         </Card>
                         <Card className=" bg-gradient-to-r from-[#E2F2FF] to-[#FFF3F3] rounded-lg">
-                            <CardContent className="flex gap-2 p-2 flex-col flex-1">
+                            <CardContent className="flex gap-2 p-4 flex-col flex-1">
                             <div className=" text-xs text-secondary font-semibold Inter flex gap-2">Total Engagement</div>
                             <div className="flex justify-between">
                             <p className=" text-2xl font-semibold my-auto">23K</p>
@@ -167,7 +167,7 @@ function HomeSection({ store , mediaKitData }) {
                             </CardContent>
                         </Card>
                         <Card className=" bg-gradient-to-r from-[#E2F2FF] to-[#FFF3F3] rounded-lg">
-                            <CardContent className="flex gap-2 p-2 flex-col flex-1">
+                            <CardContent className="flex gap-2 p-4 flex-col flex-1">
                             <div className=" text-xs text-secondary font-semibold Inter flex gap-2">Total Followers</div>
                             <div className="flex justify-between">
                             <p className=" text-2xl font-semibold my-auto">23K</p>
@@ -182,12 +182,15 @@ function HomeSection({ store , mediaKitData }) {
                 </div>
                 <div className="">
                 <ShineBorder
-                  className="relative flex w-full py-5 flex-1 flex-col overflow-hidden rounded-lg border bg-background md:shadow-xl"
+                  className="relative flex w-full py-5 flex-1 justify-between overflow-hidden rounded-lg border bg-background md:shadow-lg"
                   color={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
                   borderWidth={2}
                 >
-                  <p className="text-[#151212] mr-auto flex gap-1 font-semibold text-base"><LucideSparkles className="h-4 my-auto"/> AI Growth Insights</p>
-                  <p className="text-[#252C32] text-base mr-auto">Post on Thursdays at 5-7 PM for better reach. Use hashtags like #Inspiration and #Style!</p>
+                  <div className="flex flex-col mr-auto">
+                    <p className="text-[#151212] mr-auto flex gap-1 font-semibold text-base"><LucideSparkles className="h-4 my-auto"/> AI Growth Insights</p>
+                    <p className="text-[#252C32] text-base mr-auto">Post on Thursdays at 5-7 PM for better reach. Use hashtags like #Inspiration and #Style!</p>
+                  </div>
+                  <Button className="bg-[#409BFF] h-12">Discover More</Button>
                 </ShineBorder>
                 </div>
                 <div className="grid grid-cols-[60%,40%] gap-6 bg-[#f6f8f9] rounded-xl border p-6">
@@ -219,20 +222,20 @@ function HomeSection({ store , mediaKitData }) {
                 </div>
                 </div>
                 <Card className="flex flex-col gap-4 bg-[#f6f8f9]">
-                    <CardHeader className="flex-row justify-between">
+                    <CardHeader className="flex-row justify-between pb-0">
                         <CardTitle className="text-lg font-semibold">Top content by reach</CardTitle>
                         <p className=" text-[#409BFF] font-medium">See More</p>
                     </CardHeader>
                     <CardContent className="grid grid-cols-4 gap-1">
                     {Array.from({ length: 4 }).map((_, index) => (
-                        <Card key={index}>
+                        <Card key={index} className="overflow-hidden">
                             <CardContent className="p-0 h-[200px] bg-[#e3e3e3] justify-center flex overflow-hidden">
                                     <img src="https://images.unsplash.com/photo-1733592688551-5ba7804a9634" alt="placeholder" className=" max-h-full my-auto" />
                             </CardContent>
-                            <CardFooter className=" flex-col p-2 ">
+                            <CardFooter className=" flex-col p-4 ">
                                 <p className=" text-xs font-semibold mr-auto">Post caption</p>
-                                <p className=" text-secondary text-xs mr-auto">Sun, Oct 13 9:00am</p>
-                                <div className="flex justify-between w-full mt-1">
+                                <p className=" text-secondary text-xs mr-auto mt-[6px]">Sun, Oct 13 9:00am</p>
+                                <div className="flex justify-between w-full max-w-56 mr-auto mt-3">
                                     <div className="flex text-xs gap-1"><LucideHeart className="h-3 w-3 my-auto text-red-600" fill="red"/> <p>23k</p></div>
                                     <div className="flex text-xs gap-1"><LucideMessageSquare className="h-3 w-3 my-auto text-blue-500" fill="#409bff"/> <p>129</p></div>
                                     <div className="flex text-xs gap-1"><LucideTrendingUp className="h-3 w-3 my-auto text-green-500"/> <p>1.3k</p></div>
@@ -378,7 +381,7 @@ const DashboardProjects = observer(({ store }) => {
           >
           <DropdownMenu>
           <DropdownMenuTrigger>
-            <Button className="p-2 bg-transparent hover:bg-primary border "><LucideMoreVertical className="h-4"/></Button>
+            <Button className="p-2  bg-[#00000040] hover:bg-primary border "><LucideMoreVertical className="h-4"/></Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-white mx-1">
             <DropdownMenuItem className="flex gap-2" onClick={() => {
@@ -401,7 +404,7 @@ const DashboardProjects = observer(({ store }) => {
           </div>
         </Card>
         
-        <div className="mx-2">
+        <div className="mx-2 mt-4">
           <p className="text-sm font-semibold">{design.name}</p>
           <div className="flex justify-between">
           <p className="text-xs text-secondary">{design.lastModified&&design.lastModified.split("T")[0]}</p>
