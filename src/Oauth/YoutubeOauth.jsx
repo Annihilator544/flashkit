@@ -28,7 +28,7 @@ const ConnectButton = ({ onSuccess, afterSuccess }) => {
           },
         }
       );
-      console.log(response.data);
+      console.log(response);
       // Process and display the data
       setData(response.data);
     } catch (error) {
@@ -40,7 +40,7 @@ const ConnectButton = ({ onSuccess, afterSuccess }) => {
     onSuccess: tokenResponse => {
       setIsConnected(true);
       onSuccess(tokenResponse.access_token);
-      fetchYouTubeAnalytics(tokenResponse.access_token);
+      // fetchYouTubeAnalytics(tokenResponse.access_token);
       afterSuccess();
     },
     scope: 'https://www.googleapis.com/auth/youtube.readonly',
@@ -166,6 +166,21 @@ function YoutubeOauth() {
           },
         }
       );
+      const engagementResponse = await axios.get(
+        'https://youtubeanalytics.googleapis.com/v2/reports', {
+          params: {
+            "ids": "channel==MINE",
+            startDate: '2019-01-01',
+            endDate: '2024-12-31',
+            metrics: 'views',
+            dimensions: 'day,subscribedStatus',
+          },
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('youtubeAccessToken')}`,
+          },
+        }
+      );
+      console.log(channelResponse.data, engagementResponse.data, response.data);
       const subscriberCount = channelResponse.data.items[0].statistics.subscriberCount;
       const viewCount = channelResponse.data.items[0].statistics.viewCount;
       const result = analyzeChannelData(response.data, subscriberCount, viewCount);
