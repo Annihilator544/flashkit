@@ -375,10 +375,10 @@ const categories = [
             <p className="text-lg font-semibold">Folders</p>
             <div className="flex flex-wrap gap-3 mt-3">
                 {fileDirectory && fileDirectory.map((project, index) => (
-                  <TooltipProvider>
+                  <TooltipProvider key={index}>
                       <Tooltip>
                         <TooltipTrigger asChild>
-                  <div key={index} className="flex min-w-80 gap-3 border p-4 rounded-md">
+                  <div className="flex min-w-80 gap-3 border p-4 rounded-md">
                     <LucideFolder className="h-8 my-auto"/>
                     <p className="font-semibold my-auto">{project.name}</p>
                   </div>

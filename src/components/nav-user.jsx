@@ -30,6 +30,7 @@ import {
   useSidebar,
 } from "components/ui/sidebar"
 import { useAuthStore } from "store/use-auth-data"
+import { TabsList, TabsTrigger } from "./ui/tabs"
 
 export function NavUser() {
   const { isMobile } = useSidebar()
@@ -89,16 +90,20 @@ export function NavUser() {
               </DropdownMenuItem>}
             </DropdownMenuGroup>
             <DropdownMenuSeparator /> */}
-            <DropdownMenuGroup>
-              <DropdownMenuItem onClick={()=>window.location.href="/account"}>
-                <BadgeCheck className="h-4" />
-                Account Settings
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={()=>window.location.href="/billing"}>
-                <CreditCard className="h-4" />
-                Billing
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
+            <TabsList className="bg-white w-full p-0">
+              <DropdownMenuGroup className="w-full">
+                  <DropdownMenuItem className= "flex-1 p-0">
+                    <TabsTrigger value="settings" className="px-2 hover:bg-inherit hover:text-black flex-1 gap-0">
+                        <BadgeCheck className="h-4 my-auto" />
+                        Account Settings
+                    </TabsTrigger>
+                  </DropdownMenuItem>
+                <DropdownMenuItem onClick={()=>window.location.href="/billing"}>
+                  <CreditCard className="h-4" />
+                  Billing
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+            </TabsList>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={()=>signOut()}>
               <LogOut className="h-4" />

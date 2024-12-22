@@ -39,6 +39,7 @@ import { Input } from "./components/ui/input"
 import ProjectSection from "./components/ProjectSection";
 import HomeSection from "./components/HomeSection";
 import TemplateSection from "./components/TemplateSection";
+import SettingsSection from "./components/SettingsSection";
 
 function DashBoard({ store }) {
   const { data } = useYoutubeData();
@@ -176,7 +177,10 @@ function DashBoard({ store }) {
               <TemplateSection store={store} />
             </TabsContent>
             <TabsContent value="projects" className="flex-1 p-4 pt-2 space-y-6">
-                <ProjectSection store={store} />
+              <ProjectSection store={store} />
+            </TabsContent>
+            <TabsContent value="settings" className="flex-1 p-4 pt-2 space-y-6">
+              <SettingsSection/>
             </TabsContent>
         </div>
         </SidebarLayout>
