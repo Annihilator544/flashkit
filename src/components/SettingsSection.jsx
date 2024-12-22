@@ -1,11 +1,11 @@
 import { useEngagementData } from "store/use-engagement-data";
 import ConnectAccount from "./ConnectAccount";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import { useAuthStore } from "store/use-auth-data";
 import { Button } from "./ui/button";
-import { LucideCamera } from "lucide-react";
+import { LucideCamera, LucidePlus } from "lucide-react";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,6 +13,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Slider } from "./ui/slider";
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
 
 function SettingsSection() {
     const { Engagement } = useEngagementData();
@@ -203,6 +205,124 @@ function SettingsSection() {
                 </Form>
               </CardContent>
             </Card>
+          </TabsContent>
+          <TabsContent value="billings">
+          <div className="flex flex-col gap-6 p-6">
+            <Card className="border bg-[#f6f8f9]">
+              <CardHeader>
+                <CardTitle className="text-xl">Subscription Plan</CardTitle>
+              </CardHeader>
+              <CardContent className="flex items-center justify-between">
+                <div className="flex gap-2">
+                <CardDescription className="text-sm font-medium text-gray-500">
+                  Current Plan
+                </CardDescription>
+                  <div className="font-semibold">Flashkit Social Monthly Plan</div>
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button className="bg-[#409BFF]" variant="default">Change Plan</Button>
+              </CardFooter>
+            </Card>
+            <Card className="border bg-[#f6f8f9]">
+              <CardHeader className="flex-row justify-between">
+                <CardTitle className="text-xl">Current Plan</CardTitle>
+                <Button variant="outline" className="">Cancel Subscription</Button>
+              </CardHeader>
+              <CardContent className="flex flex-col gap-4">
+              <div className="font-semibold">Flashkit Social Monthly Plan</div>
+                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+                  <div className="text-sm text-gray-600">
+                    Your payment is <span className="font-semibold">$59.00 USD</span>, to be charged on <span className="font-semibold">July 08, 2024</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="border bg-[#f6f8f9]">
+              <CardHeader>
+                <CardTitle className="text-xl">Payment Methods</CardTitle>
+                <CardDescription className="text-sm text-gray-500">
+                  Choose your preferred payment method for making future payments
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex flex-col gap-4">
+                <RadioGroup defaultValue="card1" className="flex flex-col gap-3">
+                  <div className="flex items-center justify-between border p-4 rounded-xl gap-3">
+                    <label htmlFor="card1" className="text-sm flex items-start gap-1 flex-col">
+                      <div className="text-xs uppercase font-semibold text-gray-700">Visa</div>
+                      <span className="text-sm text-gray-600">•••• •••• •••• ••••</span>
+                      <span className="text-sm text-gray-500">expires on 12/25</span>
+                    </label>
+                    <RadioGroupItem value="card1" id="card1" />
+                  </div>
+                  <div className="flex items-center justify-between border p-4 rounded-xl gap-3">
+                    <label htmlFor="card2" className="text-sm flex items-start gap-1 flex-col">
+                      <div className="text-xs uppercase font-semibold text-gray-700">Visa</div>
+                      <span className="text-sm text-gray-600">•••• •••• •••• ••••</span>
+                      <span className="text-sm text-gray-500">expires on 12/25</span>
+                    </label>
+                    <RadioGroupItem value="card2" id="card2" />
+                  </div>
+                </RadioGroup>
+                <Button variant="outline" className="mr-auto"><LucidePlus className="h-4 my-auto mr-1"/> Add New Payment Method</Button>
+              </CardContent>
+            </Card>
+            <Card className="border bg-[#f6f8f9]">
+              <CardHeader>
+                <CardTitle className="text-xl">Latest Transactions</CardTitle>
+                <CardDescription className="text-sm text-gray-500">
+                  Keep track of your most recent activities
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="mb-4 flex justify-end">
+                  <Button variant="outline" size="sm">Download</Button>
+                </div>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="w-1/2">Invoices</TableHead>
+                      <TableHead>Date</TableHead>
+                      <TableHead>Amount</TableHead>
+                      <TableHead>Status</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell>Flashkit Social Plan</TableCell>
+                      <TableCell>16/12/24</TableCell>
+                      <TableCell>$40.00</TableCell>
+                      <TableCell className="text-green-600">Completed</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Flashkit Social Plan</TableCell>
+                      <TableCell>16/12/24</TableCell>
+                      <TableCell>$40.00</TableCell>
+                      <TableCell className="text-green-600">Completed</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Flashkit Social Plan</TableCell>
+                      <TableCell>16/12/24</TableCell>
+                      <TableCell>$40.00</TableCell>
+                      <TableCell className="text-green-600">Completed</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Flashkit Social Plan</TableCell>
+                      <TableCell>16/12/24</TableCell>
+                      <TableCell>$40.00</TableCell>
+                      <TableCell className="text-green-600">Completed</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Flashkit Social Plan</TableCell>
+                      <TableCell>16/12/24</TableCell>
+                      <TableCell>$40.00</TableCell>
+                      <TableCell className="text-green-600">Completed</TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+          </div>
           </TabsContent>
         </Tabs>
     </div>
