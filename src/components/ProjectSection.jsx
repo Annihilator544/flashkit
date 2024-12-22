@@ -5,7 +5,7 @@ import { Button } from "./ui/button"
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs"
 import projectSvg from '../assets/project.svg'
 import { useEffect, useState } from "react";
-import { LucideCopy, LucideFilter, LucideFolder, LucideFolderOpen, LucideMoreVertical, LucidePlus, LucideSearch, LucideTrash2 } from "lucide-react"
+import { LucideBell, LucideCopy, LucideFilter, LucideFolder, LucideFolderOpen, LucideMoreVertical, LucidePlus, LucideSearch, LucideSettings, LucideTrash2 } from "lucide-react"
 import { Spinner } from "@blueprintjs/core"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu"
 import { Card } from "./ui/card"
@@ -18,6 +18,7 @@ import { useAuthStore } from "store/use-auth-data"
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb"
 import { DynamoDBDocumentClient, GetCommand, PutCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip"
+import { NavUser } from "./nav-user"
 
 const categories = [
     { label: "All" },
@@ -158,8 +159,8 @@ const categories = [
           </div>
         </Card>
         
-        <div className="mx-2">
-          <p className="text-sm font-semibold">{design.name}</p>
+        <div className="mx-2 mt-3">
+          <p className="text-xs font-semibold">{design.name}</p>
           <div className="flex justify-between">
           <p className="text-xs text-secondary">{design.lastModified&&design.lastModified.split("T")[0]}</p>
           <p className="text-xs text-secondary">{design.lastModified&&design.lastModified.replace(/^[^:]*([0-2]\d:[0-5]\d).*$/, "$1")}</p>
@@ -168,6 +169,65 @@ const categories = [
         </div>
       );
     });
+
+    const DashboardProjects2 = observer(({ store }) => {
+        const project = useProject();
+        const [designsLoadings, setDesignsLoading] = useState(false);
+        const [designs, setDesigns] =  useState([]);
+      
+        const loadDesigns = async () => {
+          setDesignsLoading(true);
+          const list = await api.listDesigns();
+          setDesigns(list);
+          setDesignsLoading(false);
+        };
+      
+        const handleProjectDelete = ({ id }) => {
+          setDesigns(designs.filter((design) => design.id !== id));
+          api.deleteDesign({ id });
+        };
+      
+        const handleProjectDuplicate = async({ id }) => {
+          await api.duplicateDesign({ id: id});
+          await loadDesigns();
+        } 
+      
+        useEffect(() => {
+          loadDesigns();
+        }, [project.cloudEnabled, project.designsLength]);
+        return (
+          <div className="flex flex-col flex-wrap">
+            <div className="flex gap-5 flex-wrap">
+              <Button
+                variant="dotted"
+                className="px-10 py-8 aspect-square h-full"
+                  onClick={async () => {
+                    window.location.href = `/canvas?id=create_new_design`;
+                  }}
+                >
+                  <LucidePlus className=" h-4"/>Create new project
+              </Button>
+            {!designsLoadings && !designs.length && (
+              <div style={{ paddingTop: '20px', textAlign: 'center', opacity: 0.6 }}>
+                You have no designs yet.
+              </div>
+            )}
+            {designsLoadings && (
+              <div style={{ paddingTop: '20px', textAlign: 'center', opacity: 0.6 }}>
+                Loading designs...
+              </div>
+            )}
+            {designs.map((design) => (
+              <DesignCard
+                key={design.id}
+                design={design}
+                onDelete={handleProjectDelete}
+                onDuplicate={handleProjectDuplicate}
+              />
+            ))}
+            </div>
+          </div>
+        );});
 
 
     function ProjectSection({ store }) {
@@ -252,25 +312,40 @@ const categories = [
   
       return (
           <div className="flex flex-col">
+            <header className="flex shrink-0 h-10 items-center gap-2 transition-[width,height] ease-linear justify-end mb-2">
+              <div className="flex gap-3">
+                  <LucideSettings className="h-5 my-auto" />
+                  <LucideBell className="h-5 my-auto" />
+                  <NavUser/>
+              </div>
+            </header>
             <DashboardHeader title={"Project"} buttonText={"Explore Project"} bottomSection={false}/>
-            <div>
                 <div className="flex items-center justify-between py-4 rounded-md">
-                    <div className="relative flex flex-1 items-center">
-                      <Input
-                          type="search"
-                          placeholder="Search Templates ..."
-                          className="rounded-full w-1/2"
-                      />
-                      <div className="absolute right-[51%] text-gray-400">
-                          <LucideSearch className="h-5"/>
+                      <div className="flex gap-2">
+                        <search className=" min-w-80 flex">
+                        <div className="flex flex-1 items-center border rounded-full px-1">
+                            <div className=" text-gray-400">
+                            <LucideSearch className="h-5"/>
+                            </div>
+                            <Input
+                            type="search"
+                            placeholder="Search ..."
+                            className=" border-none focus:outline-none focus:ring-0 bg-transparent w-full focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                            />
+                        </div>
+                        </search>
+                        {categories.map((cat, i) => (
+                        <Button key={i} variant="outline" className="whitespace-nowrap rounded-full">
+                            {cat.icon && <span className="mr-1">{cat.icon}</span>}
+                            {cat.label}
+                        </Button>
+                        ))}
                       </div>
-                    </div>
                     <div className="flex items-center space-x-2">
-                      <Button variant="outline"><LucideFilter className="h-4 my-auto mr-2"/>Filters</Button>
                       <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>
                             <Button variant="outline">
-                                <div className=" p-[2px] rounded-sm bg-[#fe5655] mr-2 ">
+                                <div className=" p-[2px] rounded-sm bg-[#409BFF] mr-2 ">
                                     <LucidePlus size={14} fill="#fff" color="#fff"/>
                                 </div>Add New
                             </Button>
@@ -290,23 +365,14 @@ const categories = [
                             </div>
                         </DialogContent>
                       </Dialog>
+                      <Button variant="outline"><LucideFilter className="h-4 my-auto mr-2"/>Filters</Button>
                     </div>
                 </div>
-                <div className="flex gap-2 overflow-x-auto">
-                    {/* Map through categories if available */}
-                    {categories && categories.map((cat, i) => (
-                        <Button key={i} variant="outline" className="whitespace-nowrap rounded-full">
-                        {cat.icon && <span className="mr-1">{cat.icon}</span>}
-                        {cat.label}
-                        </Button>
-                    ))}
-                </div>
-            </div>
             <div className="max-w-[80vw] my-10">
               <p className="text-lg font-semibold mb-3">Recent Designs</p>
               <DashboardProjects store={store}/>
             </div>
-            <p className="text-lg font-semibold">Projects</p>
+            <p className="text-lg font-semibold">Folders</p>
             <div className="flex flex-wrap gap-3 mt-3">
                 {fileDirectory && fileDirectory.map((project, index) => (
                   <TooltipProvider>
@@ -324,6 +390,10 @@ const categories = [
                     </Tooltip>
                   </TooltipProvider>
                 ))}
+            </div>
+            <div className=" my-10">
+              <p className="text-lg font-semibold mb-3">Designs</p>
+              <DashboardProjects2 store={store}/>
             </div>
           </div>
       );

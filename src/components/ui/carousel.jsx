@@ -1,6 +1,6 @@
 import * as React from "react"
 import useEmblaCarousel from "embla-carousel-react";
-import { ArrowLeft, ArrowRight, LucideChevronLeft, LucideChevronRight } from "lucide-react"
+import { LucideChevronLeft, LucideChevronRight } from "lucide-react"
 
 import { cn } from "../../lib/utils.ts"
 import { Button } from "./button"

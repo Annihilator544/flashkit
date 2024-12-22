@@ -26,7 +26,7 @@ import { Label, PolarGrid, PolarRadiusAxis, RadialBar, RadialBarChart } from "re
 import EQSCircle from "../assets/EQSCircle.svg";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 
-function HomeSection({ store , mediaKitData }) {
+function HomeSection({ store }) {
     const { user } = useAuthStore();
     const { data } = useYoutubeData();
     const { Engagement, setEngagement } = useEngagementData();
@@ -127,7 +127,7 @@ function HomeSection({ store , mediaKitData }) {
                         <CardContent className="flex h-fit gap-2 p-5 flex-col">
                               <img src={EQSCircle} className="h-30 w-30 m-auto" alt="EQS Circle"/>
                               {/* <p className=" text-2xl font-semibold">{Engagement && typeof Engagement ==='object' && Object.keys(Engagement).length > 0 ? Engagement.engagementMetrics.score * 10 : 79} %</p> */}
-                              {/* {data && typeof data === 'object' && Object.keys(data).length > 0 ?<Button className={"w-full" + loading ? " opacity-90 ":""} onClick={()=>getEQSScore(data)}>{loading ? "Loading ...":" Generate EQS Score"}</Button> : <></>} */}
+                              {data && typeof data === 'object' && Object.keys(data).length > 0 ?<Button className={"w-full" + loading ? " opacity-90 ":""} onClick={()=>getEQSScore(data)}>{loading ? "Loading ...":" Generate EQS Score"}</Button> : <></>}
                               <div className="flex text-sm font-medium gap-1"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
                         </CardContent>
                     </Card>
@@ -190,7 +190,7 @@ function HomeSection({ store , mediaKitData }) {
                     <p className="text-[#151212] mr-auto flex gap-1 font-semibold text-base"><LucideSparkles className="h-4 my-auto"/> AI Growth Insights</p>
                     <p className="text-[#252C32] text-base mr-auto">Post on Thursdays at 5-7 PM for better reach. Use hashtags like #Inspiration and #Style!</p>
                   </div>
-                  <Button className="bg-[#409BFF] h-12">Discover More</Button>
+                  <Button className="bg-[#409BFF] h-11">Discover More</Button>
                 </ShineBorder>
                 </div>
                 <div className="grid grid-cols-[60%,40%] gap-6 bg-[#f6f8f9] rounded-xl border p-6">
@@ -404,7 +404,7 @@ const DashboardProjects = observer(({ store }) => {
           </div>
         </Card>
         
-        <div className="mx-2 mt-4">
+        <div className="mx-2 mt-3">
           <p className="text-sm font-semibold">{design.name}</p>
           <div className="flex justify-between">
           <p className="text-xs text-secondary">{design.lastModified&&design.lastModified.split("T")[0]}</p>

@@ -1,5 +1,5 @@
 import { useJsonData } from "store/use-json-data";
-import { Card, CardContent } from "./ui/card";
+import { Card, CardContent, CardFooter } from "./ui/card";
 
 function TemplateCard({ url , jsonURL, BucketKey}){
     const { setData } = useJsonData();
@@ -19,6 +19,10 @@ function TemplateCard({ url , jsonURL, BucketKey}){
                     <img src={url} alt="img" className="w-full"/>
                 </CardContent>
             </Card>
+            <div className="flex flex-col justify-between items-center p-2">
+                    <p className="text-xs font-semibold  mr-auto">Template name</p>
+                    <p className="text-xs text-secondary mr-auto">description</p>
+            </div>
         </button>
         :
         <button onClick={() => ParseJson(jsonURL)}>
@@ -27,6 +31,10 @@ function TemplateCard({ url , jsonURL, BucketKey}){
                     <img src={url} alt="img" className="w-full"/>
                 </CardContent>
             </Card>
+            <div className="flex flex-col justify-between items-center p-2">
+                    <p className="text-xs font-semibold  mr-auto">Template name</p>
+                    <p className="text-xs text-secondary mr-auto">description</p>
+            </div>
         </button>
     )
 }
