@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import { useAuthStore } from "store/use-auth-data";
 import { Button } from "./ui/button";
-import { LucideCamera, LucidePlus } from "lucide-react";
+import { LucideCamera, LucideDownload, LucidePlus } from "lucide-react";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,10 +15,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { Slider } from "./ui/slider";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
+import { useState } from "react";
 
 function SettingsSection() {
     const { Engagement } = useEngagementData();
     const { user} = useAuthStore();
+    const [selectedCard, setSelectedCard] = useState("card1")
     const formSchema = z.object({
         firstname: z.string().min(3,{message:"Username should be minimum 3 letters"}).max(100),
         lastname: z.string().min(3,{message:"Username should be minimum 3 letters"}).max(100),
@@ -207,7 +209,7 @@ function SettingsSection() {
             </Card>
           </TabsContent>
           <TabsContent value="billings">
-          <div className="flex flex-col gap-6 p-6">
+          <div className="flex flex-col gap-6">
             <Card className="border bg-[#f6f8f9]">
               <CardHeader>
                 <CardTitle className="text-xl">Subscription Plan</CardTitle>
@@ -217,11 +219,11 @@ function SettingsSection() {
                 <CardDescription className="text-sm font-medium text-gray-500">
                   Current Plan
                 </CardDescription>
-                  <div className="font-semibold">Flashkit Social Monthly Plan</div>
+                  <div className="font-semibold">Flashkit Monthly Plan</div>
                 </div>
               </CardContent>
               <CardFooter>
-                <Button className="bg-[#409BFF]" variant="default">Change Plan</Button>
+                <Button className="bg-[#409BFF]" variant="default">Buy Plan</Button>
               </CardFooter>
             </Card>
             <Card className="border bg-[#f6f8f9]">
@@ -230,7 +232,7 @@ function SettingsSection() {
                 <Button variant="outline" className="">Cancel Subscription</Button>
               </CardHeader>
               <CardContent className="flex flex-col gap-4">
-              <div className="font-semibold">Flashkit Social Monthly Plan</div>
+              <div className="font-semibold">Flashkit Monthly Plan</div>
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                   <div className="text-sm text-gray-600">
                     Your payment is <span className="font-semibold">$59.00 USD</span>, to be charged on <span className="font-semibold">July 08, 2024</span>
@@ -246,8 +248,8 @@ function SettingsSection() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex flex-col gap-4">
-                <RadioGroup defaultValue="card1" className="flex flex-col gap-3">
-                  <div className="flex items-center justify-between border p-4 rounded-xl gap-3">
+                <RadioGroup value={selectedCard} onValueChange={(value) => setSelectedCard(value)} defaultValue="card1" className="flex flex-col gap-3">
+                  <div className={`flex items-center justify-between border p-4 rounded-xl gap-3 ${selectedCard === "card1" ? " border-blue-300" : ""}`}>
                     <label htmlFor="card1" className="text-sm flex items-start gap-1 flex-col">
                       <div className="text-xs uppercase font-semibold text-gray-700">Visa</div>
                       <span className="text-sm text-gray-600">•••• •••• •••• ••••</span>
@@ -255,7 +257,7 @@ function SettingsSection() {
                     </label>
                     <RadioGroupItem value="card1" id="card1" />
                   </div>
-                  <div className="flex items-center justify-between border p-4 rounded-xl gap-3">
+                  <div className={`flex items-center justify-between border p-4 rounded-xl gap-3 ${selectedCard === "card2" ? " border-blue-300" : ""}`}>
                     <label htmlFor="card2" className="text-sm flex items-start gap-1 flex-col">
                       <div className="text-xs uppercase font-semibold text-gray-700">Visa</div>
                       <span className="text-sm text-gray-600">•••• •••• •••• ••••</span>
@@ -268,18 +270,20 @@ function SettingsSection() {
               </CardContent>
             </Card>
             <Card className="border bg-[#f6f8f9]">
-              <CardHeader>
+              <CardHeader className="flex-row justify-between">
+              <div>
                 <CardTitle className="text-xl">Latest Transactions</CardTitle>
                 <CardDescription className="text-sm text-gray-500">
                   Keep track of your most recent activities
                 </CardDescription>
-              </CardHeader>
-              <CardContent>
+              </div> 
                 <div className="mb-4 flex justify-end">
-                  <Button variant="outline" size="sm">Download</Button>
+                  <Button variant="outline" size="sm"><LucideDownload className="h-4 mr-1"/>Download</Button>
                 </div>
-                <Table>
-                  <TableHeader>
+              </CardHeader>
+              <CardContent className="p-0 mx-6 mb-6 border rounded-xl overflow-hidden">
+                <Table className="">
+                  <TableHeader className="bg-[#f0f9fe]">
                     <TableRow>
                       <TableHead className="w-1/2">Invoices</TableHead>
                       <TableHead>Date</TableHead>
@@ -287,7 +291,7 @@ function SettingsSection() {
                       <TableHead>Status</TableHead>
                     </TableRow>
                   </TableHeader>
-                  <TableBody>
+                  <TableBody className="bg-white">
                     <TableRow>
                       <TableCell>Flashkit Social Plan</TableCell>
                       <TableCell>16/12/24</TableCell>

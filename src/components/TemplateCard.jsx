@@ -19,7 +19,7 @@ function TemplateCard({ url , jsonURL, BucketKey}){
                     <img src={url} alt="img" className="w-full"/>
                 </CardContent>
             </Card>
-            <div className="flex flex-col justify-between items-center p-2">
+            <div className="flex flex-col justify-between items-center py-2">
                     <p className="text-xs font-semibold  mr-auto">Template name</p>
                     <p className="text-xs text-secondary mr-auto">description</p>
             </div>
@@ -31,7 +31,7 @@ function TemplateCard({ url , jsonURL, BucketKey}){
                     <img src={url} alt="img" className="w-full"/>
                 </CardContent>
             </Card>
-            <div className="flex flex-col justify-between items-center p-2">
+            <div className="flex flex-col justify-between items-center py-2">
                     <p className="text-xs font-semibold  mr-auto">Template name</p>
                     <p className="text-xs text-secondary mr-auto">description</p>
             </div>

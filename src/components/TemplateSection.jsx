@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import DashboardHeader from "./DashboardHeader";
 import { Input } from "./ui/input";
-import { LucideBell, LucideSearch, LucideSettings } from "lucide-react";
+import { LucideBadgeAlert, LucideBell, LucideFlame, LucideSearch, LucideSettings, LucideStar } from "lucide-react";
 import { Button } from "./ui/button";
 import TemplateCard from "./TemplateCard";
 import S3FileManager from "./S3MarketPlace";
@@ -16,9 +16,9 @@ function TemplateSection({ store }) {
     const [classicDesigns, setClassicDesigns] = useState([]);
     
     const categories = [
-      { label: "Starred", icon: "⭐" },
-      { label: "New!", icon: "✨" },
-      { label: "Trending!", icon: "🔥" },
+      { label: "Starred", icon: <LucideStar className="h-4" fill="#FFC02D" stroke="#FFC02D" /> },
+      { label: "New!", icon: <LucideBadgeAlert className="h-5" fill={"#89D0F7"} stroke="#fff"/> },
+      { label: "Trending!", icon: <LucideFlame className="h-4" fill={"#FE5655"} stroke="#FE5655" /> },
       { label: "All" },
       { label: "Media Kit" },
       { label: "Marketing" },
@@ -89,7 +89,7 @@ function TemplateSection({ store }) {
             </div>
             <div>
                 <p className="text-lg font-semibold">Choose your category</p>
-                <div className="flex flex-wrap gap-3 px-4 mt-5">
+                <div className="flex justify-between gap-3 px-4 mt-5">
                 {
                   choose.map((item)=>(
                     <div className="p-2 bg-gray-100 rounded-lg border flex flex-col gap-2 align-middle ">
@@ -120,14 +120,14 @@ function TemplateSection({ store }) {
                     <CarouselNext variant="outline" className="absolute -right-5 top-1/2 -translate-y-1/2"/>
                 </Carousel>
               </div>
-              <div>
+              {/* <div>
                 <div className="flex justify-between">
                     <p className="text-lg font-semibold mb-5">MarketPlace</p>
                     <p className=" text-[#409BFF] font-medium">See More</p>
                 </div>
                 <S3FileManager store={store}/>
-              </div>
-              <div>
+              </div> */}
+              {/* <div>
                 <div className="flex justify-between">
                     <p className="text-lg font-semibold mb-5">Youtube Templates</p>
                     <p className=" text-[#409BFF] font-medium">See More</p>
@@ -141,7 +141,7 @@ function TemplateSection({ store }) {
                   })
                 }
                 </div>
-              </div>
+              </div> */}
               <div>
                 <div className="flex justify-between">
                     <p className="text-lg font-semibold mb-5">Instagram Stories</p>

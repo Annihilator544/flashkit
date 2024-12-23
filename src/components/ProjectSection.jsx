@@ -19,7 +19,7 @@ import { DynamoDBClient } from "@aws-sdk/client-dynamodb"
 import { DynamoDBDocumentClient, GetCommand, PutCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip"
 import { NavUser } from "./nav-user"
-
+import folderSVG from "../assets/folder.svg"
 const categories = [
     { label: "All" },
     { label: "Folders" },
@@ -64,22 +64,15 @@ const categories = [
             Loading designs...
           </div>
         )}
-        <Carousel>
-            <CarouselContent>
-                {designs.map((design) => (
-                <CarouselItem className="basis-[200px]" key={design.id}>
+        {/*last 5 designs*/ }
+                {designs.slice(-5).reverse().map((design) => (
                     <DesignCard
                         key={design.id}
                         design={design}
                         onDelete={handleProjectDelete}
                         onDuplicate={handleProjectDuplicate}
                     />
-                </CarouselItem>
                 ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-        </Carousel>
         </div>
       </div>
     );});
@@ -108,7 +101,7 @@ const categories = [
         <Card
           style={{  padding: '3px', position: 'relative' }}
           interactive
-          className="fit-content w-fit mb-auto mx-1"
+          className="fit-content w-fit mb-auto mx-1 group"
           onClick={() => {
             handleSelect();
           }}
@@ -129,16 +122,16 @@ const categories = [
             </div>
           )}
           <div
-            style={{ position: 'absolute', top: '5px', right: '5px' }}
+            className="absolute top-1 right-1 "
             onClick={(e) => {
               e.stopPropagation();
             }}
           >
           <DropdownMenu>
           <DropdownMenuTrigger>
-            <Button className="p-2 bg-transparent hover:bg-primary border "><LucideMoreVertical className="h-4"/></Button>
+            <Button className="p-2  bg-[#00000040] hover:bg-[#00000080] border hidden group-hover:block"><LucideMoreVertical className="h-4"/></Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="bg-white mx-1">
+          <DropdownMenuContent className="bg-white mx-1 absolute">
             <DropdownMenuItem className="flex gap-2" onClick={() => {
                       handleSelect();
                     }}>
@@ -365,7 +358,7 @@ const categories = [
                             </div>
                         </DialogContent>
                       </Dialog>
-                      <Button variant="outline"><LucideFilter className="h-4 my-auto mr-2"/>Filters</Button>
+                      <Button variant="outline"><LucideFilter className="h-4 my-auto "/>Filters</Button>
                     </div>
                 </div>
             <div className="max-w-[80vw] my-10">
@@ -378,8 +371,8 @@ const categories = [
                   <TooltipProvider key={index}>
                       <Tooltip>
                         <TooltipTrigger asChild>
-                  <div className="flex min-w-80 gap-3 border p-4 rounded-md">
-                    <LucideFolder className="h-8 my-auto"/>
+                  <div className="flex min-w-80 gap-3 hover:bg-[#f9f9f9] p-4 rounded-md">
+                    <img src={folderSVG} alt="folder" className="h-5" />
                     <p className="font-semibold my-auto">{project.name}</p>
                   </div>
                   </TooltipTrigger>

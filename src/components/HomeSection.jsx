@@ -127,7 +127,7 @@ function HomeSection({ store }) {
                         <CardContent className="flex h-fit gap-2 p-5 flex-col">
                               <img src={EQSCircle} className="h-30 w-30 m-auto" alt="EQS Circle"/>
                               {/* <p className=" text-2xl font-semibold">{Engagement && typeof Engagement ==='object' && Object.keys(Engagement).length > 0 ? Engagement.engagementMetrics.score * 10 : 79} %</p> */}
-                              {data && typeof data === 'object' && Object.keys(data).length > 0 ?<Button className={"w-full" + loading ? " opacity-90 ":""} onClick={()=>getEQSScore(data)}>{loading ? "Loading ...":" Generate EQS Score"}</Button> : <></>}
+                              {/* {data && typeof data === 'object' && Object.keys(data).length > 0 ?<Button className={"w-full" + loading ? " opacity-90 ":""} onClick={()=>getEQSScore(data)}>{loading ? "Loading ...":" Generate EQS Score"}</Button> : <></>} */}
                               <div className="flex text-sm font-medium gap-1"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
                         </CardContent>
                     </Card>
@@ -353,7 +353,7 @@ const DashboardProjects = observer(({ store }) => {
         <Card
           style={{  padding: '3px', position: 'relative' }}
           interactive
-          className="fit-content w-fit mb-auto mx-1"
+          className="fit-content w-fit mb-auto mx-1 group"
           onClick={() => {
             handleSelect();
           }}
@@ -374,16 +374,16 @@ const DashboardProjects = observer(({ store }) => {
             </div>
           )}
           <div
-            style={{ position: 'absolute', top: '5px', right: '5px' }}
+            className="absolute top-1 right-1 "
             onClick={(e) => {
               e.stopPropagation();
             }}
           >
           <DropdownMenu>
           <DropdownMenuTrigger>
-            <Button className="p-2  bg-[#00000040] hover:bg-primary border "><LucideMoreVertical className="h-4"/></Button>
+            <Button className="p-2  bg-[#00000040] hover:bg-[#00000080] border hidden group-hover:block"><LucideMoreVertical className="h-4"/></Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="bg-white mx-1">
+          <DropdownMenuContent className="bg-white mx-1 absolute">
             <DropdownMenuItem className="flex gap-2" onClick={() => {
                       handleSelect();
                     }}>
@@ -405,7 +405,7 @@ const DashboardProjects = observer(({ store }) => {
         </Card>
         
         <div className="mx-2 mt-3">
-          <p className="text-sm font-semibold">{design.name}</p>
+          <p className="text-xs font-semibold">{design.name}</p>
           <div className="flex justify-between">
           <p className="text-xs text-secondary">{design.lastModified&&design.lastModified.split("T")[0]}</p>
           <p className="text-xs text-secondary">{design.lastModified&&design.lastModified.replace(/^[^:]*([0-2]\d:[0-5]\d).*$/, "$1")}</p>
