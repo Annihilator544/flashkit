@@ -25,6 +25,9 @@ import { ChartContainer } from "./ui/chart";
 import { Label, PolarGrid, PolarRadiusAxis, RadialBar, RadialBarChart } from "recharts";
 import EQSCircle from "../assets/EQSCircle.svg";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import instagramSVG from "../assets/instagram.svg";
+import tiktokSVG from "../assets/tiktok.svg";
+import youtubeSVG from "../assets/youtube.svg";
 
 function HomeSection({ store }) {
     const { user } = useAuthStore();
@@ -204,17 +207,17 @@ function HomeSection({ store }) {
                             <RadioGroupItem value="allSocials" id="allSocials" />
                         </div>
                         <div className="flex items-center justify-between bg-white rounded-xl border p-3 text-black space-x-2">
-                            <p className="font-medium flex gap-1"><LucideInstagram className="h-5"/> Instagram</p>
+                            <p className="font-medium flex gap-1"><img src={instagramSVG} alt="instagram svg" /> Instagram</p>
                             <Label htmlFor="instagram">Instagram</Label>
                             <RadioGroupItem value="instagram" id="instagram" />
                         </div>
                         <div className="flex items-center justify-between bg-white rounded-xl border p-3 text-black space-x-2">
-                            <p className="font-medium flex gap-1"><LucideYoutube className="h-5"/> Youtube</p>
+                            <p className="font-medium flex gap-1"><img src={youtubeSVG} alt="youtube svg" /> Youtube</p>
                             <Label htmlFor="youtube">Youtube</Label>
                             <RadioGroupItem value="youtube" id="youtube" />
                         </div>
                         <div className="flex items-center justify-between bg-white rounded-xl border p-3 text-black space-x-2">
-                            <p className="font-medium flex gap-1"><LucideAudioWaveform className="h-5"/> TikTok</p>
+                            <p className="font-medium flex gap-1"><img src={tiktokSVG} alt="tiktok svg" /> TikTok</p>
                             <Label htmlFor="tiktok">TikTok</Label>
                             <RadioGroupItem value="tiktok" id="tiktok" />
                         </div>

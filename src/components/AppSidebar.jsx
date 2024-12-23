@@ -70,7 +70,7 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                     <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton
-                        className="data-[state=open]:bg-sidebar-accent hover:bg-inherit data-[state=open]:text-sidebar-accent-foreground active:bg-inherit group-data-[collapsible=icon]:gap-0 gap-1 h-10 p-0">
+                        className="data-[state=open]:bg-sidebar-accent hover:bg-inherit data-[state=open]:text-sidebar-accent-foreground active:bg-inherit group-data-[collapsible=icon]:gap-0 gap-1 h-10 p-0 px-2">
                         <div
                             className="flex items-center group-data-[collapsible=icon]:justify-center justify-end rounded-lg text-sidebar-primary-foreground">
                             <img src={logo} alt="Logo" className="h-6 w-6 group-data-[collapsible=icon]:h-4 group-data-[collapsible=icon]:w-4" />
