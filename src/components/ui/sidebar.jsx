@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva } from "class-variance-authority";
-import { PanelLeft, PanelRightClose, PanelRightOpen } from "lucide-react"
+import { LucideChevronsLeft, LucideChevronsRight, PanelLeft, PanelRightClose, PanelRightOpen } from "lucide-react"
 
 import { useIsMobile } from "../../hooks/use-mobile"
 import { cn } from "../../lib/utils.ts"
@@ -233,7 +233,7 @@ const SidebarTrigger = React.forwardRef(({ className, onClick, ...props }, ref) 
         setIsToggled((isToggled) => !isToggled)
       }}
       {...props}>
-      {isToggled ? <PanelRightClose className="h-4" /> : <PanelRightOpen className="h-4" />}
+      {isToggled ? <div className="border rounded-md aspect-square my-auto flex justify-center align-middle"><LucideChevronsLeft className="h-4 my-auto"/></div> : <div className="border rounded-md aspect-square my-auto flex justify-center align-middle"><LucideChevronsLeft className="h-4 my-auto"/></div>}
       <span className="sr-only">Toggle Sidebar</span>
     </Button>)
   );
@@ -400,7 +400,7 @@ const SidebarMenu = React.forwardRef(({ className, ...props }, ref) => (
   <ul
     ref={ref}
     data-sidebar="menu"
-    className={cn("flex w-full min-w-0 flex-col gap-1", className)}
+    className={cn("flex w-full min-w-0 flex-col gap-[6px]", className)}
     {...props} />
 ))
 SidebarMenu.displayName = "SidebarMenu"
@@ -409,22 +409,22 @@ const SidebarMenuItem = React.forwardRef(({ className, ...props }, ref) => (
   <li
     ref={ref}
     data-sidebar="menu-item"
-    className={cn("group/menu-item relative", className)}
+    className={cn("group/menu-item relative flex-1", className)}
     {...props} />
 ))
 SidebarMenuItem.displayName = "SidebarMenuItem"
 
 const sidebarMenuButtonVariants = cva(
-  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-none ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-[#ffffff] active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:font-normal  data-[state=open]:hover:bg-[#ffffff] data-[state=open]:hover:text-sidebar-accent-foreground data-[state=open]:bg-[#ffffff] data-[state=open]:text-[#fe5655] group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
+  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md px-2 py-1 text-left text-sm outline-none ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-[#ffffff] active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:font-normal data-[state=open]:hover:bg-[#ffffff] data-[state=open]:hover:text-sidebar-accent-foreground data-[state=open]:bg-[#ffffff] data-[state=open]:text-[#fe5655] group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 ",
   {
     variants: {
       variant: {
-        default: "hover:bg-[#ffffff] hover:text-[#fe5655] focus:outline-none focus-visible:outline-none focus-visible:ring-0",
+        default: "hover:bg-[#ffffff] data-[state=open]:drop-shadow data-[state=open]:hover:drop-shadow-md hover:drop-shadow-md hover:text-[#fe5655] focus:outline-none focus-visible:outline-none focus-visible:ring-0",
         outline:
           "bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]",
       },
       size: {
-        default: "h-8 text-sm",
+        default: "h-9 text-sm",
         sm: "h-7 text-xs",
         lg: "h-12 text-sm group-data-[collapsible=icon]:!p-0",
       },

@@ -1,11 +1,13 @@
 import {
     ChevronRight,
+    LucideChevronsLeft,
     LucideCircleUserRound,
     LucideFileChartColumn,
     LucideFileSearch,
     LucideFileText,
     LucideFolder,
     LucideGem,
+    LucideHelpCircle,
     LucideHome,
     LucideLayoutDashboard,
     LucidePieChart,
@@ -26,6 +28,7 @@ import {
     SidebarMenuSubButton,
     SidebarMenuSubItem,
     SidebarRail,
+    SidebarTrigger,
   } from "components/ui/sidebar"
 import { TabsList, TabsTrigger } from "./ui/tabs"
 import { Collapsible, CollapsibleTrigger } from "./ui/collapsible"
@@ -67,25 +70,26 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                     <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton
-                        className="data-[state=open]:bg-sidebar-accent hover:bg-inherit data-[state=open]:text-sidebar-accent-foreground group-data-[collapsible=icon]:gap-0 gap-1">
+                        className="data-[state=open]:bg-sidebar-accent hover:bg-inherit data-[state=open]:text-sidebar-accent-foreground active:bg-inherit group-data-[collapsible=icon]:gap-0 gap-1 h-10 p-0">
                         <div
                             className="flex items-center group-data-[collapsible=icon]:justify-center justify-end rounded-lg text-sidebar-primary-foreground">
-                            <img src={logo} alt="Logo" className="h-5 w-5 group-data-[collapsible=icon]:h-4 group-data-[collapsible=icon]:w-4" />
+                            <img src={logo} alt="Logo" className="h-6 w-6 group-data-[collapsible=icon]:h-4 group-data-[collapsible=icon]:w-4" />
                         </div>
-                        <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
+                        <div className="flex justify-between flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden my-auto">
                              {/* {localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ? 
                             <img src={flashkit} alt="flashkit logo" className="h-5" />
                             : localStorage.getItem("flashkitPlan") === "FLASHKITSOCIAL" ?
                             <img src={flashkitSocial} alt="flashkit logo" className="h-5" />
                             : <img src={flashkitPro} alt="flashkit logo" className="h-5" /> } */}
-                           <img src={flashkit} alt="flashkit logo" className="h-[14px]" />
+                           <img src={flashkit} alt="flashkit logo" className="h-[18px] my-auto" />
+                           <SidebarTrigger className="group-data-[collapsible=icon]:hidden"/>
                         </div>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
-                        <TabsTrigger value="home" className="p-0">
+                        <TabsTrigger value="home" className="p-0 ">
                             <SidebarMenuItem>
                                 <SidebarMenuButton>
-                                    <LucideHome className="h-5"/> <p className="text-sidebar-foreground">Home</p>
+                                    <LucideHome className="h-6"/> <p className="text-sidebar-foreground">Home</p>
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
                         </TabsTrigger>
@@ -102,19 +106,19 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                         <TabsTrigger value="templates" className="p-0">
                             <SidebarMenuItem>
                                 <SidebarMenuButton>
-                                    <LucideLayoutDashboard className="h-5"/> <p className="text-sidebar-foreground">Template Hub</p>
+                                    <LucideLayoutDashboard className="h-6"/> <p className="text-sidebar-foreground">Template Hub</p>
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
                         </TabsTrigger>
                             <SidebarMenu>
                                 <Collapsible
                                     asChild
-                                    defaultOpen={true}
+                                    defaultOpen={false}
                                     className="group/collapsible">
                                     <SidebarMenuItem>
                                     <CollapsibleTrigger asChild>
                                         <SidebarMenuButton className=" font-normal">
-                                        <LucideFileChartColumn className="h-5"/> <p className="text-sidebar-foreground Inter">Insights</p>
+                                        <LucideFileChartColumn className="h-6"/> <p className="text-sidebar-foreground Inter">Insights</p>
                                         <ChevronRight
                                             className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                                         </SidebarMenuButton>
@@ -163,7 +167,7 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                         <TabsTrigger value="projects" className="p-0">
                             <SidebarMenuItem>
                                 <SidebarMenuButton>
-                                <LucideFolder className="h-5"/> <p className="text-sidebar-foreground"> Projects</p>
+                                <LucideFolder className="h-6"/> <p className="text-sidebar-foreground"> Projects</p>
                                 </SidebarMenuButton>
                             </SidebarMenuItem>
                         </TabsTrigger>
@@ -178,7 +182,9 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                 </SidebarGroup>
                 </SidebarContent>
                 <SidebarFooter>
-                <NavUser />
+                        <SidebarMenuButton>
+                        <LucideHelpCircle className="h-6 text-white" fill="#000"/> <p className="text-sidebar-foreground text-xs"> Need Help ?</p>
+                        </SidebarMenuButton>
                 </SidebarFooter>
                 <SidebarRail />
             </Sidebar>

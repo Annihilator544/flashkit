@@ -46,7 +46,7 @@ import { ChartContainer } from "../ui/chart";
       Object.keys(data).length ? setChartData(transformData(data.monthly).slice(-6)) : setChartData(monthlyData);
     },[data]);  
     return (
-      <Card className="flex-1">
+      <Card className="flex-1 bg-inherit border-none shadow-none">
         <CardHeader>
           <CardTitle>Monthly Engagement</CardTitle>
         </CardHeader>
