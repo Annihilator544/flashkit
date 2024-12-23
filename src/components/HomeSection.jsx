@@ -212,14 +212,14 @@ function HomeSection({ store }) {
                             <RadioGroupItem value="instagram" id="instagram" />
                         </div>
                         <div className="flex items-center justify-between bg-white rounded-xl border p-3 text-black space-x-2">
-                            <p className="font-medium flex gap-1"><img src={youtubeSVG} alt="youtube svg" /> Youtube</p>
-                            <Label htmlFor="youtube">Youtube</Label>
-                            <RadioGroupItem value="youtube" id="youtube" />
-                        </div>
-                        <div className="flex items-center justify-between bg-white rounded-xl border p-3 text-black space-x-2">
                             <p className="font-medium flex gap-1"><img src={tiktokSVG} alt="tiktok svg" /> TikTok</p>
                             <Label htmlFor="tiktok">TikTok</Label>
                             <RadioGroupItem value="tiktok" id="tiktok" />
+                        </div>
+                        <div className="flex items-center justify-between bg-white rounded-xl border p-3 text-black space-x-2">
+                            <p className="font-medium flex gap-1"><img src={youtubeSVG} alt="youtube svg" /> Youtube</p>
+                            <Label htmlFor="youtube">Youtube</Label>
+                            <RadioGroupItem value="youtube" id="youtube" />
                         </div>
                     </RadioGroup>
                 </div>
