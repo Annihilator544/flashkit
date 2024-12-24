@@ -73,7 +73,7 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                         className="data-[state=open]:bg-sidebar-accent hover:bg-inherit data-[state=open]:text-sidebar-accent-foreground active:bg-inherit group-data-[collapsible=icon]:gap-0 gap-1 h-10 p-0 px-2">
                         <div
                             className="flex items-center group-data-[collapsible=icon]:justify-center justify-end rounded-lg text-sidebar-primary-foreground">
-                            <img src={logo} alt="Logo" className="h-6 w-6 group-data-[collapsible=icon]:h-4 group-data-[collapsible=icon]:w-4" />
+                            <img src={logo} alt="Logo" className="h-5 w-5 group-data-[collapsible=icon]:h-4 group-data-[collapsible=icon]:w-4" />
                         </div>
                         <div className="flex justify-between flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden my-auto">
                              {/* {localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ? 
@@ -81,7 +81,7 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                             : localStorage.getItem("flashkitPlan") === "FLASHKITSOCIAL" ?
                             <img src={flashkitSocial} alt="flashkit logo" className="h-5" />
                             : <img src={flashkitPro} alt="flashkit logo" className="h-5" /> } */}
-                           <img src={flashkit} alt="flashkit logo" className="h-[18px] my-auto" />
+                           <img src={flashkit} alt="flashkit logo" className="h-[16px] my-auto" />
                            <SidebarTrigger className="group-data-[collapsible=icon]:hidden"/>
                         </div>
                         </SidebarMenuButton>

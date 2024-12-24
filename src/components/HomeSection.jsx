@@ -23,7 +23,7 @@ import { Input } from "./ui/input";
 import { NavUser } from "./nav-user";
 import { ChartContainer } from "./ui/chart";
 import { Label, PolarGrid, PolarRadiusAxis, RadialBar, RadialBarChart } from "recharts";
-import EQSCircle from "../assets/EQSCircle.svg";
+import EQSCircle from "../assets/EQSCircle.jpg";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import instagramSVG from "../assets/instagram.svg";
 import tiktokSVG from "../assets/tiktok.svg";
@@ -114,7 +114,7 @@ function HomeSection({ store }) {
                 {/* {localStorage.getItem("flashkitPlan") === "FLASHKITSOCIAL" ? 
                 <> */}
                 <div className="flex gap-1 flex-wrap">
-                    <Card className="flex">
+                    <Card className="flex h-52 aspect-square items-center justify-center">
                         <CardContent className="flex gap-2 p-5 px-12 flex-col my-auto">
                             <Avatar className= "m-auto h-20 w-20">
                             {user&&user.photoURL ? <AvatarImage src={user.photoURL} /> :
@@ -126,7 +126,7 @@ function HomeSection({ store }) {
                             <div className="text-[#E1A100] bg-[#fdf5e1] text-center font-semibold flex pr-2 py-[2px] rounded-sm mx-auto"><LucideAward className="h-4 my-auto"/>Gold</div>
                         </CardContent>
                     </Card>
-                    <Card className=" flex aspect-square">
+                    <Card className=" flex aspect-square h-52 items-center justify-center">
                         <CardContent className="flex h-fit gap-2 p-5 flex-col">
                               <img src={EQSCircle} className="h-30 w-30 m-auto" alt="EQS Circle"/>
                               {/* <p className=" text-2xl font-semibold">{Engagement && typeof Engagement ==='object' && Object.keys(Engagement).length > 0 ? Engagement.engagementMetrics.score * 10 : 79} %</p> */}
@@ -134,8 +134,8 @@ function HomeSection({ store }) {
                               <div className="flex text-sm font-medium gap-1"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
                         </CardContent>
                     </Card>
-                    <Card className= " flex flex-1 p-0 ">
-                        <CardContent className="grid grid-cols-2 grid-rows-2 gap-1 p-1 flex-1">
+                    <Card className= " flex flex-1 p-0 border-none ">
+                        <CardContent className="grid grid-cols-2 grid-rows-2 gap-1 p-0 flex-1">
                         <Card className=" bg-gradient-to-r from-[#E2F2FF] to-[#FFF3F3] rounded-lg">
                             <CardContent className="flex gap-2 p-4 flex-col flex-1">
                             <div className=" text-xs text-secondary font-semibold Inter flex gap-2">Total Followers</div>
@@ -196,7 +196,7 @@ function HomeSection({ store }) {
                   <Button className="bg-[#409BFF] h-11">Discover More</Button>
                 </ShineBorder>
                 </div>
-                <div className="grid grid-cols-[60%,40%] gap-6 bg-[#f6f8f9] rounded-xl border p-6">
+                {/* <div className="grid grid-cols-[60%,40%] gap-6 bg-[#f6f8f9] rounded-xl border p-6">
                 <MonthlyEngagementChart/>
                 <div className="flex flex-col gap-4 p-6">
                     <p className=" font-semibold text-2xl"> Choose account</p>
@@ -223,7 +223,7 @@ function HomeSection({ store }) {
                         </div>
                     </RadioGroup>
                 </div>
-                </div>
+                </div> */}
                 <Card className="flex flex-col gap-4 bg-[#f6f8f9]">
                     <CardHeader className="flex-row justify-between pb-0">
                         <CardTitle className="text-lg font-semibold">Top content by reach</CardTitle>

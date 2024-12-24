@@ -9,6 +9,7 @@ import {
   Globe, 
   Upload,
   MoreHorizontal,
+  Instagram,
 } from "lucide-react";
 import headerSvg from '../assets/header.svg'
 
@@ -31,8 +32,8 @@ const DashboardHeader = ({ title, buttonText, bottomSection }) => {
         <ToolButton icon={<Image />} label="Graphics" color="text-orange-500" />
         <ToolButton icon={<Share2 />} label="Share" color="text-pink-500" />
         <ToolButton icon={<Film />} label="Video" color="text-purple-500" />
-        <ToolButton icon={<FileText />} label="Print" color="text-indigo-500" />
-        <ToolButton icon={<Globe />} label="Website" color="text-blue-500" />
+        <ToolButton icon={<FileText />} label="Media Kit" color="text-indigo-500" />
+        <ToolButton icon={<Instagram />} label="Instagram" color="text-pink-500" />
         <ToolButton icon={<Layout />} label="Custom" color="text-gray-500" />
         <ToolButton icon={<Upload />} label="Upload" color="text-slate-500" />
         <ToolButton icon={<MoreHorizontal />} label="More" color="text-gray-700" />
@@ -51,7 +52,7 @@ const ToolButton = ({ icon, label, color }) => {
         className={` aspect-square flex flex-col p-4 h-20 w-20 ${color} hover:bg-gray-100`}
       >
         <div>{icon}</div>
-        <span className="text-xs text-gray-600">{label}</span>
+        <span className="text-xs text-gray-600 mt-4">{label}</span>
       </Button>
     </div>
   );
