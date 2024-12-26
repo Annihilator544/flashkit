@@ -74,13 +74,12 @@ export default observer(({ store }) => {
     <NavbarContainer className="bp5-navbar bg-white">
       <NavInner>
         <Navbar.Group align={Alignment.LEFT}>
-          <FileMenu store={store} project={project} />
           <div className='ml-3'>
           {project.status === "saved" ?
-          <LucideCloud className="h-8 w-8 text-[#F56B63]"/> :
+          <LucideCloud className="h-8 w-8 text-[#34C759]"/> :
           <div className='flex'>
-          <LucideCloudUpload className="h-8 w-8 text-[#F56B63]"/>
-          <LucideLoader2 className="h-2 w-2 text-[#F56B63] animate-spin"/>
+          <LucideCloudUpload className="h-8 w-8 text-[#34C759]"/>
+          <LucideLoader2 className="h-2 w-2 text-[#34C759] animate-spin"/>
           </div>
           }
           </div>
@@ -131,7 +130,7 @@ export default observer(({ store }) => {
                                 </Button>
                             : 
                             <></>} */}
-          <div className='flex gap-4'>
+          <div className='flex gap-2'>
           <Input
               value={window.project.name}
               placeholder="Design name"
@@ -140,10 +139,11 @@ export default observer(({ store }) => {
                 window.project.requestSave();
                 console.log(window.project.name);
               }}
-              className={' bg-white '}
+              className={' bg-white border-none hover:border active:border focus:border focus:outline-none focus:ring-0 w-fit'}
             />
-          <Share store={store}/>
           <DownloadButton store={store} />
+          <Share store={store}/>
+          <FileMenu store={store} project={project} />
           </div>
           {/* <UserMenu store={store} project={project} /> */}
           {/* <NavbarHeading>Polotno Studio</NavbarHeading> */}

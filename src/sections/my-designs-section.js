@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import {
-  Button,
   Spinner,
 } from '@blueprintjs/core';
 
@@ -10,49 +9,43 @@ import { CloudWarning } from '../plotNoFeatures/cloud-warning';
 import { SectionTab } from 'polotno/side-panel';
 import { useProject } from '../plotNoFeatures/project';
 import * as api from '../plotNoFeatures/api';
-import { LucideFolderOpen, LucideMoreHorizontal, LucidePlus, LucideTrash2 } from 'lucide-react';
+import { LucideCopy, LucideFolderOpen, LucideMoreHorizontal, LucideMoreVertical, LucidePlus, LucideTrash2 } from 'lucide-react';
 import { Card } from '../components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../components/ui/dropdown-menu";
+import { Button } from '../components/ui/button';
 
 
-const DesignCard = observer(({ design, store, onDelete }) => {
-  const [loading, setLoading] = React.useState(false);
-  const [previewURL, setPreviewURL] = React.useState(design.previewURL);
+const DesignCard = observer(({ design, store, onDelete, onDuplicate }) => {
+  const [loading, setLoading] = useState(false);
+  const [previewURL, setPreviewURL] = useState(design.previewURL);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const load = async () => {
       const url = await api.getPreview({ id: design.id });
       setPreviewURL(url);
     };
     load();
-  });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[]);
 
   const handleSelect = async () => {
     setLoading(true);
-    window.project.loadById(design.id);
+    window.location.href = `/canvas?id=${design.id}`;
     setLoading(false);
   };
 
   return (
+    <div className="flex flex-col my-2">
     <Card
-      style={{ margin: '3px', padding: '3px', position: 'relative' }}
+      style={{  padding: '3px', position: 'relative' }}
       interactive
+      className="fit-content w-fit mb-auto mx-1 group"
       onClick={() => {
         handleSelect();
       }}
     >
       <div className="rounded-lg overflow-hidden">
-        <img src={previewURL} style={{ width: '100%' }} alt="URL" />
-      </div>
-      <div
-        style={{
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap',
-          padding: '3px',
-        }}
-      >
-        {design.name || 'Untitled'}
+      <img src={previewURL} style={{ width: '200px' }} alt="url" />
       </div>
       {loading && (
         <div
@@ -67,32 +60,36 @@ const DesignCard = observer(({ design, store, onDelete }) => {
         </div>
       )}
       <div
-        style={{ position: 'absolute', top: '5px', right: '5px' }}
+        className="absolute top-1 right-1 "
         onClick={(e) => {
           e.stopPropagation();
         }}
       >
       <DropdownMenu>
-        <DropdownMenuTrigger>
-          <Button className="p-2"><LucideMoreHorizontal className="h-4"/></Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="bg-white mx-1">
-          <DropdownMenuItem className="flex gap-2" onClick={() => {
-                    handleSelect();
-                  }}>
-              <LucideFolderOpen className='h-4'/>Open
-          </DropdownMenuItem>
-          <DropdownMenuItem className="flex gap-2" onClick={() => {
-                    if (window.confirm('Are you sure you want to delete it?')) {
-                      onDelete({ id: design.id });
-                    }
-                  }}>
-              <LucideTrash2 className='h-4'/>Delete
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-        </DropdownMenu>
+      <DropdownMenuTrigger>
+        <Button className="p-2  bg-[#00000040] hover:bg-[#00000080] border hidden group-hover:block"><LucideMoreVertical className="h-4"/></Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="bg-white mx-1 absolute">
+        <DropdownMenuItem className="flex gap-2" onClick={() => {
+                  handleSelect();
+                }}>
+            <LucideFolderOpen className='h-4'/>Open
+        </DropdownMenuItem>
+        <DropdownMenuItem className="flex gap-2" onClick={() => {
+                    onDelete({ id: design.id });
+                }}>
+            <LucideTrash2 className='h-4'/>Delete
+        </DropdownMenuItem>
+        <DropdownMenuItem className="flex gap-2" onClick={() => {
+                    onDuplicate({ id: design.id });
+                }}>
+            <LucideCopy className='h-4'/>Duplicate
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+      </DropdownMenu>
       </div>
     </Card>
+    </div>
   );
 });
 
@@ -131,8 +128,7 @@ export const MyDesignsPanel = observer(({ store }) => {
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <Button
-        fill
-        intent="primary"
+        variant="outline"
         onClick={async () => {
           project.createNewDesign();
         }}
@@ -200,7 +196,7 @@ export const MyDesignsSection = {
   name: 'Add Design',
   Tab: (props) => (
     <SectionTab name="Add Design" {...props}>
-      <div  className="bg-[#ef8a80] max-md:p-[2px] md:p-1 max-md:m-auto md:rounded-lg max-md:rounded-sm ">
+      <div  className="bg-[#f35b54] max-md:p-[2px] md:p-1 max-md:m-auto md:rounded-lg max-md:rounded-sm ">
         <LucidePlus size={16} fill="#fff"  color="#fff" className='md:hidden'/>
         <LucidePlus size={20} fill="#fff"  color="#fff" className='max-md:hidden'/>
       </div>

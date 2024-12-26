@@ -3,7 +3,7 @@ import React, { useState, useEffect, use } from 'react';
 import { S3Client, ListObjectsV2Command, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
-import { Loader2, LucideGlobe, LucideUpload } from 'lucide-react';
+import { Loader2, LucideGlobe, LucideSend, LucideShare, LucideUpload } from 'lucide-react';
 import { observer } from 'mobx-react-lite';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
 import { useProject } from 'plotNoFeatures/project';
@@ -127,13 +127,14 @@ const Share = observer(({ store }) => {
         {window.project.status==="saved"&&window.project.name&&window.project.name!==''&&window.project.name!=='Untitled Design' ? 
           <DialogTrigger>
             <Button className="my-auto">
-            <LucideUpload className="h-4 mr-2" />
               Share
+              
+            <LucideSend className="h-4 ml-[6px]" />
             </Button>
         </DialogTrigger>
             :
             <Button className="my-auto" disabled>
-            <LucideUpload className="h-4 mr-2" />
+            <LucideUpload className="h-4 ml-[6px]" />
               Share
             </Button>
         }

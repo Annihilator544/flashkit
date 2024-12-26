@@ -10,11 +10,11 @@
       --card-foreground: 222.2 84% 4.9%;
       --popover: 0 0% 100%;
       --popover-foreground: 222.2 84% 4.9%;
-      --primary: 3, 87%, 64%;
+      --primary: 211.41, 100%, 62.55%;
       --primary-foreground: 210 40% 98%;
       --secondary: 0,0%,59%;;
       --secondary-foreground: 3, 87%, 64%;
-      --muted: 3.53, 51.52%, 93.53%;
+      --muted: 210, 4.17%, 90.59%;
       --muted-foreground: 215.4 16.3% 46.9%;
       --accent: 210 40% 96.1%;
       --accent-foreground: 222.2 47.4% 11.2%;
@@ -129,7 +129,7 @@
         overflow-y: auto;
         overflow-x: hidden;
         min-width: 100px !important;
-        background-color: #f7e7e6;
+        background-color: #f6f8f9;
     }
     
     /* .go806284747::-webkit-scrollbar{
@@ -178,6 +178,16 @@
 .go1222219977{
     padding-bottom: 20px;
     gap:5px;
+}
+.go3593045756{
+  border : 1px solid #dbddde;
+  box-shadow: none;
+  background-color: #e8e8e8;
+}
+.go1155992819{
+  border : 1px solid #dbddde;
+  box-shadow: none;
+  border-bottom: none;
 }
 
 .SignUp{

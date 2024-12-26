@@ -377,14 +377,16 @@ export const DownloadButton = observer(({ store }) => {
         <DropdownMenuTrigger>
           <Button onClick={() => {
               setQuality(1);
-            }}>
-            <LucideDownload className='h-4 mr-2'/> Download
+            }}
+            variant="outline"
+            >
+            Download <LucideDownload className='h-4 ml-[6px]'/>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="bg-white mx-1">
           <DropdownMenuLabel>File type</DropdownMenuLabel>
           <Select value={type} onValueChange={setType}>
-            <SelectTrigger className="w-[180px] mb-2">
+            <SelectTrigger className="w-[180px] ">
               <SelectValue placeholder="PNG" defaultValue={"png"}  />
             </SelectTrigger>
             <SelectContent>
@@ -504,7 +506,7 @@ export const DownloadButton = observer(({ store }) => {
           <DropdownMenuSeparator />
           <Button
             loading={saving}
-            className=' my-3 w-full px-3 py-2'
+            className=' w-full px-3 py-2'
             onClick={async () => {
               setSaving(true);
               try {

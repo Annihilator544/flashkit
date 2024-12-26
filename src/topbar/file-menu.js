@@ -23,7 +23,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu"
-import { LucideFolderOpen, LucideLanguages, LucidePlus, LucideSave } from 'lucide-react';
+import { LucideEllipsisVertical, LucideFolderOpen, LucideLanguages, LucidePlus, LucideSave } from 'lucide-react';
 
 export const FileMenu = observer(({ store, project }) => {
   const inputRef = React.useRef();
@@ -123,7 +123,7 @@ export const FileMenu = observer(({ store, project }) => {
       </Popover> */}
       <DropdownMenu>
         <DropdownMenuTrigger>
-          <Button className="hover:bg-[#ff9b88]">File</Button>
+          <Button className="p-2" variant="outline"><LucideEllipsisVertical className='h-5'/></Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="bg-white mx-1">
           <DropdownMenuItem className="flex gap-2"  onClick={() => {
