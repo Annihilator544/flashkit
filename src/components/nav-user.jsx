@@ -47,9 +47,9 @@ export function NavUser() {
                       }
                         <AvatarFallback>CN</AvatarFallback>
               </Avatar>
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate text-xs font-semibold flex">{user&&user.displayName ? user.displayName : ""} <LucideChevronDown className="m-auto h-3"/></span>
-                <span className="truncate text-secondary text-xs">{user&&user.email ? user.email : ""}</span>
+              <div className="flex align-middle justify-center flex-1 text-left text-sm leading-tight">
+                <span className="truncate text-xs font-semibold flex my-auto">{user&&user.displayName ? user.displayName : ""} <LucideChevronDown className="m-auto h-3"/></span>
+                {/* <span className="truncate text-secondary text-xs">{user&&user.email ? user.email : ""}</span> */}
               </div>
             </div>
           </DropdownMenuTrigger>

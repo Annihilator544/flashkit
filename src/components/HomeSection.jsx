@@ -103,9 +103,7 @@ function HomeSection({ store }) {
                     <SelectContent>
                       <SelectGroup>
                         <SelectItem value="Instagram"><div className="flex gap-2"><Instagram className="h-5"/>Instagram </div></SelectItem>
-                        <SelectItem value="Twitter"><div className="flex gap-2"><Twitter className="h-5"/>Twitter </div></SelectItem>
                         <SelectItem value="Youtube"><div className="flex gap-2"><Youtube className="h-5"/>Youtube</div></SelectItem>
-                        <SelectItem value="LinkedIn"><div className="flex gap-2"><Linkedin className="h-5"/>LinkedIn </div></SelectItem>
                         {/* <SelectItem value="TikTok"><div className="flex gap-2"><TikTok className="h-5"/>Instagram </div></SelectItem> */}
                       </SelectGroup>
                     </SelectContent>
@@ -114,7 +112,7 @@ function HomeSection({ store }) {
                 {/* {localStorage.getItem("flashkitPlan") === "FLASHKITSOCIAL" ? 
                 <> */}
                 <div className="flex gap-1 flex-wrap">
-                    <Card className="flex h-52 aspect-square items-center justify-center">
+                    <Card className="flex h-52 aspect-square items-center justify-center drop-shadow-sm">
                         <CardContent className="flex gap-2 p-5 px-12 flex-col my-auto">
                             <Avatar className= "m-auto h-20 w-20">
                             {user&&user.photoURL ? <AvatarImage src={user.photoURL} /> :
@@ -126,7 +124,7 @@ function HomeSection({ store }) {
                             <div className="text-[#E1A100] bg-[#fdf5e1] text-center font-semibold flex pr-2 py-[2px] rounded-sm mx-auto"><LucideAward className="h-4 my-auto"/>Gold</div>
                         </CardContent>
                     </Card>
-                    <Card className=" flex aspect-square h-52 items-center justify-center">
+                    <Card className=" flex aspect-square h-52 items-center justify-center drop-shadow-sm">
                         <CardContent className="flex h-fit gap-2 p-5 flex-col">
                               <img src={EQSCircle} className="h-30 w-30 m-auto" alt="EQS Circle"/>
                               {/* <p className=" text-2xl font-semibold">{Engagement && typeof Engagement ==='object' && Object.keys(Engagement).length > 0 ? Engagement.engagementMetrics.score * 10 : 79} %</p> */}
@@ -136,7 +134,7 @@ function HomeSection({ store }) {
                     </Card>
                     <Card className= " flex flex-1 p-0 border-none ">
                         <CardContent className="grid grid-cols-2 grid-rows-2 gap-1 p-0 flex-1">
-                        <Card className=" bg-gradient-to-r from-[#E2F2FF] to-[#FFF3F3] rounded-lg">
+                        <Card className=" bg-gradient-to-r from-[#E2F2FF] to-[#FFF3F3] rounded-lg drop-shadow-sm">
                             <CardContent className="flex gap-2 p-4 flex-col flex-1">
                             <div className=" text-xs text-secondary font-semibold Inter flex gap-2">Total Followers</div>
                             <div className="flex justify-between">
@@ -147,7 +145,7 @@ function HomeSection({ store }) {
                             </div>
                             </CardContent>
                         </Card>
-                        <Card className=" bg-gradient-to-r from-[#E2F2FF] to-[#FFF3F3] rounded-lg">
+                        <Card className=" bg-gradient-to-r from-[#E2F2FF] to-[#FFF3F3] rounded-lg drop-shadow-sm">
                             <CardContent className="flex gap-2 p-4 flex-col flex-1">
                             <div className=" text-xs text-secondary font-semibold Inter flex gap-2">Daily Engagements</div>
                             <div className="flex justify-between">
@@ -158,7 +156,7 @@ function HomeSection({ store }) {
                             </div>
                             </CardContent>
                         </Card>
-                        <Card className=" bg-gradient-to-r from-[#E2F2FF] to-[#FFF3F3] rounded-lg">
+                        <Card className=" bg-gradient-to-r from-[#E2F2FF] to-[#FFF3F3] rounded-lg drop-shadow-sm">
                             <CardContent className="flex gap-2 p-4 flex-col flex-1">
                             <div className=" text-xs text-secondary font-semibold Inter flex gap-2">Total Engagement</div>
                             <div className="flex justify-between">
@@ -169,7 +167,7 @@ function HomeSection({ store }) {
                             </div>
                             </CardContent>
                         </Card>
-                        <Card className=" bg-gradient-to-r from-[#E2F2FF] to-[#FFF3F3] rounded-lg">
+                        <Card className=" bg-gradient-to-r from-[#E2F2FF] to-[#FFF3F3] rounded-lg drop-shadow-sm">
                             <CardContent className="flex gap-2 p-4 flex-col flex-1">
                             <div className=" text-xs text-secondary font-semibold Inter flex gap-2">Total Followers</div>
                             <div className="flex justify-between">
@@ -185,7 +183,7 @@ function HomeSection({ store }) {
                 </div>
                 <div className="">
                 <ShineBorder
-                  className="relative flex w-full py-5 flex-1 justify-between overflow-hidden rounded-lg border bg-background md:shadow-lg"
+                  className="relative flex w-full p-5 flex-1 justify-between overflow-hidden rounded-lg border bg-background md:shadow-lg"
                   color={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
                   borderWidth={2}
                 >

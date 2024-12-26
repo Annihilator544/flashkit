@@ -76,9 +76,9 @@ export default observer(({ store }) => {
         <Navbar.Group align={Alignment.LEFT}>
           <div className='ml-3'>
           {project.status === "saved" ?
-          <LucideCloud className="h-8 w-8 text-[#34C759]"/> :
+          <LucideCloud className="h-8 w-8 text-[#34C759]" strokeWidth={1}/> :
           <div className='flex'>
-          <LucideCloudUpload className="h-8 w-8 text-[#34C759]"/>
+          <LucideCloudUpload className="h-8 w-8 text-[#34C759]" strokeWidth={1}/>
           <LucideLoader2 className="h-2 w-2 text-[#34C759] animate-spin"/>
           </div>
           }
@@ -139,7 +139,7 @@ export default observer(({ store }) => {
                 window.project.requestSave();
                 console.log(window.project.name);
               }}
-              className={' bg-white border-none hover:border active:border focus:border focus:outline-none focus:ring-0 w-fit'}
+              className={' bg-white border-none hover:border active:border focus:border focus:outline-none focus:ring-0 ring-offset-0 w-fit max-w-60'}
             />
           <DownloadButton store={store} />
           <Share store={store}/>

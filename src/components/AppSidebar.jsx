@@ -134,28 +134,10 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                                         </TabsTrigger>
                                         </SidebarMenuSub>
                                         <SidebarMenuSub>
-                                        <TabsTrigger value="twitter" className="p-0">
-                                            <SidebarMenuSubItem >
-                                            <SidebarMenuSubButton asChild>
-                                                <span>Twitter</span>
-                                            </SidebarMenuSubButton>
-                                            </SidebarMenuSubItem>
-                                        </TabsTrigger>
-                                        </SidebarMenuSub>
-                                        <SidebarMenuSub>
                                         <TabsTrigger value="youtube" className="p-0">
                                             <SidebarMenuSubItem >
                                             <SidebarMenuSubButton asChild>
                                                 <span>Youtube</span>
-                                            </SidebarMenuSubButton>
-                                            </SidebarMenuSubItem>
-                                        </TabsTrigger>
-                                        </SidebarMenuSub>
-                                        <SidebarMenuSub>
-                                        <TabsTrigger value="linkedIn" className="p-0">
-                                            <SidebarMenuSubItem >
-                                            <SidebarMenuSubButton asChild>
-                                                <span>LinkedIn</span>
                                             </SidebarMenuSubButton>
                                             </SidebarMenuSubItem>
                                         </TabsTrigger>
