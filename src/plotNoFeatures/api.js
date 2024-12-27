@@ -278,62 +278,62 @@ export const uploadAsset = async ({ file, preview, type }) => {
 
   const src = await getAssetSrc({ id });
   const previewSrc = await getAssetPreviewSrc({ id });
-  const authStorage = localStorage.getItem('auth-storage');
-  const authObject = JSON.parse(authStorage);
-  const uid = authObject?.state?.user?.uid;
-  const bucketNamePersonal = 'flashkitpersonalsharebucket';
-  const s3Client = new S3Client({
-        region: 'eu-west-2', // e.g., 'us-east-1'
-        credentials: {
-          accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
-          secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
-        }
-      });
-      if(uid){
-        const commandImage = new PutObjectCommand({
-          Bucket: bucketNamePersonal,
-          Key: `${uid}/uploads/${id}.${type === 'video' ? 'mp4' : 'png'}`,
-          Body: file,
-          ContentType: type,
-        });
-        const commandImagePreview = new PutObjectCommand({
-            Bucket: bucketNamePersonal,
-            Key: `${uid}/uploads/${id}-preview.png`,
-            Body: preview,
-            ContentType: type,
-          });
-        await s3Client.send(commandImagePreview);
-        await s3Client.send(commandImage);
-      }
+  // const authStorage = localStorage.getItem('auth-storage');
+  // const authObject = JSON.parse(authStorage);
+  // const uid = authObject?.state?.user?.uid;
+  // const bucketNamePersonal = 'flashkitpersonalsharebucket';
+  // const s3Client = new S3Client({
+  //       region: 'eu-west-2', // e.g., 'us-east-1'
+  //       credentials: {
+  //         accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+  //         secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+  //       }
+  //     });
+  //     if(uid){
+  //       const commandImage = new PutObjectCommand({
+  //         Bucket: bucketNamePersonal,
+  //         Key: `${uid}/uploads/${id}.${type === 'video' ? 'mp4' : 'png'}`,
+  //         Body: file,
+  //         ContentType: type,
+  //       });
+  //       const commandImagePreview = new PutObjectCommand({
+  //           Bucket: bucketNamePersonal,
+  //           Key: `${uid}/uploads/${id}-preview.png`,
+  //           Body: preview,
+  //           ContentType: type,
+  //         });
+  //       await s3Client.send(commandImagePreview);
+  //       await s3Client.send(commandImage);
+  //     }
   return { id, src, preview: previewSrc };
 };
 
 export const deleteAsset = async ({ id }) => {
   const list = await listAssets();
-  let type = list.find((asset) => asset.id === id).type;
+  // let type = list.find((asset) => asset.id === id).type;
   const newList = list.filter((asset) => asset.id !== id);
-  const authStorage = localStorage.getItem('auth-storage');
-  const authObject = JSON.parse(authStorage);
-  const uid = authObject?.state?.user?.uid;
-  const bucketNamePersonal = 'flashkitpersonalsharebucket';
-  const s3Client = new S3Client({
-        region: 'eu-west-2', // e.g., 'us-east-1'
-        credentials: {
-          accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
-          secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
-        }
-      });
-  if(uid){
-      const deleteImage = new DeleteObjectCommand({
-        Bucket: bucketNamePersonal,
-        Key: `${uid}/uploads/${id}.${type === 'video' ? 'mp4' : 'png'}`,
-      });
-      const deleteImagePreview = new DeleteObjectCommand({
-        Bucket: bucketNamePersonal,
-        Key: `${uid}/uploads/${id}-preview.png`,
-      });
-      await s3Client.send(deleteImage);
-      await s3Client.send(deleteImagePreview);
-    }
+  // const authStorage = localStorage.getItem('auth-storage');
+  // const authObject = JSON.parse(authStorage);
+  // const uid = authObject?.state?.user?.uid;
+  // const bucketNamePersonal = 'flashkitpersonalsharebucket';
+  // const s3Client = new S3Client({
+  //       region: 'eu-west-2', // e.g., 'us-east-1'
+  //       credentials: {
+  //         accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+  //         secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+  //       }
+  //     });
+  // if(uid){
+  //     const deleteImage = new DeleteObjectCommand({
+  //       Bucket: bucketNamePersonal,
+  //       Key: `${uid}/uploads/${id}.${type === 'video' ? 'mp4' : 'png'}`,
+  //     });
+  //     const deleteImagePreview = new DeleteObjectCommand({
+  //       Bucket: bucketNamePersonal,
+  //       Key: `${uid}/uploads/${id}-preview.png`,
+  //     });
+  //     await s3Client.send(deleteImage);
+  //     await s3Client.send(deleteImagePreview);
+  //   }
   await writeKv('assets-list', newList);
 };
