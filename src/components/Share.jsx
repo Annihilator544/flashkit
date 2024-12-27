@@ -3,7 +3,7 @@ import React, { useState, useEffect, use } from 'react';
 import { S3Client, ListObjectsV2Command, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
-import { Loader2, LucideGlobe, LucideSend, LucideShare, LucideUpload } from 'lucide-react';
+import { Loader2, LucideCopy, LucideGlobe, LucideSend, LucideShare, LucideUpload } from 'lucide-react';
 import { observer } from 'mobx-react-lite';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
 import { useProject } from 'plotNoFeatures/project';
@@ -128,14 +128,13 @@ const Share = observer(({ store }) => {
           <DialogTrigger>
             <Button className="my-auto">
               Share
-              
             <LucideSend className="h-4 ml-[6px]" />
             </Button>
         </DialogTrigger>
             :
             <Button className="my-auto" disabled>
-            <LucideUpload className="h-4 ml-[6px]" />
               Share
+              <LucideSend className="h-4 ml-[6px]" />
             </Button>
         }
         <DialogContent>
@@ -173,7 +172,7 @@ const Share = observer(({ store }) => {
                 )}
             </DialogDescription>
             </DialogHeader>
-            <DialogFooter>
+            <DialogFooter className="grid grid-cols-2">
             {/* {uploading ? 
                 <Button className="mt-5" disabled>
                   <Loader2 className="animate-spin h-4 mr-2" />
@@ -192,20 +191,20 @@ const Share = observer(({ store }) => {
                 </Button>
             } */}
             {uploadingPersonal ? 
-                <Button className="mt-5" disabled>
+                <Button className="mt-5" variant="outline" disabled>
                   <Loader2 className="animate-spin h-4 mr-2" />
                     Uploading
                 </Button>
                 :
                 window.project.name&&window.project.name!==''&&window.project.name!=='Untitled Design' ?
-                <Button className="mt-5" onClick={()=>handleFileUploadPersonal()} >
-                    {isUploadedPersonal ? <></>: <LucideUpload className="h-4 mr-2" />}
-                    {isUploadedPersonal ? "Uploaded": "Share Via Link"}
+                <Button className="mt-5" variant="outline" onClick={()=>handleFileUploadPersonal()} >
+                    {isUploadedPersonal ? "Uploaded": "Colaboration Link"}
+                    {isUploadedPersonal ? <></>: <LucideCopy className="h-4 ml-2" />}
                 </Button>
                 :
-                <Button className="mt-5" disabled >
-                    {isUploadedPersonal ? <></>: <LucideUpload className="h-4 mr-2" />}
-                    {isUploadedPersonal ? "Uploaded": "Share Via Link"}
+                <Button className="mt-5" variant="outline" disabled >
+                    {isUploadedPersonal ? "Uploaded": "Colaboration Link"}
+                    {isUploadedPersonal ? <></>: <LucideCopy className="h-4 ml-2" />}
                 </Button>
             }
             {uploading ? 
@@ -216,13 +215,13 @@ const Share = observer(({ store }) => {
                 :
                 window.project.name&&window.project.name!==''&&window.project.name!=='Untitled Design' ?
                 <Button className="mt-5" onClick={()=>handleFileUploadPublic()} >
-                    {isUploaded ? <></>: <LucideGlobe className="h-4 mr-2" />}
                     {isUploaded ? "Uploaded": "Public Link"}
+                    {isUploaded ? <></>: <LucideCopy className="h-4 ml-2" />}
                 </Button>
                 :
                 <Button className="mt-5" disabled >
-                    {isUploaded ? <></>: <LucideGlobe className="h-4 mr-2" />}
                     {isUploaded ? "Uploaded": "Public Link"}
+                    {isUploaded ? <></>: <LucideCopy className="h-4 ml-2" />}
                 </Button>
             }
             </DialogFooter>

@@ -130,7 +130,7 @@ export default observer(({ store }) => {
                                 </Button>
                             : 
                             <></>} */}
-          <div className='flex gap-2'>
+          <div className='flex gap-2 my-auto'>
           <Input
               value={window.project.name}
               placeholder="Design name"

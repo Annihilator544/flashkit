@@ -81,6 +81,9 @@ class Project {
     if (lastDesignId) {
       await this.loadById(lastDesignId);
     }
+    if(this.id !== ''){
+      await this.getPreviewImages()
+    }
   }
 
   async loadById(id) {
@@ -175,7 +178,7 @@ class Project {
     }
     finally{
       if(this.id !== ''){
-      this.getPreviewImages()
+      await this.getPreviewImages()
       }
     }
     this.status = 'saved';
