@@ -2,6 +2,9 @@ import { nanoid } from 'nanoid';
 import localforage from 'localforage';
 import { dataURLtoBlob } from './blob';
 import { DeleteObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+import { DynamoDBDocumentClient, UpdateCommand } from '@aws-sdk/lib-dynamodb';
+import React from 'react';
 
 const isSignedIn = () => {
   // return window.puter?.auth?.isSignedIn();
@@ -39,11 +42,30 @@ async function readKv(key) {
 }
 
 async function writeKv(key, value) {
-  if (isSignedIn()) {
-    // return await window.puter.kv.set(key, value);
-  } else {
-    return await localforage.setItem(key, value);
+  if(key==='designs-list'){
+    const authStorage = localStorage.getItem('auth-storage');
+    const authObject = JSON.parse(authStorage);
+    const uid = authObject?.state?.user?.uid;
+    const region = "eu-west-2";
+    const credentials = {
+      accessKeyId: process.env.REACT_APP_DYNAMO_DB_AWS_ACCESS_KEY_ID,
+      secretAccessKey: process.env.REACT_APP_DYNAMO_DB_AWS_SECRET_ACCESS_KEY
+    };
+    const ddbClient = new DynamoDBClient({ region, credentials });
+    const docClient = DynamoDBDocumentClient.from(ddbClient);
+    const tableName = "flashkitUserData";
+    const params = {
+      TableName: tableName,
+      Key: { uid: uid },
+      UpdateExpression: 'SET designsList = :new_items',
+      ExpressionAttributeValues: {
+        ':new_items': value,
+      },
+      ReturnValues: 'ALL_NEW',
+    };
+    await docClient.send(new UpdateCommand(params));
   }
+  return await localforage.setItem(key, value);
 }
 
 // export async function backupFromLocalToCloud() {

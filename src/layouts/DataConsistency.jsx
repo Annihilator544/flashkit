@@ -1,11 +1,15 @@
-import { DeleteObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { DeleteObjectCommand, GetObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import * as api from '../plotNoFeatures/api';
 import localforage from 'localforage';
 import { useEffect } from 'react';
 import useOnlineStatus from '../hooks/useOnlineStatus';
+import { DynamoDBDocumentClient, GetCommand } from '@aws-sdk/lib-dynamodb';
+import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+import { useAuthStore } from 'store/use-auth-data';
 
 function  DataConsistency({ children }) {
     const isOnline = useOnlineStatus();
+    const { user } = useAuthStore();
     const uploadOfflineData = async () => {
         const list = await api.listOfflineChanges();
         const map = new Map(list);
@@ -51,15 +55,119 @@ function  DataConsistency({ children }) {
             console.error(e);
           } finally{
             await localforage.setItem('offline-changes', Array.from(map));
-            console.log(localforage.getItem('offline-changes'));
           }
         });
         console.log(localforage.getItem('offline-changes'));
     }
+    async function syncArraysExact(localArray, uploadArray) {
+        const s3Client = new S3Client({
+            region: 'eu-west-2', // e.g., 'us-east-1'
+            credentials: {
+              accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+              secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+            }
+        });
+        const bucketName = 'flashkitpersonalsharebucket';
+        // Step 1: Insert or update all items from uploadArray
+        let updatedLocal = [...localArray];
+        for (const uploadItem of uploadArray) {
+          const indexInLocal = updatedLocal.findIndex(
+            (localItem) => localItem.id === uploadItem.id
+          );
+          if (indexInLocal === -1) {
+            const command = new GetObjectCommand({
+                Bucket: bucketName,
+                Key: `${user.uid}/shared/${uploadItem.id}.json`
+            });
+            const command2 = new GetObjectCommand({
+                Bucket: bucketName,
+                Key: `${user.uid}/shared/${uploadItem.id}.jpg`
+            });
+            //get object from s3
+            const { Body } = await s3Client.send(command);
+            const { Body2 } = await s3Client.send(command2);
+            api.saveDesign({
+                storeJSON: Body,
+                preview: Body2,
+                id: uploadItem.id,
+                name: uploadItem.name,
+            });
+            updatedLocal.push(uploadItem);
+          } else {
+            if(uploadItem.lastModified > updatedLocal[indexInLocal].lastModified) {
+                const command = new GetObjectCommand({
+                    Bucket: bucketName,
+                    Key: `${user.uid}/shared/${uploadItem.id}.json`
+                });
+                const command2 = new GetObjectCommand({
+                    Bucket: bucketName,
+                    Key: `${user.uid}/shared/${uploadItem.id}.jpg`
+                });
+                //get object from s3
+                const { Body } = await s3Client.send(command);
+                const { Body2 } = await s3Client.send(command2);
+                api.saveDesign({
+                    storeJSON: Body,
+                    preview: Body2,
+                    id: uploadItem.id,
+                    name: uploadItem.name,
+                });
+            }
+            updatedLocal[indexInLocal] = {
+              ...updatedLocal[indexInLocal],
+              ...uploadItem,
+            };
+          }
+        }
+      
+        // Step 2: Remove anything not in uploadArray
+        const uploadIds = new Set(uploadArray.map((item) => item.id));
+        updatedLocal.filter((localItem) =>
+          !uploadIds.has(localItem.id)
+        ).map(async (item) => {
+            api.deleteDesign(item.id);
+        });
+
+        updatedLocal = updatedLocal.filter((localItem) =>
+            uploadIds.has(localItem.id)
+        );
+      
+        // Step 3: Save the updated local array
+        await localforage.setItem('designs-list', updatedLocal);
+      }      
+    const syncOnlineData = async () => {
+        const region = "eu-west-2";
+        const credentials = {
+        accessKeyId: process.env.REACT_APP_DYNAMO_DB_AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.REACT_APP_DYNAMO_DB_AWS_SECRET_ACCESS_KEY
+        };
+        const ddbClient = new DynamoDBClient({ region, credentials });
+        const docClient = DynamoDBDocumentClient.from(ddbClient);
+        const tableName = "flashkitUserData";
+        const params = {
+        TableName: tableName,
+        Key: { uid: user.uid },
+      };
+        const result = await docClient.send(new GetCommand(params));
+        const list = await api.listDesigns();
+        if (result.Item && result.Item.designsList && result.Item.designsList !== list) {
+          await syncArraysExact(list, result.Item.designsList);
+        } 
+        else if (!result.Item) {
+          console.log("No user data found");
+        }
+        else {
+          console.log("Data is in sync");
+        }
+    }
     useEffect  (() => {
+        async function fetchData() {
         console.log("Starting upload");
-        uploadOfflineData();
+        await uploadOfflineData();
+        await syncOnlineData();
         console.log("Data uploaded");
+        }
+        fetchData();
     }, [isOnline]);
   return (
     <div>
