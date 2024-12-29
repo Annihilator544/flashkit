@@ -4,7 +4,7 @@ import { S3Client, ListObjectsV2Command,  GetObjectCommand } from '@aws-sdk/clie
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import TemplateCard from './TemplateCard';
 
-const s3Client = new S3Client({
+export const s3Client = new S3Client({
   region: 'eu-west-2', // e.g., 'us-east-1'
   credentials: {
     accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,

@@ -6,6 +6,8 @@ import useOnlineStatus from '../hooks/useOnlineStatus';
 import { DynamoDBDocumentClient, GetCommand } from '@aws-sdk/lib-dynamodb';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { useAuthStore } from 'store/use-auth-data';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import React from 'react';
 
 function  DataConsistency({ children }) {
     const isOnline = useOnlineStatus();
@@ -84,14 +86,21 @@ function  DataConsistency({ children }) {
                 Key: `${user.uid}/shared/${uploadItem.id}.jpg`
             });
             //get object from s3
-            const { Body } = await s3Client.send(command);
-            const { Body2 } = await s3Client.send(command2);
+            const urlJSON = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
+            const urlImage = await getSignedUrl(s3Client, command2, { expiresIn: 3600 });
+
+            // Now 'urlJSON' and 'urlImage' are just strings (the presigned URLs).
+            const response1 = await fetch(urlJSON);
+            const jsonData = await response1.json();
+
+            const response2 = await fetch(urlImage);
+            const blobImage = await response2.blob();
             api.saveDesign({
-                storeJSON: Body,
-                preview: Body2,
+                storeJSON: jsonData,
+                preview: blobImage,
                 id: uploadItem.id,
                 name: uploadItem.name,
-            });
+              });
             updatedLocal.push(uploadItem);
           } else {
             if(uploadItem.lastModified > updatedLocal[indexInLocal].lastModified) {
@@ -106,6 +115,7 @@ function  DataConsistency({ children }) {
                 //get object from s3
                 const { Body } = await s3Client.send(command);
                 const { Body2 } = await s3Client.send(command2);
+                console.log(Body, Body2);
                 api.saveDesign({
                     storeJSON: Body,
                     preview: Body2,
