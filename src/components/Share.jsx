@@ -11,6 +11,7 @@ import { useAuthStore } from 'store/use-auth-data';
 import { Skeleton } from './ui/skeleton';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocumentClient, GetCommand, PutCommand, UpdateCommand } from '@aws-sdk/lib-dynamodb';
+import useOnlineStatus from '../hooks/useOnlineStatus';
 
 const region = "eu-west-2";
 const credentials = {
@@ -30,6 +31,7 @@ const Share = observer(({ store }) => {
   const docClient = DynamoDBDocumentClient.from(ddbClient);
   const tableName = "flashkitUserData";
   const project = useProject();
+  const isOnline = useOnlineStatus();
 
 
   const handleFileUploadPublic = async (event) => {
@@ -124,7 +126,7 @@ const Share = observer(({ store }) => {
 
   return (
     <Dialog>
-        {window.project.status==="saved"&&window.project.name&&window.project.name!==''&&window.project.name!=='Untitled Design' ? 
+        {window.project.status==="saved"&&window.project.name&&window.project.name!==''&&window.project.name!=='Untitled Design'&&isOnline ? 
           <DialogTrigger>
             <Button className="my-auto">
               Share

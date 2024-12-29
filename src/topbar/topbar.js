@@ -15,6 +15,7 @@ import { LucideCloud, LucideCloudUpload, LucideGem, LucideLoader, LucideLoader2,
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import Share from '../components/Share';
+import useOnlineStatus from '../hooks/useOnlineStatus';
 
 const NavbarContainer = styled('div')`
   white-space: nowrap;
@@ -69,6 +70,7 @@ const NavInner = styled('div')`
 
 export default observer(({ store }) => {
   const project = useProject();
+  const isOnline = useOnlineStatus();
 
   return (
     <NavbarContainer className="bp5-navbar bg-white">
@@ -76,10 +78,10 @@ export default observer(({ store }) => {
         <Navbar.Group align={Alignment.LEFT}>
           <div className='ml-3'>
           {project.status === "saved" ?
-          <LucideCloud className="h-8 w-8 text-[#34C759]" strokeWidth={1}/> :
+          <LucideCloud className={`h-8 w-8 ${isOnline ? 'text-[#34C759]' : 'text-secondary'}`} strokeWidth={1}/> :
           <div className='flex'>
-          <LucideCloudUpload className="h-8 w-8 text-[#34C759]" strokeWidth={1}/>
-          <LucideLoader2 className="h-2 w-2 text-[#34C759] animate-spin"/>
+          <LucideCloudUpload className={`h-8 w-8 ${isOnline ? 'text-[#34C759]' : 'text-secondary'}`} strokeWidth={1}/>
+          <LucideLoader2 className={`h-2 w-2 ${isOnline ? 'text-[#34C759]' : 'text-secondary'} animate-spin`}/>
           </div>
           }
           </div>

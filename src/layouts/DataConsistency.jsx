@@ -2,8 +2,10 @@ import { DeleteObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client
 import * as api from '../plotNoFeatures/api';
 import localforage from 'localforage';
 import { useEffect } from 'react';
+import useOnlineStatus from '../hooks/useOnlineStatus';
 
 function  DataConsistency({ children }) {
+    const isOnline = useOnlineStatus();
     const uploadOfflineData = async () => {
         const list = await api.listOfflineChanges();
         const map = new Map(list);
@@ -58,7 +60,7 @@ function  DataConsistency({ children }) {
         console.log("Starting upload");
         uploadOfflineData();
         console.log("Data uploaded");
-    }, [navigator.onLine]);
+    }, [isOnline]);
   return (
     <div>
       {children}
