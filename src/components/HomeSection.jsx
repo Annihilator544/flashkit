@@ -28,6 +28,7 @@ import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import instagramSVG from "../assets/instagram.svg";
 import tiktokSVG from "../assets/tiktok.svg";
 import youtubeSVG from "../assets/youtube.svg";
+import { useSyncState } from "store/use-sync-state";
 
 function HomeSection({ store }) {
     const { user } = useAuthStore();
@@ -292,10 +293,11 @@ const DashboardProjects = observer(({ store }) => {
       await api.duplicateDesign({ id: id});
       await loadDesigns();
     } 
+    const { syncing } = useSyncState();
   
     useEffect(() => {
       loadDesigns();
-    }, [project.cloudEnabled, project.designsLength]);
+    }, [project.cloudEnabled, project.designsLength,syncing]);
     return (
       <div className="flex flex-col flex-wrap">
         <div className="flex gap-5 flex-wrap">

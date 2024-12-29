@@ -7,11 +7,12 @@ import { DynamoDBDocumentClient, GetCommand } from '@aws-sdk/lib-dynamodb';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { useAuthStore } from 'store/use-auth-data';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import React from 'react';
+import { useSyncState } from 'store/use-sync-state';
 
 function  DataConsistency({ children }) {
     const isOnline = useOnlineStatus();
     const { user } = useAuthStore();
+    const { setSyncing } = useSyncState();
     const uploadOfflineData = async () => {
         const list = await api.listOfflineChanges();
         const map = new Map(list);
@@ -59,7 +60,6 @@ function  DataConsistency({ children }) {
             await localforage.setItem('offline-changes', Array.from(map));
           }
         });
-        console.log(localforage.getItem('offline-changes'));
     }
     async function syncArraysExact(localArray, uploadArray) {
         const s3Client = new S3Client({
@@ -135,13 +135,13 @@ function  DataConsistency({ children }) {
         updatedLocal.filter((localItem) =>
           !uploadIds.has(localItem.id)
         ).map(async (item) => {
-            api.deleteDesign(item.id);
+            await localforage.removeItem(`designs/${item.id}.json`);
+            await localforage.removeItem(`designs/${item.id}.jpg`);
         });
 
         updatedLocal = updatedLocal.filter((localItem) =>
             uploadIds.has(localItem.id)
         );
-      
         // Step 3: Save the updated local array
         await localforage.setItem('designs-list', updatedLocal);
       }      
@@ -161,7 +161,11 @@ function  DataConsistency({ children }) {
         const result = await docClient.send(new GetCommand(params));
         const list = await api.listDesigns();
         if (result.Item && result.Item.designsList && result.Item.designsList !== list) {
-          await syncArraysExact(list, result.Item.designsList);
+            console.log("Data is out of sync");
+            setSyncing(true);
+            await syncArraysExact(list, result.Item.designsList);
+            setSyncing(false);
+            console.log("Data synced");
         } 
         else if (!result.Item) {
           console.log("No user data found");
