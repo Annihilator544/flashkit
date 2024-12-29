@@ -147,7 +147,7 @@ class Project {
     // Now you can safely access the UID
     const uid = authObject?.state?.user?.uid;
     try {
-      if(uid){
+      if(uid && this.id !== ''){
       const command = new PutObjectCommand({
         Bucket: bucketNamePersonal,
         Key: `${uid}/shared/${this.id}.json`,
@@ -160,8 +160,17 @@ class Project {
         Body: preview,
         ContentType: 'image/jpeg',
       });
-      await s3Client.send(command);
-      await s3Client.send(commandImage);
+      if(window.navigator.onLine){
+        await s3Client.send(command);
+        await s3Client.send(commandImage);
+      }
+      else{
+        const list = await api.listOfflineChanges();
+        const map = new Map(list);
+        map.set(`${uid}/shared/${this.id}.json`, Shareable);
+        map.set(`${uid}/shared/${this.id}.jpg`, preview);
+        await localforage.setItem('offline-changes', Array.from(map));
+      }
     }
       const res = await api.saveDesign({
         storeJSON,

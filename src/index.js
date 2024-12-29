@@ -20,6 +20,7 @@ import TermsOfService from 'TermsOfService';
 import Secret from 'Secret';
 import Billing from 'Billing';
 import PublicView from 'PublicView';
+import DataConsistency from 'layouts/DataConsistency';
 
 // if (window.location.host !== 'studio.polotno.com') {
 //   console.log(
@@ -91,7 +92,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <ProtectedRoute><DashBoard store={store}/></ProtectedRoute>,
+    element: <ProtectedRoute><DataConsistency><DashBoard store={store}/></DataConsistency></ProtectedRoute>,
   },
   {
     path: "/privacy",
@@ -111,7 +112,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/canvas",
-    element: <ProtectedRoute><App  store={store} /></ProtectedRoute>,
+    element: <ProtectedRoute><DataConsistency><App store={store} /></DataConsistency></ProtectedRoute>,
   },
   {
     path: "/public",

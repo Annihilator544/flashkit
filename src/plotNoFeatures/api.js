@@ -69,6 +69,10 @@ export async function listDesigns() {
   return (await readKv('designs-list')) || [];
 }
 
+export async function listOfflineChanges() {
+  return (await readKv('offline-changes')) || [];
+}
+
 export async function deleteDesign({ id }) {
   const authStorage = localStorage.getItem('auth-storage');
   const authObject = JSON.parse(authStorage);
@@ -90,8 +94,17 @@ export async function deleteDesign({ id }) {
         Bucket: bucketNamePersonal,
         Key: `${uid}/shared/${id}.jpg`,
       });
-      await s3Client.send(command);
-      await s3Client.send(commandImage);
+      if(window.navigator.onLine){
+        await s3Client.send(command);
+        await s3Client.send(commandImage);
+      }
+      else{
+        const list = await listOfflineChanges();
+        const map = new Map(list);
+        map.set(`${uid}/delete/${id}.json`, `${uid}/shared/${id}.json`);
+        map.set(`${uid}/delete/${id}.jpg`, `${uid}/shared/${id}.jpg`);
+        await localforage.setItem('offline-changes', Array.from(map));
+      }
     }
   const list = await listDesigns();
   const newList = list.filter((design) => design.id !== id);
@@ -157,8 +170,17 @@ export async function duplicateDesign({ id }) {
               Body: preview,
               ContentType: 'image/jpeg',
             });
-      await s3Client.send(command);
-      await s3Client.send(commandImage);
+        if(window.navigator.onLine){
+          await s3Client.send(command);
+          await s3Client.send(commandImage);
+        }
+        else{
+          const list = await listOfflineChanges();
+          const map = new Map(list);
+          map.set(`${uid}/shared/${newId}.json`, Shareable);
+          map.set(`${uid}/shared/${newId}.jpg`, preview);
+          await localforage.setItem('offline-changes', Array.from(map));
+        }
     }
   await writeKv('designs-list', list);
   return { newId, status: 'saved' };
