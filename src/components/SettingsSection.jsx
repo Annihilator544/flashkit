@@ -86,7 +86,7 @@ function SettingsSection() {
                 Plans & Billing
             </TabsTrigger>
           </TabsList>
-          <TabsContent value="profile">
+          <TabsContent value="profile" className="flex flex-col gap-6">
             <Card className="bg-[#f6f8f9]">
               <CardHeader>
                 <CardTitle>Edit Profile</CardTitle>
@@ -163,6 +163,7 @@ function SettingsSection() {
                 </Form>
               </CardContent>
             </Card>
+            <ConnectAccount/>
           </TabsContent>
           <TabsContent value="password">
             <Card className="bg-[#f6f8f9]">
