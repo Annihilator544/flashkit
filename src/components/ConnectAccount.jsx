@@ -1,4 +1,4 @@
-import { Instagram, Linkedin, Twitter, Youtube } from "lucide-react";
+import { Instagram, Linkedin, LucideMoreVertical, Twitter, Youtube } from "lucide-react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { useState } from "react";
@@ -8,7 +8,7 @@ import FacebookLogin from "Oauth/InstagramOauth";
 function ConnectAccount(){
     const [selectedAccount, setSelectedAccount] = useState('');
     return (
-        <Card className="mb-auto">
+        <Card className="mb-auto bg-[#f6f8f9]">
                   <CardHeader>
                     <CardTitle>Social Accounts</CardTitle>
                     <CardDescription>Choose a Social Account to Connect</CardDescription>
@@ -29,11 +29,27 @@ function ConnectAccount(){
                     </SelectContent>
                   </Select>
                   </CardContent>
-                  <CardFooter className="mt-auto">
+                  <CardFooter className="mt-auto flex flex-col gap-5 items-start">
                        {selectedAccount==='Youtube' && <YoutubeOauth/>}
                        {selectedAccount==='Instagram' && <FacebookLogin/>}
+                       <div className="flex flex-col gap-2 ">
+                       {localStorage.getItem('youtubeAccessToken') && ConnectedSocialMediaCard({icon:<Youtube className="h-5"/>, title:'Youtube'})}
+                       {localStorage.getItem('instagramAccessToken') && ConnectedSocialMediaCard({icon:<Instagram className="h-5"/>, title:'Instagram'})}
+                       </div>
                   </CardFooter>
                 </Card>
+    )
+}
+
+function ConnectedSocialMediaCard({icon, title}){
+    return (
+        <Card className="bg-white flex w-96">
+            <CardContent className="flex gap-2 p-4 w-full">
+                {icon}
+                <p>{title}</p>
+                <LucideMoreVertical className="h-4 my-auto ml-auto"/>
+            </CardContent>
+        </Card>
     )
 }
 

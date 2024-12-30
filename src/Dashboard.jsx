@@ -110,7 +110,7 @@ function DashBoard({ store }) {
     if (hash && hash.includes('access_token')) {
       const token = extractAccessToken(hash);
       console.log('Access Token:', token);
-      localStorage.setItem('fb_access_token', token);
+      localStorage.setItem('instagramAccessToken', token);
       fetchInstagramBusinessAccount(token);
     }
   }, []);

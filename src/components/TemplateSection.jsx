@@ -91,8 +91,8 @@ function TemplateSection({ store }) {
                 <p className="text-lg font-semibold">Choose your category</p>
                 <div className="flex justify-between gap-3 px-4 mt-5">
                 {
-                  choose.map((item)=>(
-                    <div className="p-2 bg-gray-100 rounded-lg border flex flex-col gap-2 align-middle ">
+                  choose.map((item,index)=>(
+                    <div className="p-2 bg-gray-100 rounded-lg border flex flex-col gap-2 align-middle " key={index}>
                         <div className=" rounded-lg h-20 w-40 flex items-center justify-center bg-cover">
                             <img src="https://images.unsplash.com/photo-1729761137674-9a3a841f7cea" className="h-full w-full object-cover rounded-lg" alt="category"/>
                         </div>
@@ -149,9 +149,9 @@ function TemplateSection({ store }) {
                 </div>
                 <div className="flex flex-wrap gap-3">
                 {
-                  minimalDesigns.map((item)=>{
+                  minimalDesigns.map((item, index)=>{
                     return(
-                      <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
+                      <TemplateCard url={item.preview} jsonURL={item.json} store={store} key={index}/>
                     )
                   })
                 }
@@ -164,9 +164,9 @@ function TemplateSection({ store }) {
                 </div>
                 <div className="flex flex-wrap gap-3">
                 {
-                  classicDesigns.map((item)=>{
+                  classicDesigns.map((item, index)=>{
                     return(
-                      <TemplateCard url={item.preview} jsonURL={item.json} store={store}/>
+                      <TemplateCard url={item.preview} jsonURL={item.json} store={store} key={index}/>
                     )
                   })
                 }
