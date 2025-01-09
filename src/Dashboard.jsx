@@ -87,6 +87,13 @@ function DashBoard({ store }) {
             );
             const userData = await userDataResponse.json();
             setUserData(userData);
+            const currentEpoch = Math.floor(new Date().getTime() / 1000);
+            const monthAgoEpoch = currentEpoch - 30 * 24 * 60 * 60;
+            const insightsResponse = await fetch(
+              `https://graph.facebook.com/${instagramBusinessAccountId}/insights?metric=follower_count,impressions,reach&period=day&since=${monthAgoEpoch}&until=${currentEpoch}&access_token=${pageAccessToken}`
+            );
+            const insightsData = await insightsResponse.json();
+            console.log('Insights Data:', insightsData);
 
             // Exit loop after finding the first Instagram business account
             break;

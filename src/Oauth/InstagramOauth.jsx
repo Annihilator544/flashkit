@@ -3,9 +3,11 @@ import { LucideLogIn } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useInstagramData } from 'store/use-instagram-data';
 
+
+const isLocalhost = typeof window !== "undefined" && window.location.href.indexOf('localhost') >= 0;
 // Replace with your Facebook App details
 const FB_APP_ID = '849578353662455'; // Replace with your app's Facebook App ID
-const REDIRECT_URI = 'https://app.flashkit.co.uk/dashboard'; // Replace with your app's redirect URI
+const REDIRECT_URI = isLocalhost ? 'http://localhost:3000/dashboard':'https://app.flashkit.co.uk/dashboard'; // Replace with your app's redirect URI
 
 const SCOPES = [
   'email',
