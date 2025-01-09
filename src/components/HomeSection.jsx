@@ -3,7 +3,6 @@ import DashboardHeader from "./DashboardHeader";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Separator } from "./ui/separator";
-import { useYoutubeData } from "store/use-youtube-data";
 import TemplateCard from "./TemplateCard";
 import { MonthlyEngagementChart } from "./charts/MonthlyEngagementChart";
 import { InsightsChart } from "./charts/InsightsChart";
@@ -32,7 +31,6 @@ import { useSyncState } from "store/use-sync-state";
 
 function HomeSection({ store }) {
     const { user } = useAuthStore();
-    const { data } = useYoutubeData();
     const { Engagement, setEngagement } = useEngagementData();
     const [loading, setLoading] = useState(false);
     const getEQSScore = async (userData) => {

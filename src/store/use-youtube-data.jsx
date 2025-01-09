@@ -3,8 +3,8 @@ import { persist } from 'zustand/middleware';
 
 export const useYoutubeData = create(
     persist((set) => ({
-    data: {},
-    setData: (data) => set({data: data})
+    youtubeData: {},
+    setYoutubeData: (data) => set({youtubeData: data})
 }),{
     name: 'YoutubeStorage', // required, this is the key used in storage
     storage: localStorage, // optional, defaults to localStorage

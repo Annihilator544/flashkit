@@ -58,8 +58,8 @@ const chartConfig = {
 }
 
 export function YoutubeMonthly() {
-    const { data } = useYoutubeData();
-    const chartData = transformData(data.monthly);
+    const { youtubeData } = useYoutubeData();
+    const chartData = transformData(youtubeData.monthly);
   return (
     <Card className="flex-1">
       <CardHeader>

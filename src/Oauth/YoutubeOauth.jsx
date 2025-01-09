@@ -8,33 +8,6 @@ import localforage from 'localforage';
 
 const ConnectButton = ({ onSuccess, afterSuccess }) => {
   const [isConnected, setIsConnected] = useState(false);
-  const { setData } = useYoutubeData();
-  const endDate = new Date().toISOString().split('T')[0];
-
-  const fetchYouTubeAnalytics = useCallback(async (accessToken) => {
-    try {
-      const response = await axios.get(
-        'https://youtubeanalytics.googleapis.com/v2/reports', {
-          params: {
-            "ids": "channel==MINE",
-            startDate: '2019-01-01',
-            endDate: endDate,
-            metrics: 'comments,likes,dislikes,shares,views',
-            dimensions: 'day',
-            sort: 'day'
-          },
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      console.log(response);
-      // Process and display the data
-      setData(response.data);
-    } catch (error) {
-      console.error('Error fetching YouTube Analytics:', error);
-    }
-  }, [setData]);
 
   const login = useGoogleLogin({
     onSuccess: tokenResponse => {
@@ -59,7 +32,7 @@ function YoutubeOauth() {
     console.log('accessToken', localStorage.getItem('youtubeAccessToken'));
   };
   
-  const { setData } = useYoutubeData();
+  const { setYoutubeData } = useYoutubeData();
 
   function processData(data) {
     return data.rows.map(row => ({
@@ -211,35 +184,18 @@ function YoutubeOauth() {
     return yearlyChanges;
   }
   
-  function analyzeChannelData(rawData, currentSubscribers, currentViews, engagementData, channelData) {
+  function analyzeChannelData(rawData, engagementData, channelData) {
     const processedData = processData(rawData);
     const dailyData = calculateDailyChanges(processedData, engagementData);
     const monthlyChanges = calculateMonthlyChanges(processedData, engagementData);
     const yearlyChanges = calculateYearlyChanges(processedData, engagementData);
-    
-    // Calculate total changes
-    const totalSubscriberChange = Object.values(yearlyChanges).reduce((sum, year) => sum + year.subscribers, 0);
-    const totalViewChange = Object.values(yearlyChanges).reduce((sum, year) => sum + year.views, 0);
-    const totalComments = Object.values(yearlyChanges).reduce((sum, year) => sum + year.comments, 0);
-    
-    // Calculate initial counts
-    const initialSubscribers = currentSubscribers - totalSubscriberChange;
-    const initialViews = currentViews - totalViewChange;
-    
+    const lastFetched = new Date().toISOString();
     return {
+      lastFetched: lastFetched,
       daily: dailyData,
       monthly: monthlyChanges,
       yearly: yearlyChanges,
       channel: channelData,
-      total: {
-        initialSubscribers,
-        currentSubscribers,
-        subscriberChange: totalSubscriberChange,
-        initialViews,
-        currentViews,
-        viewChange: totalViewChange,
-        totalComments
-      }
     };
   } 
   
@@ -290,16 +246,13 @@ function YoutubeOauth() {
         }
       );
       console.log(channelResponse.data, engagementResponse.data, response.data);
-      const subscriberCount = channelResponse.data.items[0].statistics.subscriberCount;
-      const viewCount = channelResponse.data.items[0].statistics.viewCount;
-      const channelData = channelResponse.data.items[0];
-      const result = analyzeChannelData(response.data, subscriberCount, viewCount, engagementResponse.data, channelData);
-      setData(result);
+      const result = analyzeChannelData(response.data, engagementResponse.data, channelResponse.data.items[0]);
+      setYoutubeData(result);
       console.log(result);
     } catch (error) {
       console.error('Error fetching YouTube Analytics:', error);
     }
-  }, [setData]);
+  }, [setYoutubeData]);
 
   
 

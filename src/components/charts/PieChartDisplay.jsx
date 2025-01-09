@@ -52,7 +52,7 @@ const chartConfig = {
 
 function PieChartDisplay() {
   
-  const { data } = useYoutubeData();
+  const { youtubeData } = useYoutubeData();
   function transformData(inputData) {
   
     return Object.entries(inputData).map(([dateString, data]) => {
@@ -64,7 +64,7 @@ function PieChartDisplay() {
       };
     });
   }
-  const chartData = transformData(data.yearly);
+  const chartData = transformData(youtubeData.yearly);
   const totalVisitors = React.useMemo(() => {
     return chartData.reduce((acc, curr) => acc + curr.views, 0)
   }, [chartData])

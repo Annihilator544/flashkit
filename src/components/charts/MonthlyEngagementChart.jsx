@@ -30,7 +30,7 @@ import { ChartContainer } from "../ui/chart";
     });
   }
   export function MonthlyEngagementChart() {
-    const { data } = useYoutubeData();
+    const { youtubeData } = useYoutubeData();
     const [chartData, setChartData] = useState(monthlyData);
     const chartConfig = {
       views: {
@@ -43,8 +43,8 @@ import { ChartContainer } from "../ui/chart";
       },
     }; 
     useEffect(() => {
-      Object.keys(data).length ? setChartData(transformData(data.monthly).slice(-6)) : setChartData(monthlyData);
-    },[data]);  
+      Object.keys(youtubeData).length ? setChartData(transformData(youtubeData.monthly).slice(-6)) : setChartData(monthlyData);
+    },[youtubeData]);  
     return (
       <Card className="flex-1 bg-inherit border-none shadow-none">
         <CardHeader>

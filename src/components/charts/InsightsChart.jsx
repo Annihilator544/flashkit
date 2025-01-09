@@ -29,7 +29,7 @@ function transformData(inputData) {
 }
 
 export function InsightsChart() {
-    const { data } = useYoutubeData();
+    const { youtubeData } = useYoutubeData();
     const [chartData, setChartData] = useState(dailyData);
     const chartConfig = {
       views: {
@@ -42,8 +42,8 @@ export function InsightsChart() {
       },
     };    
     useEffect(() => {
-      Object.keys(data).length ? setChartData(transformData(data.yearly).slice(-6)): setChartData(dailyData) ;
-      },[data]);  
+      Object.keys(youtubeData).length ? setChartData(transformData(youtubeData.yearly).slice(-6)): setChartData(dailyData) ;
+      },[youtubeData]);  
   return (
     <Card className="flex-1">
       <CardHeader>
