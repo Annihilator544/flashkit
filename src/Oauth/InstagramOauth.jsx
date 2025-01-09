@@ -15,6 +15,9 @@ const SCOPES = [
   'pages_read_engagement',
   'business_management',
   'instagram_manage_insights',
+  'instagram_branded_content_ads_brand',
+  'instagram_branded_content_brand',
+  'instagram_branded_content_creator',
 ];
 
 const FacebookLogin = () => {

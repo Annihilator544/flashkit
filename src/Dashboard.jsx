@@ -228,7 +228,8 @@ function DashBoard({ store }) {
       localStorage.setItem('instagramAccessToken', token);
       fetchInstagramBusinessAccount(token);
     }
-    fetchYoutubeDailyData();
+    //move this to server side
+   // fetchYoutubeDailyData();
   }, []);
 
 
