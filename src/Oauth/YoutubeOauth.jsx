@@ -307,9 +307,6 @@ function YoutubeOauth() {
     <GoogleOAuthProvider clientId="981134062816-8dkf4i2lm59dhfotllmf43vlgc44408c.apps.googleusercontent.com">
       <div className="App flex flex-col">
         <ConnectButton onSuccess={handleLoginSuccess} afterSuccess={fetchDataManually} />
-        <Button onClick={fetchDataManually} className='my-5 max-w-96'>
-          Fetch Data
-        </Button>
       </div>
     </GoogleOAuthProvider>
   );
