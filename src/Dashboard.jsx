@@ -23,7 +23,6 @@ import LineChartDisplay from "./components/charts/LineChartDisplay";
 import { Separator } from "./components/ui/separator";
 import { InsightsChart } from "./components/charts/InsightsChart";
 import { MonthlyEngagementChart } from "./components/charts/MonthlyEngagementChart";
-import { TopContentCarousel } from "./components/TopContentCarousel";
 import TemplateCard from "./components/TemplateCard";
 import ChatWidget from "./components/ChatWidget";
 import { useEngagementData } from "store/use-engagement-data";
@@ -41,6 +40,7 @@ import HomeSection from "./components/HomeSection";
 import TemplateSection from "./components/TemplateSection";
 import SettingsSection from "./components/SettingsSection";
 import axios from "axios";
+import YoutubeSection from "./components/YoutubeSection";
 
 function DashBoard({ store }) {
   const { youtubeData, setYoutubeData } = useYoutubeData();
@@ -258,63 +258,8 @@ function DashBoard({ store }) {
             <TabsContent value="home" className="flex-1 p-4 pt-2 overflow-y-auto">
               <HomeSection store={store}/>
             </TabsContent>
-            <TabsContent value="youtube" className="flex-1 p-4 space-y-6">
-            <p className=" text-3xl font-semibold">Youtube Analytics</p>
-            <div>
-              <p className="text-secondary font-medium text-lg">Overview</p>
-              <div className="flex gap-5 mt-3">
-                  <Card className="flex-1 shadow-md">
-                    <CardContent className="pt-6">
-                      <p className="text-lg font-semibold">Total Followers</p>
-                      <p className="text-3xl font-semibold">127K</p>
-                      <div className="flex text-sm font-medium gap-1 mt-6"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
-                    </CardContent>
-                  </Card>
-                  <Card className="flex-1 shadow-md">
-                    <CardContent className="pt-6">
-                      <p className="text-lg font-semibold">Total Engagement</p>
-                      <p className="text-3xl font-semibold">127K</p>
-                      <div className="flex text-sm font-medium gap-1 mt-6"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
-                    </CardContent>
-                  </Card>
-                  <Card className="flex-1 shadow-md">
-                    <CardContent className="pt-6">
-                      <p className="text-lg font-semibold">Daily Visitors</p>
-                      <p className="text-3xl font-semibold">5.3K</p>
-                      <div className="flex text-sm font-medium gap-1 mt-6"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
-                    </CardContent>
-                  </Card>
-              </div>
-            </div>
-            <div>
-              <p className="text-secondary font-medium text-lg">Audience</p>
-              { youtubeData && typeof youtubeData === 'object' && Object.keys(youtubeData).length > 0 ?
-                      <div className="flex-1 mt-3">
-                        <div className="flex-1 p-4 flex gap-4">
-                          <PieChartDisplay/>
-                          <YoutubeMonthly/>
-                          
-                        </div>
-                        <div className="flex-1 p-4 flex gap-4 flex-wrap">
-                          <RadarChartDisplay/>
-                          <RadialChartDisplay/>
-                        </div>
-                        <div className="flex-1 p-4 flex gap-4 flex-wrap">
-                          <BarChartDisplay/>
-                          <LineChartDisplay/>
-                        </div>
-                      </div>
-                      :
-                      <div className="flex gap-5 mt-3">
-                        <InsightsChart/>
-                        <MonthlyEngagementChart/>
-                      </div>
-                } 
-            </div>
-            <div>
-                <p className="text-secondary font-medium text-lg mb-3">Top Content</p>
-                <TopContentCarousel />
-            </div>
+            <TabsContent value="youtube" className="flex-1 p-4 pt-2 overflow-y-auto">
+              <YoutubeSection />
             </TabsContent>
             <TabsContent value="instagram" className="flex-1 p-4 space-y-6">
             <p className=" text-3xl font-semibold">Instagram Analytics</p>

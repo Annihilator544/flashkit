@@ -28,11 +28,14 @@ import instagramSVG from "../assets/instagram.svg";
 import tiktokSVG from "../assets/tiktok.svg";
 import youtubeSVG from "../assets/youtube.svg";
 import { useSyncState } from "store/use-sync-state";
+import CircularProgress from "./CircularProgress";
+import { useYoutubeData } from "store/use-youtube-data";
 
 function HomeSection({ store }) {
     const { user } = useAuthStore();
     const { Engagement, setEngagement } = useEngagementData();
     const [loading, setLoading] = useState(false);
+    const { youtubeData } = useYoutubeData();
     const getEQSScore = async (userData) => {
         setLoading(true);
         try {
@@ -124,11 +127,11 @@ function HomeSection({ store }) {
                         </CardContent>
                     </Card>
                     <Card className=" flex aspect-square h-52 items-center justify-center drop-shadow-sm">
-                        <CardContent className="flex h-fit gap-2 p-5 flex-col">
-                              <img src={EQSCircle} className="h-30 w-30 m-auto" alt="EQS Circle"/>
+                        <CardContent className="flex h-fit gap-2 p-2  flex-col">
+                              {Engagement && typeof Engagement ==='object' && Object.keys(Engagement).length > 0 ?<CircularProgress score={Engagement.engagementMetrics.score * 10} startColor="#FE5655" endColor="#89D0F7"/> : <CircularProgress /> }
                               {/* <p className=" text-2xl font-semibold">{Engagement && typeof Engagement ==='object' && Object.keys(Engagement).length > 0 ? Engagement.engagementMetrics.score * 10 : 79} %</p> */}
-                              {/* {data && typeof data === 'object' && Object.keys(data).length > 0 ?<Button className={"w-full" + loading ? " opacity-90 ":""} onClick={()=>getEQSScore(data)}>{loading ? "Loading ...":" Generate EQS Score"}</Button> : <></>} */}
-                              <div className="flex text-sm font-medium gap-1"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
+                              {/* {youtubeData && typeof data === 'object' && Object.keys(youtubeData).length > 0 ?<Button className={"w-full" + loading ? " opacity-90 ":""} onClick={()=>getEQSScore(youtubeData)}>{loading ? "Loading ...":" Generate EQS Score"}</Button> : <></>} */}
+                              <div className="flex text-sm font-medium gap-1 mx-auto mb-5"><p className="text-[#34C759] flex">+20%<LucideArrowUpRight className="h-4 w-4 mt-auto"/></p><p className="text-secondary"> than last week</p></div>
                         </CardContent>
                     </Card>
                     <Card className= " flex flex-1 p-0 border-none ">

@@ -38,6 +38,8 @@ import logo from "../assets/logo.png"
 import flashkit from "../assets/flashkit.png"
 import flashkitPro from "../assets/flashkitPro.png"
 import flashkitSocial from "../assets/flashkitSocial.png"
+import YoutubeSvg from "../assets/youtube.svg"
+import instagramSvg from "../assets/instagram.svg"
 
   export function AppSidebar({
     ...props
@@ -128,7 +130,7 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                                         <TabsTrigger value="instagram" className="p-0">
                                             <SidebarMenuSubItem >
                                             <SidebarMenuSubButton asChild>
-                                                <span>Instagram</span>
+                                                <span><img src={instagramSvg} alt="Instagram Logo" className=""/>Instagram</span>
                                             </SidebarMenuSubButton>
                                             </SidebarMenuSubItem>
                                         </TabsTrigger>
@@ -137,7 +139,7 @@ import flashkitSocial from "../assets/flashkitSocial.png"
                                         <TabsTrigger value="youtube" className="p-0">
                                             <SidebarMenuSubItem >
                                             <SidebarMenuSubButton asChild>
-                                                <span>Youtube</span>
+                                                <span><img src={YoutubeSvg} alt="youtube Logo" className=""/>Youtube</span>
                                             </SidebarMenuSubButton>
                                             </SidebarMenuSubItem>
                                         </TabsTrigger>
