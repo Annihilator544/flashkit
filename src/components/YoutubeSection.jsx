@@ -112,7 +112,7 @@ function YoutubeSection () {
         percentageChangeAverageViewDuration: 0,
     });
     const getRecentVideos = async ( channelResponse ) => {
-      const API_KEY ="AIzaSyA7Nf4gXPnicfy0m3QV5atXhrj6jRPIh88";
+      const API_KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
       try {
         const uploadPlaylistId =
           channelResponse.contentDetails.relatedPlaylists.uploads;
