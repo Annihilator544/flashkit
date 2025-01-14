@@ -42,7 +42,6 @@ const DailyWatchMetrics = ({ youtubeData }) => {
               <XAxis dataKey="date" tick={{ fontSize: 12 }} />
               <YAxis />
               <Tooltip />
-              <Legend />
               <Area
                 type="monotone"
                 dataKey="estimatedMinutesWatched"

@@ -41,11 +41,107 @@ import TemplateSection from "./components/TemplateSection";
 import SettingsSection from "./components/SettingsSection";
 import axios from "axios";
 import YoutubeSection from "./components/YoutubeSection";
+import InstagramSection from "./components/InstagramSection";
+
+function calculateDailyChanges(processedData, currentFollowers){
+  const dailyData = {};
+  let previousFollowers = currentFollowers;
+  processedData.forEach(data => {
+    if(data.name === 'follower_count'){
+      data.values.forEach(value => {
+        previousFollowers -= value.value;
+      });
+    }});
+
+  processedData.forEach(data => {
+    const name = data.name;
+    data.values.forEach(value => {
+      const date = value.end_time.split('T')[0];
+      if (!dailyData[date]) {
+        dailyData[date] = { follower_count: 0, impressions: 0, reach: 0 };
+      }
+      if (name === 'follower_count') {
+        previousFollowers += value.value;
+        dailyData[date].follower_count = previousFollowers;
+      } else {
+        dailyData[date][name] = value.value;
+      }
+    });
+  });
+  return dailyData;
+}
+
+function calculateExtraMetrics(monthlyData, lastWeekData, thisWeekData) {
+  const extraMetrics = {};
+  monthlyData.forEach(data => {
+    const name = data.name;
+    const value2 = data?.total_value?.value || 0;
+    if (!extraMetrics[name]) {
+      extraMetrics[name] = {monthly: 0, lastWeek: 0, thisWeek: 0};
+    }
+    extraMetrics[name].monthly = value2;
+  })
+  lastWeekData.forEach(data => {
+    const name = data.name;
+    const value2 = data?.total_value?.value || 0;
+    if (!extraMetrics[name]) {
+      extraMetrics[name] = {monthly: 0, lastWeek: 0, thisWeek: 0};
+    }
+    extraMetrics[name].lastWeek = value2;
+  })
+  thisWeekData.forEach(data => {
+    const name = data.name;
+    const value2 = data?.total_value?.value || 0;
+    if (!extraMetrics[name]) {
+      extraMetrics[name] = {monthly: 0, lastWeek: 0, thisWeek: 0};
+    }
+    extraMetrics[name].thisWeek = value2;
+  })
+  return extraMetrics;
+}
+
+function calculateDemographicsData(engagementData, reachedData, followerData) {
+  const demographicsData = {};
+  if (engagementData) {
+  engagementData.forEach(data => {
+    data.total_value.breakdowns[0].results.forEach(result => {
+      const country = result.dimension_keys[0];
+      const value = result.value;
+      if (!demographicsData[country]) {
+        demographicsData[country] = {engaged_audience_demographics: 0, reached_audience_demographics: 0, follower_demographics: 0};
+      }
+      demographicsData[country].engaged_audience_demographics = value;
+    });
+  });
+  }
+  reachedData.forEach(data => {
+    data.total_value.breakdowns[0].results.forEach(result => {
+      const country = result.dimension_values[0];
+      const value = result.value;
+      if (!demographicsData[country]) {
+        demographicsData[country] = {engaged_audience_demographics: 0, reached_audience_demographics: 0, follower_demographics: 0};
+      }
+      demographicsData[country].reached_audience_demographics = value;
+    });
+  });
+  followerData.forEach(data => {
+    data.total_value.breakdowns[0].results.forEach(result => {
+      const country = result.dimension_values[0];
+      const value = result.value;
+      if (!demographicsData[country]) {
+        demographicsData[country] = {engaged_audience_demographics: 0, reached_audience_demographics: 0, follower_demographics: 0};
+      }
+      demographicsData[country].follower_demographics = value;
+    });
+  });
+  return demographicsData;
+}
+
 
 function DashBoard({ store }) {
   const { youtubeData, setYoutubeData } = useYoutubeData();
   const {instagramData} = useInstagramData();
-  const { setPostData, setUserData  } = useInstagramData();
+  const { setPostData, setUserData, setDaily, setExtraMetrics, setDemographicData } = useInstagramData();
   const fetchInstagramBusinessAccount = async (userAccessToken) => {
     try {
       // Step 1: Get the user's Facebook Pages
@@ -70,15 +166,11 @@ function DashBoard({ store }) {
             const instagramBusinessAccountId =
               igAccountData.instagram_business_account.id;
 
-            console.log('Instagram Business Account ID:', instagramBusinessAccountId);
-
             // Step 4: Fetch Instagram media using the Page Access Token
             const mediaResponse = await fetch(
               `https://graph.facebook.com/${instagramBusinessAccountId}/media?fields=id,caption,media_type,media_url,permalink,timestamp,username,like_count,comments_count&access_token=${pageAccessToken}`
             );
             const mediaData = await mediaResponse.json();
-
-            console.log('Media Data:', mediaData);
             setPostData(mediaData.data);
 
             // Step 5: Fetch Instagram user data using the Page Access Token
@@ -93,9 +185,62 @@ function DashBoard({ store }) {
               `https://graph.facebook.com/${instagramBusinessAccountId}/insights?metric=follower_count,impressions,reach&period=day&since=${monthAgoEpoch}&until=${currentEpoch}&access_token=${pageAccessToken}`
             );
             const insightsData = await insightsResponse.json();
-            console.log('Insights Data:', insightsData);
+            const processedData = calculateDailyChanges(insightsData.data, userData.followers_count);
+            setDaily(processedData);
 
-            // Exit loop after finding the first Instagram business account
+            const extraMetrics = await fetch(
+              `https://graph.facebook.com/${instagramBusinessAccountId}/insights?metric=profile_views,accounts_engaged,likes,comments,shares,saves,replies,follows_and_unfollows,total_interactions&metric_type=total_value&period=day&since=${monthAgoEpoch}&until=${currentEpoch}&access_token=${pageAccessToken}`
+            );
+            const extraMetricsData = await extraMetrics.json();
+
+            const thisWeekEpoch = currentEpoch - 7 * 24 * 60 * 60;
+            const lastWeekEpoch = thisWeekEpoch - 7 * 24 * 60 * 60;
+            const extraMetricsLastWeek = await fetch(
+              `https://graph.facebook.com/${instagramBusinessAccountId}/insights?metric=profile_views,accounts_engaged,likes,comments,shares,saves,replies,follows_and_unfollows,total_interactions&metric_type=total_value&period=day&since=${lastWeekEpoch}&until=${thisWeekEpoch}&access_token=${pageAccessToken}`
+            );
+            const extraMetricsLastWeekData = await extraMetricsLastWeek.json();
+
+            const extraMetricsThisWeek = await fetch(
+              `https://graph.facebook.com/${instagramBusinessAccountId}/insights?metric=profile_views,accounts_engaged,likes,comments,shares,saves,replies,follows_and_unfollows,total_interactions&metric_type=total_value&period=day&since=${thisWeekEpoch}&until=${currentEpoch}&access_token=${pageAccessToken}`
+            );
+            const extraMetricsThisWeekData = await extraMetricsThisWeek.json();
+
+            const ExtraMetrics = calculateExtraMetrics(extraMetricsData.data, extraMetricsLastWeekData.data, extraMetricsThisWeekData.data);
+            setExtraMetrics(ExtraMetrics);
+
+            let engagedAudienceData = { data : [] };
+            let reachedAudienceData = { data: [] };
+            let followerDemographicsData = { data: [] };
+
+            try{
+            const engagedAudienceResponse = await fetch(
+              `https://graph.facebook.com/${instagramBusinessAccountId}/insights?metric=engaged_audience_demographics&period=lifetime&timeframe=this_month&breakdown=country&metric_type=total_value&access_token=${pageAccessToken}`
+            );
+            engagedAudienceData = await engagedAudienceResponse.json();
+            } catch (error) {
+              console.error('Error fetching Engaged Audience Data:', error);
+            }
+
+            try{
+            const reachedAudienceDataResponse = await fetch(
+              `https://graph.facebook.com/${instagramBusinessAccountId}/insights?metric=reached_audience_demographics&period=lifetime&timeframe=this_month&breakdown=country&metric_type=total_value&access_token=${pageAccessToken}`
+            );
+            reachedAudienceData = await reachedAudienceDataResponse.json();
+            } catch (error) {
+              console.error('Error fetching Reached Audience Data:', error);
+            }
+
+            try{
+            const followerDemographicsResponse = await fetch(
+              `https://graph.facebook.com/${instagramBusinessAccountId}/insights?metric=follower_demographics&period=lifetime&timeframe=this_month&breakdown=country&metric_type=total_value&access_token=${pageAccessToken}`
+            );
+            followerDemographicsData = await followerDemographicsResponse.json();
+            } catch (error) {
+              console.error('Error fetching Follower Demographics Data:', error);
+            }
+            const DemographicsData = calculateDemographicsData(engagedAudienceData.data, reachedAudienceData.data, followerDemographicsData.data);
+            setDemographicData(DemographicsData);
+              // Exit loop after finding the first Instagram business account
             break;
           }
         }
@@ -231,7 +376,6 @@ function DashBoard({ store }) {
     const hash = window.location.hash;
     if (hash && hash.includes('access_token')) {
       const token = extractAccessToken(hash);
-      console.log('Access Token:', token);
       localStorage.setItem('instagramAccessToken', token);
       fetchInstagramBusinessAccount(token);
     }
@@ -242,15 +386,6 @@ function DashBoard({ store }) {
 
   return (
     <div className="flex flex-col">
-      {/* <header>
-        <div className="flex h-[7vh] fixed z-10 w-full bg-white top-0 left-0 border-b-[1px] px-6 justify-between">
-            <Link to='/' className=' hover:no-underline my-auto'>
-                <div className='flex gap-2 my-auto'>
-                    <img src={logo} alt="logo" className=' h-8' />
-                </div>
-            </Link>
-        </div>
-      </header> */}
       <div className="flex">
         <Tabs className="flex flex-1 " defaultValue="home" >
         <SidebarLayout>
@@ -261,8 +396,9 @@ function DashBoard({ store }) {
             <TabsContent value="youtube" className="flex-1 p-4 pt-2 overflow-y-auto">
               <YoutubeSection />
             </TabsContent>
-            <TabsContent value="instagram" className="flex-1 p-4 space-y-6">
-            <p className=" text-3xl font-semibold">Instagram Analytics</p>
+            <TabsContent value="instagram" className="flex-1 p-4 pt-2 overflow-y-auto">
+              <InstagramSection />
+            {/* <p className=" text-3xl font-semibold">Instagram Analytics</p>
             {instagramData && instagramData.userData.id ?
             <Card>
               <CardHeader className="flex-row justify-between">
@@ -311,7 +447,7 @@ function DashBoard({ store }) {
             <div>
                 <p className="text-secondary font-medium text-lg mb-3">Top Content</p>
                 {instagramData && <InstagramContentCarousel CarouselItems={instagramData.posts} />}
-            </div>
+            </div> */}
             </TabsContent>
             <TabsContent value="templates" className="flex-1 p-4 pt-2">
               <TemplateSection store={store} />

@@ -42,7 +42,6 @@ const DailyLikeShareDislikeYoutube = ({ youtubeData }) => {
               <XAxis dataKey="date" tick={{ fontSize: 12 }} />
               <YAxis />
               <Tooltip />
-              <Legend />
               <Bar dataKey="likes" fill="#FF6B6B" name="Likes" />
               <Bar dataKey="shares" fill="#FF4C4C" name="Shares" />
               <Bar dataKey="dislikes" fill="#D72638" name="Dislikes" />

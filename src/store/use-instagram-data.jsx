@@ -15,10 +15,23 @@ export const useInstagramData = create(
             follows_count: 0,
             biography: '',
             name: ''
-        }
+        },
+        daily: {},
+        monthly: {},
+        yearly: {},
+        extraMetrics: {},
+        demographicData: {},
+        lastFetched: ''
     },
     setPostData: (posts) => set((state) => ({ instagramData: { ...state.instagramData, posts : posts } })),
     setUserData: (userData) => set((state) => ({ instagramData: { ...state.instagramData, userData : userData } })),
+    setDaily: (daily) => set((state) => ({ instagramData: { ...state.instagramData, daily : daily } })),
+    setMonthly: (monthly) => set((state) => ({ instagramData: { ...state.instagramData, monthly : monthly } })),
+    setYearly: (yearly) => set((state) => ({ instagramData: { ...state.instagramData, yearly : yearly } })),
+    setLastFetched: (lastFetched) => set((state) => ({ instagramData: { ...state.instagramData, lastFetched : lastFetched } })),
+    setExtraMetrics: (extraMetrics) => set((state) => ({ instagramData: { ...state.instagramData, extraMetrics : extraMetrics } })),
+    setDemographicData: (demographicData) => set((state) => ({ instagramData: { ...state.instagramData, demographicData : demographicData } })),
+    setInstagramData: (instagramData) => set((state) => ({ instagramData: instagramData })),
 }),
 {
     name: 'InstagramStorage', // required, this is the key used in storage
