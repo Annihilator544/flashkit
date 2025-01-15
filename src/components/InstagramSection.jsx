@@ -358,11 +358,14 @@ function InstagramSection (){
                 <CardHeader>
                   <p className="text-[#101010] font-semibold text-xl flex gap-1">Story Analytics</p>
                 </CardHeader>
+                {instagramData.stories.length ? 
                 <CardContent className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                   {instagramData.stories.map((item) => (
-                    <Card key={item.id} className="overflow-hidden">
+                      <Card key={item.id} className="overflow-hidden">
                             <CardContent className="p-0 h-[200px] bg-[#e3e3e3] justify-center flex overflow-hidden">
+                                {item.media_type === "VIDEO" ? <video src={item.media_url} className="w-full h-full object-cover" autoPlay loop muted/> :
                                     <img src={item.media_url} alt="Story Thumbnail" className=" max-h-full my-auto" />
+                                }
                             </CardContent>
                               <CardFooter className=" flex-col p-4 ">
                                   <p className="text-gray-500 text-xs mr-auto ">
@@ -384,11 +387,13 @@ function InstagramSection (){
                         </Card>
                   ))}
                 </CardContent>
+                : <CardContent className="p-4 text-center text-secondary">No Stories found</CardContent>}
                 </Card>
                 <Card className="flex-1 bg-[#f6f8f9] shadow-md">
                 <CardHeader>
                   <p className="text-[#101010] font-semibold text-xl flex gap-1">Reels Insights</p>
                 </CardHeader>
+                {instagramData.posts.filter((item) => item.media_type === "VIDEO").length ?
                 <CardContent>
                   <div className="grid grid-cols-4 border-b border-gray-300 bg-gray-50 p-4 text-sm font-semibold text-gray-700">
                     <div>Content</div>
@@ -403,11 +408,7 @@ function InstagramSection (){
                       className="grid grid-cols-4 items-center gap-4 p-4 border-b border-gray-200 hover:bg-gray-100"
                     >
                       <div className="flex items-center space-x-4">
-                        <img
-                          src={item.media_url}
-                          alt={item.caption}
-                          className="w-24 h-16 rounded-md object-cover"
-                        />
+                        <video src={item.media_url} className="w-24 h-16 rounded-md object-cover" autoPlay loop muted/>
                         <div>
                           <p className="text-gray-900 font-medium">{item.caption}</p>
                           <p className="text-gray-500 text-sm">
@@ -439,6 +440,7 @@ function InstagramSection (){
                     </div>
                   ))}
                 </CardContent>
+                : <CardContent className="p-4 text-center text-secondary">No Reels found</CardContent>}
               </Card>
             </div>
     </>
