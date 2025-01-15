@@ -153,15 +153,15 @@ function YoutubeSection () {
       // round to 2 decimal places
     const totalViewsThisWeek = calculateLastDaysViews( youtubeData, 7 );
     const totalViewsLastWeek = calculateLastDaysViews( youtubeData, 14 ) - totalViewsThisWeek;
-    const percentageChangeViews = totalViewsLastWeek === 0 ? 0 : (((totalViewsThisWeek - totalViewsLastWeek) / totalViewsLastWeek) * 100).toFixed(0);
+    const percentageChangeViews = totalViewsLastWeek === 0 ? 0 : (((totalViewsThisWeek - totalViewsLastWeek) / totalViewsLastWeek) * 100).toFixed(2 );
     const totalWatchTime = calculateTotalWatchTime( youtubeData, 7 );
     const totalWatchTimeLastWeek = calculateTotalWatchTime( youtubeData, 14 ) - totalWatchTime;
-    const percentageChangeWatchTime = totalWatchTimeLastWeek === 0 ? 0 : (((totalWatchTime - totalWatchTimeLastWeek) / totalWatchTimeLastWeek) * 100).toFixed(0);
+    const percentageChangeWatchTime = totalWatchTimeLastWeek === 0 ? 0 : (((totalWatchTime - totalWatchTimeLastWeek) / totalWatchTimeLastWeek) * 100).toFixed(2 );
     const lastWeekSubscribers = calculateTotalSubscribers( youtubeData );
-    const percentageChangeSubscribers = lastWeekSubscribers === 0 ? 0 : (((youtubeData.channel.statistics.subscriberCount - lastWeekSubscribers) / lastWeekSubscribers) * 100).toFixed(0);
+    const percentageChangeSubscribers = lastWeekSubscribers === 0 ? 0 : (((youtubeData.channel.statistics.subscriberCount - lastWeekSubscribers) / lastWeekSubscribers) * 100).toFixed(2 );
     const lastWeekAverageViewDuration = calculateAverageViewDuration( youtubeData, 7, 14 );
     const averageViewDuration = calculateAverageViewDuration( youtubeData, 0, 7 );
-    const percentageChangeAverageViewDuration = lastWeekAverageViewDuration === 0 ? 0 : (((averageViewDuration - lastWeekAverageViewDuration) / lastWeekAverageViewDuration) * 100).toFixed(0);
+    const percentageChangeAverageViewDuration = lastWeekAverageViewDuration === 0 ? 0 : (((averageViewDuration - lastWeekAverageViewDuration) / lastWeekAverageViewDuration) * 100).toFixed(2 );
     setYoutubeCalculatedData({
         totalViewsThisWeek,
         percentageChangeViews,

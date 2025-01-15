@@ -1,36 +1,121 @@
-import { LucideArrowDownLeft, LucideArrowUpRight, LucideBell, LucideEqual, LucideHash, LucideSettings, LucideUsers } from "lucide-react";
+import { LucideArrowDownLeft, LucideArrowUpRight, LucideBell, LucideEqual, LucideHash, LucideHeart, LucideMessageSquare, LucideSettings, LucideUsers } from "lucide-react";
 import CircularProgress from "./CircularProgress";
-import { Card, CardContent, CardHeader } from "./ui/card";
+import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { Separator } from "./ui/separator";
 import { NavUser } from "./nav-user";
 import sparkle from "../assets/sparkle.svg";
 import triangle from "../assets/triangle.svg";
 import instagramSvg from "../assets/instagram.svg"
 import { useInstagramData } from "store/use-instagram-data";
+import { useEffect, useState } from "react";
+import countryNames from "../lib/InstagramCountries";
+import DailyFollower from "./InstagramCharts/DailyFollowers";
+import DailyImpressions from "./InstagramCharts/DailyImpressions";
+import DailyReach from "./InstagramCharts/DailyReach";
+import Demographics from "./InstagramCharts/Demographics";
 
-const calculateLastDaysViews = (data, days) => {
-  const dailyData = data.daily;
-  const lastFetched = new Date(data.lastFetched);
+function formatDate(date) {
+  const options = {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  };
 
-  let totalViews = 0;
+  return date.toLocaleDateString("en-US", options).replace(",", "");
+}
 
+const labelMap = {
+  profile_views: "Profile Views",
+  accounts_engaged: "Accounts Engaged",
+  likes: "Likes",
+  comments: "Comments",
+  shares: "Shares",
+  saves: "Saves",
+  replies: "Replies",
+  follows_and_unfollows: "Follows & Unfollows",
+  total_interactions: "Total Interactions",
+};
+
+const calculateFollowersChange = (data) => {
+  const date = new Date().toISOString().split('T')[0];
+  const pastWeek = new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+  const followersToday = data.daily[date]?.follower_count || 0;
+  const followersLastWeek = data.daily[pastWeek]?.follower_count || 0;
+  const followersChange = followersToday - followersLastWeek;
+  const percentageChange = ((followersChange / followersLastWeek) * 100).toFixed(2);
+  return percentageChange;
+};
+
+function calculateTotalImpressions(data, days) {
+  let totalImpressions = 0;
   for (let i = 0; i < days; i++) {
-    const dateKey = new Date(
-      lastFetched.getTime() - i * 24 * 60 * 60 * 1000
-    ).toISOString().split("T")[0];
-    if (dailyData[dateKey]) {
-      totalViews += dailyData[dateKey].followers_count || 0;
+    const day = new Date(new Date().getTime() - i * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+    totalImpressions += data.daily[day]?.impressions || 0;
+  }
+  return totalImpressions;
+}
+
+function calculateTotalReach(data, days) {
+  let totalReach = 0;
+  for (let i = 0; i < days; i++) {
+    const day = new Date(new Date().getTime() - i * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+    totalReach += data.daily[day]?.reach || 0;
+  }
+  return totalReach;
+} 
+
+function calculateTopCountry(data) {
+  let maxCountryCode = null;
+  let maxTotal = 0;
+  
+  for (const [countryCode, stats] of Object.entries(data)) {
+    const total = stats.engaged_audience_demographics + stats.reached_audience_demographics + stats.follower_demographics;
+    if (total > maxTotal) {
+      maxTotal = total;
+      maxCountryCode = countryCode;
     }
   }
-
-  return totalViews;
-};
+  
+  const maxCountryName = countryNames[maxCountryCode];
+  return maxCountryName;
+}
 
 function InstagramSection (){
     const { instagramData } = useInstagramData();
     console.log(instagramData)
-
+    const [ instagramCalculatedData, setInstagramCalculatedData ] = useState({
+        percentageChangeFollowers: 0,
+        totalImpressions: 0,
+        percentageChangeImpressions: 0,
+        totalReach: 0,
+        percentageChangeReach: 0,
+        topCountry: '',
+        numberOfDaysOfData: 0
+    });
+    useEffect(() => {
+    const percentageChangeFollowers = calculateFollowersChange(instagramData);
+    const totalImpressions = calculateTotalImpressions(instagramData, 7);
+    const totalImpressionsLastWeek = calculateTotalImpressions(instagramData, 14);
+    const percentageChangeImpressions = totalImpressionsLastWeek ? (((totalImpressions - totalImpressionsLastWeek) / totalImpressionsLastWeek) * 100).toFixed(2) : 0;
+    const totalReach = calculateTotalReach(instagramData, 7);
+    const totalReachLastWeek = calculateTotalReach(instagramData, 14);
+    const percentageChangeReach = totalReachLastWeek ? (((totalReach - totalReachLastWeek) / totalReachLastWeek) * 100).toFixed(2) : 0;
+    const topCountry = calculateTopCountry(instagramData.demographicData);
+    const numberOfDaysOfData = Object.keys(instagramData.daily).length;
     
+    setInstagramCalculatedData({
+        totalImpressions,
+        totalReach,
+        percentageChangeReach,
+        percentageChangeImpressions,
+        percentageChangeFollowers,
+        topCountry,
+        numberOfDaysOfData
+    });
+    },[instagramData]);
     return (
         <>
             <header className="flex shrink-0 h-10 items-center gap-2 transition-[width,height] ease-linear justify-end mb-2">
@@ -64,7 +149,7 @@ function InstagramSection (){
                             <div className="flex justify-between">
                             <p className=" text-2xl font-semibold my-auto">{instagramData.userData.followers_count}</p>
                             <div className="flex flex-col text-sm font-medium">
-                                {/* <p className={`${youtubeCalculatedData.percentageChangeViews > 0 ? "text-[#34C759]": youtubeCalculatedData.percentageChangeViews === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{youtubeCalculatedData.percentageChangeViews}% {youtubeCalculatedData.percentageChangeViews > 0 ? <LucideArrowUpRight className="h-4 w-4 mt-auto"/> : youtubeCalculatedData.percentageChangeViews === 0 ? <></> : <LucideArrowDownLeft className="h-4 w-4 mt-auto"/>}</p> */}
+                                <p className={`${instagramCalculatedData.percentageChangeFollowers > 0 ? "text-[#34C759]": instagramCalculatedData.percentageChangeFollowers === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{instagramCalculatedData.percentageChangeFollowers}% {instagramCalculatedData.percentageChangeFollowers > 0 ? <LucideArrowUpRight className="h-4 w-4 mt-auto"/> : instagramCalculatedData.percentageChangeFollowers === 0 ? <></> : <LucideArrowDownLeft className="h-4 w-4 mt-auto"/>}</p>
                                 <p className="text-secondary ml-auto"> than last week</p></div>
                             </div>
                             </CardContent>
@@ -72,11 +157,11 @@ function InstagramSection (){
                         <Separator orientation="horizontal"/>
                         <Card className=" border-none rounded-lg shadow-none">
                             <CardContent className="flex gap-1 p-2 flex-col flex-1">
-                            <div className=" text-sm text-secondary font-medium Inter flex gap-2">Total Subscribers</div>
+                            <div className=" text-sm text-secondary font-medium Inter flex gap-2">Total Impressions</div>
                             <div className="flex justify-between">
-                            {/* <p className=" text-2xl font-semibold my-auto">{youtubeData?.channel?.statistics?.subscriberCount}</p> */}
+                            <p className=" text-2xl font-semibold my-auto">{instagramCalculatedData.totalImpressions}</p>
                             <div className="flex flex-col text-sm font-medium">
-                                {/* <p className={`${youtubeCalculatedData.percentageChangeSubscribers > 0 ? "text-[#34C759]": youtubeCalculatedData.percentageChangeSubscribers === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{youtubeCalculatedData.percentageChangeSubscribers}%{youtubeCalculatedData.percentageChangeSubscribers > 0 ? <LucideArrowUpRight className="h-4 w-4 mt-auto"/> : youtubeCalculatedData.percentageChangeSubscribers === 0 ? <></> : <LucideArrowDownLeft className="h-4 w-4 mt-auto"/>}</p> */}
+                                <p className={`${instagramCalculatedData.percentageChangeImpressions > 0 ? "text-[#34C759]": instagramCalculatedData.percentageChangeImpressions === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{instagramCalculatedData.percentageChangeImpressions}%{instagramCalculatedData.percentageChangeImpressions > 0 ? <LucideArrowUpRight className="h-4 w-4 mt-auto"/> : instagramCalculatedData.percentageChangeImpressions === 0 ? <></> : <LucideArrowDownLeft className="h-4 w-4 mt-auto"/>}</p>
                                 <p className="text-secondary ml-auto"> than last week</p></div>
                             </div>
                             </CardContent>
@@ -86,11 +171,11 @@ function InstagramSection (){
                         <div className="gap-2 flex flex-col flex-1">
                         <Card className=" border-none rounded-lg shadow-none">
                             <CardContent className="flex gap-1 p-2 flex-col flex-1">
-                            <div className=" text-sm text-secondary font-medium Inter flex gap-2">Total Watch Time</div>
+                            <div className=" text-sm text-secondary font-medium Inter flex gap-2">Total Reach</div>
                             <div className="flex justify-between">
-                            {/* <p className=" text-2xl font-semibold my-auto">{youtubeCalculatedData.totalWatchTime}</p> */}
+                            <p className=" text-2xl font-semibold my-auto">{instagramCalculatedData.totalReach}</p>
                             <div className="flex flex-col text-sm font-medium">
-                                {/* <p className={`${youtubeCalculatedData.percentageChangeWatchTime > 0 ? "text-[#34C759]": youtubeCalculatedData.percentageChangeWatchTime === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{youtubeCalculatedData.percentageChangeWatchTime}%{youtubeCalculatedData.percentageChangeWatchTime > 0 ? <LucideArrowUpRight className="h-4 w-4 mt-auto"/> : youtubeCalculatedData.percentageChangeWatchTime === 0 ? <></> : <LucideArrowDownLeft className="h-4 w-4 mt-auto"/>}</p> */}
+                                <p className={`${instagramCalculatedData.percentageChangeReach > 0 ? "text-[#34C759]": instagramCalculatedData.percentageChangeReach === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{instagramCalculatedData.percentageChangeReach}%{instagramCalculatedData.percentageChangeReach > 0 ? <LucideArrowUpRight className="h-4 w-4 mt-auto"/> : instagramCalculatedData.percentageChangeReach === 0 ? <></> : <LucideArrowDownLeft className="h-4 w-4 mt-auto"/>}</p>
                                 <p className="text-secondary ml-auto"> than last week</p></div>
                             </div>
                             </CardContent>
@@ -98,34 +183,42 @@ function InstagramSection (){
                         <Separator orientation="horizontal"/>
                         <Card className=" border-none rounded-lg shadow-none">
                             <CardContent className="flex gap-1 p-2 flex-col flex-1">
-                            <div className=" text-sm text-secondary font-medium Inter flex gap-2">Average View Duration</div>
-                            <div className="flex justify-between">
-                            {/* <p className=" text-2xl font-semibold my-auto">{youtubeCalculatedData.averageViewDuration}</p> */}
-                            <div className="flex flex-col text-sm font-medium">
-                                {/* <p className={`${youtubeCalculatedData.percentageChangeAverageViewDuration > 0 ? "text-[#34C759]": youtubeCalculatedData.percentageChangeAverageViewDuration === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{youtubeCalculatedData.percentageChangeAverageViewDuration}% {youtubeCalculatedData.percentageChangeAverageViewDuration > 0 ? <LucideArrowUpRight className="h-4 w-4 mt-auto"/> : youtubeCalculatedData.percentageChangeAverageViewDuration === 0 ? <></> : <LucideArrowDownLeft className="h-4 w-4 mt-auto"/>}</p> */}
-                                <p className="text-secondary ml-auto"> than last week</p></div>
-                            </div>
+                            <div className=" text-sm text-secondary font-medium Inter flex gap-2">Top Country</div>
+                            <p className=" text-2xl font-semibold my-auto">{instagramCalculatedData.topCountry}</p>
                             </CardContent>
                         </Card>
                   </div>
                 </CardContent>
               </Card>
-              {/* <div>
+              <div>
                 <div className="flex-1 mt-3 flex flex-col gap-4">
                   <div className="flex-1 flex gap-4">
-                    <DailyViewsYoutube youtubeData={youtubeData} percentageChangeViews={youtubeCalculatedData.percentageChangeViews}/>
-                    <DailyWatchMetrics youtubeData={youtubeData}/>
+                    <DailyFollower followerData={instagramData.daily} percentageChangeFollowers={instagramCalculatedData.percentageChangeFollowers} numberOfDaysOfData={instagramCalculatedData.numberOfDaysOfData}/>
+                    <DailyImpressions impressionsData={instagramData.daily} percentageChangeImpressions={instagramCalculatedData.percentageChangeImpressions} numberOfDaysOfData={instagramCalculatedData.numberOfDaysOfData}/>
                   </div>
                   <div className="flex-1 flex gap-4 flex-wrap">
-                    <DialySubscribedUnsubscribed youtubeData={youtubeData} percentageChangeViews={youtubeCalculatedData.percentageChangeViews}/>
-                    <DailyCommentsYoutube youtubeData={youtubeData}/>
+                    <DailyReach reachData={instagramData.daily} percentageChangeReach={instagramCalculatedData.percentageChangeReach} numberOfDaysOfData={instagramCalculatedData.numberOfDaysOfData}/>
+                    <Demographics demographicData={instagramData.demographicData}/>
                   </div>
-                  <div className="flex-1 flex gap-4 flex-wrap">
-                    <DailySubscribersYoutube youtubeData={youtubeData} percentageChangeSubscribers={youtubeCalculatedData.percentageChangeSubscribers}/>
-                    <DailyLikeShareDislikeYoutube youtubeData={youtubeData}/>
-                  </div>
+                  <Card className="flex-1 bg-[#f6f8f9] rounded-lg shadow-md">
+                    <CardHeader>
+                      <p className="text-[#101010] font-semibold text-lg">Extra Metrics</p>
+                      <p className="text-secondary">this week</p>
+                    </CardHeader>
+                    <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {Object.entries(instagramData.extraMetrics).map(([key, value], index) => (
+                      <div
+                        key={index}
+                        className="bg-white p-4 rounded-md shadow flex flex-col items-center justify-center"
+                      >
+                        <p className="text-gray-600 text-sm">{labelMap[key]}</p>
+                        <p className="text-gray-900 text-xl font-bold">{value.thisWeek}</p>
+                      </div>
+                    ))}
+                    </CardContent>
+                  </Card>
                 </div>
-              </div> */}
+              </div>
               <Card className="flex-1 bg-[#f6f8f9] shadow-md">
                 <CardHeader>
                   <p className="text-[#101010] font-semibold text-lg flex gap-1"><img src={sparkle} alt="sparkle" /> AI Growth Insights</p>
@@ -206,59 +299,147 @@ function InstagramSection (){
                   </Card>
                 </CardContent>
               </Card>
-              {/* <Card className="flex-1 bg-[#f6f8f9] shadow-md">
-              <CardHeader>
-                <p className="text-[#101010] font-semibold text-xl flex gap-1">Content Insights</p>
-              </CardHeader>
-              <CardContent>
-              <div className="grid grid-cols-4 border-b border-gray-300 bg-gray-50 p-4 text-sm font-semibold text-gray-700">
+              <Card className="flex-1 bg-[#f6f8f9] shadow-md">
+                <CardHeader>
+                  <p className="text-[#101010] font-semibold text-xl flex gap-1">Content Insights</p>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-4 border-b border-gray-300 bg-gray-50 p-4 text-sm font-semibold text-gray-700">
                     <div>Content</div>
                     <div className="text-center">Comments</div>
                     <div className="text-center">Likes</div>
-                    <div className="text-center">Views</div>
+                    <div className="text-center">Timestamp</div>
                   </div>
 
-                  {videos.map((video,index) => (
+                  {instagramData.posts.filter((item) => item.media_type !== "VIDEO").slice(0, 5).map((item, index) => (
                     <div
                       key={index}
                       className="grid grid-cols-4 items-center gap-4 p-4 border-b border-gray-200 hover:bg-gray-100"
                     >
                       <div className="flex items-center space-x-4">
                         <img
-                          src={video.thumbnails.default.url}
-                          alt={video.title}
+                          src={item.media_url}
+                          alt={item.caption}
                           className="w-24 h-16 rounded-md object-cover"
                         />
                         <div>
-                          <p className="text-gray-900 font-medium">{video.title}</p>
+                          <p className="text-gray-900 font-medium">{item.caption}</p>
                           <p className="text-gray-500 text-sm">
-                            {new Date(video.publishedAt).toLocaleDateString("en-US", {
-                              weekday: "short",
-                              month: "short",
-                              day: "numeric",
-                              year: "numeric",
-                              hour: "numeric",
-                              minute: "numeric",
-                            })}
+                            <a
+                              href={item.permalink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-blue-500 hover:underline"
+                            >
+                              View Post
+                            </a>
                           </p>
                         </div>
                       </div>
 
                       <div className="text-center">
-                        <p className="text-gray-900 font-medium">{video.commentCount}</p>
+                        <p className="text-gray-900 font-medium">{item.comments_count}</p>
                       </div>
 
                       <div className="text-center">
-                        <p className="text-gray-900 font-medium">{video.likeCount}</p>
+                        <p className="text-gray-900 font-medium">{item.like_count}</p>
                       </div>
 
                       <div className="text-center">
-                        <p className="text-gray-900 font-medium">{video.viewCount.toLocaleString()}</p>
+                        <p className="text-gray-900 font-medium">
+                          {formatDate(new Date(item.timestamp))}
+                        </p>
                       </div>
                     </div>
                   ))}
-              </CardContent>
-              </Card> */}
+                </CardContent>
+              </Card>
+              <Card className="flex-1 bg-[#f6f8f9] shadow-md">
+                <CardHeader>
+                  <p className="text-[#101010] font-semibold text-xl flex gap-1">Story Analytics</p>
+                </CardHeader>
+                <CardContent className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                  {instagramData.stories.map((item) => (
+                    <Card key={item.id} className="overflow-hidden">
+                            <CardContent className="p-0 h-[200px] bg-[#e3e3e3] justify-center flex overflow-hidden">
+                                    <img src={item.media_url} alt="Story Thumbnail" className=" max-h-full my-auto" />
+                            </CardContent>
+                              <CardFooter className=" flex-col p-4 ">
+                                  <p className="text-gray-500 text-xs mr-auto ">
+                                  <a
+                                    href={item.permalink}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-blue-500 hover:underline"
+                                  >
+                                    View Story
+                                  </a>
+                                </p>
+                                <p className=" text-secondary text-xs mr-auto mt-[6px]">{formatDate(new Date(item.timestamp))}</p>
+                                <div className="flex gap-3 w-full max-w-56 mr-auto mt-3">
+                                    <div className="flex text-xs gap-1"><LucideHeart className="h-3 w-3 my-auto text-red-600" fill="red"/> <p>{item.like_count.toLocaleString()}</p></div>
+                                    <div className="flex text-xs gap-1"><LucideMessageSquare className="h-3 w-3 my-auto text-blue-500" fill="#409bff"/> <p>{item.comments_count.toLocaleString()}</p></div>
+                                </div>
+                            </CardFooter>
+                        </Card>
+                  ))}
+                </CardContent>
+                </Card>
+                <Card className="flex-1 bg-[#f6f8f9] shadow-md">
+                <CardHeader>
+                  <p className="text-[#101010] font-semibold text-xl flex gap-1">Reels Insights</p>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-4 border-b border-gray-300 bg-gray-50 p-4 text-sm font-semibold text-gray-700">
+                    <div>Content</div>
+                    <div className="text-center">Comments</div>
+                    <div className="text-center">Likes</div>
+                    <div className="text-center">Timestamp</div>
+                  </div>
+
+                  {instagramData.posts.filter((item) => item.media_type === "VIDEO").slice(0, 5).map((item, index) => (
+                    <div
+                      key={index}
+                      className="grid grid-cols-4 items-center gap-4 p-4 border-b border-gray-200 hover:bg-gray-100"
+                    >
+                      <div className="flex items-center space-x-4">
+                        <img
+                          src={item.media_url}
+                          alt={item.caption}
+                          className="w-24 h-16 rounded-md object-cover"
+                        />
+                        <div>
+                          <p className="text-gray-900 font-medium">{item.caption}</p>
+                          <p className="text-gray-500 text-sm">
+                            <a
+                              href={item.permalink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-blue-500 hover:underline"
+                            >
+                              View Post
+                            </a>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="text-center">
+                        <p className="text-gray-900 font-medium">{item.comments_count}</p>
+                      </div>
+
+                      <div className="text-center">
+                        <p className="text-gray-900 font-medium">{item.like_count}</p>
+                      </div>
+
+                      <div className="text-center">
+                        <p className="text-gray-900 font-medium">
+                          {formatDate(new Date(item.timestamp))}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
             </div>
     </>
     )

@@ -5,6 +5,7 @@ export const useInstagramData = create(
     persist((set) => ({
     instagramData: {
         posts:[],
+        stories: [],
         userData: {
             id: '',
             ig_id:'',
@@ -24,6 +25,7 @@ export const useInstagramData = create(
         lastFetched: ''
     },
     setPostData: (posts) => set((state) => ({ instagramData: { ...state.instagramData, posts : posts } })),
+    setStoryData: (stories) => set((state) => ({ instagramData: { ...state.instagramData, stories : stories } })),
     setUserData: (userData) => set((state) => ({ instagramData: { ...state.instagramData, userData : userData } })),
     setDaily: (daily) => set((state) => ({ instagramData: { ...state.instagramData, daily : daily } })),
     setMonthly: (monthly) => set((state) => ({ instagramData: { ...state.instagramData, monthly : monthly } })),

@@ -141,7 +141,7 @@ function calculateDemographicsData(engagementData, reachedData, followerData) {
 function DashBoard({ store }) {
   const { youtubeData, setYoutubeData } = useYoutubeData();
   const {instagramData} = useInstagramData();
-  const { setPostData, setUserData, setDaily, setExtraMetrics, setDemographicData } = useInstagramData();
+  const { setPostData, setUserData, setDaily, setExtraMetrics, setDemographicData, setStoryData } = useInstagramData();
   const fetchInstagramBusinessAccount = async (userAccessToken) => {
     try {
       // Step 1: Get the user's Facebook Pages
@@ -241,6 +241,16 @@ function DashBoard({ store }) {
             const DemographicsData = calculateDemographicsData(engagedAudienceData.data, reachedAudienceData.data, followerDemographicsData.data);
             setDemographicData(DemographicsData);
               // Exit loop after finding the first Instagram business account
+            try{
+              const storyresponse = await fetch(
+                `https://graph.facebook.com/${instagramBusinessAccountId}/stories?fields=id,media_type,media_url,permalink,timestamp,username,like_count,comments_count&access_token=${pageAccessToken}`
+              );
+              const storyData = await storyresponse.json();
+              console.log('Story Data:', storyData);
+              setStoryData(storyData.data);
+            } catch (error) {
+              console.error('Error fetching Instagram Stories:', error);
+            }
             break;
           }
         }
@@ -377,7 +387,9 @@ function DashBoard({ store }) {
     if (hash && hash.includes('access_token')) {
       const token = extractAccessToken(hash);
       localStorage.setItem('instagramAccessToken', token);
+      console.log('instagram data fetching')
       fetchInstagramBusinessAccount(token);
+      console.log('instagram data fetched')
     }
     //move this to server side
    // fetchYoutubeDailyData();
