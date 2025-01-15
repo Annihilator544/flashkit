@@ -176,10 +176,14 @@ function  DataConsistency({ children }) {
     }
     useEffect  (() => {
         async function fetchData() {
-        console.log("Starting upload");
-        await uploadOfflineData();
-        await syncOnlineData();
-        console.log("Data uploaded");
+          try{
+            console.log("Starting upload");
+            await uploadOfflineData();
+            await syncOnlineData();
+            console.log("Data uploaded");
+          } catch (e) {
+            console.error(e);
+          }
         }
         fetchData();
     }, [isOnline]);

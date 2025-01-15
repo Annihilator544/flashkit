@@ -362,7 +362,7 @@ function InstagramSection (){
                   {instagramData.stories.map((item) => (
                       <Card key={item.id} className="overflow-hidden">
                             <CardContent className="p-0 h-[200px] bg-[#e3e3e3] justify-center flex overflow-hidden">
-                                {item.media_type === "VIDEO" ? <video src={item.media_url} className="w-full h-full object-cover" autoPlay loop muted/> :
+                                {item.media_type === "VIDEO" ? <img src={item.thumbnail_url} alt="Story Thumbnail" className=" max-h-full my-auto"/> :
                                     <img src={item.media_url} alt="Story Thumbnail" className=" max-h-full my-auto" />
                                 }
                             </CardContent>
@@ -407,7 +407,7 @@ function InstagramSection (){
                       className="grid grid-cols-4 items-center gap-4 p-4 border-b border-gray-200 hover:bg-gray-100"
                     >
                       <div className="flex items-center space-x-4">
-                        <video src={item.media_url} className="w-24 h-16 rounded-md object-cover" autoPlay loop muted/>
+                        <img src={item.thumbnail_url} alt="Story Thumbnail" className=" max-h-full my-auto"/>
                         <div>
                           <p className="text-gray-900 font-medium">{item.caption}</p>
                           <p className="text-gray-500 text-sm">

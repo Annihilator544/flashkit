@@ -243,7 +243,7 @@ function DashBoard({ store }) {
               // Exit loop after finding the first Instagram business account
             try{
               const storyresponse = await fetch(
-                `https://graph.facebook.com/${instagramBusinessAccountId}/stories?fields=id,media_type,media_url,permalink,timestamp,username,like_count,comments_count&access_token=${pageAccessToken}`
+                `https://graph.facebook.com/${instagramBusinessAccountId}/stories?fields=id,media_type,media_url,permalink,timestamp,username,like_count,comments_count,thumbnail_url&access_token=${pageAccessToken}`
               );
               const storyData = await storyresponse.json();
               console.log('Story Data:', storyData);
