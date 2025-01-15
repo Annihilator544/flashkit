@@ -85,7 +85,6 @@ function calculateTopCountry(data) {
 
 function InstagramSection (){
     const { instagramData } = useInstagramData();
-    console.log(instagramData)
     const [ instagramCalculatedData, setInstagramCalculatedData ] = useState({
         percentageChangeFollowers: 0,
         totalImpressions: 0,
