@@ -40,8 +40,8 @@ const labelMap = {
 };
 
 const calculateFollowersChange = (data) => {
-  const date = new Date().toISOString().split('T')[0];
-  const pastWeek = new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+  const date = new Date(new Date().getTime() -  1 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+  const pastWeek = new Date(new Date().getTime() - 8 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
   const followersToday = data.daily[date]?.follower_count || 0;
   const followersLastWeek = data.daily[pastWeek]?.follower_count || 0;
   const followersChange = followersToday - followersLastWeek;
@@ -51,7 +51,7 @@ const calculateFollowersChange = (data) => {
 
 function calculateTotalImpressions(data, days) {
   let totalImpressions = 0;
-  for (let i = 0; i < days; i++) {
+  for (let i = 1; i <= days; i++) {
     const day = new Date(new Date().getTime() - i * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
     totalImpressions += data.daily[day]?.impressions || 0;
   }
@@ -60,7 +60,7 @@ function calculateTotalImpressions(data, days) {
 
 function calculateTotalReach(data, days) {
   let totalReach = 0;
-  for (let i = 0; i < days; i++) {
+  for (let i = 1; i <= days; i++) {
     const day = new Date(new Date().getTime() - i * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
     totalReach += data.daily[day]?.reach || 0;
   }

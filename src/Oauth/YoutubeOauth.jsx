@@ -3,8 +3,11 @@ import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import { useYoutubeData } from 'store/use-youtube-data';
 import { Button } from '../components/ui/button';
-import { LucideLogIn } from 'lucide-react';
+import { LucideCheck, LucideLogIn } from 'lucide-react';
 import localforage from 'localforage';
+import { useAuthStore } from 'store/use-auth-data';
+import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+import { DynamoDBDocumentClient, UpdateCommand } from '@aws-sdk/lib-dynamodb';
 
 const ConnectButton = ({ onSuccess, afterSuccess }) => {
   const [isConnected, setIsConnected] = useState(false);
@@ -13,7 +16,6 @@ const ConnectButton = ({ onSuccess, afterSuccess }) => {
     onSuccess: tokenResponse => {
       setIsConnected(true);
       onSuccess(tokenResponse.access_token);
-      // fetchYouTubeAnalytics(tokenResponse.access_token);
       afterSuccess();
     },
     scope: 'https://www.googleapis.com/auth/youtube.readonly',
@@ -21,7 +23,7 @@ const ConnectButton = ({ onSuccess, afterSuccess }) => {
 
   return (
     <Button onClick={() => login()} className='my-5 max-w-96'>
-      Connect <LucideLogIn className='h-5 w-5 ml-2' />
+      {isConnected ? "Connected" :"Connect"} {isConnected ?  <LucideCheck className='h-5 w-5 ml-2' /> :<LucideLogIn className='h-5 w-5 ml-2' />}
     </Button>
   );
 };
@@ -29,10 +31,10 @@ const ConnectButton = ({ onSuccess, afterSuccess }) => {
 function YoutubeOauth() {
   const handleLoginSuccess = (accessToken) => {
     localStorage.setItem('youtubeAccessToken', accessToken);
-    console.log('accessToken', localStorage.getItem('youtubeAccessToken'));
   };
   
   const { setYoutubeData } = useYoutubeData();
+  const { user } = useAuthStore();
 
   function processData(data) {
     return data.rows.map(row => ({
@@ -49,6 +51,7 @@ function YoutubeOauth() {
       subscribersLost: row[10]  // Assuming this is the correct index for subscribersLost
     }));
   }
+
   function calculateDailyChanges(processedData, engagementData) {
     const dailyChanges = {};
     //only get the last 90 days
@@ -201,6 +204,7 @@ function YoutubeOauth() {
   
 
   const fetchDataManually = useCallback(async () => {
+    console.log('Fetching YouTube Analytics');
     const endDate = new Date().toISOString().split('T')[0];
     try {
       const channelResponse = await axios.get(
@@ -230,7 +234,6 @@ function YoutubeOauth() {
           },
         }
       );
-      console.log(response.data);
       const engagementResponse = await axios.get(
         'https://youtubeanalytics.googleapis.com/v2/reports', {
           params: {
@@ -245,10 +248,53 @@ function YoutubeOauth() {
           },
         }
       );
-      console.log(channelResponse.data, engagementResponse.data, response.data);
       const result = analyzeChannelData(response.data, engagementResponse.data, channelResponse.data.items[0]);
       setYoutubeData(result);
-      console.log(result);
+      try {
+        const region = "eu-west-2";
+            const credentials = {
+              accessKeyId: process.env.REACT_APP_DYNAMO_DB_AWS_ACCESS_KEY_ID,
+              secretAccessKey: process.env.REACT_APP_DYNAMO_DB_AWS_SECRET_ACCESS_KEY
+            };
+            const ddbClient = new DynamoDBClient({ region, credentials });
+            const docClient = DynamoDBDocumentClient.from(ddbClient);
+            const tableName = "flashkitUserData";
+            const params = {
+              TableName: tableName,
+              Key: { uid: user.uid },
+              UpdateExpression: 'SET youtubeData = :new_items',
+              ExpressionAttributeValues: {
+                ':new_items': result,
+              },
+              ReturnValues: 'ALL_NEW',
+            };
+            await docClient.send(new UpdateCommand(params));
+      } catch (error) {
+        console.error('Error updating DynamoDB:', error);
+      }
+      try {
+        const region = "eu-west-2";
+            const credentials = {
+              accessKeyId: process.env.REACT_APP_DYNAMO_DB_AWS_ACCESS_KEY_ID,
+              secretAccessKey: process.env.REACT_APP_DYNAMO_DB_AWS_SECRET_ACCESS_KEY
+            };
+            const ddbClient = new DynamoDBClient({ region, credentials });
+            const docClient = DynamoDBDocumentClient.from(ddbClient);
+            const tableName = "flashkitUserData";
+            const params = {
+              TableName: tableName,
+              Key: { uid: user.uid },
+              UpdateExpression: 'SET youtubeAccessToken = :new_items',
+              ExpressionAttributeValues: {
+                ':new_items': localStorage.getItem('youtubeAccessToken'),
+              },
+              ReturnValues: 'ALL_NEW',
+            };
+            await docClient.send(new UpdateCommand(params));
+      } catch (error) {
+        console.error('Error updating DynamoDB:', error);
+      }
+      console.log('YouTube Analytics fetched and saved');
     } catch (error) {
       console.error('Error fetching YouTube Analytics:', error);
     }

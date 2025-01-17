@@ -1,7 +1,7 @@
 import { TabsContent } from "@radix-ui/react-tabs";
 import { Tabs, TabsList, TabsTrigger } from "./components/ui/tabs";
 import { Instagram, Linkedin, LucideAward, LucideCircleUserRound, LucideCopy, LucideFolderOpen, LucideGauge, LucideLayoutDashboard, LucideLogOut, LucideMoreHorizontal, LucideMoreVertical, LucidePieChart, LucidePlus, LucideSearch, LucideSettings, LucideSparkles, LucideTrash2, LucideTvMinimalPlay, LucideUsersRound, Twitter, Youtube } from "lucide-react";
-import React, { useEffect } from "react";
+import React, { use, useEffect } from "react";
 import { useProject } from "plotNoFeatures/project";
 import { Spinner } from "@blueprintjs/core";
 import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
@@ -42,6 +42,8 @@ import SettingsSection from "./components/SettingsSection";
 import axios from "axios";
 import YoutubeSection from "./components/YoutubeSection";
 import InstagramSection from "./components/InstagramSection";
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { DynamoDBDocumentClient, GetCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
 
 function calculateDailyChanges(processedData, currentFollowers){
   const dailyData = {};
@@ -141,9 +143,34 @@ function calculateDemographicsData(engagementData, reachedData, followerData) {
 function DashBoard({ store }) {
   const { youtubeData, setYoutubeData } = useYoutubeData();
   const {instagramData} = useInstagramData();
-  const { setPostData, setUserData, setDaily, setExtraMetrics, setDemographicData, setStoryData } = useInstagramData();
+  const { user } = useAuthStore();
+  const { setPostData, setUserData, setDaily, setExtraMetrics, setDemographicData, setStoryData, setLastFetched } = useInstagramData();
   const fetchInstagramBusinessAccount = async (userAccessToken) => {
     try {
+      const region = "eu-west-2";
+      const credentials = {
+        accessKeyId: process.env.REACT_APP_DYNAMO_DB_AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.REACT_APP_DYNAMO_DB_AWS_SECRET_ACCESS_KEY
+      };
+      const ddbClient = new DynamoDBClient({ region, credentials });
+      const docClient = DynamoDBDocumentClient.from(ddbClient);
+      const tableName = "flashkitUserData";
+      const paramsSetAccessToken = {
+        TableName: tableName,
+        Key: { uid: user.uid },
+        UpdateExpression: 'SET instagramAccessToken = :new_items',
+        ExpressionAttributeValues: {
+          ':new_items': userAccessToken,
+        },
+        ReturnValues: 'ALL_NEW',
+      };
+      await docClient.send(new UpdateCommand(paramsSetAccessToken));
+      const params = {
+      TableName: tableName,
+      Key: { uid: user.uid },
+    };
+      const result = await docClient.send(new GetCommand(params));
+      if((result.Item && result.Item.instagramData && Object.keys(result.Item.instagramData).length > 0)){
       // Step 1: Get the user's Facebook Pages
       const pagesResponse = await fetch(
         `https://graph.facebook.com/me/accounts?fields=id,name,access_token&access_token=${userAccessToken}`
@@ -246,20 +273,42 @@ function DashBoard({ store }) {
                 `https://graph.facebook.com/${instagramBusinessAccountId}/stories?fields=id,media_type,media_url,permalink,timestamp,username,like_count,comments_count,thumbnail_url&access_token=${pageAccessToken}`
               );
               const storyData = await storyresponse.json();
-              console.log('Story Data:', storyData);
               setStoryData(storyData.data);
             } catch (error) {
               console.error('Error fetching Instagram Stories:', error);
             }
+            setLastFetched(new Date().toISOString());
+            const region = "eu-west-2";
+            const credentials = {
+              accessKeyId: process.env.REACT_APP_DYNAMO_DB_AWS_ACCESS_KEY_ID,
+              secretAccessKey: process.env.REACT_APP_DYNAMO_DB_AWS_SECRET_ACCESS_KEY
+            };
+            const ddbClient = new DynamoDBClient({ region, credentials });
+            const docClient = DynamoDBDocumentClient.from(ddbClient);
+            const tableName = "flashkitUserData";
+            const params = {
+              TableName: tableName,
+              Key: { uid: user.uid },
+              UpdateExpression: 'SET instagramData = :new_items',
+              ExpressionAttributeValues: {
+                ':new_items': instagramData,
+              },
+              ReturnValues: 'ALL_NEW',
+            };
+            await docClient.send(new UpdateCommand(params));
             break;
           }
         }
       } else {
         console.log('No pages found.');
       }
+    } else {
+      console.log('Not fetching data as it is already present');
+    }
     } catch (error) {
       console.error('Error fetching Instagram Business Account:', error);
     }
+    
   };
   
   // Extract access token from the URL hash
@@ -390,6 +439,7 @@ function DashBoard({ store }) {
       console.log('instagram data fetching')
       fetchInstagramBusinessAccount(token);
       console.log('instagram data fetched')
+      window.history.pushState({}, document.title, window.location.pathname);
     }
     //move this to server side
    // fetchYoutubeDailyData();
