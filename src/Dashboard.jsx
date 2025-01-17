@@ -1,7 +1,7 @@
 import { TabsContent } from "@radix-ui/react-tabs";
 import { Tabs, TabsList, TabsTrigger } from "./components/ui/tabs";
 import { Instagram, Linkedin, LucideAward, LucideCircleUserRound, LucideCopy, LucideFolderOpen, LucideGauge, LucideLayoutDashboard, LucideLogOut, LucideMoreHorizontal, LucideMoreVertical, LucidePieChart, LucidePlus, LucideSearch, LucideSettings, LucideSparkles, LucideTrash2, LucideTvMinimalPlay, LucideUsersRound, Twitter, Youtube } from "lucide-react";
-import React, { use, useEffect } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useProject } from "plotNoFeatures/project";
 import { Spinner } from "@blueprintjs/core";
 import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
@@ -44,6 +44,8 @@ import YoutubeSection from "./components/YoutubeSection";
 import InstagramSection from "./components/InstagramSection";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, GetCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
+import { useToast } from "./hooks/use-toast"
+import { ToastAction } from "./components/ui/toast";
 
 function calculateDailyChanges(processedData, currentFollowers){
   const dailyData = {};
@@ -142,9 +144,12 @@ function calculateDemographicsData(engagementData, reachedData, followerData) {
 
 function DashBoard({ store }) {
   const { youtubeData, setYoutubeData } = useYoutubeData();
+  const [ selectedValue , setSelectedValue ] = useState('home');
   const {instagramData} = useInstagramData();
   const { user } = useAuthStore();
+  const { toast } = useToast();
   const { setPostData, setUserData, setDaily, setExtraMetrics, setDemographicData, setStoryData, setLastFetched } = useInstagramData();
+
   const fetchInstagramBusinessAccount = async (userAccessToken) => {
     try {
       const region = "eu-west-2";
@@ -176,6 +181,19 @@ function DashBoard({ store }) {
         `https://graph.facebook.com/me/accounts?fields=id,name,access_token&access_token=${userAccessToken}`
       );
       const pagesData = await pagesResponse.json();
+
+      if(pagesData.error){
+        if(pagesData.error.code === 190){
+          console.log('Token Expired');
+          localStorage.removeItem('instagramAccessToken');
+          toast({
+            title: "Instagram Token Expired",
+            description: "Please log in again.",
+            action: <Button onClick={()=>{setSelectedValue("settings")}} size="sm" variant="destructive">Login</Button>,});
+          console.error('Error fetching Instagram Business Account:', pagesData.error);
+          return;
+        }
+      }
 
       if (pagesData && pagesData.data && pagesData.data.length > 0) {
         // Step 2: Iterate over pages to find connected Instagram accounts
@@ -317,120 +335,276 @@ function DashBoard({ store }) {
     return params.get('access_token');
   };
 
-  const fetchYoutubeDailyData = async () => {
-    function calculateDailyChanges(processedData, engagementData, dailyDataPast) {
-      processedData.forEach(day => {
-        const date = day.date.toISOString().split('T')[0];
-        if (!dailyDataPast[date]) {
-          dailyDataPast[date] = { views: 0, subscribers: 0, comments: 0, subscribed: 0, unsubscribed: 0, likes: 0, dislikes: 0, shares: 0, estimatedMinutesWatched: 0, averageViewDuration: 0, averageViewPercentage: 0  };
-        }
-        dailyDataPast[date].views += day.views;
-        dailyDataPast[date].subscribers += (day.subscribersGained - day.subscribersLost);
-        dailyDataPast[date].comments += day.comments;
-        dailyDataPast[date].likes += day.likes;
-        dailyDataPast[date].dislikes += day.dislikes;
-        dailyDataPast[date].shares += day.shares;
-        dailyDataPast[date].estimatedMinutesWatched += day.estimatedMinutesWatched;
-        dailyDataPast[date].averageViewDuration += day.averageViewDuration;
-        dailyDataPast[date].averageViewPercentage += day.averageViewPercentage;
-      });
-      engagementData.rows.filter(row => new Date(row[0]) >= new Date(new Date().setDate(new Date().getDate() - 90))).forEach(row => {
-        const date = row[0];
-        if (!dailyDataPast[date]) {
-          dailyDataPast[date] = { views: 0, subscribers: 0, comments: 0, subscribed: 0, unsubscribed: 0, likes: 0, dislikes: 0, shares: 0, estimatedMinutesWatched: 0, averageViewDuration: 0, averageViewPercentage: 0  };
-        }
-        if (row[1] === 'SUBSCRIBED') {
-          dailyDataPast[date].subscribed += row[2];
-        } else if (row[1] === 'UNSUBSCRIBED') {
-          dailyDataPast[date].unsubscribed += row[2];
-        }
+  function processData(data) {
+    return data.rows.map(row => ({
+      date: new Date(row[0]),
+      comments: row[1],
+      likes: row[2],
+      dislikes: row[3],
+      shares: row[4],
+      views: row[5],
+      estimatedMinutesWatched: row[6],
+      averageViewDuration: row[7],
+      averageViewPercentage: row[8],
+      subscribersGained: row[9],
+      subscribersLost: row[10]  // Assuming this is the correct index for subscribersLost
+    }));
+  }
+
+  function calculateDailyChangesYoutube(processedData, engagementData) {
+    const dailyChanges = {};
+    //only get the last 90 days
+    const processedData90Days = processedData.slice(-90);
+    const engagementData90Days = engagementData.rows.filter(row => new Date(row[0]) >= new Date(new Date().setDate(new Date().getDate() - 90)));
+    processedData90Days.forEach(day => {
+      const date = day.date.toISOString().split('T')[0];
+      if (!dailyChanges[date]) {
+        dailyChanges[date] = { views: 0, subscribers: 0, comments: 0, subscribed: 0, unsubscribed: 0, likes: 0, dislikes: 0, shares: 0, estimatedMinutesWatched: 0, averageViewDuration: 0, averageViewPercentage: 0  };
       }
+      dailyChanges[date].views += day.views;
+      dailyChanges[date].subscribers += (day.subscribersGained - day.subscribersLost);
+      dailyChanges[date].comments += day.comments;
+      dailyChanges[date].likes += day.likes;
+      dailyChanges[date].dislikes += day.dislikes;
+      dailyChanges[date].shares += day.shares;
+      dailyChanges[date].estimatedMinutesWatched += day.estimatedMinutesWatched;
+      dailyChanges[date].averageViewDuration += day.averageViewDuration;
+      dailyChanges[date].averageViewPercentage += day.averageViewPercentage;
+    });
+    engagementData90Days.forEach(row => {
+      const date = row[0];
+      if (!dailyChanges[date]) {
+        dailyChanges[date] = { views: 0, subscribers: 0, comments: 0, subscribed: 0, unsubscribed: 0, likes: 0, dislikes: 0, shares: 0, estimatedMinutesWatched: 0, averageViewDuration: 0, averageViewPercentage: 0  };
+      }
+      if (row[1] === 'SUBSCRIBED') {
+        dailyChanges[date].subscribed += row[2];
+      } else if (row[1] === 'UNSUBSCRIBED') {
+        dailyChanges[date].unsubscribed += row[2];
+      }
+    }
+    );
+    return dailyChanges;
+  }
+  
+  function calculateMonthlyChanges(processedData, engagementData) {
+    const monthlyChanges = {};
+    let averageView = {};
+
+    processedData.forEach(day => {
+      const yearMonth = `${day.date.getFullYear()}-${(day.date.getMonth() + 1).toString().padStart(2, '0')}`;
+      
+      if (!monthlyChanges[yearMonth]) {
+        monthlyChanges[yearMonth] = { views: 0, subscribers: 0, comments: 0, subscribed: 0, unsubscribed: 0, likes: 0, dislikes: 0, shares: 0, estimatedMinutesWatched: 0, averageViewDuration: 0, averageViewPercentage: 0  };
+      }
+      if(!averageView[yearMonth]) {
+        averageView[yearMonth] = { sumDuration: 0, sumPercentage: 0, countDuration: 0, countPercentage: 0 };
+      }
+      
+      monthlyChanges[yearMonth].views += day.views;
+      monthlyChanges[yearMonth].subscribers += (day.subscribersGained - day.subscribersLost);
+      monthlyChanges[yearMonth].comments += day.comments;
+      monthlyChanges[yearMonth].likes += day.likes;
+      monthlyChanges[yearMonth].dislikes += day.dislikes;
+      monthlyChanges[yearMonth].shares += day.shares;
+      monthlyChanges[yearMonth].estimatedMinutesWatched += day.estimatedMinutesWatched;
+      averageView[yearMonth].sumDuration += day.averageViewDuration;
+      averageView[yearMonth].sumPercentage += day.averageViewPercentage;
+      if(day.averageViewDuration) averageView[yearMonth].countDuration++;
+      if(day.averageViewPercentage) averageView[yearMonth].countPercentage++;
+    });
+
+    Object.keys(averageView).forEach(yearMonth => {
+      monthlyChanges[yearMonth].averageViewDuration = averageView[yearMonth].countDuration ? averageView[yearMonth].sumDuration / averageView[yearMonth].countDuration : 0;
+      monthlyChanges[yearMonth].averageViewPercentage = averageView[yearMonth].countPercentage ? averageView[yearMonth].sumPercentage / averageView[yearMonth].countPercentage : 0;
+    });
+
+    engagementData.rows.forEach(row => {
+      const day = new Date(row[0]);
+      const yearMonth = `${day.getFullYear()}-${(day.getMonth() + 1).toString().padStart(2, '0')}`;
+      
+      if (!monthlyChanges[yearMonth]) {
+        monthlyChanges[yearMonth] = { views: 0, subscribers: 0, comments: 0, subscribed: 0, unsubscribed: 0, likes: 0, dislikes: 0, shares: 0, estimatedMinutesWatched: 0, averageViewDuration: 0, averageViewPercentage: 0  };
+      }
+      
+      if (row[1] === 'SUBSCRIBED') {
+        monthlyChanges[yearMonth].subscribed += row[2];
+      } else if (row[1] === 'UNSUBSCRIBED') {
+        monthlyChanges[yearMonth].unsubscribed += row[2];
+      }
+    });
+    
+    return monthlyChanges;
+  }
+  
+  function calculateYearlyChanges(processedData, engagementData) {
+    const yearlyChanges = {};
+    let averageView = {};
+    
+    processedData.forEach(day => {
+      const year = day.date.getFullYear();
+      
+      if (!yearlyChanges[year]) {
+        yearlyChanges[year] = { views: 0, subscribers: 0, comments: 0, subscribed: 0, unsubscribed: 0, likes: 0, dislikes: 0, shares: 0, estimatedMinutesWatched: 0, averageViewDuration: 0, averageViewPercentage: 0  };
+      }
+      if(!averageView[year]) {
+        averageView[year] = { sumDuration: 0, sumPercentage: 0, countDuration: 0, countPercentage: 0 };
+      }
+      
+      yearlyChanges[year].views += day.views;
+      yearlyChanges[year].subscribers += (day.subscribersGained - day.subscribersLost);
+      yearlyChanges[year].comments += day.comments;
+      yearlyChanges[year].likes += day.likes;
+      yearlyChanges[year].dislikes += day.dislikes;
+      yearlyChanges[year].shares += day.shares;
+      yearlyChanges[year].estimatedMinutesWatched += day.estimatedMinutesWatched;
+      averageView[year].sumDuration += day.averageViewDuration;
+      averageView[year].sumPercentage += day.averageViewPercentage;
+      if(day.averageViewDuration) averageView[year].countDuration++;
+      if(day.averageViewPercentage) averageView[year].countPercentage++;
+    });
+
+    Object.keys(averageView).forEach(year => {
+      yearlyChanges[year].averageViewDuration = averageView[year].countDuration ? averageView[year].sumDuration / averageView[year].countDuration : 0;
+      yearlyChanges[year].averageViewPercentage = averageView[year].countPercentage ? averageView[year].sumPercentage / averageView[year].countPercentage : 0;
+    });
+
+    engagementData.rows.forEach(row => {
+      const day = new Date(row[0]);
+      const year = day.getFullYear();
+      
+      if (!yearlyChanges[year]) {
+        yearlyChanges[year] = { views: 0, subscribers: 0, comments: 0, subscribed: 0, unsubscribed: 0, likes: 0, dislikes: 0, shares: 0, estimatedMinutesWatched: 0, averageViewDuration: 0, averageViewPercentage: 0  };
+      }
+      
+      if (row[1] === 'SUBSCRIBED') {
+        yearlyChanges[year].subscribed += row[2];
+      } else if (row[1] === 'UNSUBSCRIBED') {
+        yearlyChanges[year].unsubscribed += row[2];
+      }
+    });
+    
+    return yearlyChanges;
+  }
+  
+  function analyzeChannelData(rawData, engagementData, channelData) {
+    const processedData = processData(rawData);
+    const dailyData = calculateDailyChangesYoutube(processedData, engagementData);
+    const monthlyChanges = calculateMonthlyChanges(processedData, engagementData);
+    const yearlyChanges = calculateYearlyChanges(processedData, engagementData);
+    const lastFetched = new Date().toISOString();
+    return {
+      lastFetched: lastFetched,
+      daily: dailyData,
+      monthly: monthlyChanges,
+      yearly: yearlyChanges,
+      channel: channelData,
+    };
+  } 
+  
+  async function fetchDataManually(userAccessToken){ 
+    console.log('Fetching YouTube Analytics');
+    const endDate = new Date().toISOString().split('T')[0];
+    try {
+      const channelResponse = await axios.get(
+        'https://www.googleapis.com/youtube/v3/channels', {
+          params: {
+            part: 'snippet,contentDetails,statistics,brandingSettings',
+            mine: true,
+          },
+          headers: {
+            Authorization: `Bearer ${userAccessToken}`,
+          },
+        }
       );
-      //onli last 90 days data
-      const dailyDataPastKeys = Object.keys(dailyDataPast);
-      if (dailyDataPastKeys.length > 90) {
-        const keysToDelete = dailyDataPastKeys.slice(0, dailyDataPastKeys.length - 90);
-        keysToDelete.forEach(key => {
-          delete dailyDataPast[key];
-        });
-      }
-      return dailyDataPast;
-    }
-    function analyzeChannelData(rawData, engagementData, dailyDataPast) {
-      const processedData = rawData.rows.map(row => ({
-        date: new Date(row[0]),
-        comments: row[1],
-        likes: row[2],
-        dislikes: row[3],
-        shares: row[4],
-        views: row[5],
-        estimatedMinutesWatched: row[6],
-        averageViewDuration: row[7],
-        averageViewPercentage: row[8],
-        subscribersGained: row[9],
-        subscribersLost: row[10]  // Assuming this is the correct index for subscribersLost
-      }));
-      return calculateDailyChanges(processedData, engagementData, dailyDataPast);
-    } 
-    const accessToken = localStorage.getItem('youtubeAccessToken');
-    const lastFetched = youtubeData?.lastFetched?.split('T')[0];
-    console.log('Last Fetched:', lastFetched,youtubeData);
-    const today = new Date().toISOString().split('T')[0];
-    if (accessToken && lastFetched !== today) {
+      const startDate = channelResponse.data.items[0].snippet.publishedAt.split('T')[0];
+      const response = await axios.get(
+        'https://youtubeanalytics.googleapis.com/v2/reports', {
+          params: {
+            "ids": "channel==MINE",
+            startDate: startDate,
+            endDate: endDate,
+            metrics: 'comments,likes,dislikes,shares,views,estimatedMinutesWatched,averageViewDuration,averageViewPercentage,subscribersGained,subscribersLost',
+            dimensions: 'day',
+            sort: 'day'
+          },
+          headers: {
+            Authorization: `Bearer ${userAccessToken}`,
+          },
+        }
+      );
+      const engagementResponse = await axios.get(
+        'https://youtubeanalytics.googleapis.com/v2/reports', {
+          params: {
+            "ids": "channel==MINE",
+            startDate: startDate,
+            endDate: endDate,
+            metrics: 'views',
+            dimensions: 'day,subscribedStatus',
+          },
+          headers: {
+            Authorization: `Bearer ${userAccessToken}`,
+          },
+        }
+      );
+      const result = analyzeChannelData(response.data, engagementResponse.data, channelResponse.data.items[0]);
+      setYoutubeData(result);
       try {
-        const channelResponse = await axios.get(
-          'https://www.googleapis.com/youtube/v3/channels', {
-            params: {
-              part: 'snippet,contentDetails,statistics,brandingSettings',
-              mine: true,
-            },
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('youtubeAccessToken')}`,
-            },
-          }
-        );
-        const startDate = '2022-01-07';
-        const endDate = new Date().toISOString().split('T')[0];
-        const response = await axios.get(
-          'https://youtubeanalytics.googleapis.com/v2/reports', {
-            params: {
-              "ids": "channel==MINE",
-              startDate: startDate,
-              endDate: endDate,
-              metrics: 'comments,likes,dislikes,shares,views,estimatedMinutesWatched,averageViewDuration,averageViewPercentage,subscribersGained,subscribersLost',
-              dimensions: 'day',
-              sort: 'day'
-            },
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('youtubeAccessToken')}`,
-            },
-          }
-        );
-        const engagementResponse = await axios.get(
-          'https://youtubeanalytics.googleapis.com/v2/reports', {
-            params: {
-              "ids": "channel==MINE",
-              startDate: startDate,
-              endDate: endDate,
-              metrics: 'views',
-              dimensions: 'day,subscribedStatus',
-            },
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('youtubeAccessToken')}`,
-            },
-          }
-        );
-        const dailyData = youtubeData.daily;
-        const result = analyzeChannelData(response.data, engagementResponse.data, dailyData);
-        setYoutubeData({ ...youtubeData, daily: result, lastFetched: today , channel: channelResponse.data.items[0] });
+        const region = "eu-west-2";
+            const credentials = {
+              accessKeyId: process.env.REACT_APP_DYNAMO_DB_AWS_ACCESS_KEY_ID,
+              secretAccessKey: process.env.REACT_APP_DYNAMO_DB_AWS_SECRET_ACCESS_KEY
+            };
+            const ddbClient = new DynamoDBClient({ region, credentials });
+            const docClient = DynamoDBDocumentClient.from(ddbClient);
+            const tableName = "flashkitUserData";
+            const params = {
+              TableName: tableName,
+              Key: { uid: user.uid },
+              UpdateExpression: 'SET youtubeData = :new_items',
+              ExpressionAttributeValues: {
+                ':new_items': result,
+              },
+              ReturnValues: 'ALL_NEW',
+            };
+            await docClient.send(new UpdateCommand(params));
       } catch (error) {
-        console.error('Error fetching Youtube Daily Data:', error);
+        console.error('Error updating DynamoDB:', error);
       }
+      try {
+        const region = "eu-west-2";
+            const credentials = {
+              accessKeyId: process.env.REACT_APP_DYNAMO_DB_AWS_ACCESS_KEY_ID,
+              secretAccessKey: process.env.REACT_APP_DYNAMO_DB_AWS_SECRET_ACCESS_KEY
+            };
+            const ddbClient = new DynamoDBClient({ region, credentials });
+            const docClient = DynamoDBDocumentClient.from(ddbClient);
+            const tableName = "flashkitUserData";
+            const params = {
+              TableName: tableName,
+              Key: { uid: user.uid },
+              UpdateExpression: 'SET youtubeAccessToken = :new_items',
+              ExpressionAttributeValues: {
+                ':new_items': userAccessToken,
+              },
+              ReturnValues: 'ALL_NEW',
+            };
+            await docClient.send(new UpdateCommand(params));
+      } catch (error) {
+        console.error('Error updating DynamoDB:', error);
+      }
+      console.log('YouTube Analytics fetched and saved');
+    } catch (error) {
+      console.error('Error fetching YouTube Analytics:', error);
+        if(error.status === 401){
+          localStorage.removeItem('youtubeAccessToken');
+          toast({
+            title: "YouTube Token Expired",
+            description: "Please log in again.",
+            action: <Button onClick={()=>{setSelectedValue("settings")}} size="sm" variant="destructive">Login</Button>,});
+          return;
+        }
     }
-    else{
-      console.log('Data already fetched for today');
-    }
-  };
+  }
   useEffect(() => {
     const hash = window.location.hash;
     if (hash && hash.includes('access_token')) {
@@ -441,15 +615,21 @@ function DashBoard({ store }) {
       console.log('instagram data fetched')
       window.history.pushState({}, document.title, window.location.pathname);
     }
-    //move this to server side
-   // fetchYoutubeDailyData();
+      const instagramToken = localStorage.getItem('instagramAccessToken');
+      console.log('instagram data fetching')
+      fetchInstagramBusinessAccount(instagramToken);
+      console.log('instagram data fetched')
+      const youtubeToken = localStorage.getItem('youtubeAccessToken');
+      console.log('youtube data fetching')
+      fetchDataManually(youtubeToken);
+      console.log('youtube data fetched')
   }, []);
 
 
   return (
     <div className="flex flex-col">
       <div className="flex">
-        <Tabs className="flex flex-1 " defaultValue="home" >
+      <Tabs className="flex flex-1 " value={selectedValue} onValueChange={setSelectedValue}>
         <SidebarLayout>
         <div className=" flex">
             <TabsContent value="home" className="flex-1 p-4 pt-2 overflow-y-auto">
@@ -522,7 +702,7 @@ function DashBoard({ store }) {
             </TabsContent>
         </div>
         </SidebarLayout>
-        </Tabs>
+      </Tabs>
         {/* {localStorage.getItem("flashkitPlan") === "FLASHKITUNLIMITED" ? 
         <div className="w-[15%] border-2 border-black my-2 mr-4">
             <p className="my-auto">Ad Space</p>

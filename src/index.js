@@ -21,6 +21,7 @@ import Secret from 'Secret';
 import Billing from 'Billing';
 import PublicView from 'PublicView';
 import DataConsistency from 'layouts/DataConsistency';
+import { Toaster } from './components/ui/toaster';
 
 // if (window.location.host !== 'studio.polotno.com') {
 //   console.log(
@@ -140,6 +141,7 @@ root.render(
       }
     }}
   >
+  <Toaster />
     <ProjectContext.Provider value={project}>
       <Auth0Provider domain={AUTH_DOMAIN} clientId={ID} redirectUri={REDIRECT}>
         <RouterProvider router={router}>
