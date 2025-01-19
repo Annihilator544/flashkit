@@ -30,6 +30,7 @@ import youtubeSVG from "../assets/youtube.svg";
 import { useSyncState } from "store/use-sync-state";
 import CircularProgress from "./CircularProgress";
 import { useYoutubeData } from "store/use-youtube-data";
+import { SidebarTrigger } from "./ui/sidebar";
 
 function HomeSection({ store }) {
     const { user } = useAuthStore();
@@ -73,7 +74,7 @@ function HomeSection({ store }) {
                 </BreadcrumbList>
                 </Breadcrumb>
             </div> */}
-            <search className=" min-w-80 flex">
+            {/* <search className=" min-w-80 flex">
             <div className="flex flex-1 items-center border rounded-full px-1">
                 <div className=" text-gray-400">
                 <LucideSearch className="h-5"/>
@@ -84,21 +85,20 @@ function HomeSection({ store }) {
                 className=" border-none focus:outline-none focus:ring-0 bg-transparent w-full focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                 />
             </div>
-            </search>
-            <div className="flex gap-3">
-                <LucideSettings className="h-5 my-auto" />
-                <LucideBell className="h-5 my-auto" />
+            </search> */}
+            <SidebarTrigger className=" md:hidden"/>
+            <div className="flex gap-3 ml-auto">
                 <NavUser/>
             </div>
             </header>
             <DashboardHeader title={"Explore Flashkit"} buttonText={"Explore Flashkit"} bottomSection={true}/>
-            <div className="p-2 flex-col flex gap-10">
+            <div className="p-2 max-md:p-0 flex-col flex gap-10">
               <div className=" text-[#252C32] flex justify-between">
                 <div>
                   <p className=" font-semibold text-2xl">Welcome back {user&&user.displayName&&user.displayName.split(" ")[0]} !</p>
                   <p className=" font-normal text-base ">Your latest social media performance </p>
                 </div>
-                <Select>
+                {/* <Select>
                     <SelectTrigger className="w-[180px]">
                       <SelectValue placeholder="Select an Account" />
                     </SelectTrigger>
@@ -106,14 +106,13 @@ function HomeSection({ store }) {
                       <SelectGroup>
                         <SelectItem value="Instagram"><div className="flex gap-2"><Instagram className="h-5"/>Instagram </div></SelectItem>
                         <SelectItem value="Youtube"><div className="flex gap-2"><Youtube className="h-5"/>Youtube</div></SelectItem>
-                        {/* <SelectItem value="TikTok"><div className="flex gap-2"><TikTok className="h-5"/>Instagram </div></SelectItem> */}
                       </SelectGroup>
                     </SelectContent>
-                  </Select>
+                  </Select> */}
               </div>
                 {/* {localStorage.getItem("flashkitPlan") === "FLASHKITSOCIAL" ? 
                 <> */}
-                <div className="flex gap-1 flex-wrap">
+                <div className="flex gap-1 flex-wrap max-md:flex-col">
                     <Card className="flex h-52 aspect-square items-center justify-center drop-shadow-sm">
                         <CardContent className="flex gap-2 p-5 px-12 flex-col my-auto">
                             <Avatar className= "m-auto h-20 w-20">
@@ -137,46 +136,46 @@ function HomeSection({ store }) {
                     <Card className= " flex flex-1 p-0 border-none ">
                         <CardContent className="grid grid-cols-2 grid-rows-2 gap-1 p-0 flex-1">
                         <Card className=" bg-gradient-to-r from-[#E2F2FF] to-[#FFF3F3] rounded-lg drop-shadow-sm">
-                            <CardContent className="flex gap-2 p-4 flex-col flex-1">
+                            <CardContent className="flex gap-2 p-4 max-md:p-2 flex-col flex-1">
                             <div className=" text-xs text-secondary font-semibold Inter flex gap-2">Total Followers</div>
                             <div className="flex justify-between">
                             <p className=" text-2xl font-semibold my-auto">23K</p>
                             <div className="flex flex-col text-sm font-medium">
-                                <p className="text-[#FF3B30] ml-auto flex">-0.4% <LucideArrowDownLeft className="h-4 w-4 mt-auto"/></p>
-                                <p className="text-secondary ml-auto"> than last week</p></div>
+                                <p className="text-[#FF3B30] ml-auto flex max-md:mt-auto">-0.4% <LucideArrowDownLeft className="h-4 w-4 mt-auto"/></p>
+                                <p className="text-secondary ml-auto max-md:hidden"> than last week</p></div>
                             </div>
                             </CardContent>
                         </Card>
                         <Card className=" bg-gradient-to-r from-[#E2F2FF] to-[#FFF3F3] rounded-lg drop-shadow-sm">
-                            <CardContent className="flex gap-2 p-4 flex-col flex-1">
+                            <CardContent className="flex gap-2 p-4 max-md:p-2 flex-col flex-1">
                             <div className=" text-xs text-secondary font-semibold Inter flex gap-2">Daily Engagements</div>
                             <div className="flex justify-between">
                             <p className=" text-2xl font-semibold my-auto">23K</p>
                             <div className="flex flex-col text-sm font-medium">
-                                <p className="text-[#FF9500] ml-auto flex">0%</p>
-                                <p className="text-secondary ml-auto"> than last week</p></div>
+                                <p className="text-[#FF9500] ml-auto flex max-md:mt-auto">0%</p>
+                                <p className="text-secondary ml-auto max-md:hidden"> than last week</p></div>
                             </div>
                             </CardContent>
                         </Card>
                         <Card className=" bg-gradient-to-r from-[#E2F2FF] to-[#FFF3F3] rounded-lg drop-shadow-sm">
-                            <CardContent className="flex gap-2 p-4 flex-col flex-1">
+                            <CardContent className="flex gap-2 p-4 max-md:p-2 flex-col flex-1">
                             <div className=" text-xs text-secondary font-semibold Inter flex gap-2">Total Engagement</div>
                             <div className="flex justify-between">
                             <p className=" text-2xl font-semibold my-auto">23K</p>
                             <div className="flex flex-col text-sm font-medium">
-                                <p className="text-[#FF3B30] ml-auto flex">-0.4% <LucideArrowDownLeft className="h-4 w-4 mt-auto"/></p>
-                                <p className="text-secondary ml-auto"> than last week</p></div>
+                                <p className="text-[#FF3B30] ml-auto flex max-md:mt-auto">-0.4% <LucideArrowDownLeft className="h-4 w-4 mt-auto"/></p>
+                                <p className="text-secondary ml-auto max-md:hidden"> than last week</p></div>
                             </div>
                             </CardContent>
                         </Card>
                         <Card className=" bg-gradient-to-r from-[#E2F2FF] to-[#FFF3F3] rounded-lg drop-shadow-sm">
-                            <CardContent className="flex gap-2 p-4 flex-col flex-1">
+                            <CardContent className="flex gap-2 p-4 max-md:p-2 flex-col flex-1">
                             <div className=" text-xs text-secondary font-semibold Inter flex gap-2">Total Followers</div>
                             <div className="flex justify-between">
                             <p className=" text-2xl font-semibold my-auto">23K</p>
                             <div className="flex flex-col text-sm font-medium">
-                                <p className="text-[#34C759] ml-auto flex">+18% <LucideArrowUpRight className="h-4 w-4 mt-auto"/></p>
-                                <p className="text-secondary ml-auto"> than last week</p></div>
+                                <p className="text-[#34C759] ml-auto flex max-md:mt-auto">+18% <LucideArrowUpRight className="h-4 w-4 mt-auto"/></p>
+                                <p className="text-secondary ml-auto max-md:hidden"> than last week</p></div>
                             </div>
                             </CardContent>
                         </Card>
@@ -185,7 +184,7 @@ function HomeSection({ store }) {
                 </div>
                 <div className="">
                 <ShineBorder
-                  className="relative flex w-full p-5 flex-1 justify-between overflow-hidden rounded-lg border bg-background md:shadow-lg"
+                  className="relative flex w-full p-5 flex-1 justify-between overflow-hidden rounded-lg border bg-background md:shadow-lg max-md:flex-col"
                   color={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
                   borderWidth={2}
                 >
@@ -227,9 +226,8 @@ function HomeSection({ store }) {
                 <Card className="flex flex-col gap-4 bg-[#f6f8f9]">
                     <CardHeader className="flex-row justify-between pb-0">
                         <CardTitle className="text-lg font-semibold">Top content by reach</CardTitle>
-                        <p className=" text-[#409BFF] font-medium">See More</p>
                     </CardHeader>
-                    <CardContent className="grid grid-cols-4 gap-1">
+                    <CardContent className="grid md:grid-cols-4 gap-1">
                     {Array.from({ length: 4 }).map((_, index) => (
                         <Card key={index} className="overflow-hidden">
                             <CardContent className="p-0 h-[200px] bg-[#e3e3e3] justify-center flex overflow-hidden">
@@ -301,10 +299,10 @@ const DashboardProjects = observer(({ store }) => {
     }, [project.cloudEnabled, project.designsLength,syncing]);
     return (
       <div className="flex flex-col flex-wrap">
-        <div className="flex gap-5 flex-wrap">
+        <div className="md:flex md:gap-5 md:flex-wrap max-md:grid max-md:grid-cols-2 max-md:gap-2">
           <Button
             variant="dotted"
-            className="px-10 py-8 aspect-square h-full"
+            className="px-10 py-8 aspect-square h-full max-md:w-full max-md:px-2"
               onClick={async () => {
                 window.location.href = `/canvas?id=create_new_design`;
               }}

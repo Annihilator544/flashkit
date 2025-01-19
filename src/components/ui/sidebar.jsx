@@ -233,7 +233,7 @@ const SidebarTrigger = React.forwardRef(({ className, onClick, ...props }, ref) 
         setIsToggled((isToggled) => !isToggled)
       }}
       {...props}>
-      {isToggled ? <div className="border rounded-md aspect-square my-auto flex justify-center align-middle"><LucideChevronsLeft className="h-4 my-auto"/></div> : <div className="border rounded-md aspect-square my-auto flex justify-center align-middle"><LucideChevronsLeft className="h-4 my-auto"/></div>}
+      {isToggled ? <div className="border rounded-md aspect-square my-auto flex justify-center align-middle"><LucideChevronsLeft className="h-4 my-auto"/></div> : <div className="border rounded-md aspect-square my-auto flex justify-center align-middle"><LucideChevronsRight className="h-4 my-auto"/></div>}
       <span className="sr-only">Toggle Sidebar</span>
     </Button>)
   );

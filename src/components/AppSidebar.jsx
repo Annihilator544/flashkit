@@ -84,7 +84,7 @@ import instagramSvg from "../assets/instagram.svg"
                             <img src={flashkitSocial} alt="flashkit logo" className="h-5" />
                             : <img src={flashkitPro} alt="flashkit logo" className="h-5" /> } */}
                            <img src={flashkit} alt="flashkit logo" className="h-[16px] my-auto" />
-                           <SidebarTrigger className="group-data-[collapsible=icon]:hidden"/>
+                           <SidebarTrigger className="group-data-[collapsible=icon]:hidden max-md:hidden"/>
                         </div>
                         </SidebarMenuButton>
                     </SidebarMenuItem>

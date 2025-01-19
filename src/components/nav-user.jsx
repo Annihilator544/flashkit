@@ -40,14 +40,14 @@ export function NavUser() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <div
-              className="flex gap-2 w-40">
+              className="flex gap-2 md:w-40 ">
               <Avatar className="h-8 w-8 rounded-full">
                     {user&&user.photoURL ? <AvatarImage src={user.photoURL} /> :
                         <AvatarImage src="https://github.com/shadcn.png" />
                       }
                         <AvatarFallback>CN</AvatarFallback>
               </Avatar>
-              <div className="flex align-middle justify-center flex-1 text-left text-sm leading-tight">
+              <div className="flex align-middle justify-center flex-1 text-left text-sm leading-tight max-md:hidden">
                 <span className="truncate text-xs font-semibold flex my-auto">{user&&user.displayName ? user.displayName : ""} <LucideChevronDown className="m-auto h-3"/></span>
                 {/* <span className="truncate text-secondary text-xs">{user&&user.email ? user.email : ""}</span> */}
               </div>
