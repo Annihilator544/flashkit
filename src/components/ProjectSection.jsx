@@ -23,6 +23,7 @@ import folderSVG from "../assets/folder.svg"
 import { file } from "jszip"
 import { nanoid } from "nanoid"
 import { Label } from "./ui/label"
+import { SidebarTrigger } from "./ui/sidebar"
 const categories = [
     { label: "All" },
     { label: "Folders" },
@@ -56,7 +57,7 @@ const categories = [
     }, [project.cloudEnabled, project.designsLength]);
     return (
       <div className="flex flex-col flex-wrap w-full">
-        <div className="flex gap-5 flex-wrap">
+        <div className="md:flex md:gap-5 md:flex-wrap max-md:grid max-md:grid-cols-2 max-md:gap-2">
         {!designsLoadings && !designs.length && (
           <div style={{ paddingTop: '20px', textAlign: 'center', opacity: 0.6 }}>
             You have no designs yet.
@@ -134,7 +135,7 @@ const categories = [
           >
           <DropdownMenu>
           <DropdownMenuTrigger>
-            <Button className="p-2  bg-[#00000040] hover:bg-[#00000080] border hidden group-hover:block"><LucideMoreVertical className="h-4"/></Button>
+            <Button className="p-2  bg-[#00000040] hover:bg-[#00000080] border md:hidden group-hover:block"><LucideMoreVertical className="h-4"/></Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-white mx-1 absolute">
             <DropdownMenuItem className="flex gap-2" onClick={() => {
@@ -290,10 +291,10 @@ const categories = [
         }, [project.cloudEnabled, project.designsLength]);
         return (
           <div className="flex flex-col flex-wrap">
-            <div className="flex gap-5 flex-wrap">
+            <div className="md:flex md:gap-5 md:flex-wrap max-md:grid max-md:grid-cols-2 max-md:gap-2">
               <Button
                 variant="dotted"
-                className="px-10 py-8 aspect-square h-full"
+                className="px-10 py-8 aspect-square h-full max-md:w-full max-md:px-2"
                   onClick={async () => {
                     window.location.href = `/canvas?id=create_new_design`;
                   }}
@@ -346,7 +347,7 @@ const categories = [
           }, [project.cloudEnabled, project.designsLength]);
           return (
             <div className="flex flex-col flex-wrap">
-              <div className="flex gap-5 flex-wrap">
+              <div className="md:flex md:gap-5 md:flex-wrap max-md:grid max-md:grid-cols-2 max-md:gap-2">
               {!designsLoadings && !designs.length && (
                 <div style={{ paddingTop: '20px', textAlign: 'center', opacity: 0.6 }}>
                   You have no designs yet.
@@ -485,15 +486,14 @@ const categories = [
       return (
           <div className="flex flex-col">
             <header className="flex shrink-0 h-10 items-center gap-2 transition-[width,height] ease-linear justify-end mb-2">
-              <div className="flex gap-3">
-                  <LucideSettings className="h-5 my-auto" />
-                  <LucideBell className="h-5 my-auto" />
+              <SidebarTrigger className=" md:hidden"/>
+              <div className="flex gap-3 ml-auto">
                   <NavUser/>
               </div>
             </header>
             <DashboardHeader title={"Project"} buttonText={"Explore Project"} bottomSection={false}/>
                 <div className="flex items-center justify-between py-4 rounded-md">
-                      <div className="flex gap-2">
+                      {/* <div className="flex gap-2">
                         <search className=" min-w-80 flex">
                         <div className="flex flex-1 items-center border rounded-full px-1">
                             <div className=" text-gray-400">
@@ -512,7 +512,7 @@ const categories = [
                             {cat.label}
                         </Button>
                         ))}
-                      </div>
+                      </div> */}
                     <div className="flex items-center space-x-2">
                       <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>
@@ -540,7 +540,7 @@ const categories = [
                       <Button variant="outline"><LucideFilter className="h-4 my-auto "/>Filters</Button>
                     </div>
                 </div>
-            <div className="max-w-[80vw] my-10">
+            <div className="max-w-[80vw] max-md:max-w-full my-10">
               <p className="text-lg font-semibold mb-3">Recent Designs</p>
               <DashboardProjects store={store} addFiles={addFilesToProject} fileDirectory={fileDirectory}/>
             </div>
@@ -571,7 +571,7 @@ const categories = [
                         </DialogDescription>
                       </DialogHeader>
                         <DashboardProjects3 store={store} projectId={project.id} files={project.files} deleteFiles={deleteFilesFromProject}/>
-                      <DialogFooter>
+                      <DialogFooter className="max-md:grid max-md:grid-cols-2 max-md:gap-2">
                         <Button onClick={()=>{handleDeleteProject(project.id)}} variant="destructive">Delete Folder</Button>
                         <Button type="submit">Save changes</Button>
                       </DialogFooter>
