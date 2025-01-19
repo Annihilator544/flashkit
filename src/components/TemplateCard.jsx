@@ -14,7 +14,7 @@ function TemplateCard({ url , jsonURL, BucketKey}){
     return (
         BucketKey ? 
         <button onClick={() => setJSON(BucketKey)}>
-            <Card className=" overflow-hidden min-w-28 max-w-40">
+            <Card className=" overflow-hidden min-w-28 max-w-40 max-md:max-w-full">
                 <CardContent className="p-0">
                     <img src={url} alt="img" className="w-full"/>
                 </CardContent>
@@ -26,7 +26,7 @@ function TemplateCard({ url , jsonURL, BucketKey}){
         </button>
         :
         <button onClick={() => ParseJson(jsonURL)}>
-            <Card className=" overflow-hidden min-w-28 max-w-40">
+            <Card className=" overflow-hidden min-w-28 max-w-40 max-md:max-w-full">
                 <CardContent className="p-0">
                     <img src={url} alt="img" className="w-full"/>
                 </CardContent>

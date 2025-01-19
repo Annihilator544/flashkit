@@ -8,6 +8,7 @@ import S3FileManager from "./S3MarketPlace";
 import { NavUser } from "./nav-user";
 import { Card } from "@blueprintjs/core";
 import { CarouselPrevious, CarouselNext, Carousel, CarouselContent, CarouselItem } from "./ui/carousel";
+import { SidebarTrigger } from "./ui/sidebar";
 
 function TemplateSection({ store }) {
     const [mediaKitData, setMediaKitData] = useState([]);
@@ -59,15 +60,14 @@ function TemplateSection({ store }) {
   return (
     <>
         <header className="flex shrink-0 h-10 items-center gap-2 transition-[width,height] ease-linear justify-end mb-2">
-            <div className="flex gap-3">
-                <LucideSettings className="h-5 my-auto" />
-                <LucideBell className="h-5 my-auto" />
+            <SidebarTrigger className=" md:hidden"/>
+            <div className="flex gap-3 ml-auto">
                 <NavUser/>
             </div>
         </header>
         <DashboardHeader title={"Design Stunning Content Effortlessly!"} buttonText={"Explore Templates"} bottomSection={false}/>
-        <div className="p-2 flex-col flex gap-10">
-            <div className="flex gap-2">
+        <div className="p-2 max-md:p-0 flex-col flex gap-10">
+            {/* <div className="flex gap-2">
                 <search className=" min-w-80 flex">
                 <div className="flex flex-1 items-center border rounded-full px-1">
                     <div className=" text-gray-400">
@@ -86,14 +86,14 @@ function TemplateSection({ store }) {
                     {cat.label}
                 </Button>
                 ))}
-            </div>
+            </div> */}
             <div>
                 <p className="text-lg font-semibold">Choose your category</p>
-                <div className="flex justify-between gap-3 px-4 mt-5">
+                <div className="flex justify-between gap-3 px-4 mt-5 max-md:grid max-md:grid-cols-2 max-md:px-0">
                 {
                   choose.map((item,index)=>(
                     <div className="p-2 bg-gray-100 rounded-lg border flex flex-col gap-2 align-middle " key={index}>
-                        <div className=" rounded-lg h-20 w-40 flex items-center justify-center bg-cover">
+                        <div className=" rounded-lg h-20 w-40 flex items-center justify-center bg-cover max-md:w-full">
                             <img src="https://images.unsplash.com/photo-1729761137674-9a3a841f7cea" className="h-full w-full object-cover rounded-lg" alt="category"/>
                         </div>
                         <p className="mx-auto">{item}</p>
@@ -102,7 +102,7 @@ function TemplateSection({ store }) {
                 }
                 </div>
             </div>
-              <div className="max-w-[80vw]">
+              <div className="max-w-[80vw] max-md:max-w-[90vw] mx-auto">
                 <p className="text-lg font-semibold mb-5">Trending Templates</p>
                 <Carousel>
                     <CarouselContent>
@@ -147,7 +147,7 @@ function TemplateSection({ store }) {
                     <p className="text-lg font-semibold mb-5">Instagram Stories</p>
                     <p className=" text-[#409BFF] font-medium">See More</p>
                 </div>
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-3 max-md:grid max-md:grid-cols-2">
                 {
                   minimalDesigns.map((item, index)=>{
                     return(
@@ -162,7 +162,7 @@ function TemplateSection({ store }) {
                     <p className="text-lg font-semibold mb-5">Youtube Templates</p>
                     <p className=" text-[#409BFF] font-medium">See More</p>
                 </div>
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-3 max-md:grid">
                 {
                   classicDesigns.map((item, index)=>{
                     return(
