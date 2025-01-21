@@ -1,57 +1,188 @@
-import React from "react";
-import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
+"use client";
+
 import { LucideArrowDownLeft, LucideArrowUpRight } from "lucide-react";
+import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "../ui/chart";
+
+const chartConfig = {
+  views: {
+    label: "Views",
+    color: "hsl(var(--youtube-chart-1))",
+  },
+  subscribed: {
+    label: "Subscribed",
+    color: "hsl(var(--youtube-chart-2))",
+  },
+  unsubscribed: {
+    label: "Unsubscribed",
+    color: "hsl(var(--youtube-chart-3))",
+  },
+};
+
+function formatDate(date) {
+  const options = {
+    month: "short",
+    day: "numeric",
+  };
+
+  return date.toLocaleDateString("en-US", options).replace(",", "");
+}
+//conver 2025-01-12 to 12 jan
+function convertDateFormat(date) {
+  const options = {
+    month: "short",
+    day: "numeric",
+  };
+  return new Date(date).toLocaleDateString("en-US", options).replace(",", "");
+}
 
 const DialySubscribedUnsubscribed = ({ youtubeData, percentageChangeViews }) => {
   // Prepare data for the chart
   const chartData = Object.keys(youtubeData.daily)
+    .slice(-7)
     .sort((a, b) => new Date(a) - new Date(b))
     .map((date) => ({
-      date, // X-axis value
+      date: convertDateFormat(date), // X-axis value
       views: youtubeData.daily[date].views,
       subscribed: youtubeData.daily[date].subscribed,
       unsubscribed: youtubeData.daily[date].unsubscribed,
     }));
 
-  const date = new Date();
-  const currentMonth = date.toLocaleString("default", { month: "long" });
-  const currentYear = date.getFullYear();
-  const daysAgoMonth = new Date(date.setDate(date.getDate() - 90)).toLocaleString("default", { month: "long" });
-  const daysAgoYear = new Date(date).getFullYear();
+    const date = new Date();
+    const formatedDate = formatDate(date);
+    const dateWeekAgo = new Date(date.setDate(date.getDate() - 7))
+    const formatedDateWeekAgo = formatDate(dateWeekAgo);
 
   return (
-    <Card className="max-w-4xl mx-auto flex-1 bg-[#f6f8f9] shadow-md">
+    <Card className=" flex flex-col flex-1 bg-[#f6f8f9] shadow-md">
       <CardHeader>
-        <p className="text-[#252C32] font-semibold text-lg">Views, Subscribed, and Unsubscribed</p>
-        <p className="text-secondary">{`${daysAgoMonth} ${daysAgoYear} to ${currentMonth} ${currentYear}`}</p>
+        <CardTitle className="text-[#252C32] font-semibold text-lg">View Metrics</CardTitle>
+        <CardDescription>{`${formatedDateWeekAgo} to ${formatedDate}`}</CardDescription>
       </CardHeader>
-      <CardContent className="p-0 pr-6">
-        <div className="h-96">
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={chartData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" tick={{ fontSize: 12 }} />
-              <YAxis />
-              <Tooltip />
-              <Area type="monotone" dataKey="views" stackId="1" stroke="#FF6B6B" fill="#FF6B6B" fillOpacity={0.3} />
-              <Area type="monotone" dataKey="subscribed" stackId="1" stroke="#FF4C4C" fill="#FF4C4C" fillOpacity={0.3} />
-              <Area type="monotone" dataKey="unsubscribed" stackId="1" stroke="#D72638" fill="#D72638" fillOpacity={0.3} />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
+      <CardContent>
+        <ChartContainer config={chartConfig}>
+          <AreaChart
+            accessibilityLayer
+            data={chartData}
+            margin={{
+              left: 12,
+              right: 12,
+            }}
+          >
+            <CartesianGrid vertical={false} />
+            <XAxis
+              dataKey="date"
+              tickLine={false}
+              axisLine={false}
+              tickMargin={8}
+            />
+            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+            <defs>
+              <linearGradient id="fillViews" x1="0" y1="0" x2="0" y2="1">
+                <stop
+                  offset="5%"
+                  stopColor="var(--color-views)"
+                  stopOpacity={0.8}
+                />
+                <stop
+                  offset="95%"
+                  stopColor="var(--color-views)"
+                  stopOpacity={0.1}
+                />
+              </linearGradient>
+              <linearGradient id="fillSubscribed" x1="0" y1="0" x2="0" y2="1">
+                <stop
+                  offset="5%"
+                  stopColor="var(--color-subscribed)"
+                  stopOpacity={0.8}
+                />
+                <stop
+                  offset="95%"
+                  stopColor="var(--color-subscribed)"
+                  stopOpacity={0.1}
+                />
+              </linearGradient>
+              <linearGradient id="fillUnsubscribed" x1="0" y1="0" x2="0" y2="1">
+                <stop
+                  offset="5%"
+                  stopColor="var(--color-unsubscribed)"
+                  stopOpacity={0.8}
+                />
+                <stop
+                  offset="95%"
+                  stopColor="var(--color-unsubscribed)"
+                  stopOpacity={0.1}
+                />
+              </linearGradient>
+            </defs>
+            <Area
+              dataKey="views"
+              type="natural"
+              fill="url(#fillViews)"
+              fillOpacity={0.4}
+              stroke="var(--color-views)"
+              stackId="a"
+            />
+            <Area
+              dataKey="subscribed"
+              type="natural"
+              fill="url(#fillSubscribed)"
+              fillOpacity={0.4}
+              stroke="var(--color-subscribed)"
+              stackId="a"
+            />
+            <Area
+              dataKey="unsubscribed"
+              type="natural"
+              fill="url(#fillUnsubscribed)"
+              fillOpacity={0.4}
+              stroke="var(--color-unsubscribed)"
+              stackId="a"
+            />
+          </AreaChart>
+        </ChartContainer>
       </CardContent>
-      <CardFooter className="flex flex-col gap-1 items-start mt-4">
-            <p className="flex font-semibold gap-1 text-sm">Trending By <p className={`${percentageChangeViews > 0 ? "text-[#34C759]": percentageChangeViews === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{percentageChangeViews}% {percentageChangeViews > 0 ? <LucideArrowUpRight className="h-4 w-4 mt-auto"/> : percentageChangeViews === 0 ? <></> : <LucideArrowDownLeft className="h-4 w-4 mt-auto"/>}</p> past 90 days</p>
-            <p className="text-secondary text-sm">Show trends in views, subscribers, and unsubscribers for the last 90 days.</p>
+      <CardFooter className="flex flex-col gap-1 items-start mt-auto">
+        <div className="flex w-full items-start gap-2 text-sm">
+          <div className="grid gap-2">
+          <p className="flex font-semibold gap-1 text-sm">
+              Views trending By
+              <span
+                className={`${
+                  percentageChangeViews > 0
+                    ? "text-[#34C759]"
+                    : percentageChangeViews === 0
+                    ? "text-[#FF9500]"
+                    : "text-[#FF3B30]"
+                } ml-2 flex items-center`}
+              >
+              {percentageChangeViews}%
+                {percentageChangeViews > 0 ? (
+                  <LucideArrowUpRight className="h-4 w-4 ml-1" />
+                ) : percentageChangeViews === 0 ? null : (
+                  <LucideArrowDownLeft className="h-4 w-4 ml-1" />
+                )}
+              </span>{" "}
+              past week
+            </p>
+            <div className="leading-none text-muted-foreground">
+              Compare views, subscribers, and unsubscribers for the last 7 days.
+            </div>
+          </div>
+        </div>
       </CardFooter>
     </Card>
   );

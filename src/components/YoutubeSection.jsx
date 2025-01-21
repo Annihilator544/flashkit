@@ -258,18 +258,13 @@ function YoutubeSection () {
               </Card>
               <div>
                 <div className="flex-1 mt-3 flex flex-col gap-4">
-                  <div className="flex-1 flex gap-4">
-                    <DailyViewsYoutube youtubeData={youtubeData} percentageChangeViews={youtubeCalculatedData.percentageChangeViews}/>
-                    {/* <YoutubeMonthly/> */}
+                  <div className="grid grid-cols-2 gap-4">
                     <DailyWatchMetrics youtubeData={youtubeData}/>
-                  </div>
-                  <div className="flex-1 flex gap-4 flex-wrap">
                     <DialySubscribedUnsubscribed youtubeData={youtubeData} percentageChangeViews={youtubeCalculatedData.percentageChangeViews}/>
-                    <DailyCommentsYoutube youtubeData={youtubeData}/>
                   </div>
-                  <div className="flex-1 flex gap-4 flex-wrap">
-                    <DailySubscribersYoutube youtubeData={youtubeData} percentageChangeSubscribers={youtubeCalculatedData.percentageChangeSubscribers}/>
+                  <div className="grid grid-cols-2 gap-4">
                     <DailyLikeShareDislikeYoutube youtubeData={youtubeData}/>
+                    <DailyCommentsYoutube youtubeData={youtubeData} percentageChangeSubscribers={youtubeCalculatedData.percentageChangeSubscribers}/>
                   </div>
                 </div>
               </div>
