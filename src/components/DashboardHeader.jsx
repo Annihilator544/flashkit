@@ -17,11 +17,8 @@ const DashboardHeader = ({ title, buttonText, bottomSection }) => {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-[#E4F0FA] to-[#9DD3FF] stops-[#9DD3FF] p-6 rounded-lg mb-6">
+      <div className="bg-gradient-to-r from-[#E4F0FA] to-[#9DD3FF] stops-[#9DD3FF] rounded-lg mb-6 p-8 h-[140px]">
         <h1 className="text-3xl font-light text-black mb-4">{title}</h1>
-        <Button variant="secondary" className="bg-white text-black hover:bg-gray-100 drop-shadow-2xl">
-          {buttonText}
-        </Button>
       </div>
 
       {/* Tools Grid */}

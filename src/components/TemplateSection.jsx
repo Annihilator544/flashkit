@@ -62,6 +62,8 @@ function TemplateSection({ store }) {
         <header className="flex shrink-0 h-10 items-center gap-2 transition-[width,height] ease-linear justify-end mb-2">
             <SidebarTrigger className=" md:hidden"/>
             <div className="flex gap-3 ml-auto">
+                <LucideSettings className="h-5 my-auto" />
+                <LucideBell className="h-5 my-auto" />
                 <NavUser/>
             </div>
         </header>

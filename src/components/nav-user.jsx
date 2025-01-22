@@ -98,10 +98,10 @@ export function NavUser() {
                         Account Settings
                     </TabsTrigger>
                   </DropdownMenuItem>
-                <DropdownMenuItem onClick={()=>window.location.href="/billing"}>
+                {/* <DropdownMenuItem onClick={()=>window.location.href="/billing"}>
                   <CreditCard className="h-4" />
                   Billing
-                </DropdownMenuItem>
+                </DropdownMenuItem> */}
               </DropdownMenuGroup>
             </TabsList>
             <DropdownMenuSeparator />

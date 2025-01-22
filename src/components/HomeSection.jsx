@@ -88,6 +88,8 @@ function HomeSection({ store }) {
             </search> */}
             <SidebarTrigger className=" md:hidden"/>
             <div className="flex gap-3 ml-auto">
+                    <LucideSettings className="h-5 my-auto" />
+                    <LucideBell className="h-5 my-auto" />
                 <NavUser/>
             </div>
             </header>
