@@ -486,6 +486,18 @@ const categories = [
       return (
           <div className="flex flex-col">
             <header className="flex shrink-0 h-10 items-center gap-2 transition-[width,height] ease-linear justify-end mb-2">
+            <search className=" min-w-80 flex">
+            <div className="flex flex-1 items-center border rounded-full px-1">
+                <div className=" text-gray-400">
+                <LucideSearch className="h-5"/>
+                </div>
+                <Input
+                type="search"
+                placeholder="Search ..."
+                className=" border-none focus:outline-none focus:ring-0 bg-transparent w-full focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                />
+            </div>
+            </search>
               <SidebarTrigger className=" md:hidden"/>
               <div className="flex gap-3 ml-auto">
                     <LucideSettings className="h-5 my-auto" />
@@ -493,7 +505,7 @@ const categories = [
                   <NavUser/>
               </div>
             </header>
-            <DashboardHeader title={"Project"} buttonText={"Explore Project"} bottomSection={false}/>
+            <DashboardHeader title={"Projects"} buttonText={"Explore Project"} bottomSection={false}/>
                 <div className="flex items-center justify-between py-4 rounded-md">
                       {/* <div className="flex gap-2">
                         <search className=" min-w-80 flex">

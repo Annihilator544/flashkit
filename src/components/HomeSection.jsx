@@ -74,7 +74,7 @@ function HomeSection({ store }) {
                 </BreadcrumbList>
                 </Breadcrumb>
             </div> */}
-            {/* <search className=" min-w-80 flex">
+            <search className=" min-w-80 flex">
             <div className="flex flex-1 items-center border rounded-full px-1">
                 <div className=" text-gray-400">
                 <LucideSearch className="h-5"/>
@@ -85,7 +85,7 @@ function HomeSection({ store }) {
                 className=" border-none focus:outline-none focus:ring-0 bg-transparent w-full focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                 />
             </div>
-            </search> */}
+            </search>
             <SidebarTrigger className=" md:hidden"/>
             <div className="flex gap-3 ml-auto">
                     <LucideSettings className="h-5 my-auto" />
