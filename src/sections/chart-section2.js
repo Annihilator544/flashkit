@@ -1,6 +1,6 @@
 import { SectionTab } from 'polotno/side-panel';
 import { LucideChartArea } from 'lucide-react';
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Button } from '@blueprintjs/core';
 import { observer } from 'mobx-react-lite';
 import { AreaChartDisplay } from '../components/charts/AreaChartDisplay';
@@ -12,6 +12,16 @@ import RadarChartDisplay from '../components/charts/RadarChartDisplay';
 import RadialChartDisplay from '../components/charts/RadialChartDisplay';
 import html2canvas from 'html2canvas';
 import ChartsVector from '../assets/ChartsVector.svg'
+import DailyFollowerChart from '../components/InstagramCharts/DailyFollowerChart';
+import { useInstagramData } from 'store/use-instagram-data';
+import DailyImpressionsChart from '../components/InstagramCharts/DailyImpressionsChart';
+import DailyReachChart from '../components/InstagramCharts/DailyReachChart';
+import DemographicsChart from '../components/InstagramCharts/DemographicsChart';
+import DailyCommentsChart from '../components/YoutubeCharts/DailyCommentsChart';
+import DailyLikeShareDislikeChart from '../components/YoutubeCharts/DailyLikeShareDislikeChart';
+import DailySubscribedUnsubscribedChart from '../components/YoutubeCharts/DailySubscribedUnsubscribedChart';
+import DailyWatchMetricsChart from '../components/YoutubeCharts/DailyWatchMetricsChart';
+
 
 const ChartWrapper = observer(({ children, store, name }) => {
   const chartRef = useRef(null);
@@ -56,7 +66,7 @@ const ChartWrapper = observer(({ children, store, name }) => {
 
   return (
     <div 
-      className="cursor-pointer hover:bg-gray-100 p-2 rounded"
+      className="cursor-pointer hover:bg-gray-200 bg-gray-100 p-4 rounded-2xl"
       onClick={handleClick}
       ref={chartRef}
     >
@@ -74,27 +84,33 @@ export const ChartSection = {
   ),
   Panel: observer(({ store }) => {
     return (
-      <div className="overflow-y-auto h-full flex flex-col gap-2 p-2">
+      <div className="overflow-y-auto h-full flex flex-col gap-2">
+        <ChartWrapper store={store} name="Radar">
+          <DailyCommentsChart />
+        </ChartWrapper>
         <ChartWrapper store={store} name="Area">
-          <AreaChartDisplay />
+          <DailyFollowerChart />
+        </ChartWrapper>
+        <ChartWrapper store={store} name="Radial">
+          <DailyLikeShareDislikeChart />
         </ChartWrapper>
         <ChartWrapper store={store} name="Bar">
-          <BarChartDisplay />
+        <DailyImpressionsChart />
         </ChartWrapper>
         <ChartWrapper store={store} name="Insights">
-          <InsightsChart />
+          <DailyReachChart />
         </ChartWrapper>
         <ChartWrapper store={store} name="Line">
-          <LineChartDisplay />
+          <DemographicsChart />
         </ChartWrapper>
         <ChartWrapper store={store} name="Monthly Engagement">
           <MonthlyEngagementChart />
         </ChartWrapper>
         <ChartWrapper store={store} name="Radar">
-          <RadarChartDisplay />
+          <DailySubscribedUnsubscribedChart />
         </ChartWrapper>
-        <ChartWrapper store={store} name="Radial">
-          <RadialChartDisplay />
+        <ChartWrapper store={store} name="Radar">
+          <DailyWatchMetricsChart />
         </ChartWrapper>
       </div>
     );

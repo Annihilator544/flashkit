@@ -62,13 +62,7 @@ export function YoutubeMonthly() {
     const chartData = transformData(youtubeData.monthly);
   return (
     <Card className="flex-1">
-      <CardHeader>
-        <CardTitle>Youtube Metrics</CardTitle>
-        <CardDescription>
-          Showing for the last 5 Years
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
+      <CardContent className="p-0">
         <ChartContainer config={chartConfig} className="w-full max-h-[250px]">
           <AreaChart
             accessibilityLayer

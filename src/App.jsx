@@ -30,7 +30,7 @@ import { LogoSection } from './sections/logo-section.js';
 import Topbar from 'topbar/topbar';
 import { useSearchParams } from 'react-router-dom';
 import { useJsonData } from 'store/use-json-data';
-import { ChartSection } from 'sections/chart-section';
+import { ChartSection } from 'sections/chart-section2';
 import { ElementsSection } from 'sections/element-section';
 import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';

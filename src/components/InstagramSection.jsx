@@ -198,7 +198,7 @@ function InstagramSection (){
                   </div>
                   <div className="flex-1 flex gap-4 flex-wrap">
                     <DailyReach reachData={instagramData.daily} percentageChangeReach={instagramCalculatedData.percentageChangeReach} numberOfDaysOfData={instagramCalculatedData.numberOfDaysOfData}/>
-                    <Demographics demographicData={instagramData.demographicData}/>
+                    <Demographics demographicData={instagramData.daily}/>
                   </div>
                   <Card className="flex-1 bg-[#f6f8f9] rounded-lg shadow-md">
                     <CardHeader>

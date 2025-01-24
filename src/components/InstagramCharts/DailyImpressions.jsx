@@ -48,6 +48,7 @@ const DailyImpressions = ({
   impressionsData,
   percentageChangeImpressions,
   numberOfDaysOfData,
+  className,
 }) => {
   // Prepare data for the chart
   const chartData = Object.keys(impressionsData).slice(-7).map((date) => ({
@@ -67,7 +68,7 @@ const DailyImpressions = ({
   });
 
   return (
-    <Card className=" flex flex-col flex-1 bg-[#f6f8f9] shadow-md">
+    <Card className={`flex flex-col flex-1 bg-[#f6f8f9] shadow-md ${className}`}>
       <CardHeader>
         <CardTitle className="text-[#252C32] font-semibold text-lg">Impressions</CardTitle>
         <CardDescription>

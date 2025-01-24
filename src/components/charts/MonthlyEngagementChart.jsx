@@ -23,7 +23,7 @@ import { ChartContainer } from "../ui/chart";
       const monthIndex = parseInt(monthNumber, 10) - 1; // Convert to 0-based index
       
       return {
-        month: monthNames[monthIndex] + ' ' + year,
+        month: monthNames[monthIndex] ,
         views: data.views,
         subscribers: data.subscribers,
       };
@@ -47,10 +47,7 @@ import { ChartContainer } from "../ui/chart";
     },[youtubeData]);  
     return (
       <Card className="flex-1 bg-inherit border-none shadow-none">
-        <CardHeader>
-          <CardTitle>Monthly Engagement</CardTitle>
-        </CardHeader>
-        <CardContent className="p-0 pb-6">
+        <CardContent className="p-0 ">
         <ChartContainer
           config={chartConfig}
           className="mx-auto "
@@ -59,11 +56,9 @@ import { ChartContainer } from "../ui/chart";
             width={600}
             height={300}
             data={chartData}
-            margin={{ top: 20, right: 5, left: 5, bottom: 10 }}
+            margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
           >
-            <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="month" />
-            <YAxis />
             <Tooltip />
             {/* <Legend /> */}
             {chartData === monthlyData ? (
