@@ -11,7 +11,7 @@ import { cn } from "../../lib/utils.ts";
  * @param children contains react node elements.
  */
 export default function ShineBorder({
-  borderRadius = 8,
+  borderRadius = 16,
   borderWidth = 1,
   duration = 14,
   color = "#000000",

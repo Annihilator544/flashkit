@@ -60,7 +60,7 @@ function TemplateSection({ store }) {
   return (
     <>
         <header className="flex shrink-0 h-10 items-center gap-2 transition-[width,height] ease-linear justify-end mb-2">
-        <search className=" min-w-80 flex">
+        {/* <search className=" min-w-80 flex">
             <div className="flex flex-1 items-center border rounded-full px-1">
                 <div className=" text-gray-400">
                 <LucideSearch className="h-5"/>
@@ -71,7 +71,7 @@ function TemplateSection({ store }) {
                 className=" border-none focus:outline-none focus:ring-0 bg-transparent w-full focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                 />
             </div>
-            </search>
+            </search> */}
             <SidebarTrigger className=" md:hidden"/>
             <div className="flex gap-3 ml-auto">
                 <LucideSettings className="h-5 my-auto" />
@@ -81,7 +81,7 @@ function TemplateSection({ store }) {
         </header>
         <DashboardHeader title={"Template Hub"} buttonText={"Explore Templates"} bottomSection={false}/>
         <div className="p-2 max-md:p-0 flex-col flex gap-10">
-            {/* <div className="flex gap-2">
+            <div className="flex gap-2">
                 <search className=" min-w-80 flex">
                 <div className="flex flex-1 items-center border rounded-full px-1">
                     <div className=" text-gray-400">
@@ -100,10 +100,10 @@ function TemplateSection({ store }) {
                     {cat.label}
                 </Button>
                 ))}
-            </div> */}
+            </div>
             <div>
                 <p className="text-lg font-semibold">Choose your category</p>
-                <div className="flex justify-between gap-3 px-4 mt-5 max-md:grid max-md:grid-cols-2 max-md:px-0">
+                <div className="flex justify-start gap-3 px-4 mt-5 max-md:grid max-md:grid-cols-2 max-md:px-0">
                 {
                   choose.map((item,index)=>(
                     <div className="p-2 bg-gray-100 rounded-lg border flex flex-col gap-2 align-middle " key={index}>
@@ -116,7 +116,7 @@ function TemplateSection({ store }) {
                 }
                 </div>
             </div>
-              <div className="max-w-[80vw] max-md:max-w-[90vw] mx-auto">
+              <div className="max-w-[80vw] max-md:max-w-[90vw] mr-auto">
                 <p className="text-lg font-semibold mb-5">Trending Templates</p>
                 <Carousel>
                     <CarouselContent>
@@ -159,7 +159,7 @@ function TemplateSection({ store }) {
               <div>
                 <div className="flex justify-between">
                     <p className="text-lg font-semibold mb-5">Instagram Stories</p>
-                    <p className=" text-[#409BFF] font-medium">See More</p>
+                    {/* <p className=" text-[#409BFF] font-medium">See More</p> */}
                 </div>
                 <div className="flex flex-wrap gap-3 max-md:grid max-md:grid-cols-2">
                 {
@@ -174,7 +174,7 @@ function TemplateSection({ store }) {
               <div>
                 <div className="flex justify-between">
                     <p className="text-lg font-semibold mb-5">Youtube Templates</p>
-                    <p className=" text-[#409BFF] font-medium">See More</p>
+                    {/* <p className=" text-[#409BFF] font-medium">See More</p> */}
                 </div>
                 <div className="flex flex-wrap gap-3 max-md:grid">
                 {

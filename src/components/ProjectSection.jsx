@@ -57,7 +57,7 @@ const categories = [
     }, [project.cloudEnabled, project.designsLength]);
     return (
       <div className="flex flex-col flex-wrap w-full">
-        <div className="md:flex md:gap-5 md:flex-wrap max-md:grid max-md:grid-cols-2 max-md:gap-2">
+        <div className="md:flex md:gap-2 md:flex-wrap max-md:grid max-md:grid-cols-2 max-md:gap-2">
         {!designsLoadings && !designs.length && (
           <div style={{ paddingTop: '20px', textAlign: 'center', opacity: 0.6 }}>
             You have no designs yet.
@@ -291,7 +291,7 @@ const categories = [
         }, [project.cloudEnabled, project.designsLength]);
         return (
           <div className="flex flex-col flex-wrap">
-            <div className="md:flex md:gap-5 md:flex-wrap max-md:grid max-md:grid-cols-2 max-md:gap-2">
+            <div className="md:flex md:gap-2 md:flex-wrap max-md:grid max-md:grid-cols-2 max-md:gap-2">
               <Button
                 variant="dotted"
                 className="px-10 py-8 aspect-square h-full max-md:w-full max-md:px-2"
@@ -347,7 +347,7 @@ const categories = [
           }, [project.cloudEnabled, project.designsLength]);
           return (
             <div className="flex flex-col flex-wrap">
-              <div className="md:flex md:gap-5 md:flex-wrap max-md:grid max-md:grid-cols-2 max-md:gap-2">
+              <div className="md:flex md:gap-2 md:flex-wrap max-md:grid max-md:grid-cols-2 max-md:gap-2">
               {!designsLoadings && !designs.length && (
                 <div style={{ paddingTop: '20px', textAlign: 'center', opacity: 0.6 }}>
                   You have no designs yet.
@@ -486,18 +486,6 @@ const categories = [
       return (
           <div className="flex flex-col">
             <header className="flex shrink-0 h-10 items-center gap-2 transition-[width,height] ease-linear justify-end mb-2">
-            <search className=" min-w-80 flex">
-            <div className="flex flex-1 items-center border rounded-full px-1">
-                <div className=" text-gray-400">
-                <LucideSearch className="h-5"/>
-                </div>
-                <Input
-                type="search"
-                placeholder="Search ..."
-                className=" border-none focus:outline-none focus:ring-0 bg-transparent w-full focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
-                />
-            </div>
-            </search>
               <SidebarTrigger className=" md:hidden"/>
               <div className="flex gap-3 ml-auto">
                     <LucideSettings className="h-5 my-auto" />
@@ -507,7 +495,7 @@ const categories = [
             </header>
             <DashboardHeader title={"Projects"} buttonText={"Explore Project"} bottomSection={false}/>
                 <div className="flex items-center justify-between py-4 rounded-md">
-                      {/* <div className="flex gap-2">
+                      <div className="flex gap-2">
                         <search className=" min-w-80 flex">
                         <div className="flex flex-1 items-center border rounded-full px-1">
                             <div className=" text-gray-400">
@@ -526,7 +514,7 @@ const categories = [
                             {cat.label}
                         </Button>
                         ))}
-                      </div> */}
+                      </div>
                     <div className="flex items-center space-x-2">
                       <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>

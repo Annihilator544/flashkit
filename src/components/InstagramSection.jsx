@@ -147,7 +147,7 @@ function InstagramSection (){
                             <CardContent className="flex gap-1 p-2 flex-col flex-1">
                             <div className=" text-sm text-secondary font-medium Inter flex gap-2">Total Followers</div>
                             <div className="flex justify-between">
-                            <p className=" text-2xl font-semibold my-auto">{instagramData.userData.followers_count}</p>
+                            <p className=" text-3xl font-semibold my-auto">{instagramData.userData.followers_count}</p>
                             <div className="flex flex-col text-sm font-medium">
                                 <p className={`${instagramCalculatedData.percentageChangeFollowers > 0 ? "text-[#34C759]": instagramCalculatedData.percentageChangeFollowers === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{instagramCalculatedData.percentageChangeFollowers}% {instagramCalculatedData.percentageChangeFollowers > 0 ? <LucideArrowUpRight className="h-4 w-4 mt-auto"/> : instagramCalculatedData.percentageChangeFollowers === 0 ? <></> : <LucideArrowDownLeft className="h-4 w-4 mt-auto"/>}</p>
                                 <p className="text-secondary ml-auto"> than last week</p></div>
@@ -159,7 +159,7 @@ function InstagramSection (){
                             <CardContent className="flex gap-1 p-2 flex-col flex-1">
                             <div className=" text-sm text-secondary font-medium Inter flex gap-2">Total Impressions</div>
                             <div className="flex justify-between">
-                            <p className=" text-2xl font-semibold my-auto">{instagramCalculatedData.totalImpressions}</p>
+                            <p className=" text-3xl font-semibold my-auto">{instagramCalculatedData.totalImpressions}</p>
                             <div className="flex flex-col text-sm font-medium">
                                 <p className={`${instagramCalculatedData.percentageChangeImpressions > 0 ? "text-[#34C759]": instagramCalculatedData.percentageChangeImpressions === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{instagramCalculatedData.percentageChangeImpressions}%{instagramCalculatedData.percentageChangeImpressions > 0 ? <LucideArrowUpRight className="h-4 w-4 mt-auto"/> : instagramCalculatedData.percentageChangeImpressions === 0 ? <></> : <LucideArrowDownLeft className="h-4 w-4 mt-auto"/>}</p>
                                 <p className="text-secondary ml-auto"> than last week</p></div>
@@ -173,7 +173,7 @@ function InstagramSection (){
                             <CardContent className="flex gap-1 p-2 flex-col flex-1">
                             <div className=" text-sm text-secondary font-medium Inter flex gap-2">Total Reach</div>
                             <div className="flex justify-between">
-                            <p className=" text-2xl font-semibold my-auto">{instagramCalculatedData.totalReach}</p>
+                            <p className=" text-3xl font-semibold my-auto">{instagramCalculatedData.totalReach}</p>
                             <div className="flex flex-col text-sm font-medium">
                                 <p className={`${instagramCalculatedData.percentageChangeReach > 0 ? "text-[#34C759]": instagramCalculatedData.percentageChangeReach === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{instagramCalculatedData.percentageChangeReach}%{instagramCalculatedData.percentageChangeReach > 0 ? <LucideArrowUpRight className="h-4 w-4 mt-auto"/> : instagramCalculatedData.percentageChangeReach === 0 ? <></> : <LucideArrowDownLeft className="h-4 w-4 mt-auto"/>}</p>
                                 <p className="text-secondary ml-auto"> than last week</p></div>
@@ -184,7 +184,7 @@ function InstagramSection (){
                         <Card className=" border-none rounded-lg shadow-none">
                             <CardContent className="flex gap-1 p-2 flex-col flex-1">
                             <div className=" text-sm text-secondary font-medium Inter flex gap-2">Top Country</div>
-                            <p className=" text-2xl font-semibold my-auto">{instagramCalculatedData.topCountry}</p>
+                            <p className=" text-3xl font-semibold my-auto">{instagramCalculatedData.topCountry}</p>
                             </CardContent>
                         </Card>
                   </div>
@@ -205,7 +205,7 @@ function InstagramSection (){
                       <p className="text-[#101010] font-semibold text-lg">Extra Metrics</p>
                       <p className="text-secondary">this week</p>
                     </CardHeader>
-                    <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <CardContent className="grid grid-cols-1 md:grid-cols-4 gap-3">
                     {Object.entries(instagramData.extraMetrics).map(([key, value], index) => (
                       <div
                         key={index}

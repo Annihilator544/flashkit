@@ -208,7 +208,7 @@ function YoutubeSection () {
                             <CardContent className="flex gap-1 p-2 flex-col flex-1">
                             <div className=" text-sm text-secondary font-medium Inter flex gap-2">Total Views</div>
                             <div className="flex justify-between">
-                            <p className=" text-2xl font-semibold my-auto">{youtubeCalculatedData.totalViewsThisWeek}</p>
+                            <p className=" text-3xl font-semibold my-auto">{youtubeCalculatedData.totalViewsThisWeek}</p>
                             <div className="flex flex-col text-sm font-medium">
                                 <p className={`${youtubeCalculatedData.percentageChangeViews > 0 ? "text-[#34C759]": youtubeCalculatedData.percentageChangeViews === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{youtubeCalculatedData.percentageChangeViews}% {youtubeCalculatedData.percentageChangeViews > 0 ? <LucideArrowUpRight className="h-4 w-4 mt-auto"/> : youtubeCalculatedData.percentageChangeViews === 0 ? <></> : <LucideArrowDownLeft className="h-4 w-4 mt-auto"/>}</p>
                                 <p className="text-secondary ml-auto"> than last week</p></div>
@@ -220,7 +220,7 @@ function YoutubeSection () {
                             <CardContent className="flex gap-1 p-2 flex-col flex-1">
                             <div className=" text-sm text-secondary font-medium Inter flex gap-2">Total Subscribers</div>
                             <div className="flex justify-between">
-                            <p className=" text-2xl font-semibold my-auto">{youtubeData?.channel?.statistics?.subscriberCount}</p>
+                            <p className=" text-3xl font-semibold my-auto">{youtubeData?.channel?.statistics?.subscriberCount}</p>
                             <div className="flex flex-col text-sm font-medium">
                                 <p className={`${youtubeCalculatedData.percentageChangeSubscribers > 0 ? "text-[#34C759]": youtubeCalculatedData.percentageChangeSubscribers === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{youtubeCalculatedData.percentageChangeSubscribers}%{youtubeCalculatedData.percentageChangeSubscribers > 0 ? <LucideArrowUpRight className="h-4 w-4 mt-auto"/> : youtubeCalculatedData.percentageChangeSubscribers === 0 ? <></> : <LucideArrowDownLeft className="h-4 w-4 mt-auto"/>}</p>
                                 <p className="text-secondary ml-auto"> than last week</p></div>
@@ -234,7 +234,7 @@ function YoutubeSection () {
                             <CardContent className="flex gap-1 p-2 flex-col flex-1">
                             <div className=" text-sm text-secondary font-medium Inter flex gap-2">Total Watch Time</div>
                             <div className="flex justify-between">
-                            <p className=" text-2xl font-semibold my-auto">{youtubeCalculatedData.totalWatchTime}</p>
+                            <p className=" text-3xl font-semibold my-auto">{youtubeCalculatedData.totalWatchTime}</p>
                             <div className="flex flex-col text-sm font-medium">
                                 <p className={`${youtubeCalculatedData.percentageChangeWatchTime > 0 ? "text-[#34C759]": youtubeCalculatedData.percentageChangeWatchTime === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{youtubeCalculatedData.percentageChangeWatchTime}%{youtubeCalculatedData.percentageChangeWatchTime > 0 ? <LucideArrowUpRight className="h-4 w-4 mt-auto"/> : youtubeCalculatedData.percentageChangeWatchTime === 0 ? <></> : <LucideArrowDownLeft className="h-4 w-4 mt-auto"/>}</p>
                                 <p className="text-secondary ml-auto"> than last week</p></div>
@@ -246,7 +246,7 @@ function YoutubeSection () {
                             <CardContent className="flex gap-1 p-2 flex-col flex-1">
                             <div className=" text-sm text-secondary font-medium Inter flex gap-2">Average View Duration</div>
                             <div className="flex justify-between">
-                            <p className=" text-2xl font-semibold my-auto">{youtubeCalculatedData.averageViewDuration}</p>
+                            <p className=" text-3xl font-semibold my-auto">{youtubeCalculatedData.averageViewDuration}</p>
                             <div className="flex flex-col text-sm font-medium">
                                 <p className={`${youtubeCalculatedData.percentageChangeAverageViewDuration > 0 ? "text-[#34C759]": youtubeCalculatedData.percentageChangeAverageViewDuration === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{youtubeCalculatedData.percentageChangeAverageViewDuration}% {youtubeCalculatedData.percentageChangeAverageViewDuration > 0 ? <LucideArrowUpRight className="h-4 w-4 mt-auto"/> : youtubeCalculatedData.percentageChangeAverageViewDuration === 0 ? <></> : <LucideArrowDownLeft className="h-4 w-4 mt-auto"/>}</p>
                                 <p className="text-secondary ml-auto"> than last week</p></div>

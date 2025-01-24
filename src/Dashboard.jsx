@@ -187,7 +187,7 @@ function DashBoard({ store }) {
           console.log('Token Expired');
           localStorage.removeItem('instagramAccessToken');
           toast({
-            title: "Instagram Token Expired",
+            title: "Instagram Disconnected ",
             description: "Please log in again.",
             action: <Button onClick={()=>{setSelectedValue("settings")}} size="sm" variant="destructive">Login</Button>,});
           console.error('Error fetching Instagram Business Account:', pagesData.error);
@@ -598,7 +598,7 @@ function DashBoard({ store }) {
         if(error.status === 401){
           localStorage.removeItem('youtubeAccessToken');
           toast({
-            title: "YouTube Token Expired",
+            title: "YouTube Disconnected",
             description: "Please log in again.",
             action: <Button onClick={()=>{setSelectedValue("settings")}} size="sm" variant="destructive">Login</Button>,});
           return;

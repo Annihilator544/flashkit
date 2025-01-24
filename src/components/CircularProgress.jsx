@@ -62,7 +62,7 @@ const CircularProgress = ({ score = 79, startColor = "#ff9a9e", endColor = "#fad
       </svg>
       {/* Score display */}
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-2xl font-medium text-gray-800 mx-auto">
+        <span className="text-3xl font-medium text-gray-800 mx-auto">
           {currentScore}%
         </span>
         <span className="text-gray-400 text-[10px] mt-0.5 flex mx-auto ">

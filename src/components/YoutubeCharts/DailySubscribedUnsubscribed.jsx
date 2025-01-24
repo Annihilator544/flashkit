@@ -130,7 +130,6 @@ const DialySubscribedUnsubscribed = ({ youtubeData, percentageChangeViews }) => 
             </defs>
             <Area
               dataKey="views"
-              type="natural"
               fill="url(#fillViews)"
               fillOpacity={0.4}
               stroke="var(--color-views)"
@@ -138,7 +137,6 @@ const DialySubscribedUnsubscribed = ({ youtubeData, percentageChangeViews }) => 
             />
             <Area
               dataKey="subscribed"
-              type="natural"
               fill="url(#fillSubscribed)"
               fillOpacity={0.4}
               stroke="var(--color-subscribed)"
@@ -146,7 +144,6 @@ const DialySubscribedUnsubscribed = ({ youtubeData, percentageChangeViews }) => 
             />
             <Area
               dataKey="unsubscribed"
-              type="natural"
               fill="url(#fillUnsubscribed)"
               fillOpacity={0.4}
               stroke="var(--color-unsubscribed)"
