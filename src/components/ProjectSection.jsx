@@ -112,7 +112,7 @@ const categories = [
             handleSelect();
           }}
         >
-          <div className="rounded-lg overflow-hidden">
+          <div className="rounded-2xl overflow-hidden">
           <img src={previewURL} style={{ width: '200px' }} alt="url" />
           </div>
           {loading && (
@@ -212,7 +212,7 @@ const categories = [
             handleSelect();
           }}
         >
-          <div className="rounded-lg overflow-hidden">
+          <div className="rounded-2xl overflow-hidden">
           <img src={previewURL} style={{ width: '200px' }} alt="url" />
           </div>
           {loading && (
