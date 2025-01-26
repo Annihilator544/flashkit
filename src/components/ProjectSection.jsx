@@ -135,7 +135,7 @@ const categories = [
           >
           <DropdownMenu>
           <DropdownMenuTrigger>
-            <Button className="p-2  bg-[#00000040] hover:bg-[#00000080] border md:hidden group-hover:block"><LucideMoreVertical className="h-4"/></Button>
+            <Button className="p-2 rounded-2xl bg-[#00000040] hover:bg-[#00000080] border md:hidden group-hover:block"><LucideMoreVertical className="h-4"/></Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-white mx-1 absolute">
             <DropdownMenuItem className="flex gap-2" onClick={() => {
@@ -235,7 +235,7 @@ const categories = [
           >
           <DropdownMenu>
           <DropdownMenuTrigger>
-            <Button className="p-2  bg-[#00000040] hover:bg-[#00000080] border hidden group-hover:block"><LucideMoreVertical className="h-4"/></Button>
+            <Button className="p-2 rounded-2xl bg-[#00000040] hover:bg-[#00000080] border hidden group-hover:block"><LucideMoreVertical className="h-4"/></Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-white mx-1 absolute">
             <DropdownMenuItem className="flex gap-2" onClick={() => {

@@ -44,7 +44,7 @@ const DesignCard = observer(({ design, store, onDelete, onDuplicate }) => {
         handleSelect();
       }}
     >
-      <div className="rounded-lg overflow-hidden">
+      <div className="rounded-2xl overflow-hidden">
       <img src={previewURL} style={{ width: '200px' }} alt="url" />
       </div>
       {loading && (
@@ -67,7 +67,7 @@ const DesignCard = observer(({ design, store, onDelete, onDuplicate }) => {
       >
       <DropdownMenu>
       <DropdownMenuTrigger>
-        <Button className="p-2  bg-[#00000040] hover:bg-[#00000080] border hidden group-hover:block"><LucideMoreVertical className="h-4"/></Button>
+        <Button className="p-2 rounded-2xl bg-[#00000040] hover:bg-[#00000080] border hidden group-hover:block"><LucideMoreVertical className="h-4"/></Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="bg-white mx-1 absolute">
         <DropdownMenuItem className="flex gap-2" onClick={() => {
