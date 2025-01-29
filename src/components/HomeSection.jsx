@@ -91,7 +91,9 @@ function HomeSection({ store }) {
                 </BreadcrumbList>
                 </Breadcrumb>
             </div> */}
-            <search className=" min-w-80 flex" onClick={() => setOpen(true)}>
+            
+            <SidebarTrigger className=" md:hidden"/>
+            <search className=" md:min-w-80  flex" onClick={() => setOpen(true)}>
             <div className="flex flex-1 items-center border rounded-full px-1">
                 <div className=" text-gray-400">
                 <LucideSearch className="h-5"/>
@@ -151,7 +153,6 @@ function HomeSection({ store }) {
                 </CommandGroup>
               </CommandList>
             </CommandDialog>
-            <SidebarTrigger className=" md:hidden"/>
             <div className="flex gap-3 ml-auto">
                     <LucideSettings className="h-5 my-auto" />
                     <LucideBell className="h-5 my-auto" />
@@ -251,7 +252,7 @@ function HomeSection({ store }) {
                 </div>
                 <div className="">
                 <ShineBorder
-                  className="relative flex w-full p-5 flex-1 justify-between overflow-hidden rounded-2xl border bg-background md:shadow-md max-md:flex-col"
+                  className="relative flex w-full p-5 flex-1 justify-between overflow-hidden rounded-2xl border bg-background md:shadow-md max-md:flex-col max-md:gap-4"
                   color={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
                   borderWidth={2}
                 >
