@@ -1,4 +1,4 @@
-import { LucideArrowDownLeft, LucideArrowUpRight, LucideBell, LucideEqual, LucideHash, LucideHeart, LucideMessageSquare, LucideSettings, LucideUsers } from "lucide-react";
+import { LucideArrowDownLeft, LucideArrowUpRight, LucideBell, LucideEqual, LucideHash, LucideHeart, LucideMessageSquare, LucidePlus, LucideSettings, LucideUsers } from "lucide-react";
 import CircularProgress from "./CircularProgress";
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { Separator } from "./ui/separator";
@@ -13,6 +13,9 @@ import DailyFollower from "./InstagramCharts/DailyFollowers";
 import DailyImpressions from "./InstagramCharts/DailyImpressions";
 import DailyReach from "./InstagramCharts/DailyReach";
 import Demographics from "./InstagramCharts/Demographics";
+import connectAccount from "../assets/connectAccount.svg"
+import { Button } from "./ui/button";
+import { TabsList, TabsTrigger } from "./ui/tabs";
 
 function formatDate(date) {
   const options = {
@@ -133,6 +136,8 @@ function InstagramSection (){
                 <h1 className="text-2xl font-light text-black mb-2 flex gap-2"><img src={instagramSvg} alt="youtube" className="h-6 my-auto"/>Instagram Analytics</h1>
                 <p className="text-secondary text-base">Uncover Key Insights to Boost Your Instagram Performance</p>
             </div>
+            {localStorage.getItem("instagramAccessToken") 
+            ?
             <div className="p-2 flex-col flex gap-10">
               <h1 className="text-2xl font-semibold">Insights</h1>
               <Card>
@@ -443,6 +448,18 @@ function InstagramSection (){
                 : <CardContent className="p-4 text-center text-secondary">No Reels found</CardContent>}
               </Card>
             </div>
+            :
+            <div className=" flex flex-1 flex-col justify-center items-center gap-4 ">
+                <img src={connectAccount} alt="" className=" h-60" /> 
+                <h1 className="text-2xl font-semibold">Connect Your Instagram Account</h1>
+                <p className="text-secondary">Get started by connecting your Instagram account to view insights.</p>
+                <TabsList className="p-0 bg-white border-none">
+                  <TabsTrigger value="settings" className="p-0 bg-white border-none">
+                    <Button className=""><LucidePlus className="h-4 my-auto"/> Connect Instagram</Button>
+                  </TabsTrigger>
+                </TabsList>
+            </div>
+            }
     </>
     )
 }

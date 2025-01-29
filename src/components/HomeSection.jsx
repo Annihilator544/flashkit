@@ -8,7 +8,7 @@ import { MonthlyEngagementChart } from "./charts/MonthlyEngagementChart";
 import { InsightsChart } from "./charts/InsightsChart";
 import ShineBorder from "./ui/shine-border";
 import { useEngagementData } from "store/use-engagement-data";
-import { Instagram, Linkedin, LucideArrowDown10, LucideArrowDownLeft, LucideArrowUpRight, LucideAudioWaveform, LucideAward, LucideBell, LucideCopy, LucideFolderOpen, LucideGauge, LucideGaugeCircle, LucideHeart, LucideInstagram, LucideMessageSquare, LucideMoreVertical, LucideMusic, LucidePlus, LucideSearch, LucideSend, LucideSettings, LucideSparkles, LucideTrash2, LucideTrendingUp, LucideYoutube, Twitter, Youtube } from "lucide-react";
+import { Calculator, Calendar, CreditCard, Instagram, Linkedin, LucideArrowDown10, LucideArrowDownLeft, LucideArrowUpRight, LucideAudioWaveform, LucideAward, LucideBell, LucideCommand, LucideCopy, LucideFolder, LucideFolderOpen, LucideGauge, LucideGaugeCircle, LucideGlobeLock, LucideHeart, LucideHelpCircle, LucideHome, LucideInstagram, LucideLayoutDashboard, LucideMessageSquare, LucideMoreVertical, LucideMusic, LucidePlus, LucideSearch, LucideSend, LucideSettings, LucideSparkles, LucideTrash2, LucideTrendingUp, LucideYoutube, Settings, Smile, Twitter, User, Youtube } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
 import { Spinner } from "@blueprintjs/core";
@@ -31,6 +31,10 @@ import { useSyncState } from "store/use-sync-state";
 import CircularProgress from "./CircularProgress";
 import { useYoutubeData } from "store/use-youtube-data";
 import { SidebarTrigger } from "./ui/sidebar";
+import { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from "./ui/command";
+import { TabsList, TabsTrigger } from "./ui/tabs";
+import YoutubeSvg from "../assets/youtube.svg"
+import instagramSvg from "../assets/instagram.svg"
 
 function HomeSection({ store }) {
     const { user } = useAuthStore();
@@ -56,6 +60,19 @@ function HomeSection({ store }) {
     
         setLoading(false);
       };
+      
+    const [open, setOpen] = useState(false)
+    useEffect(() => {
+      const down = (e) => {
+        if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+          e.preventDefault()
+          setOpen((open) => !open)
+        }
+      }
+   
+      document.addEventListener("keydown", down)
+      return () => document.removeEventListener("keydown", down)
+    }, [])
     return (
         <>  
             <header className="flex shrink-0 h-10 items-center gap-2 transition-[width,height] ease-linear justify-between mb-2">
@@ -74,7 +91,7 @@ function HomeSection({ store }) {
                 </BreadcrumbList>
                 </Breadcrumb>
             </div> */}
-            {/* <search className=" min-w-80 flex">
+            <search className=" min-w-80 flex" onClick={() => setOpen(true)}>
             <div className="flex flex-1 items-center border rounded-full px-1">
                 <div className=" text-gray-400">
                 <LucideSearch className="h-5"/>
@@ -84,8 +101,56 @@ function HomeSection({ store }) {
                 placeholder="Search ..."
                 className=" border-none focus:outline-none focus:ring-0 bg-transparent w-full focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                 />
+                <div className=" text-gray-400 flex text-xs bg-gray-100 items-center py-1 px-2 rounded-lg gap-1 mr-1">
+                  <LucideCommand className="h-3"/> K
+                </div>
             </div>
-            </search> */}
+            </search>
+            <CommandDialog open={open} onOpenChange={setOpen}>
+              <CommandInput placeholder="Type a command or search..." />
+              <CommandList>
+                <CommandEmpty>No results found.</CommandEmpty>
+                <CommandGroup heading="Suggestions">
+                <TabsList className="flex flex-col bg-white p-0 text-black hover:text-black w-full">
+                  <TabsTrigger value="home" className="p-0 bg-white border-none text-black data-[state=active]:text-black data-[state=active]:drop-shadow-sm hover:bg-[#ffffff] hover:text-black">
+                    <CommandItem className="w-full"><LucideHome className="h-6"/>Open Dashboard</CommandItem>
+                  </TabsTrigger>
+                  <CommandItem onSelect={()=>window.location.href="/canvas?id=create_new_design"}>
+                    <div  className=" rounded-sm bg-[#fe5655]">
+                        <LucidePlus size={10} fill="#fff"  color="#fff" className=''/>
+                    </div>
+                    <p className="text-sidebar-foreground Inter">
+                    Open New Project
+                    </p>
+                  </CommandItem>
+                  <TabsTrigger value="settings" className="p-0 bg-white border-none text-black data-[state=active]:text-black data-[state=active]:drop-shadow-sm hover:bg-[#ffffff] hover:text-black">
+                    <CommandItem className="w-full"> <LucideSettings className="h-6 my-auto" /> Open Settings</CommandItem>
+                  </TabsTrigger>
+                  <TabsTrigger value="youtube" className="p-0 bg-white border-none text-black data-[state=active]:text-black data-[state=active]:drop-shadow-sm hover:bg-[#ffffff] hover:text-black">
+                    <CommandItem className="w-full"><img src={YoutubeSvg} alt="youtube Logo" className="w-5"/>Open Youtube Analytics</CommandItem>
+                  </TabsTrigger>
+                  <TabsTrigger value="instagram" className="p-0 bg-white border-none text-black data-[state=active]:text-black data-[state=active]:drop-shadow-sm hover:bg-[#ffffff] hover:text-black">
+                    <CommandItem className="w-full"><img src={instagramSvg} alt="Instagram Logo" className="w-5"/>Open Instagram Analytics</CommandItem>
+                  </TabsTrigger>
+                  <TabsTrigger value="templates" className="p-0 bg-white border-none text-black data-[state=active]:text-black data-[state=active]:drop-shadow-sm hover:bg-[#ffffff] hover:text-black">
+                    <CommandItem className="w-full"><LucideLayoutDashboard className="h-6"/>Open Templates</CommandItem>
+                  </TabsTrigger>
+                  <TabsTrigger value="projects" className="p-0 bg-white border-none text-black data-[state=active]:text-black data-[state=active]:drop-shadow-sm hover:bg-[#ffffff] hover:text-black">
+                    <CommandItem className="w-full"><LucideFolder className="h-6"/> Open Projects</CommandItem>
+                  </TabsTrigger>
+                  <CommandItem onSelect={()=>window.location.href="/faq"}>
+                    <LucideHelpCircle className="h-6"/> Get Help
+                  </CommandItem>
+                  <CommandItem onSelect={()=>window.location.href="/terms"}>
+                    <LucideAward className="h-6"/> Terms of Service
+                  </CommandItem>
+                  <CommandItem onSelect={()=>window.location.href="/privacy"}>
+                    <LucideGlobeLock className="h-6"/> Privacy Policy
+                  </CommandItem>
+                </TabsList>
+                </CommandGroup>
+              </CommandList>
+            </CommandDialog>
             <SidebarTrigger className=" md:hidden"/>
             <div className="flex gap-3 ml-auto">
                     <LucideSettings className="h-5 my-auto" />

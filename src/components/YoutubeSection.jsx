@@ -9,7 +9,7 @@ import RadarChartDisplay from "./charts/RadarChartDisplay";
 import RadialChartDisplay from "./charts/RadialChartDisplay";
 import { YoutubeMonthly } from "./charts/YoutubeMonthly";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { LucideArrowBigDown, LucideArrowDownLeft, LucideArrowUpRight, LucideBell, LucideEqual, LucideHash, LucideMessageSquare, LucideSettings, LucideSparkles, LucideTrendingDown, LucideUser, LucideUsers } from "lucide-react";
+import { LucideArrowBigDown, LucideArrowDownLeft, LucideArrowUpRight, LucideBell, LucideEqual, LucideHash, LucideMessageSquare, LucidePlus, LucideSettings, LucideSparkles, LucideTrendingDown, LucideUser, LucideUsers } from "lucide-react";
 import { NavUser } from "./nav-user";
 import { Button } from "./ui/button";
 import youtubeSvg from "../assets/youtube.svg"
@@ -28,6 +28,8 @@ import { useAuthStore } from "store/use-auth-data";
 import { useCallback } from "react";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, UpdateCommand } from "@aws-sdk/lib-dynamodb";
+import { TabsList, TabsTrigger } from "./ui/tabs";
+import connectAccount from "../assets/connectAccount.svg"
 
 const calculateLastDaysViews = (data, days) => {
   const dailyData = data.daily;
@@ -194,6 +196,8 @@ function YoutubeSection () {
                 <h1 className="text-2xl font-light text-black mb-2 flex gap-2"><img src={youtubeSvg} alt="youtube" className="h-6 my-auto"/>Youtube Analytics</h1>
                 <p className="text-secondary text-base">Uncover Key Insights to Boost Your Youtube Performance</p>
             </div>
+            {localStorage.getItem("youtubeAccessToken")
+            ?
             <div className="p-2 flex-col flex gap-10">
               <h1 className="text-2xl font-semibold">Insights</h1>
               <Card>
@@ -406,6 +410,18 @@ function YoutubeSection () {
               </CardContent>
               </Card>
             </div>
+            :
+            <div className=" flex flex-1 flex-col justify-center items-center gap-4 ">
+                <img src={connectAccount} alt="" className=" h-60" /> 
+                <h1 className="text-2xl font-semibold">Connect Your Youtube Account</h1>
+                <p className="text-secondary">Get started by connecting your Youtube account to view insights.</p>
+                <TabsList className="p-0 bg-white border-none">
+                  <TabsTrigger value="settings" className="p-0 bg-white border-none">
+                    <Button className=""><LucidePlus className="h-4 my-auto"/> Connect Youtube</Button>
+                  </TabsTrigger>
+                </TabsList>
+            </div>
+            }
     </>
   );
 }

@@ -632,13 +632,13 @@ function DashBoard({ store }) {
       <Tabs className="flex flex-1 " value={selectedValue} onValueChange={setSelectedValue}>
         <SidebarLayout>
         <div className=" flex">
-            <TabsContent value="home" className="flex-1 p-4 pt-2 overflow-y-auto">
+            <TabsContent value="home" className="flex-1 p-4 pt-2 overflow-y-auto min-h-data-[state=active]:flex data-[state=active]:flex-col">
               <HomeSection store={store}/>
             </TabsContent>
-            <TabsContent value="youtube" className="flex-1 p-4 pt-2 overflow-y-auto">
+            <TabsContent value="youtube" className="flex-1 p-4 pt-2 overflow-y-auto min-h-screen data-[state=active]:flex data-[state=active]:flex-col">
               <YoutubeSection />
             </TabsContent>
-            <TabsContent value="instagram" className="flex-1 p-4 pt-2 overflow-y-auto">
+            <TabsContent value="instagram" className="flex-1 p-4 pt-2 overflow-y-auto min-h-screen data-[state=active]:flex data-[state=active]:flex-col">
               <InstagramSection />
             {/* <p className=" text-3xl font-semibold">Instagram Analytics</p>
             {instagramData && instagramData.userData.id ?
@@ -691,13 +691,13 @@ function DashBoard({ store }) {
                 {instagramData && <InstagramContentCarousel CarouselItems={instagramData.posts} />}
             </div> */}
             </TabsContent>
-            <TabsContent value="templates" className="flex-1 p-4 pt-2">
+            <TabsContent value="templates" className="flex-1 p-4 pt-2 min-h-screen data-[state=active]:flex data-[state=active]:flex-col">
               <TemplateSection store={store} />
             </TabsContent>
-            <TabsContent value="projects" className="flex-1 p-4 pt-2 space-y-6">
+            <TabsContent value="projects" className="flex-1 p-4 pt-2 space-y-6 min-h-screen data-[state=active]:flex data-[state=active]:flex-col">
               <ProjectSection store={store} />
             </TabsContent>
-            <TabsContent value="settings" className="flex-1 p-4 pt-2 space-y-6">
+            <TabsContent value="settings" className="flex-1 p-4 pt-2 space-y-6 min-h-screen data-[state=active]:flex data-[state=active]:flex-col">
               <SettingsSection/>
             </TabsContent>
         </div>
