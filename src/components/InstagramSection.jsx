@@ -16,6 +16,8 @@ import Demographics from "./InstagramCharts/Demographics";
 import connectAccount from "../assets/connectAccount.svg"
 import { Button } from "./ui/button";
 import { TabsList, TabsTrigger } from "./ui/tabs";
+import { SidebarTrigger } from "./ui/sidebar";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion";
 
 function formatDate(date) {
   const options = {
@@ -121,7 +123,8 @@ function InstagramSection (){
     },[instagramData]);
     return (
         <>
-            <header className="flex shrink-0 h-10 items-center gap-2 transition-[width,height] ease-linear justify-end mb-2">
+            <header className="flex shrink-0 h-10 items-center gap-2 transition-[width,height] ease-linear justify-end mb-2 max-md:justify-between">
+            <SidebarTrigger className=" md:hidden"/>
                 <div className="flex gap-3">
                     <LucideSettings className="h-5 my-auto" />
                     <LucideBell className="h-5 my-auto" />
@@ -141,21 +144,23 @@ function InstagramSection (){
             <div className="p-2 flex-col flex gap-10">
               <h1 className="text-2xl font-semibold">Insights</h1>
               <Card>
-                <CardContent className="p-4 flex flex-row gap-4">
-                  <div className="gap-2 flex flex-col">
+                <CardContent className="p-4 flex flex-row gap-4 max-md:flex-col">
+                  <div className="gap-2 flex flex-col max-md:justify-center max-md:items-center">
                     <CircularProgress currentScore={79} startColor="#BD65F6" endColor="#FEB559" />
                     <div className="flex text-sm font-medium gap-1 mx-auto"><p className="text-[#34C759] flex">+20%<LucideArrowUpRight className="h-4 w-4 mt-auto"/></p><p className="text-secondary"> than last week</p></div>
                   </div>
-                  <Separator orientation="vertical"/>
-                  <div className="gap-2 flex flex-col flex-1">
+                  <Separator orientation="vertical" className="max-md:hidden"/>
+                  <Separator orientation="horizontal" className="md:hidden"/>
+                  <div className="flex md:flex-1">
+                    <div className="gap-2 flex flex-col flex-1 ">
                         <Card className=" border-none rounded-lg shadow-none">
                             <CardContent className="flex gap-1 p-2 flex-col flex-1">
                             <div className=" text-sm text-secondary font-medium Inter flex gap-2">Total Followers</div>
                             <div className="flex justify-between">
                             <p className=" text-3xl font-semibold my-auto">{instagramData.userData.followers_count}</p>
-                            <div className="flex flex-col text-sm font-medium">
+                            <div className="flex flex-col text-sm font-medium mt-auto">
                                 <p className={`${instagramCalculatedData.percentageChangeFollowers > 0 ? "text-[#34C759]": instagramCalculatedData.percentageChangeFollowers === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{instagramCalculatedData.percentageChangeFollowers}% {instagramCalculatedData.percentageChangeFollowers > 0 ? <LucideArrowUpRight className="h-4 w-4 mt-auto"/> : instagramCalculatedData.percentageChangeFollowers === 0 ? <></> : <LucideArrowDownLeft className="h-4 w-4 mt-auto"/>}</p>
-                                <p className="text-secondary ml-auto"> than last week</p></div>
+                                <p className="text-secondary ml-auto max-md:hidden"> than last week</p></div>
                             </div>
                             </CardContent>
                         </Card>
@@ -165,9 +170,9 @@ function InstagramSection (){
                             <div className=" text-sm text-secondary font-medium Inter flex gap-2">Total Impressions</div>
                             <div className="flex justify-between">
                             <p className=" text-3xl font-semibold my-auto">{instagramCalculatedData.totalImpressions}</p>
-                            <div className="flex flex-col text-sm font-medium">
+                            <div className="flex flex-col text-sm font-medium mt-auto">
                                 <p className={`${instagramCalculatedData.percentageChangeImpressions > 0 ? "text-[#34C759]": instagramCalculatedData.percentageChangeImpressions === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{instagramCalculatedData.percentageChangeImpressions}%{instagramCalculatedData.percentageChangeImpressions > 0 ? <LucideArrowUpRight className="h-4 w-4 mt-auto"/> : instagramCalculatedData.percentageChangeImpressions === 0 ? <></> : <LucideArrowDownLeft className="h-4 w-4 mt-auto"/>}</p>
-                                <p className="text-secondary ml-auto"> than last week</p></div>
+                                <p className="text-secondary ml-auto max-md:hidden"> than last week</p></div>
                             </div>
                             </CardContent>
                         </Card>
@@ -179,9 +184,9 @@ function InstagramSection (){
                             <div className=" text-sm text-secondary font-medium Inter flex gap-2">Total Reach</div>
                             <div className="flex justify-between">
                             <p className=" text-3xl font-semibold my-auto">{instagramCalculatedData.totalReach}</p>
-                            <div className="flex flex-col text-sm font-medium">
+                            <div className="flex flex-col text-sm font-medium mt-auto">
                                 <p className={`${instagramCalculatedData.percentageChangeReach > 0 ? "text-[#34C759]": instagramCalculatedData.percentageChangeReach === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{instagramCalculatedData.percentageChangeReach}%{instagramCalculatedData.percentageChangeReach > 0 ? <LucideArrowUpRight className="h-4 w-4 mt-auto"/> : instagramCalculatedData.percentageChangeReach === 0 ? <></> : <LucideArrowDownLeft className="h-4 w-4 mt-auto"/>}</p>
-                                <p className="text-secondary ml-auto"> than last week</p></div>
+                                <p className="text-secondary ml-auto max-md:hidden"> than last week</p></div>
                             </div>
                             </CardContent>
                         </Card>
@@ -193,24 +198,25 @@ function InstagramSection (){
                             </CardContent>
                         </Card>
                   </div>
+                  </div>
                 </CardContent>
               </Card>
               <div>
                 <div className="flex-1 mt-3 flex flex-col gap-4">
-                  <div className="flex-1 flex gap-4">
+                  <div className="grid grid-cols-2 max-md:grid-cols-1 gap-4">
                     <DailyFollower followerData={instagramData.daily} percentageChangeFollowers={instagramCalculatedData.percentageChangeFollowers} numberOfDaysOfData={instagramCalculatedData.numberOfDaysOfData}/>
                     <DailyImpressions impressionsData={instagramData.daily} percentageChangeImpressions={instagramCalculatedData.percentageChangeImpressions} numberOfDaysOfData={instagramCalculatedData.numberOfDaysOfData}/>
                   </div>
-                  <div className="flex-1 flex gap-4 flex-wrap">
+                  <div className="grid grid-cols-2 max-md:grid-cols-1 gap-4">
                     <DailyReach reachData={instagramData.daily} percentageChangeReach={instagramCalculatedData.percentageChangeReach} numberOfDaysOfData={instagramCalculatedData.numberOfDaysOfData}/>
-                    <Demographics demographicData={instagramData.daily}/>
+                    <Demographics demographicData={instagramData.demographicData}/>
                   </div>
                   <Card className="flex-1 bg-[#f6f8f9] rounded-lg shadow-md">
                     <CardHeader>
                       <p className="text-[#101010] font-semibold text-lg">Extra Metrics</p>
                       <p className="text-secondary">this week</p>
                     </CardHeader>
-                    <CardContent className="grid grid-cols-1 md:grid-cols-4 gap-3">
+                    <CardContent className="grid grid-cols-2 md:grid-cols-4 gap-3">
                     {Object.entries(instagramData.extraMetrics).map(([key, value], index) => (
                       <div
                         key={index}
@@ -229,79 +235,95 @@ function InstagramSection (){
                   <p className="text-[#101010] font-semibold text-lg flex gap-1"><img src={sparkle} alt="sparkle" /> AI Growth Insights</p>
                   <p className="text-secondary text-sm ">Tailored tips to boost your YouTube growth.</p>
                 </CardHeader>
-                <CardContent className="grid grid-cols-2 gap-4 grid-rows-2">
-                  <Card className="border border-gray-200 shadow-sm">
-                    <CardHeader className="flex flex-row gap-2">
-                      <div className="p-2 bg-[#f6f8f9] rounded-lg flex h-10 w-10 items-center justify-center">
-                        <img src={triangle} alt="triangle" className="h-2 "/>
+                <CardContent className="grid grid-cols-2 max-md:grid-cols-1 gap-4 ">
+                <Accordion type="single" collapsible >
+                  <AccordionItem value="follower-growth" className=" border-none">
+                    <AccordionTrigger>
+                      <div className="flex flex-row gap-2">
+                        <div className="p-2 bg-[#f6f8f9] rounded-lg flex h-10 w-10 items-center justify-center">
+                          <img src={triangle} alt="triangle" className="h-2" />
+                        </div>
+                        <div>
+                          <div className="text-secondary text-xs text-left font-medium">Follower Growth</div>
+                          <div className="text-sm font-semibold">Growth is down this week</div>
+                        </div>
                       </div>
-                      <div>
-                        <div className="text-secondary text-xs font-medium">Follower Growth</div>
-                        <div className=" text-sm font-semibold">Growth is down this week</div>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
+                    </AccordionTrigger>
+                    <AccordionContent>
                       <ul className="list-disc ml-4 text-gray-600 mt-2">
                         <li>Post 3 videos per week targeting high-performing topics</li>
                         <li>Optimize thumbnails and titles for higher click-through rates</li>
                         <li>Collaborate with influencers in your niche</li>
                       </ul>
-                    </CardContent>
-                  </Card>
-                  <Card className="border border-gray-200 shadow-sm">
-                    <CardHeader className="flex flex-row gap-2">
-                      <div className="p-2 bg-[#f6f8f9] rounded-lg flex h-10 w-10 items-center justify-center">
-                        <LucideEqual className="h-4 w-4 text-[#FF9500]"/>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+                <Accordion type="single" collapsible>
+                  <AccordionItem value="engagement-rate" className=" border-none">
+                    <AccordionTrigger>
+                      <div className="flex flex-row gap-2">
+                        <div className="p-2 bg-[#f6f8f9] rounded-lg flex h-10 w-10 items-center justify-center">
+                          <LucideEqual className="h-4 w-4 text-[#FF9500]" />
+                        </div>
+                        <div>
+                          <div className="text-secondary text-xs text-left font-medium">Engagement Rate</div>
+                          <div className="text-sm font-semibold">Engagement is steady</div>
+                        </div>
                       </div>
-                      <div>
-                        <div className="text-secondary text-xs font-medium">Engagement Rate</div>
-                        <div className=" text-sm font-semibold">Engagement is steady</div>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
+                    </AccordionTrigger>
+                    <AccordionContent>
                       <ul className="list-disc ml-4 text-gray-600 mt-2">
                         <li>Host a Q&A or create polls to boost interaction</li>
                         <li>Reply to at least 50% of comments within 24 hours</li>
                         <li>Add clear CTAs in your videos and descriptions</li>
                       </ul>
-                    </CardContent>
-                  </Card>
-                  <Card className="border border-gray-200 shadow-sm">
-                    <CardHeader className="flex flex-row gap-2">
-                      <div className="p-2 bg-[#f6f8f9] rounded-lg flex h-10 w-10 items-center justify-center">
-                        <LucideUsers className="h-4 w-4"/>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+                <Accordion type="single" collapsible>
+                  <AccordionItem value="audience-age"  className=" border-none">
+                    <AccordionTrigger>
+                      <div className="flex flex-row gap-2">
+                        <div className="p-2 bg-[#f6f8f9] rounded-lg flex h-10 w-10 items-center justify-center">
+                          <LucideUsers className="h-4 w-4" />
+                        </div>
+                        <div>
+                          <div className="text-secondary text-xs text-left font-medium">Audience Age</div>
+                          <div className="text-sm font-semibold">Younger viewers dominating</div>
+                        </div>
                       </div>
-                      <div>
-                        <div className="text-secondary text-xs font-medium">Audience Age</div>
-                        <div className=" text-sm font-semibold">Younger viewers dominating</div>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
+                    </AccordionTrigger>
+                    <AccordionContent>
                       <ul className="list-disc ml-4 text-gray-600 mt-2">
                         <li>Create fast-paced content tailored for younger viewers</li>
                         <li>Use trending memes to make your videos relatable</li>
                         <li>Promote videos on Instagram and TikTok for broader reach</li>
                       </ul>
-                    </CardContent>
-                  </Card>
-                  <Card className="border border-gray-200 shadow-sm">
-                    <CardHeader className="flex flex-row gap-2">
-                      <div className="p-2 bg-[#f6f8f9] rounded-lg flex h-10 w-10 items-center justify-center">
-                        <LucideHash className="h-4 w-4 text-[#409BFF]"/>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+                <Accordion type="single" collapsible>
+                  <AccordionItem value="trending-content-insights" className=" border-none">
+                    <AccordionTrigger>
+                      <div className="flex flex-row gap-2">
+                        <div className="p-2 bg-[#f6f8f9] rounded-lg flex h-10 w-10 items-center justify-center">
+                          <LucideHash className="h-4 w-4 text-[#409BFF]" />
+                        </div>
+                        <div>
+                          <div className="text-secondary text-xs text-left font-medium">Trending Content Insights</div>
+                          <div className="text-sm font-semibold">Try new topics</div>
+                        </div>
                       </div>
-                      <div>
-                        <div className="text-secondary text-xs font-medium">Trending Content Insights</div>
-                        <div className=" text-sm font-semibold">Try new topics</div>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
+                    </AccordionTrigger>
+                    <AccordionContent>
                       <ul className="list-disc ml-4 text-gray-600 mt-2">
                         <li>Make videos on trending topics relevant to your niche</li>
                         <li>Use trending hashtags and optimized tags for better visibility</li>
                         <li>Include "reaction" or "how-to" themes tied to the trends</li>
                       </ul>
-                    </CardContent>
-                  </Card>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
                 </CardContent>
               </Card>
               <Card className="flex-1 bg-[#f6f8f9] shadow-md">
@@ -327,7 +349,7 @@ function InstagramSection (){
                           alt={item.caption}
                           className="w-24 h-16 rounded-md object-cover"
                         />
-                        <div>
+                        <div className="max-md:hidden">
                           <p className="text-gray-900 font-medium">{item.caption}</p>
                           <p className="text-gray-500 text-sm">
                             <a
@@ -452,7 +474,7 @@ function InstagramSection (){
             <div className=" flex flex-1 flex-col justify-center items-center gap-4 ">
                 <img src={connectAccount} alt="" className=" h-60" /> 
                 <h1 className="text-2xl font-semibold">Connect Your Instagram Account</h1>
-                <p className="text-secondary">Get started by connecting your Instagram account to view insights.</p>
+                <p className="text-secondary text-center">Get started by connecting your Instagram account to view insights.</p>
                 <TabsList className="p-0 bg-white border-none">
                   <TabsTrigger value="settings" className="p-0 bg-white border-none">
                     <Button className=""><LucidePlus className="h-4 my-auto"/> Connect Instagram</Button>

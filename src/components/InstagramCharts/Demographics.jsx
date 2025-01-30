@@ -116,6 +116,16 @@ const Demographics = ({ demographicData }) => {
               cx="50%"
               cy="50%"
               outerRadius={120}
+              className="max-md:hidden"
+            />
+            <Pie
+              data={topCountries}
+              dataKey="total"
+              nameKey="country"
+              cx="50%"
+              cy="50%"
+              outerRadius={70}
+              className="md:hidden"
             />
           </PieChart>
           <CustomTooltip />

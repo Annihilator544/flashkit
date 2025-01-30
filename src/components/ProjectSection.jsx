@@ -586,9 +586,9 @@ function ProjectSection({ store }) {
         buttonText={"Explore Project"}
         bottomSection={false}
       />
-      <div className="flex items-center justify-between py-4 rounded-md">
-        <div className="flex gap-2">
-          <div className="min-w-80 flex">
+      <div className="flex items-center justify-between py-4 rounded-md max-md:grid max-md:grid-cols-[70%,30%] max-md:gap-2">
+        <div className="flex gap-2 max-md:flex-col">
+          <div className="min-w-80 flex max-md:min-w-40">
             <div className="flex flex-1 items-center border rounded-full px-1">
               <div className="text-gray-400">
                 <LucideSearch className="h-5" />
@@ -602,6 +602,7 @@ function ProjectSection({ store }) {
               />
             </div>
           </div>
+          <div className="flex gap-2">
           {categories.map((cat, i) => (
             <Button
               key={i}
@@ -612,8 +613,9 @@ function ProjectSection({ store }) {
               {cat.label}
             </Button>
           ))}
+          </div>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 max-md:flex-col-reverse max-md:gap-2 max-md:items-end" >
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
               <Button variant="outline">
@@ -661,14 +663,14 @@ function ProjectSection({ store }) {
       {(selectedCategory === "All" || selectedCategory === "Folders") && (
         <>
           <p className="text-lg font-semibold">Folders</p>
-          <div className="flex flex-wrap gap-3 mt-3">
+          <div className="md:flex md:flex-wrap gap-3 mt-3 max-md:grid max-md:grid-cols-2 max-md:gap-3">
             {filteredFileDirectory.map((project, index) => (
               <TooltipProvider key={index}>
                 <Dialog>
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <DialogTrigger asChild>
-                        <div className="flex min-w-80 gap-3 hover:bg-[#f9f9f9] p-4 rounded-md cursor-pointer">
+                        <div className="flex min-w-80 gap-3 hover:bg-[#f9f9f9] p-4 rounded-md cursor-pointer max-md:min-w-20">
                           <img src={folderSVG} alt="folder" className="h-5" />
                           <p className="font-semibold my-auto">{project.name}</p>
                         </div>

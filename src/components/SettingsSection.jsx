@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import { useAuthStore } from "store/use-auth-data";
 import { Button } from "./ui/button";
-import { LucideCamera, LucideDownload, LucidePlus } from "lucide-react";
+import { LucideBell, LucideCamera, LucideDownload, LucidePlus, LucideSettings } from "lucide-react";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,6 +16,8 @@ import { Slider } from "./ui/slider";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
 import { useState } from "react";
+import { SidebarTrigger } from "./ui/sidebar";
+import { NavUser } from "./nav-user";
 
 function SettingsSection() {
     const { Engagement } = useEngagementData();
@@ -59,7 +61,15 @@ function SettingsSection() {
         }
     }
   return (
-    <div className="m-10 flex flex-col gap-10">
+    <div className="md:m-10 flex flex-col md:gap-10">
+          <header className="flex shrink-0 h-10 items-center gap-2 transition-[width,height] ease-linear justify-end mb-2 max-md:justify-between">
+            <SidebarTrigger className=" md:hidden"/>
+                <div className="flex gap-3">
+                    <LucideSettings className="h-5 my-auto" />
+                    <LucideBell className="h-5 my-auto" />
+                    <NavUser/>
+                </div>
+            </header>
       <p className="text-3xl font-semibold">Settings</p>
         {/* <div className="m-10">
             <ConnectAccount/>

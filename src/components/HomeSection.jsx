@@ -154,8 +154,8 @@ function HomeSection({ store }) {
               </CommandList>
             </CommandDialog>
             <div className="flex gap-3 ml-auto">
-                    <LucideSettings className="h-5 my-auto" />
-                    <LucideBell className="h-5 my-auto" />
+                <LucideSettings className="h-5 my-auto" />
+                <LucideBell className="h-5 my-auto" />
                 <NavUser/>
             </div>
             </header>
@@ -181,26 +181,28 @@ function HomeSection({ store }) {
                 {/* {localStorage.getItem("flashkitPlan") === "FLASHKITSOCIAL" ? 
                 <> */}
                 <div className="flex gap-2 flex-wrap max-md:flex-col">
-                    <Card className="flex h-52 aspect-square items-center justify-center drop-shadow-sm">
-                        <CardContent className="flex gap-2 p-5 px-12 flex-col my-auto">
-                            <Avatar className= "m-auto h-20 w-20">
-                            {user&&user.photoURL ? <AvatarImage src={user.photoURL} /> :
-                            <AvatarImage src="https://github.com/shadcn.png" />
-                            }
-                            <AvatarFallback>CN</AvatarFallback>
-                            </Avatar>
-                            <span className="truncate text-xs font-semibold flex mx-auto">{user&&user.displayName ? user.displayName : ""}</span>
-                            <div className="text-[#E1A100] bg-[#fdf5e1] text-center font-semibold flex pr-2 py-[2px] rounded-sm mx-auto"><LucideAward className="h-4 my-auto"/>Gold</div>
-                        </CardContent>
-                    </Card>
-                    <Card className=" flex aspect-square h-52 items-center justify-center drop-shadow-sm">
-                        <CardContent className="flex h-fit gap-2 p-2  flex-col">
-                              {Engagement && typeof Engagement ==='object' && Object.keys(Engagement).length > 0 ?<CircularProgress score={Engagement.engagementMetrics.score * 10} startColor="#FE5655" endColor="#89D0F7"/> : <CircularProgress /> }
-                              {/* <p className=" text-2xl font-semibold">{Engagement && typeof Engagement ==='object' && Object.keys(Engagement).length > 0 ? Engagement.engagementMetrics.score * 10 : 79} %</p> */}
-                              {/* {youtubeData && typeof data === 'object' && Object.keys(youtubeData).length > 0 ?<Button className={"w-full" + loading ? " opacity-90 ":""} onClick={()=>getEQSScore(youtubeData)}>{loading ? "Loading ...":" Generate EQS Score"}</Button> : <></>} */}
-                              <div className="flex text-sm font-medium gap-1 mx-auto mb-5"><p className="text-[#34C759] flex">+20%<LucideArrowUpRight className="h-4 w-4 mt-auto"/></p><p className="text-secondary"> than last week</p></div>
-                        </CardContent>
-                    </Card>
+                    <div className="max-md:grid max-md:grid-cols-2 md:flex gap-2">
+                      <Card className="flex md:h-52 md:aspect-square items-center justify-center drop-shadow-sm">
+                          <CardContent className="flex gap-2 p-5 px-12 flex-col my-auto">
+                              <Avatar className= "m-auto h-20 w-20">
+                              {user&&user.photoURL ? <AvatarImage src={user.photoURL} /> :
+                              <AvatarImage src="https://github.com/shadcn.png" />
+                              }
+                              <AvatarFallback>CN</AvatarFallback>
+                              </Avatar>
+                              <span className="truncate text-xs font-semibold flex mx-auto">{user&&user.displayName ? user.displayName : ""}</span>
+                              <div className="text-[#E1A100] bg-[#fdf5e1] text-center font-semibold flex pr-2 py-[2px] rounded-sm mx-auto"><LucideAward className="h-4 my-auto"/>Gold</div>
+                          </CardContent>
+                      </Card>
+                      <Card className=" flex md:aspect-square md:h-52 items-center justify-center drop-shadow-sm">
+                          <CardContent className="flex h-fit gap-2 p-2  flex-col">
+                                {Engagement && typeof Engagement ==='object' && Object.keys(Engagement).length > 0 ?<CircularProgress score={Engagement.engagementMetrics.score * 10} startColor="#FE5655" endColor="#89D0F7"/> : <CircularProgress /> }
+                                {/* <p className=" text-2xl font-semibold">{Engagement && typeof Engagement ==='object' && Object.keys(Engagement).length > 0 ? Engagement.engagementMetrics.score * 10 : 79} %</p> */}
+                                {/* {youtubeData && typeof data === 'object' && Object.keys(youtubeData).length > 0 ?<Button className={"w-full" + loading ? " opacity-90 ":""} onClick={()=>getEQSScore(youtubeData)}>{loading ? "Loading ...":" Generate EQS Score"}</Button> : <></>} */}
+                                <div className="flex text-sm font-medium gap-1 mx-auto mb-5"><p className="text-[#34C759] flex">+20%<LucideArrowUpRight className="h-4 w-4 mt-auto"/></p><p className="text-secondary"> than last week</p></div>
+                          </CardContent>
+                      </Card>
+                    </div>
                     <Card className= " flex flex-1 p-0 border-none ">
                         <CardContent className="grid grid-cols-2 grid-rows-2 gap-2 p-0 flex-1">
                         <Card className=" bg-gradient-to-r from-[#E2F2FF] to-[#FFF3F3] rounded-lg drop-shadow-sm">
