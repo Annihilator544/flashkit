@@ -24,7 +24,7 @@ const PublicView = observer(({ store }) => {
   const [searchParams] = useSearchParams();
   const awsKey = searchParams.get('awsKey');
   const project = useProject();
-  const bucketName = 'flashkitpersonalsharebucket';
+  const bucketName = 'flashkitpersonalbucket';
 
   const s3Client = new S3Client({
     region: 'eu-west-2', // e.g., 'us-east-1'

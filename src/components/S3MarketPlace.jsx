@@ -14,7 +14,7 @@ export const s3Client = new S3Client({
 
 const S3FileManager = ( {store}) => {
   const [files, setFiles] = useState([]);
-  const bucketName = 'flashkitmarketplace';
+  const bucketName = 'flashkitpublicbucket';
   const folderPath = 'Image/';
 
   const listFiles = async () => {

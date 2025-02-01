@@ -24,7 +24,7 @@ function  DataConsistency({ children }) {
             }
         });
         map.forEach(async (value, key) => {
-        const bucketNamePersonal = 'flashkitpersonalsharebucket';
+        const bucketNamePersonal = 'flashkitpersonalbucket';
           try {
             if(key.includes('delete')) {
                 const command = new DeleteObjectCommand({
@@ -69,7 +69,7 @@ function  DataConsistency({ children }) {
               secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
             }
         });
-        const bucketName = 'flashkitpersonalsharebucket';
+        const bucketName = 'flashkitpersonalbucket';
         // Step 1: Insert or update all items from uploadArray
         let updatedLocal = [...localArray];
         for (const uploadItem of uploadArray) {

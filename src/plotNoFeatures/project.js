@@ -120,7 +120,7 @@ class Project {
 
   async save() {
     this.status = 'saving';
-    const bucketNamePersonal = 'flashkitpersonalsharebucket';
+    const bucketNamePersonal = 'flashkitpersonalbucket';
     const storeJSON = this.store.toJSON();
     const maxWidth = 1080;
     const s3Client = new S3Client({

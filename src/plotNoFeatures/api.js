@@ -113,7 +113,7 @@ export async function deleteDesign({ id }) {
   const authStorage = localStorage.getItem('auth-storage');
   const authObject = JSON.parse(authStorage);
   const uid = authObject?.state?.user?.uid;
-  const bucketNamePersonal = 'flashkitpersonalsharebucket';
+  const bucketNamePersonal = 'flashkitpersonalbucket';
   const s3Client = new S3Client({
         region: 'eu-west-2', // e.g., 'us-east-1'
         credentials: {
@@ -179,7 +179,7 @@ export async function duplicateDesign({ id }) {
   const authStorage = localStorage.getItem('auth-storage');
   const authObject = JSON.parse(authStorage);
   const uid = authObject?.state?.user?.uid;
-  const bucketNamePersonal = 'flashkitpersonalsharebucket';
+  const bucketNamePersonal = 'flashkitpersonalbucket';
   const s3Client = new S3Client({
         region: 'eu-west-2', // e.g., 'us-east-1'
         credentials: {
@@ -339,7 +339,7 @@ export const uploadAsset = async ({ file, preview, type }) => {
   // const authStorage = localStorage.getItem('auth-storage');
   // const authObject = JSON.parse(authStorage);
   // const uid = authObject?.state?.user?.uid;
-  // const bucketNamePersonal = 'flashkitpersonalsharebucket';
+  // const bucketNamePersonal = 'flashkitpersonalbucket';
   // const s3Client = new S3Client({
   //       region: 'eu-west-2', // e.g., 'us-east-1'
   //       credentials: {
@@ -373,7 +373,7 @@ export const deleteAsset = async ({ id }) => {
   // const authStorage = localStorage.getItem('auth-storage');
   // const authObject = JSON.parse(authStorage);
   // const uid = authObject?.state?.user?.uid;
-  // const bucketNamePersonal = 'flashkitpersonalsharebucket';
+  // const bucketNamePersonal = 'flashkitpersonalbucket';
   // const s3Client = new S3Client({
   //       region: 'eu-west-2', // e.g., 'us-east-1'
   //       credentials: {

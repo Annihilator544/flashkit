@@ -107,7 +107,7 @@ const App = observer(({ store }) => {
   const awsKeyMarket = searchParams.get('awsKeyMarket');
   const project = useProject();
   const { data } = useJsonData();
-  const bucketName = 'flashkitpersonalsharebucket';
+  const bucketName = 'flashkitpersonalbucket';
 
   const s3Client = new S3Client({
     region: 'eu-west-2', // e.g., 'us-east-1'
@@ -166,7 +166,7 @@ const App = observer(({ store }) => {
         if (!awsKeyMarket) return;
         //fetch data from aws whose key is awsKey
         const command = new GetObjectCommand({
-          Bucket: 'flashkitmarketplace',
+          Bucket: 'flashkitpublicbucket',
           Key: awsKeyMarket,
         });
         const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
