@@ -41,6 +41,7 @@ import { NavUser } from "./nav-user";
 import folderSVG from "../assets/folder.svg";
 import { nanoid } from "nanoid";
 import { SidebarTrigger } from "./ui/sidebar";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 // Category filters
 const categories = [
@@ -52,14 +53,14 @@ const categories = [
 /* -----------------------------------------
    Shared Dashboard Projects: Recent Designs
    ----------------------------------------- */
-const DashboardProjects = observer(({ store, addFiles, fileDirectory }) => {
+const DashboardProjects = observer(({ store, addFiles, fileDirectory, filterKey, filterDate }) => {
   const project = useProject();
   const [designsLoadings, setDesignsLoading] = useState(false);
   const [designs, setDesigns] = useState([]);
 
   const loadDesigns = async () => {
     setDesignsLoading(true);
-    const list = await api.listDesigns();
+    const list = await api.listFilteredDesigns(filterKey, filterDate);
     setDesigns(list);
     setDesignsLoading(false);
   };
@@ -76,7 +77,7 @@ const DashboardProjects = observer(({ store, addFiles, fileDirectory }) => {
 
   useEffect(() => {
     loadDesigns();
-  }, [project.cloudEnabled, project.designsLength]);
+  }, [project.cloudEnabled, project.designsLength, filterKey, filterDate]);
 
   return (
     <div className="flex flex-col flex-wrap w-full">
@@ -336,14 +337,14 @@ const DesignCard2 = observer(({ design, onDelete }) => {
 /* ----------------------------------
    All Designs (Full listing)
    ---------------------------------- */
-const DashboardProjects2 = observer(({ store, addFiles, fileDirectory }) => {
+const DashboardProjects2 = observer(({ store, addFiles, fileDirectory, filterKey, filterDate }) => {
   const project = useProject();
   const [designsLoadings, setDesignsLoading] = useState(false);
   const [designs, setDesigns] = useState([]);
 
   const loadDesigns = async () => {
     setDesignsLoading(true);
-    const list = await api.listDesigns();
+    const list = await api.listFilteredDesigns(filterKey, filterDate);
     setDesigns(list);
     setDesignsLoading(false);
   };
@@ -360,7 +361,7 @@ const DashboardProjects2 = observer(({ store, addFiles, fileDirectory }) => {
 
   useEffect(() => {
     loadDesigns();
-  }, [project.cloudEnabled, project.designsLength]);
+  }, [project.cloudEnabled, project.designsLength, filterKey, filterDate]);
 
   return (
     <div className="flex flex-col flex-wrap">
@@ -466,6 +467,7 @@ function ProjectSection({ store }) {
 
   // Filtering states
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchDate, setSearchDate] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   // Filtered list of Folders (Projects) - search only applies to project names
@@ -640,10 +642,26 @@ function ProjectSection({ store }) {
               </div>
             </DialogContent>
           </Dialog>
+          <Popover>
+          <PopoverTrigger asChild>
           <Button variant="outline">
             <LucideFilter className="h-4 my-auto" />
             Filters
           </Button>
+          </PopoverTrigger>
+          <PopoverContent className="bg-white p-4 rounded-md shadow-md">
+            <div className="flex flex-col gap-2">
+              <p className="text-sm font-semibold">Filter by</p>
+              <div className="flex flex-col gap-2">
+                <Input
+                  type="date"
+                  value={searchDate}
+                  onChange={(e) => setSearchDate(e.target.value)}
+                />
+                </div>
+            </div>
+          </PopoverContent>
+          </Popover>
         </div>
       </div>
 
@@ -655,6 +673,8 @@ function ProjectSection({ store }) {
             store={store}
             addFiles={addFilesToProject}
             fileDirectory={fileDirectory}
+            filterKey={searchTerm}
+            filterDate={searchDate}
           />
         </div>
       )}
@@ -724,6 +744,8 @@ function ProjectSection({ store }) {
             store={store}
             addFiles={addFilesToProject}
             fileDirectory={fileDirectory}
+            filterKey={searchTerm}
+            filterDate={searchDate}
           />
         </div>
       )}

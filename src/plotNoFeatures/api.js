@@ -91,6 +91,20 @@ export async function listDesigns() {
   return (await readKv('designs-list')) || [];
 }
 
+export async function listFilteredDesigns( filter , dateFilter) {
+  const list = await listDesigns();
+  if(!filter && !dateFilter){
+    return list;
+  }
+  if(filter && dateFilter){
+    return list.filter((design) => design.name.toLowerCase().includes(filter.toLowerCase()) && design.lastModified.includes(dateFilter));
+  }
+  if(dateFilter){
+    return list.filter((design) => design.lastModified.includes(dateFilter));
+  }
+  return list.filter((design) => design.name.toLowerCase().includes(filter.toLowerCase()));
+}
+
 export async function listOfflineChanges() {
   return (await readKv('offline-changes')) || [];
 }
