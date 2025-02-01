@@ -62,7 +62,6 @@ export default function Home() {
         setError("Please fill in all fields.");
         return
       }
-      console.log("Saving item:", params);
       await dynamodb.put(params).promise(); // Save item to DynamoDB
       setSuccess(true);
       console.log("Item saved successfully!");
