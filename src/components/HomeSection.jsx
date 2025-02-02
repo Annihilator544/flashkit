@@ -41,25 +41,6 @@ function HomeSection({ store }) {
     const { Engagement, setEngagement } = useEngagementData();
     const [loading, setLoading] = useState(false);
     const { youtubeData } = useYoutubeData();
-    const getEQSScore = async (userData) => {
-        setLoading(true);
-        try {
-          const response = await fetch("https://uibtscb6a4mio6htt6rdpuqc640hbnof.lambda-url.eu-west-2.on.aws/", {
-            method: 'POST',
-            body: JSON.stringify({
-              data : userData
-            })
-          });
-    
-          const data = await response.json();
-          console.log(data);
-          setEngagement(data);
-        } catch (error) {
-          console.error('Error:', error);
-        }
-    
-        setLoading(false);
-      };
       
     const [open, setOpen] = useState(false)
     useEffect(() => {

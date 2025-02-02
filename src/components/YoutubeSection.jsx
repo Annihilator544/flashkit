@@ -107,6 +107,22 @@ const calculateAverageViewDuration = (data, start, days) => {
   return count === 0 ? 0 :  totalAverageViewDuration/count;
 };
 
+const pastDaysData = (data, start, end) => {
+  const dailyData = data.daily;
+  const lastFetched = new Date(data.lastFetched);
+  const pastDays = {};
+  for (let i = start; i < end; i++) {
+    const dateKey = new Date(
+      lastFetched.getTime() - i * 24 * 60 * 60 * 1000
+    ).toISOString().split("T")[0];
+    if (dailyData[dateKey]) {
+      pastDays[dateKey] = dailyData[dateKey];
+    }
+  }
+  return pastDays;
+};
+
+
 function YoutubeSection () {
     const { youtubeData } = useYoutubeData();
     const [videos, setVideos] = useState([]);
@@ -155,6 +171,22 @@ function YoutubeSection () {
         console.error("Error fetching videos:", error);
       }
     };
+    const getEQSScore = async (userData) => {
+      try {
+        const response = await fetch("https://n5qthtqcoxts3m2gftclxqfvee0chgau.lambda-url.eu-west-2.on.aws/", {
+          method: 'POST',
+          body: JSON.stringify({
+            ...userData
+          })
+        });
+  
+        const data = await response.json();
+        console.log(data);
+        return data;
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
     //sum of views this week , youtube.daily is an object with keys as dates and values as views
     useEffect(() => {
       // round to 2 decimal places
@@ -179,6 +211,12 @@ function YoutubeSection () {
         percentageChangeAverageViewDuration,
     });
     getRecentVideos( youtubeData.channel )
+    async function updateYoutubeEQSData() {
+    const thisWeekEQSScore = getEQSScore( pastDaysData( youtubeData, 0, 7 ) );
+    const lastWeekEQSScore = getEQSScore( pastDaysData( youtubeData, 7, 14 ) );
+    console.log(thisWeekEQSScore, lastWeekEQSScore, pastDaysData( youtubeData, 0,7 ), pastDaysData( youtubeData, 7, 14 ));
+    }
+    updateYoutubeEQSData();
     }, []);
 
   return (
