@@ -95,9 +95,6 @@ function HomeSection({ store }) {
                 <CommandEmpty>No results found.</CommandEmpty>
                 <CommandGroup heading="Suggestions">
                 <TabsList className="flex flex-col bg-white p-0 text-black hover:text-black w-full">
-                  <TabsTrigger value="home" className="p-0 bg-white border-none text-black data-[state=active]:text-black data-[state=active]:drop-shadow-sm hover:bg-[#ffffff] hover:text-black">
-                    <CommandItem className="w-full"><LucideHome className="h-6"/>Open Dashboard</CommandItem>
-                  </TabsTrigger>
                   <CommandItem onSelect={()=>window.location.href="/canvas?id=create_new_design"}>
                     <div  className=" rounded-sm bg-[#fe5655]">
                         <LucidePlus size={10} fill="#fff"  color="#fff" className=''/>
@@ -106,9 +103,6 @@ function HomeSection({ store }) {
                     Open New Project
                     </p>
                   </CommandItem>
-                  <TabsTrigger value="settings" className="p-0 bg-white border-none text-black data-[state=active]:text-black data-[state=active]:drop-shadow-sm hover:bg-[#ffffff] hover:text-black">
-                    <CommandItem className="w-full"> <LucideSettings className="h-6 my-auto" /> Open Settings</CommandItem>
-                  </TabsTrigger>
                   <TabsTrigger value="youtube" className="p-0 bg-white border-none text-black data-[state=active]:text-black data-[state=active]:drop-shadow-sm hover:bg-[#ffffff] hover:text-black">
                     <CommandItem className="w-full"><img src={YoutubeSvg} alt="youtube Logo" className="w-5"/>Open Youtube Analytics</CommandItem>
                   </TabsTrigger>
@@ -130,6 +124,9 @@ function HomeSection({ store }) {
                   <CommandItem onSelect={()=>window.location.href="/privacy"}>
                     <LucideGlobeLock className="h-6"/> Privacy Policy
                   </CommandItem>
+                  <TabsTrigger value="settings" className="p-0 bg-white border-none text-black data-[state=active]:text-black data-[state=active]:drop-shadow-sm hover:bg-[#ffffff] hover:text-black">
+                    <CommandItem className="w-full"> <LucideSettings className="h-6 my-auto" /> Open Settings</CommandItem>
+                  </TabsTrigger>
                 </TabsList>
                 </CommandGroup>
               </CommandList>

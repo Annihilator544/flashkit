@@ -16,136 +16,192 @@ function TermsOfService() {
     <>
         <Navbar />
         <Card className="flex flex-col p-6 mx-52 my-16">
-        <CardHeader className="items-center pb-4">
-            <CardTitle className="text-3xl font-bold">
-            LiftCo Terms of Service
-            </CardTitle>
+          <CardHeader className="items-center pb-4">
+            <CardTitle className="text-3xl font-bold">Flashkit Terms of Service</CardTitle>
             <CardDescription className="text-sm text-muted-foreground">
-            Effective Date: 15/10/2024
+              Last Updated: 03/02/25
             </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <section>
+              <h2 className="text-xl font-semibold">1. Introduction</h2>
+              <p className="mt-2">
+                Welcome to Flashkit. These Terms of Service ("Agreement") govern your access
+                to and use of Flashkit&apos;s website, applications, and services (collectively,
+                the "Services"). By using our Services, you agree to be bound by these terms.
+                If you do not agree, please discontinue use of Flashkit.
+              </p>
+            </section>
 
-            <p className="mb-4">
-            This is the terms of use agreement (the <strong>"Agreement"</strong>) that governs your use of LiftCo's website,
-            apps, and services. If you do not agree with these terms, please stop using LiftCo's website, uninstall our
-            apps, and refrain from using our services.
-            </p>
+            <section>
+              <h2 className="text-xl font-semibold">2. Changes to Terms</h2>
+              <p className="mt-2">
+                Flashkit reserves the right to update or modify these Terms at any time.
+                If we make material changes, we will notify you by posting an update on our
+                website. Your continued use of the Services after changes are made constitutes
+                your acceptance of the revised Terms.
+              </p>
+            </section>
 
-            <h2 className="text-2xl font-semibold mt-8 mb-4">General Terms</h2>
-            <p className="mb-4">
-            LiftCo may change any of the terms and conditions in this Agreement at any time for any reason. A notice of
-            material change will be posted on LiftCo's website, and you are responsible for reviewing the changes. If you
-            do not agree with them, do not continue to use LiftCo's website, uninstall our apps, and refrain from using
-            our services.
-            </p>
-            <p className="mb-4">
-            LiftCo does not provide any guarantee or warranty of the accuracy of any data or AI-generated content. By
-            using LiftCo, you are certifying that you are over 16 years of age or have your legal guardian's permission
-            if you are between 13 and 16 years old.
-            </p>
-            <p className="mb-4">
-            The services LiftCo provides include AI-powered creation and updating of social media kits. The resulting
-            content is generated based on publicly available information and user inputs. While the AI-generated content is
-            unique, the underlying data used to create it may come from various public sources.
-            </p>
+            <section>
+              <h2 className="text-xl font-semibold">3. Eligibility</h2>
+              <p className="mt-2">
+                You must be at least 16 years old to use Flashkit. If you are between 13 and
+                16 years old, you may only use our Services with the consent of a legal guardian.
+              </p>
+            </section>
 
-            <h2 className="text-2xl font-semibold mt-8 mb-4">Content Rights</h2>
-            <p className="mb-4">
-            The content created using LiftCo's services is owned by you, the user. However, you grant LiftCo a
-            non-exclusive, worldwide, royalty-free license to use, reproduce, and display your content for the purpose of
-            providing and improving our services.
-            </p>
-            <p className="mb-4">
-            Sharing content created with LiftCo is allowed, provided you credit LiftCo as the tool used to generate the
-            content. The acceptable way to do this is to provide a link back to LiftCo's website and clearly state in text
-            that LiftCo was used to create the content. This includes sharing on social media websites, blogs, and in any
-            sort of publication.
-            </p>
-            <p className="mb-4">
-            Content shared from LiftCo on video platforms should include a link in the description and a verbal or written
-            acknowledgment of LiftCo as the tool used to create the content in the video itself.
-            </p>
+            <section>
+              <h2 className="text-xl font-semibold">4. Description of Services</h2>
+              <p className="mt-2">
+                Flashkit provides a platform that allows users to:
+              </p>
+              <ul className="list-disc list-inside mt-2 space-y-1">
+                <li>Create social media content</li>
+                <li>Receive AI-driven insights to optimise content</li>
+                <li>Access social media performance analytics</li>
+              </ul>
+              <p className="mt-2">
+                AI-generated insights are based on publicly available information, user inputs,
+                and platform data. While we tailor recommendations to each user, the underlying
+                data may come from various public sources.
+              </p>
+            </section>
 
-            <h2 className="text-2xl font-semibold mt-8 mb-4">Usage Restrictions</h2>
-            <p className="mb-4">
-            Mass copying of data or content from LiftCo's website (including botting, crawling, scraping, etc.) is not
-            allowed and may result in you being blocked from LiftCo's website and services. The only way you may gather
-            large amounts of data or content is through our designated export functions or by requesting data directly from
-            LiftCo (email our staff or submit a support ticket).
-            </p>
-            <p className="mb-4">
-            It is LiftCo's policy to respect the privacy settings of the social media accounts you connect to our service.
-            If you want us to stop accessing or using data from your connected accounts, you can disconnect them through
-            your account settings or by contacting our support team.
-            </p>
+            <section>
+              <h2 className="text-xl font-semibold">5. Content Rights</h2>
+              <p className="mt-2">
+                The content you create using Flashkit&apos;s Services is owned by you. However,
+                by using our Services, you grant Flashkit a non-exclusive, worldwide,
+                royalty-free licence to store, process, and display your content solely for
+                the purpose of providing and improving our Services.
+              </p>
+              <p className="mt-2">
+                This licence does not grant Flashkit the right to commercially exploit, sell,
+                or publicly distribute your content outside of the platform without your
+                explicit consent. If you delete your content or account, Flashkit will take
+                reasonable steps to remove it, except where retention is required for legal
+                compliance or service functionality (e.g., backups).
+              </p>
+            </section>
 
-            <h2 className="text-2xl font-semibold mt-8 mb-4">Data Sources</h2>
-            <p className="mb-4">
-            In order to provide our AI-powered services, LiftCo utilizes API services of third parties including but not
-            limited to Facebook, Instagram, YouTube, and other social media platforms. Unless specific access is asked for
-            at the time of use (i.e., to validate your identity or access your account data), we are only gathering publicly
-            available data from each of the API services, not anything private about your account.
-            </p>
-            <p className="mb-4">
-            When private data access is granted, collected data via the private token is used to personalize your experience
-            and improve our AI models. You can revoke access at any time via each platform's connected services page or by
-            opening a support ticket, and we will delete the token from our system. If you wish to delete your account
-            entirely, including all connected accounts, you can do so via the account settings page.
-            </p>
+            <section>
+              <h2 className="text-xl font-semibold">6. Usage Restrictions</h2>
+              <p className="mt-2">
+                You may not:
+              </p>
+              <ul className="list-disc list-inside mt-2 space-y-1">
+                <li>Copy, scrape, or mass-extract data from Flashkit&apos;s Services without authorisation.</li>
+                <li>Use Flashkit to generate or distribute unlawful, harmful, or misleading content.</li>
+                <li>Interfere with or attempt to compromise the security of Flashkit&apos;s systems.</li>
+                <li>Attempt to reverse engineer or extract proprietary algorithms from FlashKit.</li>
+              </ul>
+              <p className="mt-2">
+                Violations may result in suspension or termination of your access.
+              </p>
+            </section>
 
-            <h2 className="text-2xl font-semibold mt-8 mb-4">AI-Generated Content</h2>
-            <p className="mb-4">
-            LiftCo uses AI technology to generate and update social media kits. While we strive for high-quality results,
-            we cannot guarantee that the AI-generated content will be error-free, appropriate for all contexts, or free from
-            potential biases. Users are responsible for reviewing and editing the AI-generated content before using it in
-            their social media strategies.
-            </p>
+            <section>
+              <h2 className="text-xl font-semibold">7. Data Sources</h2>
+              <p className="mt-2">
+                To provide our Services, Flashkit utilises API services from third parties,
+                including but not limited to Facebook, Tik Tok, Instagram, and YouTube.
+              </p>
+              <ul className="list-disc list-inside mt-2 space-y-1">
+                <li>We collect only publicly available data unless specific access is granted by you.</li>
+                <li>If you provide access via API tokens, these are used to personalise your experience and improve AI models. You may revoke access at any time.</li>
+                <li>If you delete your Flashkit account, we will remove all associated private data.</li>
+              </ul>
+            </section>
 
-            <h2 className="text-2xl font-semibold mt-8 mb-4">Service Limitations</h2>
-            <p className="mb-4">
-            LiftCo will use best practices and cutting-edge AI technology to create and update social media kits, but
-            results are not guaranteed. The effectiveness of the generated content may vary depending on various factors
-            outside of our control.
-            </p>
+            <section>
+              <h2 className="text-xl font-semibold">8. AI-Generated Insights</h2>
+              <p className="mt-2">
+                Flashkit uses AI to provide insights for social media content optimisation.
+                However:
+              </p>
+              <ul className="list-disc list-inside mt-2 space-y-1">
+                <li>AI-generated insights may not be error-free, unbiased, or suitable for all use cases.</li>
+                <li>Users are responsible for reviewing and adapting AI-driven recommendations before implementing them.</li>
+                <li>Flashkit does not guarantee improved performance based on AI insights, as outcomes depend on external factors.</li>
+              </ul>
+            </section>
 
-            <h2 className="text-2xl font-semibold mt-8 mb-4">Intellectual Property</h2>
-            <p className="mb-4">
-            The LiftCo platform, including its software, algorithms, and user interface, is the intellectual property of
-            LiftCo. Users are granted a limited, non-exclusive license to use the platform for its intended purpose. Any
-            attempt to reverse engineer, decompile, or otherwise extract the underlying code or algorithms is strictly
-            prohibited.
-            </p>
+            <section>
+              <h2 className="text-xl font-semibold">9. Service Limitations</h2>
+              <p className="mt-2">
+              While Flashkit employs best practices in AI and analytics, we do not guarantee:
+              </p>
+              <ul className="list-disc list-inside mt-2 space-y-1">
+                <li>We do not guarantee uninterrupted or error-free Services.</li>
+                <li>We do not guarantee AI-generated recommendations will always be accurate or beneficial.</li>
+                <li>We do not guarantee performance outcomes for content optimised using Flashkit.</li>
+              </ul>
+              <p className="mt-2">
+                Users should exercise discretion when using AI-generated recommendations.
+              </p>
+            </section>
 
-            <h2 className="text-2xl font-semibold mt-8 mb-4">Disclaimer of Warranties</h2>
-            <p className="mb-4">
-            LiftCo provides its services on an "as is" and "as available" basis. We do not warrant that the service will
-            be uninterrupted, error-free, or completely secure. Any reliance you place on the service or its content is at
-            your own risk.
-            </p>
+            <section>
+              <h2 className="text-xl font-semibold">10. Intellectual Property</h2>
+              <p className="mt-2">
+                All software, algorithms, and interface designs associated with Flashkit are
+                the intellectual property of Flashkit. Users are granted a limited,
+                non-exclusive licence to use the platform for its intended purpose. Reverse
+                engineering, decompiling, or unauthorised extraction of proprietary
+                algorithms is strictly prohibited.
+              </p>
+            </section>
 
-            <h2 className="text-2xl font-semibold mt-8 mb-4">Limitation of Liability</h2>
-            <p className="mb-4">
-            To the fullest extent permitted by applicable law, LiftCo shall not be liable for any indirect, incidental,
-            special, consequential, or punitive damages, or any loss of profits or revenues, whether incurred directly or
-            indirectly, or any loss of data, use, goodwill, or other intangible losses resulting from your use of our
-            services.
-            </p>
+            <section>
+              <h2 className="text-xl font-semibold">11. Disclaimer of Warranties</h2>
+              <p className="mt-2">
+                Flashkit provides its Services "as is" and "as available." We do not warrant:
+              </p>
+              <ul className="list-disc list-inside mt-2 space-y-1">
+                <li>The Services will function without interruptions or security issues.</li>
+                <li>AI-generated content will be free from errors or inaccuracies.</li>
+                <li>Any reliance on our insights will guarantee success.</li>
+              </ul>
+            </section>
 
-            <h2 className="text-2xl font-semibold mt-8 mb-4">Governing Law</h2>
-            <p className="mb-4">
-            This Agreement shall be governed by and construed in accordance with the laws of the United Kingdom, without
-            regard to its conflict of law provisions.
-            </p>
+            <section>
+              <h2 className="text-xl font-semibold">12. Limitation of Liability</h2>
+              <p className="mt-2">
+                To the fullest extent permitted by law, Flashkit shall not be liable for:
+              </p>
+              <ul className="list-disc list-inside mt-2 space-y-1">
+                <li>Any indirect, incidental, special, consequential, or punitive damages.</li>
+                <li>Loss of profits, data, or goodwill resulting from the use of our Services.</li>
+                <li>Any decisions or actions taken based on AI-generated insights.</li>
+              </ul>
+            </section>
 
-            <hr className="my-8" />
+            <section>
+              <h2 className="text-xl font-semibold">13. Dispute Resolution</h2>
+              <p className="mt-2">
+                If you have concerns about Flashkit, please contact us first at <a href="mailto:akua@flashkit.co.uk">akua@flashkit.co.uk.</a>
+                In the event of a dispute, both parties agree to attempt resolution through
+                mediation before resorting to legal action.
+              </p>
+            </section>
 
-            <p className="text-sm">
-            <strong>
-                This Document is Effective as of 15/10/2024. Last Updated: 15/10/2024.
-            </strong>
-            </p>
-        </CardContent>
+            <section>
+              <h2 className="text-xl font-semibold">14. Governing Law</h2>
+              <p className="mt-2">
+                This Agreement shall be governed by and construed in accordance with the laws
+                of the United Kingdom. Any disputes arising under these Terms shall be subject
+                to the exclusive jurisdiction of the UK courts.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-xl font-semibold">15. Contact Information</h2>
+              <p className="mt-2">
+                For questions regarding these Terms, contact us at <a href="mailto:akua@flashkit.co.uk">akua@flashkit.co.uk.</a>
+              </p>
+            </section>
+          </CardContent>
         </Card>
         <Footer className="border-t-[1px] border-black" />
     </>

@@ -17,220 +17,238 @@ function PrivacyPolicy() {
         <Navbar />
         <Card className="flex flex-col p-6 mx-52 my-16">
         <CardHeader className="items-center pb-4">
-            <CardTitle className="text-3xl font-bold">
-            LiftCo Privacy Policy
-            </CardTitle>
+            <CardTitle className="text-3xl font-bold">Flashkit Privacy Policy</CardTitle>
             <CardDescription className="text-sm text-muted-foreground">
-            Effective Date: 15/10/2024
+            Last Updated: 03/02/25
             </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
             <section>
             <h2 className="text-xl font-semibold">1. Introduction</h2>
             <p className="mt-2">
-                Welcome to LiftCo ("we," "our," "us"). We are committed to
-                protecting your privacy and ensuring the security of your personal
-                information. This Privacy Policy outlines how we collect, use,
-                disclose, and safeguard your data when you use our services.
-                LiftCo is a UK-based company that provides cutting-edge software
-                for influencers, content creators, and social media managers,
-                enabling them to create and update their social media kits in
-                real-time using AI technology.
-            </p>
-            <p className="mt-2">
-                By accessing or using our platform, you agree to the collection and
-                use of your information in accordance with this Privacy Policy. If
-                you do not agree with the terms of this Privacy Policy, please do
-                not access or use our services.
-            </p>
-            <p className="mt-2">
-                LiftCo may change any of the terms and conditions in this Policy
-                at any time for any reason. A notice of material change will be
-                posted on LiftCo's website, and you are responsible for reviewing
-                the changes. If you do not agree with them, do not continue to use
-                LiftCo's website, uninstall our apps, and refrain from using our
-                data.
+            At Flashkit, we are committed to protecting your privacy and ensuring that your personal data is handled responsibly. This Privacy Policy explains how we collect, use, share, and safeguard your information when you use our services, website, and applications (collectively, the "Services"). By accessing or using Flashkit, you consent to the data practices described in this policy. 
+            If you do not agree with the terms, please discontinue use of our platform.
+
             </p>
             </section>
 
             <section>
-            <h2 className="text-xl font-semibold">2. Information We Collect</h2>
-            <h3 className="text-lg font-medium mt-4">2.1 Personal Information</h3>
+            <h2 className="text-xl font-semibold">2. Flashkit Services</h2>
             <p className="mt-2">
-                When you register or use our platform, we may collect the following
-                personal information:
+                Flashkit is a UK-based platform designed for Influencers, Content Creators,
+                and Social Media Managers.
             </p>
+            <p className="mt-1 font-medium">Our services include: </p>
             <ul className="list-disc list-inside mt-2 space-y-1">
-                <li>Name</li>
-                <li>Email Address</li>
-                <li>Username and Password</li>
-                <li>Profile Information (including social media handles)</li>
-                <li>Payment Information (if applicable)</li>
-                <li>Contact Information (such as phone number)</li>
+                <li>AI-powered content creation and optimisation</li>
+                <li>AI-driven insights for improving social media performance</li>
+                <li>Performance analytics to track engagement and content impact</li>
+                <li>Social media kit generation and real-time updates</li>
             </ul>
-
-            <h3 className="text-lg font-medium mt-4">2.2 Non-Personal Information</h3>
             <p className="mt-2">
-                We may also collect non-personal information that does not directly
-                identify you. This may include:
+                When linking your social media accounts to Flashkit, you retain control
+                over the data shared and can manage your account preferences at any time.
             </p>
-            <ul className="list-disc list-inside mt-2 space-y-1">
+            </section>
+
+            <section>
+            <h2 className="text-xl font-semibold">3. Information We Collect and How We Use It</h2>
+            <p className="mt-2">
+            We collect various types of data to provide and enhance our Services. 
+            This includes:
+
+            </p>
+            <section>
+                <h3 className="text-lg font-medium mt-4">3.1 Account Information</h3>
+                <ul className="list-disc list-inside mt-2 space-y-1">
                 <li>
-                <strong>Device Information:</strong> Type of device, operating
-                system, browser type, and version.
+                    <strong>Personal Details:</strong> Name, email address, organisation name, language preferences.
                 </li>
                 <li>
-                <strong>Usage Data:</strong> Pages you visit, time spent on the
-                platform, and other interaction data.
+                    <strong>Social Network Profile Information:</strong> If you use social login (e.g., Facebook, Instagram), we may collect your username and profile details.
                 </li>
                 <li>
-                <strong>Location Data:</strong> General geographic location based
-                on your IP address.
+                    <strong>Billing Information:</strong> If you purchase a paid plan, we collect necessary payment details securely.
                 </li>
-            </ul>
-
-            <h3 className="text-lg font-medium mt-4">2.3 Cookies and Tracking Technologies</h3>
-            <p className="mt-2">
-                We use cookies and similar tracking technologies to monitor activity
-                on our platform and store certain information. Cookies help us
-                provide a better user experience by remembering your preferences and
-                enabling essential features.
-            </p>
+                </ul>
+                <p className="mt-2">How We Use It:</p>
+                <ul className="list-disc list-inside mt-2 space-y-1">
+                <li>To create and manage your account</li>
+                <li>To communicate important updates, surveys, and offers</li>
+                <li>To process payments and provide customer support</li>
+                </ul>
             </section>
 
-            {/* Continue with the rest of the sections in the same format */}
             <section>
-            <h2 className="text-xl font-semibold">3. How We Use Your Information</h2>
+                <h3 className="text-lg font-medium mt-4">3.2 Content and Usage Data</h3>
+                <ul className="list-disc list-inside mt-2 space-y-1">
+                <li>
+                    <strong>Uploaded Content:</strong> Social media posts, images, AI-generated content.
+                </li>
+                <li>
+                    <strong>Chat &amp; Conversational Data:</strong> Messages and interactions with our chatbot or support team.
+                </li>
+                <li>
+                    <strong>Social Media Metrics:</strong> Engagement statistics, post performance, and follower analytics.
+                </li>
+                </ul>
+                <p className="mt-2">How We Use It:</p>
+                <ul className="list-disc list-inside mt-2 space-y-1">
+                <li>To provide AI-powered insights and content recommendations</li>
+                <li>To enhance platform functionality and improve AI models</li>
+                <li>To compile social media performance reports</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3 className="text-lg font-medium mt-4">3.3 Cookies &amp; Tracking Data</h3>
+                <ul className="list-disc list-inside mt-2 space-y-1">
+                <li>
+                    <strong>Log Data &amp; General Location:</strong> IP address, browser settings, device type, date and time of access.
+                </li>
+                <li>
+                    <strong>Usage Analytics:</strong> Frequency of login, interactions with features, and engagement patterns.
+                </li>
+                </ul>
+                <p className="mt-2">How We Use It:</p>
+                <ul className="list-disc list-inside mt-2 space-y-1">
+                <li>To improve platform performance and security</li>
+                <li>To personalise user experience and recommendations</li>
+                <li>To conduct analytics and monitor service health</li>
+                </ul>
+            </section>
+            </section>
+
+            <section>
+            <h2 className="text-xl font-semibold">4. Who We Share Your Information With</h2>
             <p className="mt-2">
-                We use the information we collect for various purposes, including:
+                We do not sell your personal data. However, we may share information in
+                the following cases:
             </p>
             <ul className="list-disc list-inside mt-2 space-y-1">
-                <li>To Provide and Maintain Our Services</li>
-                <li>To Improve Our Platform</li>
-                <li>To Personalize Your Experience</li>
-                <li>To Communicate With You</li>
-                <li>To Process Payments</li>
-                <li>To Ensure Security</li>
+                <li><strong>Service Providers: </strong> Third-party vendors assisting in analytics, hosting, or payment processing.</li>
+                <li><strong>Legal Compliance: </strong> If required by law or to respond to regulatory authorities.</li>
+                <li><strong>Business Transfers: </strong> In case of a merger, acquisition, or company restructuring.</li>
             </ul>
             </section>
 
-            {/* Add other sections similarly */}
             <section>
-            <h2 className="text-xl font-semibold">4. Public Information</h2>
+            <h2 className="text-xl font-semibold">5. Social Networks &amp; Third-Party Services</h2>
             <p className="mt-2">
-                Much of the data collected and shown on LiftCo is public data. We
-                collect and display the same public data you'd see by visiting
-                social media sites directly, such as follower counts and other
-                publicly available metrics. If the information isn't shown publicly
-                on those websites, it's not collected or shown on our website
-                either.
+                When you connect your social media accounts, Flashkit integrates with
+                platforms like Facebook, Instagram, and YouTube. Their respective privacy
+                policies govern how they manage your data. You may revoke access at any
+                time through the settings of these platforms.
             </p>
             </section>
 
             <section>
-            <h2 className="text-xl font-semibold">5. Data Sources</h2>
+            <h2 className="text-xl font-semibold">6. How We Use Analytics Data</h2>
             <p className="mt-2">
-                In order to keep statistical data updated, LiftCo utilizes API
-                services of third parties including but not limited to Facebook,
-                Instagram, YouTube, and other social media platforms. We only gather
-                publicly available data from each of the API services, not anything
-                private about your account.
-            </p>
-            </section>
-
-            <section>
-            <h2 className="text-xl font-semibold">6. Sharing Your Information</h2>
-            <p className="mt-2">
-                We do not sell, trade, or rent your personal information to third
-                parties. However, we may share your information in the following
-                circumstances:
+                We utilise analytics tools to:
             </p>
             <ul className="list-disc list-inside mt-2 space-y-1">
-                <li>Service Providers</li>
-                <li>Legal Compliance</li>
-                <li>Business Transfers</li>
+                <li>Improve user experience</li>
+                <li>Optimise platform performance</li>
+                <li>Identify trends and make data-driven decisions</li>
+                <li>Personalise recommendations</li>
             </ul>
             <p className="mt-2">
-                We may share aggregate information about users with third parties
-                for marketing, advertising, research, or similar purposes.
+                You can opt-out of analytics tracking via your browser settings or by contacting us.
             </p>
             </section>
 
             <section>
-            <h2 className="text-xl font-semibold">7. Security of Your Information</h2>
+            <h2 className="text-xl font-semibold">7. Data Security Measures</h2>
             <p className="mt-2">
-                We take the security of your personal information seriously and
-                implement reasonable measures to protect it from unauthorized
-                access, disclosure, alteration, or destruction. However, please be
-                aware that no method of transmission over the Internet or electronic
-                storage is completely secure, and we cannot guarantee absolute
-                security.
+                We take security seriously and implement safeguards such as:
+            </p>
+            <ul className="list-disc list-inside mt-2 space-y-1">
+                <li>Encryption of sensitive data in transit and at rest</li>
+                <li>Regular security assessments and compliance checks</li>
+                <li>Access control measures for authorised personnel only</li>
+                <li>Secure payment processing via PCI-compliant providers</li>
+            </ul>
+            <p className="mt-2">
+                Despite these measures, no system is entirely secure. Users are encouraged
+                to adopt best security practices for account protection.
             </p>
             </section>
 
             <section>
-            <h2 className="text-xl font-semibold">8. Your Rights and Choices</h2>
+            <h2 className="text-xl font-semibold">8. Data Retention</h2>
             <p className="mt-2">
-                You have the right to access, correct, and delete your personal
-                information. You may also request data portability and opt out of
-                marketing communications.
+                We retain personal data only for as long as necessary to fulfil the purpose
+                for which it was collected or as required by law. Upon request, we will
+                securely delete or anonymise data that is no longer needed.
             </p>
             </section>
 
             <section>
-            <h2 className="text-xl font-semibold">9. User-Generated Content</h2>
-            <p className="mt-2">
-                If you post content on our platform or associated services, all the
-                information posted and the username you identify yourself with will
-                be available to the public. LiftCo cannot prevent your posting
-                from being used in a manner that would violate this Policy, the law,
-                or your personal privacy.
-            </p>
+            <h2 className="text-xl font-semibold">9. Your Rights &amp; Choices</h2>
+            <section>
+                <h3 className="text-lg font-medium mt-4">9.1 Access and Correction</h3>
+                <p className="mt-2">
+                You may access and update your personal information through your account
+                settings or by contacting us.
+                </p>
+            </section>
+            <section>
+                <h3 className="text-lg font-medium mt-4">9.2 Data Portability</h3>
+                <p className="mt-2">
+                You can request a copy of your data in a structured format for portability.
+                </p>
+            </section>
+            <section>
+                <h3 className="text-lg font-medium mt-4">9.3 Deletion Requests</h3>
+                <p className="mt-2">
+                You have the right to request deletion of your data. However, certain
+                information may be retained for legal or business purposes.
+                </p>
+            </section>
+            <section>
+                <h3 className="text-lg font-medium mt-4">9.4 Marketing Preferences</h3>
+                <p className="mt-2">
+                You can opt out of marketing communications by clicking "unsubscribe"
+                in our emails or updating your preferences.
+                </p>
+            </section>
             </section>
 
             <section>
-            <h2 className="text-xl font-semibold">10. Third-Party Links</h2>
+            <h2 className="text-xl font-semibold">10. International Data Transfers</h2>
             <p className="mt-2">
-                LiftCo's site includes links to third-party websites. Access to
-                and use of linked websites is governed by those third-party
-                websites' privacy policies. LiftCo is not responsible for their
-                information practices.
+                If we transfer data outside the UK/EEA, we ensure appropriate safeguards
+                are in place, such as Standard Contractual Clauses (SCCs).
             </p>
             </section>
 
             <section>
             <h2 className="text-xl font-semibold">11. Children's Privacy</h2>
             <p className="mt-2">
-                Our services are not intended for individuals under the age of 13.
-                We do not knowingly collect personal information from children under
-                13.
+                Our services are not intended for users under 16 years old. If we become
+                aware of data collected from a minor, we will take steps to delete it.
             </p>
             </section>
 
             <section>
             <h2 className="text-xl font-semibold">12. Changes to This Privacy Policy</h2>
             <p className="mt-2">
-                We may update our Privacy Policy from time to time. We will notify
-                you of any significant changes by posting the new Privacy Policy on
-                our platform and updating the effective date at the top of this
-                page.
+                We may update this policy periodically. Material changes will be notified
+                via email or platform notices. Continued use of Flashkit constitutes
+                acceptance of the updated terms.
             </p>
             </section>
 
             <section>
-            <h2 className="text-xl font-semibold">13. Contact Us</h2>
+            <h2 className="text-xl font-semibold">13. How to Contact Us</h2>
             <p className="mt-2">
-                If you have any questions or concerns about this Privacy Policy or
-                our data practices, please contact us at:
+                For privacy-related inquiries, you can reach us at:
             </p>
-            <p className="mt-2 font-medium">akua@LiftCo.co.uk</p>
+            <ul className="list-disc list-inside mt-2 space-y-1">
+            <li className="mt-2 font-medium"><strong>Support Team:</strong> <a href="mailto:akua@flashkit.co.uk" >akua@flashkit.co.uk</a></li>
+            </ul>
             </section>
-
-            <p className="mt-6">
-            This Privacy Policy outlines how LiftCo protects your personal data.
-            It is important to regularly review this document to stay informed of
-            how your information is being handled.
-            </p>
         </CardContent>
         </Card>
         <Footer className="border-t-[1px] border-black" />
