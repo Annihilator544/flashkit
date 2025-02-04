@@ -97,7 +97,7 @@ const DashboardProjects = observer(({ store, addFiles, fileDirectory, filterKey,
           .slice(-5)
           .reverse()
           .map((design) => (
-            <DesignCard
+            <DesignCard3
               key={design.id}
               design={design}
               onDelete={handleProjectDelete}
@@ -114,7 +114,133 @@ const DashboardProjects = observer(({ store, addFiles, fileDirectory, filterKey,
 /* -------------------------------------
    Single Design Card (recent designs)
    ------------------------------------- */
-const DesignCard = observer(({ design, onDelete, onDuplicate, addFiles, fileDirectory }) => {
+const DesignCard = observer(({ design, onDelete, onDuplicate, addFiles, fileDirectory, onSelected }) => {
+  const [loading, setLoading] = useState(false);
+  const [previewURL, setPreviewURL] = useState(design.previewURL);
+
+  useEffect(() => {
+    const load = async () => {
+      const url = await api.getPreview({ id: design.id });
+      setPreviewURL(url);
+    };
+    load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleSelect = async () => {
+    setLoading(true);
+    window.location.href = `/canvas?id=${design.id}`;
+    setLoading(false);
+  };
+
+  return (
+    <div className="flex flex-col">
+      <Card
+        style={{ padding: "3px", position: "relative" }}
+        interactive
+        className="fit-content w-fit mb-auto mx-1 group"
+        onClick={handleSelect}
+      >
+        <div className="rounded-2xl overflow-hidden">
+          <img src={previewURL} style={{ width: "200px" }} alt="preview" />
+        </div>
+        {loading && (
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+            }}
+          >
+            <Spinner />
+          </div>
+        )}
+        <div className="absolute top-2 left-2">
+          <Input type="checkbox" className="rounded-2xl h-6 w-6" onClick={(e)=>e.stopPropagation()} onChange={(e) => onSelected(e.target.checked)} />
+        </div>
+        <div
+          className="absolute top-1 right-1 "
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Button className="p-2 rounded-2xl bg-[#00000040] hover:bg-[#00000080] border md:hidden group-hover:block">
+                <LucideMoreVertical className="h-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="bg-white mx-1 absolute">
+              <DropdownMenuItem
+                className="flex gap-2"
+                onClick={() => {
+                  handleSelect();
+                }}
+              >
+                <LucideFolderOpen className="h-4" />
+                Open
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="flex gap-2"
+                onClick={() => {
+                  onDelete({ id: design.id });
+                }}
+              >
+                <LucideTrash2 className="h-4" />
+                Delete
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="flex gap-2"
+                onClick={() => {
+                  onDuplicate({ id: design.id });
+                }}
+              >
+                <LucideCopy className="h-4" />
+                Duplicate
+              </DropdownMenuItem>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger className="flex gap-2">
+                  <LucideFolderOpen className="h-4" />
+                  Project
+                </DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    {fileDirectory.map((project, index) => (
+                      <DropdownMenuItem
+                        key={index}
+                        onClick={() => {
+                          addFiles(project.id, [design]);
+                        }}
+                      >
+                        {project.name}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </Card>
+
+      <div className="mx-2 mt-3">
+        <p className="text-xs font-semibold">{design.name}</p>
+        <div className="flex justify-between">
+          <p className="text-xs text-secondary">
+            {design.lastModified && design.lastModified.split("T")[0]}
+          </p>
+          <p className="text-xs text-secondary">
+            {design.lastModified &&
+              design.lastModified.replace(/^[^:]*([0-2]\d:[0-5]\d).*$/, "$1")}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+});
+
+const DesignCard3 = observer(({ design, onDelete, onDuplicate, addFiles, fileDirectory }) => {
   const [loading, setLoading] = useState(false);
   const [previewURL, setPreviewURL] = useState(design.previewURL);
 
@@ -341,6 +467,7 @@ const DashboardProjects2 = observer(({ store, addFiles, fileDirectory, filterKey
   const project = useProject();
   const [designsLoadings, setDesignsLoading] = useState(false);
   const [designs, setDesigns] = useState([]);
+  const [selectedDesign, setSelectedDesign] = useState([]);
 
   const loadDesigns = async () => {
     setDesignsLoading(true);
@@ -359,12 +486,29 @@ const DashboardProjects2 = observer(({ store, addFiles, fileDirectory, filterKey
     await loadDesigns();
   };
 
+  const handleMultipleDelete = async () => {
+    const ids = Array.from(selectedDesign, (d) => d.id);
+    await api.deleteMultipleDesigns({ ids });
+    await loadDesigns();
+  };
+
   useEffect(() => {
     loadDesigns();
   }, [project.cloudEnabled, project.designsLength, filterKey, filterDate]);
 
   return (
     <div className="flex flex-col flex-wrap">
+      <div className="flex justify-between">
+        <p className="text-lg font-semibold mb-3">Designs</p>
+        {selectedDesign.length > 0 && (
+          <Button
+            variant="destructive"
+            onClick={handleMultipleDelete}
+          >
+            Delete Selected
+          </Button>
+        )}
+      </div>
       <div className="md:flex md:gap-2 md:flex-wrap max-md:grid max-md:grid-cols-2 max-md:gap-2">
         <Button
           variant="dotted"
@@ -391,6 +535,13 @@ const DashboardProjects2 = observer(({ store, addFiles, fileDirectory, filterKey
             key={design.id}
             design={design}
             onDelete={handleProjectDelete}
+            onSelected={(selected) => {
+              if (selected) {
+                setSelectedDesign([...selectedDesign, design]);
+              } else {
+                setSelectedDesign(selectedDesign.filter((d) => d.id !== design.id));
+              }
+            }}
             onDuplicate={handleProjectDuplicate}
             fileDirectory={fileDirectory}
             addFiles={addFiles}
@@ -739,7 +890,6 @@ function ProjectSection({ store }) {
       {/* Show "Designs" if category is "All" or "Design" */}
       {(selectedCategory === "All" || selectedCategory === "Design") && (
         <div className="my-10">
-          <p className="text-lg font-semibold mb-3">Designs</p>
           <DashboardProjects2
             store={store}
             addFiles={addFilesToProject}

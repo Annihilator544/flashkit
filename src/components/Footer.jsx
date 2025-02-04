@@ -10,7 +10,7 @@ function Footer ({className}) {
                     <img src={logo} alt="logo" className='w-[20px] h-[40px]' />
                     <p className=' font-semibold text-3xl'>LiftCo</p>
                 </div>
-                <p className=' text-lg'>The Influencer kit, Trusted since 2018</p>
+                <p className=' text-lg'>The Influencer kit, Trusted since 2024</p>
                 <div className=' flex gap-4 mt-20'>
                     <div className=' p-2 border-[#D4D4D8] border-2 rounded-full w-fit text-black hover:text-white hover:border-transparent hover:bg-[#ff847c]'>
                         <LucideTwitter className='' />

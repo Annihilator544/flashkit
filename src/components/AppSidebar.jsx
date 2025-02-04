@@ -40,6 +40,7 @@ import flashkitPro from "../assets/flashkitPro.png"
 import flashkitSocial from "../assets/flashkitSocial.png"
 import YoutubeSvg from "../assets/youtube.svg"
 import instagramSvg from "../assets/instagram.svg"
+import { Link } from "react-router-dom"
 
   export function AppSidebar({
     ...props
@@ -166,9 +167,11 @@ import instagramSvg from "../assets/instagram.svg"
                 </SidebarGroup>
                 </SidebarContent>
                 <SidebarFooter>
+                    <Link to="/faq" className="p-0">
                         <SidebarMenuButton>
                         <LucideHelpCircle className="h-6 text-white" fill="#000"/> <p className="text-sidebar-foreground text-xs"> Need Help ?</p>
                         </SidebarMenuButton>
+                    </Link>
                 </SidebarFooter>
                 <SidebarRail />
             </Sidebar>

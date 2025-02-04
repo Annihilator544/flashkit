@@ -141,7 +141,7 @@ export default observer(({ store }) => {
                 window.project.requestSave();
                 console.log(window.project.name);
               }}
-              className={' bg-white border-none hover:border active:border focus:border focus:outline-none focus:ring-0 ring-offset-0 w-fit max-w-60'}
+              className={' bg-white  hover:border active:border focus:border focus:outline-none focus:ring-0 ring-offset-0 w-fit max-w-60'}
             />
           <DownloadButton store={store} />
           <Share store={store}/>

@@ -318,6 +318,24 @@
   .sidePanelHeight{
     height: calc(100vh - 60px);
   }
+  input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: #e0e0e0;
+    border: 1px solid #ccc;
+    border-radius: 16px;
+    cursor: pointer;
+    position: relative;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #409bff;
+    border: 1px solid #409bff;
+}
+
+input[type="checkbox"]:checked::after {
+    content: "";
+}
   /* .go529282772{
     display: flex;
   }

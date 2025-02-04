@@ -355,7 +355,7 @@ function Legal() {
                 </section>
                 
                 <p className="mt-2">
-                    For any inquiries regarding this DPA, please contact akua@flashkit.co.uk.
+                    For any inquiries regarding this DPA, please contact <a href="mailto:akua@flashkit.co.uk">akua@flashkit.co.uk.</a>
                 </p>
             </CardContent>
         </Card>

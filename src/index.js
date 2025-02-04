@@ -23,6 +23,8 @@ import PublicView from 'PublicView';
 import DataConsistency from 'layouts/DataConsistency';
 import { Toaster } from './components/ui/toaster';
 import Legal from 'Legal';
+import FAQ from 'FAQ';
+import AboutUs from 'AboutUs';
 
 // if (window.location.host !== 'studio.polotno.com') {
 //   console.log(
@@ -103,6 +105,14 @@ const router = createBrowserRouter([
   {
     path: "/privacy",
     element: <PrivacyPolicy />,
+  },
+  {
+    path: "/faq",
+    element: <FAQ />,
+  },
+  {
+    path: "/aboutus",
+    element: <AboutUs />,
   },
   {
     path: "/terms",

@@ -149,6 +149,50 @@ export async function deleteDesign({ id }) {
   await deleteFile(`designs/${id}.jpg`);
 }
 
+export async function deleteMultipleDesigns({ ids }) {
+  const authStorage = localStorage.getItem('auth-storage');
+  const authObject = JSON.parse(authStorage);
+  const uid = authObject?.state?.user?.uid;
+  const bucketNamePersonal = 'flashkitpersonalbucket';
+  const s3Client = new S3Client({
+        region: 'eu-west-2', // e.g., 'us-east-1'
+        credentials: {
+          accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+          secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+        }
+      });
+  if(uid){
+    for(const id of ids){
+      const command = new DeleteObjectCommand({
+        Bucket: bucketNamePersonal,
+        Key: `${uid}/shared/${id}.json`,
+      });
+      const commandImage = new DeleteObjectCommand({
+        Bucket: bucketNamePersonal,
+        Key: `${uid}/shared/${id}.jpg`,
+      });
+      if(window.navigator.onLine){
+        await s3Client.send(command);
+        await s3Client.send(commandImage);
+      }
+      else{
+        const list = await listOfflineChanges();
+        const map = new Map(list);
+        map.set(`${uid}/delete/${id}.json`, `${uid}/shared/${id}.json`);
+        map.set(`${uid}/delete/${id}.jpg`, `${uid}/shared/${id}.jpg`);
+        await localforage.setItem('offline-changes', Array.from(map));
+      }
+    }
+  }
+  const list = await listDesigns();
+  const newList = list.filter((design) => !ids.includes(design.id));
+  await writeKv('designs-list', newList);
+  for(const id of ids){
+    await deleteFile(`designs/${id}.json`);
+    await deleteFile(`designs/${id}.jpg`);
+  }
+}
+
 export async function loadById({ id }) {
   let storeJSON = await readFile(`designs/${id}.json`);
   const list = await listDesigns();
