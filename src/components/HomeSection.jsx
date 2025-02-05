@@ -35,10 +35,12 @@ import { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, Comma
 import { TabsList, TabsTrigger } from "./ui/tabs";
 import YoutubeSvg from "../assets/youtube.svg"
 import instagramSvg from "../assets/instagram.svg"
+import NavbarLeftComponent from "./NavbarLeftComponent";
 
 function HomeSection({ store }) {
     const { user } = useAuthStore();
     const { Engagement, setEngagement } = useEngagementData();
+    const [selected, setSelected] = useState("Instagram");
     const [loading, setLoading] = useState(false);
     const { youtubeData } = useYoutubeData();
       
@@ -54,6 +56,9 @@ function HomeSection({ store }) {
       document.addEventListener("keydown", down)
       return () => document.removeEventListener("keydown", down)
     }, [])
+    useEffect(()=>{
+      console.log(selected)
+    },[selected])
     return (
         <>  
             <header className="flex shrink-0 h-10 items-center gap-2 transition-[width,height] ease-linear justify-between mb-2">
@@ -74,17 +79,17 @@ function HomeSection({ store }) {
             </div> */}
             
             <SidebarTrigger className=" md:hidden"/>
-            <search className=" md:min-w-80  flex" onClick={() => setOpen(true)}>
-            <div className="flex flex-1 items-center border rounded-full px-1">
-                <div className=" text-gray-400">
+            <search className="flex md:min-w-80" onClick={() => setOpen(true)}>
+            <div className="flex items-center flex-1 px-1 border rounded-full">
+                <div className="text-gray-400 ">
                 <LucideSearch className="h-5"/>
                 </div>
                 <Input
                 type="search"
                 placeholder="Search ..."
-                className=" border-none focus:outline-none focus:ring-0 bg-transparent w-full focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                className="w-full bg-transparent border-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                 />
-                <div className=" text-gray-400 flex text-xs bg-gray-100 items-center py-1 px-2 rounded-lg gap-1 mr-1">
+                <div className="flex items-center gap-1 px-2 py-1 mr-1 text-xs text-gray-400 bg-gray-100 rounded-lg ">
                   <LucideCommand className="h-3"/> K
                 </div>
             </div>
@@ -94,7 +99,7 @@ function HomeSection({ store }) {
               <CommandList>
                 <CommandEmpty>No results found.</CommandEmpty>
                 <CommandGroup heading="Suggestions">
-                <TabsList className="flex flex-col bg-white p-0 text-black hover:text-black w-full">
+                <TabsList className="flex flex-col w-full p-0 text-black bg-white hover:text-black">
                   <CommandItem onSelect={()=>window.location.href="/canvas?id=create_new_design"}>
                     <div  className=" rounded-sm bg-[#fe5655]">
                         <LucidePlus size={10} fill="#fff"  color="#fff" className=''/>
@@ -131,20 +136,16 @@ function HomeSection({ store }) {
                 </CommandGroup>
               </CommandList>
             </CommandDialog>
-            <div className="flex gap-3 ml-auto">
-                <LucideSettings className="h-5 my-auto" />
-                <LucideBell className="h-5 my-auto" />
-                <NavUser/>
-            </div>
+            <NavbarLeftComponent/>
             </header>
             <DashboardHeader title={"Explore Flashkit"} buttonText={"Explore Flashkit"} bottomSection={true}/>
-            <div className="p-2 max-md:p-0 flex-col flex gap-10">
+            <div className="flex flex-col gap-10 p-2 max-md:p-0">
               <div className=" text-[#252C32] flex justify-between">
                 <div>
-                  <p className=" font-semibold text-2xl">Welcome back {user&&user.displayName&&user.displayName.split(" ")[0]}!</p>
-                  <p className=" font-normal text-base ">Your latest social media performance </p>
+                  <p className="text-2xl font-semibold ">Welcome back {user&&user.displayName&&user.displayName.split(" ")[0]}!</p>
+                  <p className="text-base font-normal ">Your latest social media performance </p>
                 </div>
-                {/* <Select>
+                <Select value={selected} onValueChange={setSelected} className="w-[180px]">
                     <SelectTrigger className="w-[180px]">
                       <SelectValue placeholder="Select an Account" />
                     </SelectTrigger>
@@ -154,76 +155,76 @@ function HomeSection({ store }) {
                         <SelectItem value="Youtube"><div className="flex gap-2"><Youtube className="h-5"/>Youtube</div></SelectItem>
                       </SelectGroup>
                     </SelectContent>
-                  </Select> */}
+                  </Select>
               </div>
                 {/* {localStorage.getItem("flashkitPlan") === "FLASHKITSOCIAL" ? 
                 <> */}
-                <div className="flex gap-2 flex-wrap max-md:flex-col">
-                    <div className="max-md:grid max-md:grid-cols-2 md:flex gap-2">
-                      <Card className="flex md:h-52 md:aspect-square items-center justify-center drop-shadow-sm">
-                          <CardContent className="flex gap-2 p-5 px-12 flex-col my-auto">
-                              <Avatar className= "m-auto h-20 w-20">
+                <div className="flex flex-wrap gap-2 max-md:flex-col">
+                    <div className="gap-2 max-md:grid max-md:grid-cols-2 md:flex">
+                      <Card className="flex items-center justify-center md:h-52 md:aspect-square drop-shadow-sm">
+                          <CardContent className="flex flex-col gap-2 p-5 px-12 my-auto">
+                              <Avatar className= "w-20 h-20 m-auto">
                               {user&&user.photoURL ? <AvatarImage src={user.photoURL} /> :
                               <AvatarImage src="https://github.com/shadcn.png" />
                               }
                               <AvatarFallback>CN</AvatarFallback>
                               </Avatar>
-                              <span className="truncate text-xs font-semibold flex mx-auto">{user&&user.displayName ? user.displayName : ""}</span>
+                              <span className="flex mx-auto text-xs font-semibold truncate">{user&&user.displayName ? user.displayName : ""}</span>
                               <div className="text-[#E1A100] bg-[#fdf5e1] text-center font-semibold flex pr-2 py-[2px] rounded-sm mx-auto"><LucideAward className="h-4 my-auto"/>Gold</div>
                           </CardContent>
                       </Card>
-                      <Card className=" flex md:aspect-square md:h-52 items-center justify-center drop-shadow-sm">
-                          <CardContent className="flex h-fit gap-2 p-2  flex-col">
+                      <Card className="flex items-center justify-center md:aspect-square md:h-52 drop-shadow-sm">
+                          <CardContent className="flex flex-col gap-2 p-2 h-fit">
                                 {Engagement && typeof Engagement ==='object' && Object.keys(Engagement).length > 0 ?<CircularProgress score={Engagement.engagementMetrics.score * 10} startColor="#FE5655" endColor="#89D0F7"/> : <CircularProgress /> }
-                                {/* <p className=" text-2xl font-semibold">{Engagement && typeof Engagement ==='object' && Object.keys(Engagement).length > 0 ? Engagement.engagementMetrics.score * 10 : 79} %</p> */}
+                                {/* <p className="text-2xl font-semibold ">{Engagement && typeof Engagement ==='object' && Object.keys(Engagement).length > 0 ? Engagement.engagementMetrics.score * 10 : 79} %</p> */}
                                 {/* {youtubeData && typeof data === 'object' && Object.keys(youtubeData).length > 0 ?<Button className={"w-full" + loading ? " opacity-90 ":""} onClick={()=>getEQSScore(youtubeData)}>{loading ? "Loading ...":" Generate EQS Score"}</Button> : <></>} */}
-                                <div className="flex text-sm font-medium gap-1 mx-auto mb-5"><p className="text-[#34C759] flex">+20%<LucideArrowUpRight className="h-4 w-4 mt-auto"/></p><p className="text-secondary"> than last week</p></div>
+                                <div className="flex gap-1 mx-auto mb-5 text-sm font-medium"><p className="text-[#34C759] flex">+20%<LucideArrowUpRight className="w-4 h-4 mt-auto"/></p><p className="text-secondary"> than last week</p></div>
                           </CardContent>
                       </Card>
                     </div>
-                    <Card className= " flex flex-1 p-0 border-none ">
-                        <CardContent className="grid grid-cols-2 grid-rows-2 gap-2 p-0 flex-1">
+                    <Card className= "flex flex-1 p-0 border-none ">
+                        <CardContent className="grid flex-1 grid-cols-2 grid-rows-2 gap-2 p-0">
                         <Card className=" bg-gradient-to-r from-[#E2F2FF] to-[#FFF3F3] rounded-lg drop-shadow-sm">
-                            <CardContent className="flex gap-2 p-4 max-md:p-2 flex-col flex-1">
-                            <div className=" text-xs text-secondary font-semibold Inter flex gap-2">Total Followers</div>
+                            <CardContent className="flex flex-col flex-1 gap-2 p-4 max-md:p-2">
+                            <div className="flex gap-2 text-xs font-semibold text-secondary Inter">Total Followers</div>
                             <div className="flex justify-between">
-                            <p className=" text-3xl font-semibold my-auto">23K</p>
+                            <p className="my-auto text-3xl font-semibold ">23K</p>
                             <div className="flex flex-col text-sm font-medium">
-                                <p className="text-[#FF3B30] ml-auto flex max-md:mt-auto">-0.4% <LucideArrowDownLeft className="h-4 w-4 mt-auto"/></p>
-                                <p className="text-secondary ml-auto max-md:hidden"> than last week</p></div>
+                                <p className="text-[#FF3B30] ml-auto flex max-md:mt-auto">-0.4% <LucideArrowDownLeft className="w-4 h-4 mt-auto"/></p>
+                                <p className="ml-auto text-secondary max-md:hidden"> than last week</p></div>
                             </div>
                             </CardContent>
                         </Card>
                         <Card className=" bg-gradient-to-r from-[#E2F2FF] to-[#FFF3F3] rounded-lg drop-shadow-sm">
-                            <CardContent className="flex gap-2 p-4 max-md:p-2 flex-col flex-1">
-                            <div className=" text-xs text-secondary font-semibold Inter flex gap-2">Daily Engagements</div>
+                            <CardContent className="flex flex-col flex-1 gap-2 p-4 max-md:p-2">
+                            <div className="flex gap-2 text-xs font-semibold text-secondary Inter">Daily Engagements</div>
                             <div className="flex justify-between">
-                            <p className=" text-3xl font-semibold my-auto">23K</p>
+                            <p className="my-auto text-3xl font-semibold ">23K</p>
                             <div className="flex flex-col text-sm font-medium">
                                 <p className="text-[#FF9500] ml-auto flex max-md:mt-auto">0%</p>
-                                <p className="text-secondary ml-auto max-md:hidden"> than last week</p></div>
+                                <p className="ml-auto text-secondary max-md:hidden"> than last week</p></div>
                             </div>
                             </CardContent>
                         </Card>
                         <Card className=" bg-gradient-to-r from-[#E2F2FF] to-[#FFF3F3] rounded-lg drop-shadow-sm">
-                            <CardContent className="flex gap-2 p-4 max-md:p-2 flex-col flex-1">
-                            <div className=" text-xs text-secondary font-semibold Inter flex gap-2">Total Engagement</div>
+                            <CardContent className="flex flex-col flex-1 gap-2 p-4 max-md:p-2">
+                            <div className="flex gap-2 text-xs font-semibold text-secondary Inter">Total Engagement</div>
                             <div className="flex justify-between">
-                            <p className=" text-3xl font-semibold my-auto">23K</p>
+                            <p className="my-auto text-3xl font-semibold ">23K</p>
                             <div className="flex flex-col text-sm font-medium">
-                                <p className="text-[#FF3B30] ml-auto flex max-md:mt-auto">-0.4% <LucideArrowDownLeft className="h-4 w-4 mt-auto"/></p>
-                                <p className="text-secondary ml-auto max-md:hidden"> than last week</p></div>
+                                <p className="text-[#FF3B30] ml-auto flex max-md:mt-auto">-0.4% <LucideArrowDownLeft className="w-4 h-4 mt-auto"/></p>
+                                <p className="ml-auto text-secondary max-md:hidden"> than last week</p></div>
                             </div>
                             </CardContent>
                         </Card>
                         <Card className=" bg-gradient-to-r from-[#E2F2FF] to-[#FFF3F3] rounded-lg drop-shadow-sm">
-                            <CardContent className="flex gap-2 p-4 max-md:p-2 flex-col flex-1">
-                            <div className=" text-xs text-secondary font-semibold Inter flex gap-2">Total Followers</div>
+                            <CardContent className="flex flex-col flex-1 gap-2 p-4 max-md:p-2">
+                            <div className="flex gap-2 text-xs font-semibold text-secondary Inter">Total Followers</div>
                             <div className="flex justify-between">
-                            <p className=" text-3xl font-semibold my-auto">23K</p>
+                            <p className="my-auto text-3xl font-semibold ">23K</p>
                             <div className="flex flex-col text-sm font-medium">
-                                <p className="text-[#34C759] ml-auto flex max-md:mt-auto">+18% <LucideArrowUpRight className="h-4 w-4 mt-auto"/></p>
-                                <p className="text-secondary ml-auto max-md:hidden"> than last week</p></div>
+                                <p className="text-[#34C759] ml-auto flex max-md:mt-auto">+18% <LucideArrowUpRight className="w-4 h-4 mt-auto"/></p>
+                                <p className="ml-auto text-secondary max-md:hidden"> than last week</p></div>
                             </div>
                             </CardContent>
                         </Card>
@@ -232,7 +233,7 @@ function HomeSection({ store }) {
                 </div>
                 <div className="">
                 <ShineBorder
-                  className="relative flex w-full p-5 flex-1 justify-between overflow-hidden rounded-2xl border bg-background md:shadow-md max-md:flex-col max-md:gap-4"
+                  className="relative flex justify-between flex-1 w-full p-5 overflow-hidden border rounded-2xl bg-background md:shadow-md max-md:flex-col max-md:gap-4"
                   color={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
                   borderWidth={2}
                 >
@@ -246,25 +247,25 @@ function HomeSection({ store }) {
                 {/* <div className="grid grid-cols-[60%,40%] gap-6 bg-[#f6f8f9] rounded-xl border p-6">
                 <MonthlyEngagementChart/>
                 <div className="flex flex-col gap-4 p-6">
-                    <p className=" font-semibold text-2xl"> Choose account</p>
+                    <p className="text-2xl font-semibold "> Choose account</p>
                     <RadioGroup defaultValue="option-one">
-                        <div className="flex items-center justify-between bg-white rounded-xl border p-3 text-black space-x-2">
+                        <div className="flex items-center justify-between p-3 space-x-2 text-black bg-white border rounded-xl">
                             <p className="font-medium"> All Socials</p>
                             <Label htmlFor="allSocials">All Socials</Label>
                             <RadioGroupItem value="allSocials" id="allSocials" />
                         </div>
-                        <div className="flex items-center justify-between bg-white rounded-xl border p-3 text-black space-x-2">
-                            <p className="font-medium flex gap-1"><img src={instagramSVG} alt="instagram svg" /> Instagram</p>
+                        <div className="flex items-center justify-between p-3 space-x-2 text-black bg-white border rounded-xl">
+                            <p className="flex gap-1 font-medium"><img src={instagramSVG} alt="instagram svg" /> Instagram</p>
                             <Label htmlFor="instagram">Instagram</Label>
                             <RadioGroupItem value="instagram" id="instagram" />
                         </div>
-                        <div className="flex items-center justify-between bg-white rounded-xl border p-3 text-black space-x-2">
-                            <p className="font-medium flex gap-1"><img src={tiktokSVG} alt="tiktok svg" /> TikTok</p>
+                        <div className="flex items-center justify-between p-3 space-x-2 text-black bg-white border rounded-xl">
+                            <p className="flex gap-1 font-medium"><img src={tiktokSVG} alt="tiktok svg" /> TikTok</p>
                             <Label htmlFor="tiktok">TikTok</Label>
                             <RadioGroupItem value="tiktok" id="tiktok" />
                         </div>
-                        <div className="flex items-center justify-between bg-white rounded-xl border p-3 text-black space-x-2">
-                            <p className="font-medium flex gap-1"><img src={youtubeSVG} alt="youtube svg" /> Youtube</p>
+                        <div className="flex items-center justify-between p-3 space-x-2 text-black bg-white border rounded-xl">
+                            <p className="flex gap-1 font-medium"><img src={youtubeSVG} alt="youtube svg" /> Youtube</p>
                             <Label htmlFor="youtube">Youtube</Label>
                             <RadioGroupItem value="youtube" id="youtube" />
                         </div>
@@ -275,20 +276,20 @@ function HomeSection({ store }) {
                     <CardHeader className="flex-row justify-between pb-0">
                         <CardTitle className="text-lg font-semibold">Top content by reach</CardTitle>
                     </CardHeader>
-                    <CardContent className="grid md:grid-cols-4 gap-2">
+                    <CardContent className="grid gap-2 md:grid-cols-4">
                     {Array.from({ length: 4 }).map((_, index) => (
                         <Card key={index} className="overflow-hidden">
                             <CardContent className="p-0 h-[200px] bg-[#e3e3e3] justify-center flex overflow-hidden">
-                                    <img src="https://images.unsplash.com/photo-1733592688551-5ba7804a9634" alt="placeholder" className=" max-h-full my-auto" />
+                                    <img src="https://images.unsplash.com/photo-1733592688551-5ba7804a9634" alt="placeholder" className="max-h-full my-auto " />
                             </CardContent>
-                            <CardFooter className=" flex-col p-4 ">
-                                <p className=" text-xs font-semibold mr-auto">Post caption</p>
+                            <CardFooter className="flex-col p-4 ">
+                                <p className="mr-auto text-xs font-semibold ">Post caption</p>
                                 <p className=" text-secondary text-xs mr-auto mt-[6px]">Sun, Oct 13 9:00am</p>
-                                <div className="flex justify-between w-full max-w-56 mr-auto mt-3">
-                                    <div className="flex text-xs gap-1"><LucideHeart className="h-3 w-3 my-auto text-red-600" fill="red"/> <p>23k</p></div>
-                                    <div className="flex text-xs gap-1"><LucideMessageSquare className="h-3 w-3 my-auto text-blue-500" fill="#409bff"/> <p>129</p></div>
-                                    <div className="flex text-xs gap-1"><LucideTrendingUp className="h-3 w-3 my-auto text-green-500"/> <p>1.3k</p></div>
-                                    <div className="flex text-xs gap-1"><LucideSend className="h-3 w-3 my-auto text-blue-800"/> <p>435</p></div>
+                                <div className="flex justify-between w-full mt-3 mr-auto max-w-56">
+                                    <div className="flex gap-1 text-xs"><LucideHeart className="w-3 h-3 my-auto text-red-600" fill="red"/> <p>23k</p></div>
+                                    <div className="flex gap-1 text-xs"><LucideMessageSquare className="w-3 h-3 my-auto text-blue-500" fill="#409bff"/> <p>129</p></div>
+                                    <div className="flex gap-1 text-xs"><LucideTrendingUp className="w-3 h-3 my-auto text-green-500"/> <p>1.3k</p></div>
+                                    <div className="flex gap-1 text-xs"><LucideSend className="w-3 h-3 my-auto text-blue-800"/> <p>435</p></div>
                                 </div>
                             </CardFooter>
                         </Card>
@@ -296,15 +297,15 @@ function HomeSection({ store }) {
                     </CardContent>
                 </Card>
                 <div className="">
-                  <div className="justify-between flex flex-col mb-10">
-                  <p className=" text-lg font-semibold mt-10">Recent Projects</p>
+                  <div className="flex flex-col justify-between mb-10">
+                  <p className="mt-10 text-lg font-semibold ">Recent Projects</p>
                   </div>
                   <DashboardProjects store={store} />
                 </div>
                 {/* <div className="">
                   <p className="text-lg font-semibold">Templates for you</p>
-                  <p className="text-secondary font-medium text-sm mb-5">Choose a template and craft eye-catching stats</p>
-                  <div className="flex  gap-3">
+                  <p className="mb-5 text-sm font-medium text-secondary">Choose a template and craft eye-catching stats</p>
+                  <div className="flex gap-3">
                   {
                     mediaKitData.slice(1,6).map((item,index)=>{
                       return(
@@ -350,12 +351,12 @@ const DashboardProjects = observer(({ store }) => {
         <div className="md:flex md:gap-2 md:flex-wrap max-md:grid max-md:grid-cols-2 max-md:gap-2">
           <Button
             variant="dotted"
-            className="px-10 py-8 aspect-square h-full max-md:w-full max-md:px-2"
+            className="h-full px-10 py-8 aspect-square max-md:w-full max-md:px-2"
               onClick={async () => {
                 window.location.href = `/canvas?id=create_new_design`;
               }}
             >
-              <LucidePlus className=" h-4"/>Create new project
+              <LucidePlus className="h-4 "/>Create new project
           </Button>
         {!designsLoadings && !designs.length && (
           <div style={{ paddingTop: '20px', textAlign: 'center', opacity: 0.6 }}>
@@ -403,12 +404,12 @@ const DashboardProjects = observer(({ store }) => {
         <Card
           style={{  padding: '3px', position: 'relative' }}
           interactive
-          className="fit-content w-fit mb-auto mx-1 group"
+          className="mx-1 mb-auto fit-content w-fit group"
           onClick={() => {
             handleSelect();
           }}
         >
-          <div className="rounded-2xl overflow-hidden">
+          <div className="overflow-hidden rounded-2xl">
           <img src={previewURL} style={{ width: '200px' }} alt="url" />
           </div>
           {loading && (
@@ -433,7 +434,7 @@ const DashboardProjects = observer(({ store }) => {
           <DropdownMenuTrigger>
             <Button className="p-2 rounded-2xl bg-[#00000040] hover:bg-[#00000080] border hidden group-hover:block"><LucideMoreVertical className="h-4"/></Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="bg-white mx-1 absolute">
+          <DropdownMenuContent className="absolute mx-1 bg-white">
             <DropdownMenuItem className="flex gap-2" onClick={() => {
                       handleSelect();
                     }}>
