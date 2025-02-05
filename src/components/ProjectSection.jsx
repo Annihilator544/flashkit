@@ -42,6 +42,7 @@ import folderSVG from "../assets/folder.svg";
 import { nanoid } from "nanoid";
 import { SidebarTrigger } from "./ui/sidebar";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import NavbarLeftComponent from "./NavbarLeftComponent";
 
 // Category filters
 const categories = [
@@ -138,10 +139,10 @@ const DesignCard = observer(({ design, onDelete, onDuplicate, addFiles, fileDire
       <Card
         style={{ padding: "3px", position: "relative" }}
         interactive
-        className="fit-content w-fit mb-auto mx-1 group"
+        className="mx-1 mb-auto fit-content w-fit group"
         onClick={handleSelect}
       >
-        <div className="rounded-2xl overflow-hidden">
+        <div className="overflow-hidden rounded-2xl">
           <img src={previewURL} style={{ width: "200px" }} alt="preview" />
         </div>
         {loading && (
@@ -157,7 +158,7 @@ const DesignCard = observer(({ design, onDelete, onDuplicate, addFiles, fileDire
           </div>
         )}
         <div className="absolute top-2 left-2">
-          <Input type="checkbox" className="rounded-2xl h-6 w-6" onClick={(e)=>e.stopPropagation()} onChange={(e) => onSelected(e.target.checked)} />
+          <Input type="checkbox" className="w-6 h-6 rounded-2xl" onClick={(e)=>e.stopPropagation()} onChange={(e) => onSelected(e.target.checked)} />
         </div>
         <div
           className="absolute top-1 right-1 "
@@ -171,7 +172,7 @@ const DesignCard = observer(({ design, onDelete, onDuplicate, addFiles, fileDire
                 <LucideMoreVertical className="h-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-white mx-1 absolute">
+            <DropdownMenuContent className="absolute mx-1 bg-white">
               <DropdownMenuItem
                 className="flex gap-2"
                 onClick={() => {
@@ -264,10 +265,10 @@ const DesignCard3 = observer(({ design, onDelete, onDuplicate, addFiles, fileDir
       <Card
         style={{ padding: "3px", position: "relative" }}
         interactive
-        className="fit-content w-fit mb-auto mx-1 group"
+        className="mx-1 mb-auto fit-content w-fit group"
         onClick={handleSelect}
       >
-        <div className="rounded-2xl overflow-hidden">
+        <div className="overflow-hidden rounded-2xl">
           <img src={previewURL} style={{ width: "200px" }} alt="preview" />
         </div>
         {loading && (
@@ -294,7 +295,7 @@ const DesignCard3 = observer(({ design, onDelete, onDuplicate, addFiles, fileDir
                 <LucideMoreVertical className="h-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-white mx-1 absolute">
+            <DropdownMenuContent className="absolute mx-1 bg-white">
               <DropdownMenuItem
                 className="flex gap-2"
                 onClick={() => {
@@ -390,10 +391,10 @@ const DesignCard2 = observer(({ design, onDelete }) => {
       <Card
         style={{ padding: "3px", position: "relative" }}
         interactive
-        className="fit-content w-fit mb-auto mx-1 group"
+        className="mx-1 mb-auto fit-content w-fit group"
         onClick={handleSelect}
       >
-        <div className="rounded-2xl overflow-hidden">
+        <div className="overflow-hidden rounded-2xl">
           <img src={previewURL} style={{ width: "200px" }} alt="preview" />
         </div>
         {loading && (
@@ -420,7 +421,7 @@ const DesignCard2 = observer(({ design, onDelete }) => {
                 <LucideMoreVertical className="h-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-white mx-1 absolute">
+            <DropdownMenuContent className="absolute mx-1 bg-white">
               <DropdownMenuItem
                 className="flex gap-2"
                 onClick={() => {
@@ -499,7 +500,7 @@ const DashboardProjects2 = observer(({ store, addFiles, fileDirectory, filterKey
   return (
     <div className="flex flex-col flex-wrap">
       <div className="flex justify-between">
-        <p className="text-lg font-semibold mb-3">Designs</p>
+        <p className="mb-3 text-lg font-semibold">Designs</p>
         {selectedDesign.length > 0 && (
           <Button
             variant="destructive"
@@ -512,7 +513,7 @@ const DashboardProjects2 = observer(({ store, addFiles, fileDirectory, filterKey
       <div className="md:flex md:gap-2 md:flex-wrap max-md:grid max-md:grid-cols-2 max-md:gap-2">
         <Button
           variant="dotted"
-          className="px-10 py-8 aspect-square h-full max-md:w-full max-md:px-2"
+          className="h-full px-10 py-8 aspect-square max-md:w-full max-md:px-2"
           onClick={async () => {
             window.location.href = `/canvas?id=create_new_design`;
           }}
@@ -728,11 +729,7 @@ function ProjectSection({ store }) {
     <div className="flex flex-col">
       <header className="flex shrink-0 h-10 items-center gap-2 transition-[width,height] ease-linear justify-end mb-2">
         <SidebarTrigger className="md:hidden" />
-        <div className="flex gap-3 ml-auto">
-          <LucideSettings className="h-5 my-auto" />
-          <LucideBell className="h-5 my-auto" />
-          <NavUser />
-        </div>
+        <NavbarLeftComponent />
       </header>
       <DashboardHeader
         title={"Projects"}
@@ -741,15 +738,15 @@ function ProjectSection({ store }) {
       />
       <div className="flex items-center justify-between py-4 rounded-md max-md:grid max-md:grid-cols-[70%,30%] max-md:gap-2">
         <div className="flex gap-2 max-md:flex-col">
-          <div className="min-w-80 flex max-md:min-w-40">
-            <div className="flex flex-1 items-center border rounded-full px-1">
+          <div className="flex min-w-80 max-md:min-w-40">
+            <div className="flex items-center flex-1 px-1 border rounded-full">
               <div className="text-gray-400">
                 <LucideSearch className="h-5" />
               </div>
               <Input
                 type="search"
                 placeholder="Search ..."
-                className="border-none bg-transparent w-full focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                className="w-full bg-transparent border-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -760,7 +757,7 @@ function ProjectSection({ store }) {
             <Button
               key={i}
               variant="outline"
-              className="whitespace-nowrap rounded-full"
+              className="rounded-full whitespace-nowrap"
               onClick={() => setSelectedCategory(cat.label)}
             >
               {cat.label}
@@ -800,7 +797,7 @@ function ProjectSection({ store }) {
             Filters
           </Button>
           </PopoverTrigger>
-          <PopoverContent className="bg-white p-4 rounded-md shadow-md">
+          <PopoverContent className="p-4 bg-white rounded-md shadow-md">
             <div className="flex flex-col gap-2">
               <p className="text-sm font-semibold">Filter by</p>
               <div className="flex flex-col gap-2">
@@ -819,7 +816,7 @@ function ProjectSection({ store }) {
       {/* Show "Recent Designs" if category is "All" or "Design" */}
       {(selectedCategory === "All" || selectedCategory === "Design") && (
         <div className="max-w-[80vw] max-md:max-w-full my-10">
-          <p className="text-lg font-semibold mb-3">Recent Designs</p>
+          <p className="mb-3 text-lg font-semibold">Recent Designs</p>
           <DashboardProjects
             store={store}
             addFiles={addFilesToProject}
@@ -834,7 +831,7 @@ function ProjectSection({ store }) {
       {(selectedCategory === "All" || selectedCategory === "Folders") && (
         <>
           <p className="text-lg font-semibold">Folders</p>
-          <div className="md:flex md:flex-wrap gap-3 mt-3 max-md:grid max-md:grid-cols-2 max-md:gap-3">
+          <div className="gap-3 mt-3 md:flex md:flex-wrap max-md:grid max-md:grid-cols-2 max-md:gap-3">
             {filteredFileDirectory.map((project, index) => (
               <TooltipProvider key={index}>
                 <Dialog>
@@ -843,7 +840,7 @@ function ProjectSection({ store }) {
                       <DialogTrigger asChild>
                         <div className="flex min-w-80 gap-3 hover:bg-[#f9f9f9] p-4 rounded-md cursor-pointer max-md:min-w-20">
                           <img src={folderSVG} alt="folder" className="h-5" />
-                          <p className="font-semibold my-auto">{project.name}</p>
+                          <p className="my-auto font-semibold">{project.name}</p>
                         </div>
                       </DialogTrigger>
                     </TooltipTrigger>
