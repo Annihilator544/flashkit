@@ -18,6 +18,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from ".
 import { useState } from "react";
 import { SidebarTrigger } from "./ui/sidebar";
 import { NavUser } from "./nav-user";
+import NavbarLeftComponent from "./NavbarLeftComponent";
+import DashboardHeader from "./DashboardHeader";
 
 function SettingsSection() {
     const { Engagement } = useEngagementData();
@@ -61,16 +63,16 @@ function SettingsSection() {
         }
     }
   return (
-    <div className="md:m-10 flex flex-col md:gap-10">
-          <header className="flex shrink-0 h-10 items-center gap-2 transition-[width,height] ease-linear justify-end mb-2 max-md:justify-between">
+    <div className="flex flex-col">
+            <header className="flex shrink-0 h-10 items-center gap-2 transition-[width,height] ease-linear justify-end mb-2 max-md:justify-between">
             <SidebarTrigger className=" md:hidden"/>
-                <div className="flex gap-3">
-                    <LucideSettings className="h-5 my-auto" />
-                    <LucideBell className="h-5 my-auto" />
-                    <NavUser/>
-                </div>
+                <NavbarLeftComponent/>
             </header>
-      <p className="text-3xl font-semibold">Settings</p>
+            <DashboardHeader
+              title={"Settings"}
+              buttonText={"Explore Project"}
+              bottomSection={false}
+            />
         {/* <div className="m-10">
             <ConnectAccount/>
             </div>
@@ -85,7 +87,7 @@ function SettingsSection() {
             }
         </div> */}
         <Tabs defaultValue="profile">
-          <TabsList className="flex gap-4 bg-white mb-10">
+          <TabsList className="flex gap-4 mb-10 bg-white">
             <TabsTrigger value="profile" className="p-2 px-4 rounded-full border-2 hover:border-[#409BFF] hover:text-[#409BFF] data-[state=active]:border-[#409BFF] data-[state=active]:text-[#409BFF]">
                 Profile
             </TabsTrigger>
@@ -100,11 +102,11 @@ function SettingsSection() {
             <Card className="bg-[#f6f8f9]">
               <CardHeader>
                 <CardTitle>Edit Profile</CardTitle>
-                <p className="text-secondary font-medium">Personalise your experience and upload a photo and details</p>
+                <p className="font-medium text-secondary">Personalise your experience and upload a photo and details</p>
               </CardHeader>
               <CardContent>
-                <div className="flex gap-4 justify-start items-center pb-6">
-                  <Avatar className= "my-auto h-20 w-20">
+                <div className="flex items-center justify-start gap-4 pb-6">
+                  <Avatar className= "w-20 h-20 my-auto">
                     {user&&user.photoURL ? <AvatarImage src={user.photoURL} /> :
                     <AvatarImage src="https://github.com/shadcn.png" />
                     }
@@ -179,7 +181,7 @@ function SettingsSection() {
             <Card className="bg-[#f6f8f9]">
               <CardHeader>
                 <CardTitle>Password</CardTitle>
-                <p className="text-secondary font-medium">Secure your account with a strong password</p>
+                <p className="font-medium text-secondary">Secure your account with a strong password</p>
               </CardHeader>
               <CardContent>
                 <Form {...formPassword}>
@@ -261,16 +263,16 @@ function SettingsSection() {
               <CardContent className="flex flex-col gap-4">
                 <RadioGroup value={selectedCard} onValueChange={(value) => setSelectedCard(value)} defaultValue="card1" className="flex flex-col gap-3">
                   <div className={`flex items-center justify-between border p-4 rounded-xl gap-3 ${selectedCard === "card1" ? " border-blue-300" : ""}`}>
-                    <label htmlFor="card1" className="text-sm flex items-start gap-1 flex-col">
-                      <div className="text-xs uppercase font-semibold text-gray-700">Visa</div>
+                    <label htmlFor="card1" className="flex flex-col items-start gap-1 text-sm">
+                      <div className="text-xs font-semibold text-gray-700 uppercase">Visa</div>
                       <span className="text-sm text-gray-600">•••• •••• •••• ••••</span>
                       <span className="text-sm text-gray-500">expires on 12/25</span>
                     </label>
                     <RadioGroupItem value="card1" id="card1" />
                   </div>
                   <div className={`flex items-center justify-between border p-4 rounded-xl gap-3 ${selectedCard === "card2" ? " border-blue-300" : ""}`}>
-                    <label htmlFor="card2" className="text-sm flex items-start gap-1 flex-col">
-                      <div className="text-xs uppercase font-semibold text-gray-700">Visa</div>
+                    <label htmlFor="card2" className="flex flex-col items-start gap-1 text-sm">
+                      <div className="text-xs font-semibold text-gray-700 uppercase">Visa</div>
                       <span className="text-sm text-gray-600">•••• •••• •••• ••••</span>
                       <span className="text-sm text-gray-500">expires on 12/25</span>
                     </label>
@@ -288,11 +290,11 @@ function SettingsSection() {
                   Keep track of your most recent activities
                 </CardDescription>
               </div> 
-                <div className="mb-4 flex justify-end">
+                <div className="flex justify-end mb-4">
                   <Button variant="outline" size="sm"><LucideDownload className="h-4 mr-1"/>Download</Button>
                 </div>
               </CardHeader>
-              <CardContent className="p-0 mx-6 mb-6 border rounded-xl overflow-hidden">
+              <CardContent className="p-0 mx-6 mb-6 overflow-hidden border rounded-xl">
                 <Table className="">
                   <TableHeader className="bg-[#f0f9fe]">
                     <TableRow>
