@@ -32,6 +32,7 @@ import { TabsList, TabsTrigger } from "./ui/tabs";
 import connectAccount from "../assets/connectAccount.svg"
 import { SidebarTrigger } from "./ui/sidebar";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion";
+import NavbarLeftComponent from "./NavbarLeftComponent";
 
 const calculateLastDaysViews = (data, days) => {
   const dailyData = data.daily;
@@ -190,7 +191,7 @@ function YoutubeSection () {
     //sum of views this week , youtube.daily is an object with keys as dates and values as views
     useEffect(() => {
       // round to 2 decimal places
-    const totalViewsThisWeek = calculateLastDaysViews( youtubeData, 7 );
+    if(Object.keys(youtubeData).length){const totalViewsThisWeek = calculateLastDaysViews( youtubeData, 7 );
     const totalViewsLastWeek = calculateLastDaysViews( youtubeData, 14 ) - totalViewsThisWeek;
     const percentageChangeViews = totalViewsLastWeek === 0 ? 0 : (((totalViewsThisWeek - totalViewsLastWeek) / totalViewsLastWeek) * 100).toFixed(2 );
     const totalWatchTime = calculateTotalWatchTime( youtubeData, 7 );
@@ -216,87 +217,83 @@ function YoutubeSection () {
     const lastWeekEQSScore = getEQSScore( pastDaysData( youtubeData, 7, 14 ) );
     console.log(thisWeekEQSScore, lastWeekEQSScore, pastDaysData( youtubeData, 0,7 ), pastDaysData( youtubeData, 7, 14 ));
     }
-    updateYoutubeEQSData();
+    updateYoutubeEQSData();}
     }, []);
 
   return (
     <>
             <header className="flex shrink-0 h-10 items-center gap-2 transition-[width,height] ease-linear justify-end mb-2 max-md:justify-between">
             <SidebarTrigger className=" md:hidden"/>
-                <div className="flex gap-3">
-                    <LucideSettings className="h-5 my-auto" />
-                    <LucideBell className="h-5 my-auto" />
-                    <NavUser/>
-                </div>
+                <NavbarLeftComponent/>
             </header>
             {/* <div className={` rounded-lg mb-6 h-[140px] overflow-hidden relative`}>
-                <img src={youtubeData.channel.brandingSettings.image.bannerExternalUrl} alt="youtube" className="w-full center absolute -translate-y-1/4"/>
-                <h1 className="text-3xl font-light text-black mb-4"></h1>
+                <img src={youtubeData.channel.brandingSettings.image.bannerExternalUrl} alt="youtube" className="absolute w-full center -translate-y-1/4"/>
+                <h1 className="mb-4 text-3xl font-light text-black"></h1>
             </div> */}
             <div className={`bg-gradient-to-r from-[#FF003308] to-[#FF00331F] rounded-lg mb-6 p-8 h-[140px]`}>
-                <h1 className="text-2xl font-light text-black mb-2 flex gap-2"><img src={youtubeSvg} alt="youtube" className="h-6 my-auto"/>Youtube Analytics</h1>
-                <p className="text-secondary text-base">Uncover Key Insights to Boost Your Youtube Performance</p>
+                <h1 className="flex gap-2 mb-2 text-2xl font-light text-black"><img src={youtubeSvg} alt="youtube" className="h-6 my-auto"/>Youtube Analytics</h1>
+                <p className="text-base text-secondary">Uncover Key Insights to Boost Your Youtube Performance</p>
             </div>
             {localStorage.getItem("youtubeAccessToken")
             ?
-            <div className="p-2 flex-col flex gap-10">
+            <div className="flex flex-col gap-10 p-2">
               <h1 className="text-2xl font-semibold">Insights</h1>
               <Card>
-                <CardContent className="p-4 flex flex-row gap-4 max-md:flex-col">
-                  <div className="gap-2 flex flex-col max-md:justify-center max-md:items-center">
+                <CardContent className="flex flex-row gap-4 p-4 max-md:flex-col">
+                  <div className="flex flex-col gap-2 max-md:justify-center max-md:items-center">
                     <CircularProgress currentScore={youtubeData?.channel?.statistics?.subscriberCount} startColor="#FECAD5" endColor="#FF2853" />
-                    <div className="flex text-sm font-medium gap-1 mx-auto"><p className="text-[#34C759] flex">+20%<LucideArrowUpRight className="h-4 w-4 mt-auto"/></p><p className="text-secondary"> than last week</p></div>
+                    <div className="flex gap-1 mx-auto text-sm font-medium"><p className="text-[#34C759] flex">+20%<LucideArrowUpRight className="w-4 h-4 mt-auto"/></p><p className="text-secondary"> than last week</p></div>
                   </div>
                   <Separator orientation="vertical" className="max-md:hidden"/>
                   <Separator orientation="horizontal" className="md:hidden"/>
                   <div className="flex md:flex-1">
-                  <div className="gap-2 flex flex-col flex-1 ">
-                        <Card className=" border-none rounded-lg shadow-none">
-                            <CardContent className="flex gap-1 p-2 flex-col flex-1">
-                            <div className=" text-sm text-secondary font-medium Inter flex gap-2">Total Views</div>
+                  <div className="flex flex-col flex-1 gap-2 ">
+                        <Card className="border-none rounded-lg shadow-none ">
+                            <CardContent className="flex flex-col flex-1 gap-1 p-2">
+                            <div className="flex gap-2 text-sm font-medium text-secondary Inter">Total Views</div>
                             <div className="flex justify-between">
-                            <p className=" text-3xl font-semibold my-auto">{youtubeCalculatedData.totalViewsThisWeek}</p>
-                            <div className="flex flex-col text-sm font-medium mt-auto">
-                                <p className={`${youtubeCalculatedData.percentageChangeViews > 0 ? "text-[#34C759]": youtubeCalculatedData.percentageChangeViews === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{youtubeCalculatedData.percentageChangeViews}% {youtubeCalculatedData.percentageChangeViews > 0 ? <LucideArrowUpRight className="h-4 w-4 mt-auto"/> : youtubeCalculatedData.percentageChangeViews === 0 ? <></> : <LucideArrowDownLeft className="h-4 w-4 mt-auto"/>}</p>
-                                <p className="text-secondary ml-auto max-md:hidden"> than last week</p></div>
+                            <p className="my-auto text-3xl font-semibold ">{youtubeCalculatedData.totalViewsThisWeek}</p>
+                            <div className="flex flex-col mt-auto text-sm font-medium">
+                                <p className={`${youtubeCalculatedData.percentageChangeViews > 0 ? "text-[#34C759]": youtubeCalculatedData.percentageChangeViews === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{youtubeCalculatedData.percentageChangeViews}% {youtubeCalculatedData.percentageChangeViews > 0 ? <LucideArrowUpRight className="w-4 h-4 mt-auto"/> : youtubeCalculatedData.percentageChangeViews === 0 ? <></> : <LucideArrowDownLeft className="w-4 h-4 mt-auto"/>}</p>
+                                <p className="ml-auto text-secondary max-md:hidden"> than last week</p></div>
                             </div>
                             </CardContent>
                         </Card>
                         <Separator orientation="horizontal"/>
-                        <Card className=" border-none rounded-lg shadow-none">
-                            <CardContent className="flex gap-1 p-2 flex-col flex-1">
-                            <div className=" text-sm text-secondary font-medium Inter flex gap-2">Total Subscribers</div>
+                        <Card className="border-none rounded-lg shadow-none ">
+                            <CardContent className="flex flex-col flex-1 gap-1 p-2">
+                            <div className="flex gap-2 text-sm font-medium text-secondary Inter">Total Subscribers</div>
                             <div className="flex justify-between">
-                            <p className=" text-3xl font-semibold my-auto">{youtubeData?.channel?.statistics?.subscriberCount}</p>
-                            <div className="flex flex-col text-sm font-medium mt-auto">
-                                <p className={`${youtubeCalculatedData.percentageChangeSubscribers > 0 ? "text-[#34C759]": youtubeCalculatedData.percentageChangeSubscribers === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{youtubeCalculatedData.percentageChangeSubscribers}%{youtubeCalculatedData.percentageChangeSubscribers > 0 ? <LucideArrowUpRight className="h-4 w-4 mt-auto"/> : youtubeCalculatedData.percentageChangeSubscribers === 0 ? <></> : <LucideArrowDownLeft className="h-4 w-4 mt-auto"/>}</p>
-                                <p className="text-secondary ml-auto max-md:hidden"> than last week</p></div>
+                            <p className="my-auto text-3xl font-semibold ">{youtubeData?.channel?.statistics?.subscriberCount}</p>
+                            <div className="flex flex-col mt-auto text-sm font-medium">
+                                <p className={`${youtubeCalculatedData.percentageChangeSubscribers > 0 ? "text-[#34C759]": youtubeCalculatedData.percentageChangeSubscribers === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{youtubeCalculatedData.percentageChangeSubscribers}%{youtubeCalculatedData.percentageChangeSubscribers > 0 ? <LucideArrowUpRight className="w-4 h-4 mt-auto"/> : youtubeCalculatedData.percentageChangeSubscribers === 0 ? <></> : <LucideArrowDownLeft className="w-4 h-4 mt-auto"/>}</p>
+                                <p className="ml-auto text-secondary max-md:hidden"> than last week</p></div>
                             </div>
                             </CardContent>
                         </Card>
                   </div>
                   <Separator orientation="vertical"/>
-                  <div className="gap-2 flex flex-col flex-1">
-                        <Card className=" border-none rounded-lg shadow-none">
-                            <CardContent className="flex gap-1 p-2 flex-col flex-1">
-                            <div className=" text-sm text-secondary font-medium Inter flex gap-2">Total Watch Time</div>
+                  <div className="flex flex-col flex-1 gap-2">
+                        <Card className="border-none rounded-lg shadow-none ">
+                            <CardContent className="flex flex-col flex-1 gap-1 p-2">
+                            <div className="flex gap-2 text-sm font-medium text-secondary Inter">Total Watch Time</div>
                             <div className="flex justify-between">
-                            <p className=" text-3xl font-semibold my-auto">{youtubeCalculatedData.totalWatchTime}</p>
-                            <div className="flex flex-col text-sm font-medium mt-auto">
-                                <p className={`${youtubeCalculatedData.percentageChangeWatchTime > 0 ? "text-[#34C759]": youtubeCalculatedData.percentageChangeWatchTime === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{youtubeCalculatedData.percentageChangeWatchTime}%{youtubeCalculatedData.percentageChangeWatchTime > 0 ? <LucideArrowUpRight className="h-4 w-4 mt-auto"/> : youtubeCalculatedData.percentageChangeWatchTime === 0 ? <></> : <LucideArrowDownLeft className="h-4 w-4 mt-auto"/>}</p>
-                                <p className="text-secondary ml-auto max-md:hidden"> than last week</p></div>
+                            <p className="my-auto text-3xl font-semibold ">{youtubeCalculatedData.totalWatchTime}</p>
+                            <div className="flex flex-col mt-auto text-sm font-medium">
+                                <p className={`${youtubeCalculatedData.percentageChangeWatchTime > 0 ? "text-[#34C759]": youtubeCalculatedData.percentageChangeWatchTime === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{youtubeCalculatedData.percentageChangeWatchTime}%{youtubeCalculatedData.percentageChangeWatchTime > 0 ? <LucideArrowUpRight className="w-4 h-4 mt-auto"/> : youtubeCalculatedData.percentageChangeWatchTime === 0 ? <></> : <LucideArrowDownLeft className="w-4 h-4 mt-auto"/>}</p>
+                                <p className="ml-auto text-secondary max-md:hidden"> than last week</p></div>
                             </div>
                             </CardContent>
                         </Card>
                         <Separator orientation="horizontal"/>
-                        <Card className=" border-none rounded-lg shadow-none">
-                            <CardContent className="flex gap-1 p-2 flex-col flex-1">
-                            <div className=" text-sm text-secondary font-medium Inter flex gap-2">Average View Duration</div>
+                        <Card className="border-none rounded-lg shadow-none ">
+                            <CardContent className="flex flex-col flex-1 gap-1 p-2">
+                            <div className="flex gap-2 text-sm font-medium text-secondary Inter">Average View Duration</div>
                             <div className="flex justify-between">
-                            <p className=" text-3xl font-semibold my-auto">{youtubeCalculatedData.averageViewDuration}</p>
-                            <div className="flex flex-col text-sm font-medium mt-auto">
-                                <p className={`${youtubeCalculatedData.percentageChangeAverageViewDuration > 0 ? "text-[#34C759]": youtubeCalculatedData.percentageChangeAverageViewDuration === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{youtubeCalculatedData.percentageChangeAverageViewDuration}% {youtubeCalculatedData.percentageChangeAverageViewDuration > 0 ? <LucideArrowUpRight className="h-4 w-4 mt-auto"/> : youtubeCalculatedData.percentageChangeAverageViewDuration === 0 ? <></> : <LucideArrowDownLeft className="h-4 w-4 mt-auto"/>}</p>
-                                <p className="text-secondary ml-auto max-md:hidden"> than last week</p></div>
+                            <p className="my-auto text-3xl font-semibold ">{youtubeCalculatedData.averageViewDuration}</p>
+                            <div className="flex flex-col mt-auto text-sm font-medium">
+                                <p className={`${youtubeCalculatedData.percentageChangeAverageViewDuration > 0 ? "text-[#34C759]": youtubeCalculatedData.percentageChangeAverageViewDuration === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{youtubeCalculatedData.percentageChangeAverageViewDuration}% {youtubeCalculatedData.percentageChangeAverageViewDuration > 0 ? <LucideArrowUpRight className="w-4 h-4 mt-auto"/> : youtubeCalculatedData.percentageChangeAverageViewDuration === 0 ? <></> : <LucideArrowDownLeft className="w-4 h-4 mt-auto"/>}</p>
+                                <p className="ml-auto text-secondary max-md:hidden"> than last week</p></div>
                             </div>
                             </CardContent>
                         </Card>
@@ -305,12 +302,12 @@ function YoutubeSection () {
                 </CardContent>
               </Card>
               <div>
-                <div className="flex-1 mt-3 flex flex-col gap-4">
-                  <div className="grid grid-cols-2 max-md:grid-cols-1 gap-4">
+                <div className="flex flex-col flex-1 gap-4 mt-3">
+                  <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1">
                     <DailyWatchMetrics youtubeData={youtubeData}/>
                     <DialySubscribedUnsubscribed youtubeData={youtubeData} percentageChangeViews={youtubeCalculatedData.percentageChangeViews}/>
                   </div>
-                  <div className="grid grid-cols-2 max-md:grid-cols-1 gap-4">
+                  <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1">
                     <DailyLikeShareDislikeYoutube youtubeData={youtubeData}/>
                     <DailyCommentsYoutube youtubeData={youtubeData} percentageChangeSubscribers={youtubeCalculatedData.percentageChangeSubscribers}/>
                   </div>
@@ -319,24 +316,24 @@ function YoutubeSection () {
               <Card className="flex-1 bg-[#f6f8f9] shadow-md">
                 <CardHeader>
                   <p className="text-[#101010] font-semibold text-lg flex gap-1"><img src={sparkle} alt="sparkle" /> AI Growth Insights</p>
-                  <p className="text-secondary text-sm ">Tailored tips to boost your YouTube growth.</p>
+                  <p className="text-sm text-secondary ">Tailored tips to boost your YouTube growth.</p>
                 </CardHeader>
-                <CardContent className="grid grid-cols-2 max-md:grid-cols-1 gap-4 ">
+                <CardContent className="grid grid-cols-2 gap-4 max-md:grid-cols-1 ">
                 <Accordion type="single" collapsible >
-                  <AccordionItem value="follower-growth" className=" border-none">
+                  <AccordionItem value="follower-growth" className="border-none ">
                     <AccordionTrigger>
                       <div className="flex flex-row gap-2">
                         <div className="p-2 bg-[#f6f8f9] rounded-lg flex h-10 w-10 items-center justify-center">
                           <img src={triangle} alt="triangle" className="h-2" />
                         </div>
                         <div>
-                          <div className="text-secondary text-xs text-left font-medium">Follower Growth</div>
+                          <div className="text-xs font-medium text-left text-secondary">Follower Growth</div>
                           <div className="text-sm font-semibold">Growth is down this week</div>
                         </div>
                       </div>
                     </AccordionTrigger>
                     <AccordionContent>
-                      <ul className="list-disc ml-4 text-gray-600 mt-2">
+                      <ul className="mt-2 ml-4 text-gray-600 list-disc">
                         <li>Post 3 videos per week targeting high-performing topics</li>
                         <li>Optimize thumbnails and titles for higher click-through rates</li>
                         <li>Collaborate with influencers in your niche</li>
@@ -345,20 +342,20 @@ function YoutubeSection () {
                   </AccordionItem>
                 </Accordion>
                 <Accordion type="single" collapsible>
-                  <AccordionItem value="engagement-rate" className=" border-none">
+                  <AccordionItem value="engagement-rate" className="border-none ">
                     <AccordionTrigger>
                       <div className="flex flex-row gap-2">
                         <div className="p-2 bg-[#f6f8f9] rounded-lg flex h-10 w-10 items-center justify-center">
                           <LucideEqual className="h-4 w-4 text-[#FF9500]" />
                         </div>
                         <div>
-                          <div className="text-secondary text-xs text-left font-medium">Engagement Rate</div>
+                          <div className="text-xs font-medium text-left text-secondary">Engagement Rate</div>
                           <div className="text-sm font-semibold">Engagement is steady</div>
                         </div>
                       </div>
                     </AccordionTrigger>
                     <AccordionContent>
-                      <ul className="list-disc ml-4 text-gray-600 mt-2">
+                      <ul className="mt-2 ml-4 text-gray-600 list-disc">
                         <li>Host a Q&A or create polls to boost interaction</li>
                         <li>Reply to at least 50% of comments within 24 hours</li>
                         <li>Add clear CTAs in your videos and descriptions</li>
@@ -367,20 +364,20 @@ function YoutubeSection () {
                   </AccordionItem>
                 </Accordion>
                 <Accordion type="single" collapsible>
-                  <AccordionItem value="audience-age"  className=" border-none">
+                  <AccordionItem value="audience-age"  className="border-none ">
                     <AccordionTrigger>
                       <div className="flex flex-row gap-2">
                         <div className="p-2 bg-[#f6f8f9] rounded-lg flex h-10 w-10 items-center justify-center">
-                          <LucideUsers className="h-4 w-4" />
+                          <LucideUsers className="w-4 h-4" />
                         </div>
                         <div>
-                          <div className="text-secondary text-xs text-left font-medium">Audience Age</div>
+                          <div className="text-xs font-medium text-left text-secondary">Audience Age</div>
                           <div className="text-sm font-semibold">Younger viewers dominating</div>
                         </div>
                       </div>
                     </AccordionTrigger>
                     <AccordionContent>
-                      <ul className="list-disc ml-4 text-gray-600 mt-2">
+                      <ul className="mt-2 ml-4 text-gray-600 list-disc">
                         <li>Create fast-paced content tailored for younger viewers</li>
                         <li>Use trending memes to make your videos relatable</li>
                         <li>Promote videos on Instagram and TikTok for broader reach</li>
@@ -389,20 +386,20 @@ function YoutubeSection () {
                   </AccordionItem>
                 </Accordion>
                 <Accordion type="single" collapsible>
-                  <AccordionItem value="trending-content-insights" className=" border-none">
+                  <AccordionItem value="trending-content-insights" className="border-none ">
                     <AccordionTrigger>
                       <div className="flex flex-row gap-2">
                         <div className="p-2 bg-[#f6f8f9] rounded-lg flex h-10 w-10 items-center justify-center">
                           <LucideHash className="h-4 w-4 text-[#409BFF]" />
                         </div>
                         <div>
-                          <div className="text-secondary text-xs text-left font-medium">Trending Content Insights</div>
+                          <div className="text-xs font-medium text-left text-secondary">Trending Content Insights</div>
                           <div className="text-sm font-semibold">Try new topics</div>
                         </div>
                       </div>
                     </AccordionTrigger>
                     <AccordionContent>
-                      <ul className="list-disc ml-4 text-gray-600 mt-2">
+                      <ul className="mt-2 ml-4 text-gray-600 list-disc">
                         <li>Make videos on trending topics relevant to your niche</li>
                         <li>Use trending hashtags and optimized tags for better visibility</li>
                         <li>Include "reaction" or "how-to" themes tied to the trends</li>
@@ -417,7 +414,7 @@ function YoutubeSection () {
                 <p className="text-[#101010] font-semibold text-xl flex gap-1">Content Insights</p>
               </CardHeader>
               <CardContent>
-              <div className="grid grid-cols-4 border-b border-gray-300 bg-gray-50 p-4 text-sm font-semibold text-gray-700">
+              <div className="grid grid-cols-4 p-4 text-sm font-semibold text-gray-700 border-b border-gray-300 bg-gray-50">
                     <div>Content</div>
                     <div className="text-center">Comments</div>
                     <div className="text-center">Likes</div>
@@ -428,18 +425,18 @@ function YoutubeSection () {
                   {videos.map((video,index) => (
                     <div
                       key={index}
-                      className="grid grid-cols-4 items-center gap-4 p-4 border-b border-gray-200 hover:bg-gray-100"
+                      className="grid items-center grid-cols-4 gap-4 p-4 border-b border-gray-200 hover:bg-gray-100"
                     >
                       {/* Content Section */}
                       <div className="flex items-center space-x-4">
                         <img
                           src={video.thumbnails.default.url}
                           alt={video.title}
-                          className="w-24 h-16 rounded-md object-cover"
+                          className="object-cover w-24 h-16 rounded-md"
                         />
                         <div className="max-md:hidden">
-                          <p className="text-gray-900 font-medium">{video.title}</p>
-                          <p className="text-gray-500 text-sm">
+                          <p className="font-medium text-gray-900">{video.title}</p>
+                          <p className="text-sm text-gray-500">
                             {new Date(video.publishedAt).toLocaleDateString("en-US", {
                               weekday: "short",
                               month: "short",
@@ -454,16 +451,16 @@ function YoutubeSection () {
 
                       {/* Average View Duration */}
                       <div className="text-center">
-                        <p className="text-gray-900 font-medium">{video.commentCount}</p>
+                        <p className="font-medium text-gray-900">{video.commentCount}</p>
                       </div>
 
                       <div className="text-center">
-                        <p className="text-gray-900 font-medium">{video.likeCount}</p>
+                        <p className="font-medium text-gray-900">{video.likeCount}</p>
                       </div>
 
                       {/* Views */}
                       <div className="text-center">
-                        <p className="text-gray-900 font-medium">{video.viewCount.toLocaleString()}</p>
+                        <p className="font-medium text-gray-900">{video.viewCount.toLocaleString()}</p>
                       </div>
                     </div>
                   ))}
@@ -471,10 +468,10 @@ function YoutubeSection () {
               </Card>
             </div>
             :
-            <div className=" flex flex-1 flex-col justify-center items-center gap-4 ">
+            <div className="flex flex-col items-center justify-center flex-1 gap-4 ">
                 <img src={connectAccount} alt="" className=" h-60" /> 
                 <h1 className="text-2xl font-semibold">Connect Your Youtube Account</h1>
-                <p className="text-secondary text-center">Get started by connecting your Youtube account to view insights.</p>
+                <p className="text-center text-secondary">Get started by connecting your Youtube account to view insights.</p>
                 <TabsList className="p-0 bg-white border-none">
                   <TabsTrigger value="settings" className="p-0 bg-white border-none">
                     <Button className=""><LucidePlus className="h-4 my-auto"/> Connect Youtube</Button>
