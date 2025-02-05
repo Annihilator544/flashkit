@@ -10,6 +10,7 @@ import { Button } from "./ui/button";
 import TemplateCard from "./TemplateCard";
 import { NavUser } from "./nav-user";
 import { SidebarTrigger } from "./ui/sidebar";
+import NavbarLeftComponent from "./NavbarLeftComponent";
 
 function TemplateSection({ store }) {
   const [templates, setTemplates] = useState([]);
@@ -42,23 +43,19 @@ function TemplateSection({ store }) {
 
   return (
     <>
-      <header className="flex shrink-0 h-10 items-center gap-2 justify-end mb-2">
+      <header className="flex items-center justify-end h-10 gap-2 mb-2 shrink-0">
         <SidebarTrigger className="md:hidden" />
-        <div className="flex gap-3 ml-auto">
-          <LucideSettings className="h-5 my-auto" />
-          <LucideBell className="h-5 my-auto" />
-          <NavUser />
-        </div>
+        <NavbarLeftComponent />
       </header>
       <DashboardHeader
         title="Template Hub"
         buttonText="Explore Templates"
         bottomSection={false}
       />
-      <div className="p-2 max-md:p-0 flex-col flex gap-10">
-        <div className="flex gap-2 flex-wrap">
-          <div className="min-w-80 flex">
-            <div className="flex flex-1 items-center border rounded-full px-1">
+      <div className="flex flex-col gap-10 p-2 max-md:p-0">
+        <div className="flex flex-wrap gap-2">
+          <div className="flex min-w-80">
+            <div className="flex items-center flex-1 px-1 border rounded-full">
               <div className="text-gray-400">
                 <LucideSearch className="h-5" />
               </div>
@@ -67,7 +64,7 @@ function TemplateSection({ store }) {
                 placeholder="Search ..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="border-none bg-transparent w-full focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                className="w-full bg-transparent border-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
               />
             </div>
           </div>
@@ -75,7 +72,7 @@ function TemplateSection({ store }) {
             <Button
               key={cat}
               variant="outline"
-              className="whitespace-nowrap rounded-full"
+              className="rounded-full whitespace-nowrap"
               onClick={() => setSelectedCategory(cat)}
             >
               {cat}
@@ -83,7 +80,7 @@ function TemplateSection({ store }) {
           ))}
         </div>
         <div>
-          <p className="text-lg font-semibold mb-5">{selectedCategory} Templates</p>
+          <p className="mb-5 text-lg font-semibold">{selectedCategory} Templates</p>
           <div className="flex flex-wrap gap-3 max-md:grid max-md:grid-cols-2">
             {templates.map((item, index) => (
               <TemplateCard
