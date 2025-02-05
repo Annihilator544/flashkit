@@ -503,7 +503,6 @@ const DashboardProjects2 = observer(({ store, addFiles, fileDirectory, filterKey
         <p className="mb-3 text-lg font-semibold">Designs</p>
         {selectedDesign.length > 0 && (
           <Button
-            variant="destructive"
             onClick={handleMultipleDelete}
           >
             Delete Selected

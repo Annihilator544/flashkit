@@ -46,6 +46,9 @@ const ToolButton = ({ icon, label, color }) => {
     <div className="flex flex-col items-center gap-2">
       <Button
         variant="ghost"
+        onClick={() =>
+        window.location.href = '/canvas'
+        }
         className={` aspect-square flex flex-col p-4 h-20 w-20 ${color} hover:bg-gray-100`}
       >
         <div>{icon}</div>

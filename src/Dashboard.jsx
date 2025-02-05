@@ -145,8 +145,8 @@ function calculateDemographicsData(engagementData, reachedData, followerData) {
 const calculateFollowersChange = (data) => {
   const date = new Date(new Date().getTime() -  1 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
   const pastWeek = new Date(new Date().getTime() - 8 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
-  const followersToday = data.daily[date]?.follower_count || 0;
-  const followersLastWeek = data.daily[pastWeek]?.follower_count || 0;
+  const followersToday = data?.daily[date]?.follower_count || 0;
+  const followersLastWeek = data?.daily[pastWeek]?.follower_count || 0;
   const followersChange = followersToday - followersLastWeek;
   const percentageChange = followersLastWeek ? ((followersChange / followersLastWeek) * 100).toFixed(2): 0;
   return percentageChange;
@@ -886,7 +886,7 @@ function DashBoard({ store }) {
       const percentageChange = EQSNormalizedFunction(thisWeekEQSScore.eqs) - EQSNormalizedFunction(lastWeekEQSScore.eqs)
       setEQS({eqsPercentage: EQSNormalizedFunction(thisWeekEQSScore.eqs), eqsPercentageChange: percentageChange});
       const eqsText = await getYoutubeEQSText( lastWeekData, thisWeekEQSScore );
-      // setEQSText(eqsText);
+      setEQSText(eqsText);
       console.log('EQS Data Updated');
     }
   updateYoutubeEQSData();

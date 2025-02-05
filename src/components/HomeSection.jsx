@@ -197,7 +197,7 @@ function HomeSection({ store}) {
                   </TabsTrigger>
                   : selected==="Youtube" ? 
                   <TabsTrigger value="youtube" className="p-0 cursor-pointer hover:text-black hover:shadow-none active:text-black active:shadow-none data-[state=active]:text-black data-[state=active]:drop-shadow-none">
-                    <Button className="bg-[#FF2853] h-11">Discover More</Button>
+                    <Button className="bg-[#409BFF] h-11">Discover More</Button>
                     </TabsTrigger>
                     : <></>}
                   </TabsList>

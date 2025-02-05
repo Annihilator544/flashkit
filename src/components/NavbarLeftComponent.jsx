@@ -21,8 +21,8 @@ function NavbarLeftComponent() {
             <PopoverContent className="flex flex-col gap-4 w-96">
                 {toasts.map(function ({ id, title, description, action, ...props }) {   
                     return (
-                        <div key={id} className="grid gap-1 p-6 border rounded-2xl">
-                            {title && <h4>{title}</h4>}
+                        <div key={id} className="grid gap-1 p-3 border rounded-2xl">
+                            {title && <h4 className="font-semibold">{title}</h4>}
                             {description && <p>{description}</p>}
                         </div>
                     );
