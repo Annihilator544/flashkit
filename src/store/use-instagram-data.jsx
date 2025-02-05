@@ -24,6 +24,22 @@ export const useInstagramData = create(
         demographicData: {},
         lastFetched: ''
     },
+    instagramCalculatedData: {
+        totalImpressions: 0,
+        totalReach: 0,
+        percentageChangeFollowers: 0,
+        percentageChangeImpressions: 0,
+        percentageChangeReach: 0,
+        topCountry: '',
+        numberOfDaysOfData: 0
+    },
+    instagramEQS:{
+        eqsPercentage: 0,
+        eqsPercentageChange: 0,
+    },
+    instagramEQSText: "",
+    setInstagramEQS: (data) => set({instagramEQS: data}),
+    setInstagramEQSText: (data) => set({instagramEQSText: data}),
     setPostData: (posts) => set((state) => ({ instagramData: { ...state.instagramData, posts : posts } })),
     setStoryData: (stories) => set((state) => ({ instagramData: { ...state.instagramData, stories : stories } })),
     setUserData: (userData) => set((state) => ({ instagramData: { ...state.instagramData, userData : userData } })),
@@ -34,6 +50,7 @@ export const useInstagramData = create(
     setExtraMetrics: (extraMetrics) => set((state) => ({ instagramData: { ...state.instagramData, extraMetrics : extraMetrics } })),
     setDemographicData: (demographicData) => set((state) => ({ instagramData: { ...state.instagramData, demographicData : demographicData } })),
     setInstagramData: (instagramData) => set((state) => ({ instagramData: instagramData })),
+    setInstagramCalculatedData: (instagramCalculatedData) => set((state) => ({ instagramCalculatedData: instagramCalculatedData }))
 }),
 {
     name: 'InstagramStorage', // required, this is the key used in storage

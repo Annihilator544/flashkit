@@ -4,6 +4,8 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { useState } from "react";
 import YoutubeOauth from "../Oauth/YoutubeOauth";
 import FacebookLogin from "Oauth/InstagramOauth";
+import YoutubeSvg from "../assets/youtube.svg"
+import instagramSvg from "../assets/instagram.svg"
 
 function ConnectAccount(){
     const [selectedAccount, setSelectedAccount] = useState('');
@@ -20,9 +22,9 @@ function ConnectAccount(){
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        <SelectItem value="Instagram"><div className="flex gap-2"><Instagram className="h-5"/>Instagram </div></SelectItem>
+                        <SelectItem value="Instagram"><span className="flex gap-2"><img src={instagramSvg} alt="Instagram Logo" className=""/>Instagram</span></SelectItem>
                         {/* <SelectItem value="Twitter"><div className="flex gap-2"><Twitter className="h-5"/>Twitter </div></SelectItem> */}
-                        <SelectItem value="Youtube"><div className="flex gap-2"><Youtube className="h-5"/>Youtube</div></SelectItem>
+                        <SelectItem value="Youtube"><span className="flex gap-2"><img src={YoutubeSvg} alt="youtube Logo" className=""/>Youtube</span></SelectItem>
                         {/* <SelectItem value="LinkedIn"><div className="flex gap-2"><Linkedin className="h-5"/>LinkedIn </div></SelectItem> */}
                         {/* <SelectItem value="TikTok"><div className="flex gap-2"><TikTok className="h-5"/>Instagram </div></SelectItem> */}
                       </SelectGroup>

@@ -33,111 +33,73 @@ import connectAccount from "../assets/connectAccount.svg"
 import { SidebarTrigger } from "./ui/sidebar";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion";
 import NavbarLeftComponent from "./NavbarLeftComponent";
-
-const calculateLastDaysViews = (data, days) => {
-  const dailyData = data.daily;
-  const lastFetched = new Date(data.lastFetched);
-
-  let totalViews = 0;
-
-  for (let i = 0; i < days; i++) {
-    const dateKey = new Date(
-      lastFetched.getTime() - i * 24 * 60 * 60 * 1000
-    ).toISOString().split("T")[0];
-    if (dailyData[dateKey]) {
-      totalViews += dailyData[dateKey].views || 0;
-    }
-  }
-
-  return totalViews;
-};
-
-const calculateTotalWatchTime = (data, days) => {
-  const dailyData = data.daily;
-  const lastFetched = new Date(data.lastFetched);
-
-  let totalEstimatedMinutesWatched = 0;
-
-  for (let i = 0; i < days; i++) {
-    const dateKey = new Date(
-      lastFetched.getTime() - i * 24 * 60 * 60 * 1000
-    ).toISOString().split("T")[0];
-    if (dailyData[dateKey]) {
-      totalEstimatedMinutesWatched += dailyData[dateKey].estimatedMinutesWatched || 0;
-    }
-  }
-
-  return totalEstimatedMinutesWatched;
-};
-
-const calculateTotalSubscribers = (data) => {
-  const dailyData = data.daily;
-  const lastFetched = new Date(data.lastFetched);
-  
-  let lastWeekSubscribers = 0;
-
-  for (let i = 0; i < 7; i++) {
-    const dateKey = new Date(
-      lastFetched.getTime() - i * 24 * 60 * 60 * 1000
-    ).toISOString().split("T")[0];
-    if (dailyData[dateKey]) {
-      lastWeekSubscribers += dailyData[dateKey].subscribers || 0;
-    }
-  }
-
-  return lastWeekSubscribers;
-};
-
-
-const calculateAverageViewDuration = (data, start, days) => {
-  const dailyData = data.daily;
-  const lastFetched = new Date(data.lastFetched);
-  let count = 0;
-  let totalAverageViewDuration = 0;
-
-  for (let i = start; i < days; i++) {
-    const dateKey = new Date(
-      lastFetched.getTime() - i * 24 * 60 * 60 * 1000
-    ).toISOString().split("T")[0];
-    if (dailyData[dateKey]) {
-      totalAverageViewDuration += dailyData[dateKey].averageViewDuration || 0;
-      count++;
-    }
-  }
-
-  return count === 0 ? 0 :  totalAverageViewDuration/count;
-};
-
-const pastDaysData = (data, start, end) => {
-  const dailyData = data.daily;
-  const lastFetched = new Date(data.lastFetched);
-  const pastDays = {};
-  for (let i = start; i < end; i++) {
-    const dateKey = new Date(
-      lastFetched.getTime() - i * 24 * 60 * 60 * 1000
-    ).toISOString().split("T")[0];
-    if (dailyData[dateKey]) {
-      pastDays[dateKey] = dailyData[dateKey];
-    }
-  }
-  return pastDays;
-};
+import YoutubeStats from "./YoutubeStats";
 
 
 function YoutubeSection () {
-    const { youtubeData } = useYoutubeData();
+    const { youtubeData, youtubeCalculatedData, eqsText } = useYoutubeData();
     const [videos, setVideos] = useState([]);
-
-
-    const [youtubeCalculatedData, setYoutubeCalculatedData] = useState({
-        totalViewsThisWeek: 0,
-        percentageChangeViews: 0,
-        totalWatchTime: 0,
-        percentageChangeWatchTime: 0,
-        percentageChangeSubscribers: 0, 
-        averageViewDuration: 0,
-        percentageChangeAverageViewDuration: 0,
+    const headingsMap = {
+      "Follower Growth": {
+        value: "follower-growth",
+        iconType: "triangle",
+      },
+      "Engagement Rate": {
+        value: "engagement-rate",
+        iconType: "LucideEqual",
+      },
+      "Audience": {
+        value: "audience",
+        iconType: "LucideUsers",
+      },
+      "Content Insights": {
+        value: "content-insights",
+        iconType: "LucideHash",
+      },
+    };
+    //remove the first 1. from the text
+    const text = eqsText.replace(/^\d+\.\s/, "");
+    // Split the text by each insight section (look for lines like: "1. Some Heading")
+    // This will give us an array of sections (each representing one block of insight data).
+    const sections = text.split(/\n\d+\.\s/).map(s => s.trim()).filter(Boolean);
+    // Parse each section to extract:
+    // 1) heading  (e.g. "Follower Growth")
+    // 2) subtitle (e.g. "Steady Upward Trajectory")
+    // 3) bulletPoints (everything under "Insights:\n- ...")
+    const parsedData = sections.map(section => {
+      const lines = section.split("\n").map(line => line.trim()).filter(Boolean);
+      // First line is the heading (e.g. "Follower Growth")
+      const heading = lines[0];
+      // Find the subtitle line (should start with "Subtitle:" according to the text format)
+      const subtitleLine = lines.find(l => l.startsWith("Subtitle:"));
+      const subtitle = subtitleLine ? subtitleLine.replace("Subtitle:", "").trim() : "";
+  
+      // Find where "Insights:" starts and gather bullet points after that
+      const insightsIndex = lines.findIndex(l => l.startsWith("Insights:"));
+      let bulletPoints = [];
+      if (insightsIndex !== -1 && insightsIndex < lines.length - 1) {
+        bulletPoints = lines
+          .slice(insightsIndex + 1)
+          .filter(l => l.startsWith("-"))
+          .map(l => l.replace(/^-/, "").trim());
+      }
+  
+      return { heading, subtitle, bulletPoints };
     });
+  
+    // Match each heading to our map and build final data
+    const mappedData = parsedData.map(item => {
+      const matchKey = Object.keys(headingsMap).find(h => h.toLowerCase() === item.heading.toLowerCase());
+      if (!matchKey) return null;
+  
+      return {
+        ...headingsMap[matchKey],
+        heading: matchKey,
+        subHeading: item.subtitle,
+        bulletPoints: item.bulletPoints
+      };
+    }).filter(Boolean);
+
     const getRecentVideos = async ( channelResponse ) => {
       const API_KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
       try {
@@ -172,52 +134,12 @@ function YoutubeSection () {
         console.error("Error fetching videos:", error);
       }
     };
-    const getEQSScore = async (userData) => {
-      try {
-        const response = await fetch("https://n5qthtqcoxts3m2gftclxqfvee0chgau.lambda-url.eu-west-2.on.aws/", {
-          method: 'POST',
-          body: JSON.stringify({
-            ...userData
-          })
-        });
-  
-        const data = await response.json();
-        console.log(data);
-        return data;
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
     //sum of views this week , youtube.daily is an object with keys as dates and values as views
     useEffect(() => {
       // round to 2 decimal places
-    if(Object.keys(youtubeData).length){const totalViewsThisWeek = calculateLastDaysViews( youtubeData, 7 );
-    const totalViewsLastWeek = calculateLastDaysViews( youtubeData, 14 ) - totalViewsThisWeek;
-    const percentageChangeViews = totalViewsLastWeek === 0 ? 0 : (((totalViewsThisWeek - totalViewsLastWeek) / totalViewsLastWeek) * 100).toFixed(2 );
-    const totalWatchTime = calculateTotalWatchTime( youtubeData, 7 );
-    const totalWatchTimeLastWeek = calculateTotalWatchTime( youtubeData, 14 ) - totalWatchTime;
-    const percentageChangeWatchTime = totalWatchTimeLastWeek === 0 ? 0 : (((totalWatchTime - totalWatchTimeLastWeek) / totalWatchTimeLastWeek) * 100).toFixed(2 );
-    const lastWeekSubscribers = calculateTotalSubscribers( youtubeData );
-    const percentageChangeSubscribers = lastWeekSubscribers === 0 ? 0 : (((youtubeData.channel.statistics.subscriberCount - lastWeekSubscribers) / lastWeekSubscribers) * 100).toFixed(2 );
-    const lastWeekAverageViewDuration = calculateAverageViewDuration( youtubeData, 7, 14 );
-    const averageViewDuration = calculateAverageViewDuration( youtubeData, 0, 7 );
-    const percentageChangeAverageViewDuration = lastWeekAverageViewDuration === 0 ? 0 : (((averageViewDuration - lastWeekAverageViewDuration) / lastWeekAverageViewDuration) * 100).toFixed(2 );
-    setYoutubeCalculatedData({
-        totalViewsThisWeek,
-        percentageChangeViews,
-        totalWatchTime,
-        percentageChangeWatchTime,
-        percentageChangeSubscribers,
-        averageViewDuration,
-        percentageChangeAverageViewDuration,
-    });
-    getRecentVideos( youtubeData.channel )
-    async function updateYoutubeEQSData() {
-    const thisWeekEQSScore = getEQSScore( pastDaysData( youtubeData, 0, 7 ) );
-    const lastWeekEQSScore = getEQSScore( pastDaysData( youtubeData, 7, 14 ) );
-    console.log(thisWeekEQSScore, lastWeekEQSScore, pastDaysData( youtubeData, 0,7 ), pastDaysData( youtubeData, 7, 14 ));
+    if(Object.keys(youtubeData).length){
+      getRecentVideos( youtubeData.channel )
     }
-    updateYoutubeEQSData();}
     }, []);
 
   return (
@@ -234,73 +156,11 @@ function YoutubeSection () {
                 <h1 className="flex gap-2 mb-2 text-2xl font-light text-black"><img src={youtubeSvg} alt="youtube" className="h-6 my-auto"/>Youtube Analytics</h1>
                 <p className="text-base text-secondary">Uncover Key Insights to Boost Your Youtube Performance</p>
             </div>
-            {localStorage.getItem("youtubeAccessToken")
+            {!localStorage.getItem("youtubeAccessToken")
             ?
             <div className="flex flex-col gap-10 p-2">
               <h1 className="text-2xl font-semibold">Insights</h1>
-              <Card>
-                <CardContent className="flex flex-row gap-4 p-4 max-md:flex-col">
-                  <div className="flex flex-col gap-2 max-md:justify-center max-md:items-center">
-                    <CircularProgress currentScore={youtubeData?.channel?.statistics?.subscriberCount} startColor="#FECAD5" endColor="#FF2853" />
-                    <div className="flex gap-1 mx-auto text-sm font-medium"><p className="text-[#34C759] flex">+20%<LucideArrowUpRight className="w-4 h-4 mt-auto"/></p><p className="text-secondary"> than last week</p></div>
-                  </div>
-                  <Separator orientation="vertical" className="max-md:hidden"/>
-                  <Separator orientation="horizontal" className="md:hidden"/>
-                  <div className="flex md:flex-1">
-                  <div className="flex flex-col flex-1 gap-2 ">
-                        <Card className="border-none rounded-lg shadow-none ">
-                            <CardContent className="flex flex-col flex-1 gap-1 p-2">
-                            <div className="flex gap-2 text-sm font-medium text-secondary Inter">Total Views</div>
-                            <div className="flex justify-between">
-                            <p className="my-auto text-3xl font-semibold ">{youtubeCalculatedData.totalViewsThisWeek}</p>
-                            <div className="flex flex-col mt-auto text-sm font-medium">
-                                <p className={`${youtubeCalculatedData.percentageChangeViews > 0 ? "text-[#34C759]": youtubeCalculatedData.percentageChangeViews === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{youtubeCalculatedData.percentageChangeViews}% {youtubeCalculatedData.percentageChangeViews > 0 ? <LucideArrowUpRight className="w-4 h-4 mt-auto"/> : youtubeCalculatedData.percentageChangeViews === 0 ? <></> : <LucideArrowDownLeft className="w-4 h-4 mt-auto"/>}</p>
-                                <p className="ml-auto text-secondary max-md:hidden"> than last week</p></div>
-                            </div>
-                            </CardContent>
-                        </Card>
-                        <Separator orientation="horizontal"/>
-                        <Card className="border-none rounded-lg shadow-none ">
-                            <CardContent className="flex flex-col flex-1 gap-1 p-2">
-                            <div className="flex gap-2 text-sm font-medium text-secondary Inter">Total Subscribers</div>
-                            <div className="flex justify-between">
-                            <p className="my-auto text-3xl font-semibold ">{youtubeData?.channel?.statistics?.subscriberCount}</p>
-                            <div className="flex flex-col mt-auto text-sm font-medium">
-                                <p className={`${youtubeCalculatedData.percentageChangeSubscribers > 0 ? "text-[#34C759]": youtubeCalculatedData.percentageChangeSubscribers === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{youtubeCalculatedData.percentageChangeSubscribers}%{youtubeCalculatedData.percentageChangeSubscribers > 0 ? <LucideArrowUpRight className="w-4 h-4 mt-auto"/> : youtubeCalculatedData.percentageChangeSubscribers === 0 ? <></> : <LucideArrowDownLeft className="w-4 h-4 mt-auto"/>}</p>
-                                <p className="ml-auto text-secondary max-md:hidden"> than last week</p></div>
-                            </div>
-                            </CardContent>
-                        </Card>
-                  </div>
-                  <Separator orientation="vertical"/>
-                  <div className="flex flex-col flex-1 gap-2">
-                        <Card className="border-none rounded-lg shadow-none ">
-                            <CardContent className="flex flex-col flex-1 gap-1 p-2">
-                            <div className="flex gap-2 text-sm font-medium text-secondary Inter">Total Watch Time</div>
-                            <div className="flex justify-between">
-                            <p className="my-auto text-3xl font-semibold ">{youtubeCalculatedData.totalWatchTime}</p>
-                            <div className="flex flex-col mt-auto text-sm font-medium">
-                                <p className={`${youtubeCalculatedData.percentageChangeWatchTime > 0 ? "text-[#34C759]": youtubeCalculatedData.percentageChangeWatchTime === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{youtubeCalculatedData.percentageChangeWatchTime}%{youtubeCalculatedData.percentageChangeWatchTime > 0 ? <LucideArrowUpRight className="w-4 h-4 mt-auto"/> : youtubeCalculatedData.percentageChangeWatchTime === 0 ? <></> : <LucideArrowDownLeft className="w-4 h-4 mt-auto"/>}</p>
-                                <p className="ml-auto text-secondary max-md:hidden"> than last week</p></div>
-                            </div>
-                            </CardContent>
-                        </Card>
-                        <Separator orientation="horizontal"/>
-                        <Card className="border-none rounded-lg shadow-none ">
-                            <CardContent className="flex flex-col flex-1 gap-1 p-2">
-                            <div className="flex gap-2 text-sm font-medium text-secondary Inter">Average View Duration</div>
-                            <div className="flex justify-between">
-                            <p className="my-auto text-3xl font-semibold ">{youtubeCalculatedData.averageViewDuration}</p>
-                            <div className="flex flex-col mt-auto text-sm font-medium">
-                                <p className={`${youtubeCalculatedData.percentageChangeAverageViewDuration > 0 ? "text-[#34C759]": youtubeCalculatedData.percentageChangeAverageViewDuration === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{youtubeCalculatedData.percentageChangeAverageViewDuration}% {youtubeCalculatedData.percentageChangeAverageViewDuration > 0 ? <LucideArrowUpRight className="w-4 h-4 mt-auto"/> : youtubeCalculatedData.percentageChangeAverageViewDuration === 0 ? <></> : <LucideArrowDownLeft className="w-4 h-4 mt-auto"/>}</p>
-                                <p className="ml-auto text-secondary max-md:hidden"> than last week</p></div>
-                            </div>
-                            </CardContent>
-                        </Card>
-                  </div>
-                  </div>
-                </CardContent>
-              </Card>
+              <YoutubeStats/>
               <div>
                 <div className="flex flex-col flex-1 gap-4 mt-3">
                   <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1">
@@ -319,94 +179,31 @@ function YoutubeSection () {
                   <p className="text-sm text-secondary ">Tailored tips to boost your YouTube growth.</p>
                 </CardHeader>
                 <CardContent className="grid grid-cols-2 gap-4 max-md:grid-cols-1 ">
-                <Accordion type="single" collapsible >
-                  <AccordionItem value="follower-growth" className="border-none ">
-                    <AccordionTrigger>
-                      <div className="flex flex-row gap-2">
-                        <div className="p-2 bg-[#f6f8f9] rounded-lg flex h-10 w-10 items-center justify-center">
-                          <img src={triangle} alt="triangle" className="h-2" />
-                        </div>
-                        <div>
-                          <div className="text-xs font-medium text-left text-secondary">Follower Growth</div>
-                          <div className="text-sm font-semibold">Growth is down this week</div>
-                        </div>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <ul className="mt-2 ml-4 text-gray-600 list-disc">
-                        <li>Post 3 videos per week targeting high-performing topics</li>
-                        <li>Optimize thumbnails and titles for higher click-through rates</li>
-                        <li>Collaborate with influencers in your niche</li>
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-                <Accordion type="single" collapsible>
-                  <AccordionItem value="engagement-rate" className="border-none ">
-                    <AccordionTrigger>
-                      <div className="flex flex-row gap-2">
-                        <div className="p-2 bg-[#f6f8f9] rounded-lg flex h-10 w-10 items-center justify-center">
-                          <LucideEqual className="h-4 w-4 text-[#FF9500]" />
-                        </div>
-                        <div>
-                          <div className="text-xs font-medium text-left text-secondary">Engagement Rate</div>
-                          <div className="text-sm font-semibold">Engagement is steady</div>
-                        </div>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <ul className="mt-2 ml-4 text-gray-600 list-disc">
-                        <li>Host a Q&A or create polls to boost interaction</li>
-                        <li>Reply to at least 50% of comments within 24 hours</li>
-                        <li>Add clear CTAs in your videos and descriptions</li>
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-                <Accordion type="single" collapsible>
-                  <AccordionItem value="audience-age"  className="border-none ">
-                    <AccordionTrigger>
-                      <div className="flex flex-row gap-2">
-                        <div className="p-2 bg-[#f6f8f9] rounded-lg flex h-10 w-10 items-center justify-center">
-                          <LucideUsers className="w-4 h-4" />
-                        </div>
-                        <div>
-                          <div className="text-xs font-medium text-left text-secondary">Audience Age</div>
-                          <div className="text-sm font-semibold">Younger viewers dominating</div>
-                        </div>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <ul className="mt-2 ml-4 text-gray-600 list-disc">
-                        <li>Create fast-paced content tailored for younger viewers</li>
-                        <li>Use trending memes to make your videos relatable</li>
-                        <li>Promote videos on Instagram and TikTok for broader reach</li>
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-                <Accordion type="single" collapsible>
-                  <AccordionItem value="trending-content-insights" className="border-none ">
-                    <AccordionTrigger>
-                      <div className="flex flex-row gap-2">
-                        <div className="p-2 bg-[#f6f8f9] rounded-lg flex h-10 w-10 items-center justify-center">
-                          <LucideHash className="h-4 w-4 text-[#409BFF]" />
-                        </div>
-                        <div>
-                          <div className="text-xs font-medium text-left text-secondary">Trending Content Insights</div>
-                          <div className="text-sm font-semibold">Try new topics</div>
-                        </div>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <ul className="mt-2 ml-4 text-gray-600 list-disc">
-                        <li>Make videos on trending topics relevant to your niche</li>
-                        <li>Use trending hashtags and optimized tags for better visibility</li>
-                        <li>Include "reaction" or "how-to" themes tied to the trends</li>
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
+                {mappedData.map((item, index) => (
+                    <Accordion type="single" collapsible key={index}>
+                      <AccordionItem value={item.value} className="border-none">
+                        <AccordionTrigger>
+                          <div className="flex flex-row gap-2">
+                            <div className="p-2 bg-[#f6f8f9] rounded-lg flex h-10 w-10 items-center justify-center">
+                              {item.iconType === "triangle" && <img src={triangle} alt="triangle" className="h-2" />}
+                              {item.iconType === "LucideEqual" && <LucideEqual className="h-4 w-4 text-[#FF9500]" />}
+                              {item.iconType === "LucideUsers" && <LucideUsers className="w-4 h-4" />}
+                              {item.iconType === "LucideHash" && <LucideHash className="h-4 w-4 text-[#409BFF]" />}
+                            </div>
+                            <div>
+                              <div className="text-xs font-medium text-left text-secondary">{item.heading}</div>
+                              <div className="text-sm font-semibold">{item.subHeading}</div>
+                            </div>
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent>
+                          <ul className="mt-2 ml-4 text-gray-600 list-disc">
+                            {item.bulletPoints.map((point, i) => <li key={i}>{point}</li>)}
+                          </ul>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
+                  ))}
                 </CardContent>
               </Card>
               <Card className="flex-1 bg-[#f6f8f9] shadow-md">

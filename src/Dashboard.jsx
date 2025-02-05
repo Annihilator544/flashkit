@@ -46,6 +46,7 @@ import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, GetCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
 import { useToast } from "./hooks/use-toast"
 import { ToastAction } from "./components/ui/toast";
+import countryNames from "./lib/InstagramCountries";
 
 function calculateDailyChanges(processedData, currentFollowers){
   const dailyData = {};
@@ -141,16 +142,218 @@ function calculateDemographicsData(engagementData, reachedData, followerData) {
   return demographicsData;
 }
 
+const calculateFollowersChange = (data) => {
+  const date = new Date(new Date().getTime() -  1 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+  const pastWeek = new Date(new Date().getTime() - 8 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+  const followersToday = data.daily[date]?.follower_count || 0;
+  const followersLastWeek = data.daily[pastWeek]?.follower_count || 0;
+  const followersChange = followersToday - followersLastWeek;
+  const percentageChange = followersLastWeek ? ((followersChange / followersLastWeek) * 100).toFixed(2): 0;
+  return percentageChange;
+};
+
+function calculateTotalImpressions(data, days) {
+  let totalImpressions = 0;
+  for (let i = 1; i <= days; i++) {
+    const day = new Date(new Date().getTime() - i * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+    totalImpressions += data.daily[day]?.impressions || 0;
+  }
+  return totalImpressions;
+}
+
+function calculateTotalReach(data, days) {
+  let totalReach = 0;
+  for (let i = 1; i <= days; i++) {
+    const day = new Date(new Date().getTime() - i * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+    totalReach += data.daily[day]?.reach || 0;
+  }
+  return totalReach;
+} 
+
+function calculateTopCountry(data) {
+  let maxCountryCode = null;
+  let maxTotal = 0;
+  
+  for (const [countryCode, stats] of Object.entries(data)) {
+    const total = stats.engaged_audience_demographics + stats.reached_audience_demographics + stats.follower_demographics;
+    if (total > maxTotal) {
+      maxTotal = total;
+      maxCountryCode = countryCode;
+    }
+  }
+  
+  const maxCountryName = countryNames[maxCountryCode];
+  return maxCountryName;
+}
+
+const calculateLastDaysViews = (data, days) => {
+  const dailyData = data.daily;
+  const lastFetched = new Date(data.lastFetched);
+
+  let totalViews = 0;
+
+  for (let i = 0; i < days; i++) {
+    const dateKey = new Date(
+      lastFetched.getTime() - i * 24 * 60 * 60 * 1000
+    ).toISOString().split("T")[0];
+    if (dailyData[dateKey]) {
+      totalViews += dailyData[dateKey].views || 0;
+    }
+  }
+
+  return totalViews;
+};
+
+const calculateTotalWatchTime = (data, days) => {
+  const dailyData = data.daily;
+  const lastFetched = new Date(data.lastFetched);
+
+  let totalEstimatedMinutesWatched = 0;
+
+  for (let i = 0; i < days; i++) {
+    const dateKey = new Date(
+      lastFetched.getTime() - i * 24 * 60 * 60 * 1000
+    ).toISOString().split("T")[0];
+    if (dailyData[dateKey]) {
+      totalEstimatedMinutesWatched += dailyData[dateKey].estimatedMinutesWatched || 0;
+    }
+  }
+
+  return totalEstimatedMinutesWatched;
+};
+
+const calculateTotalSubscribers = (data) => {
+  const dailyData = data.daily;
+  const lastFetched = new Date(data.lastFetched);
+  
+  let lastWeekSubscribers = 0;
+
+  for (let i = 0; i < 7; i++) {
+    const dateKey = new Date(
+      lastFetched.getTime() - i * 24 * 60 * 60 * 1000
+    ).toISOString().split("T")[0];
+    if (dailyData[dateKey]) {
+      lastWeekSubscribers += dailyData[dateKey].subscribers || 0;
+    }
+  }
+
+  return lastWeekSubscribers;
+};
+
+
+const calculateAverageViewDuration = (data, start, days) => {
+  const dailyData = data.daily;
+  const lastFetched = new Date(data.lastFetched);
+  let count = 0;
+  let totalAverageViewDuration = 0;
+
+  for (let i = start; i < days; i++) {
+    const dateKey = new Date(
+      lastFetched.getTime() - i * 24 * 60 * 60 * 1000
+    ).toISOString().split("T")[0];
+    if (dailyData[dateKey]) {
+      totalAverageViewDuration += dailyData[dateKey].averageViewDuration || 0;
+      count++;
+    }
+  }
+
+  return count === 0 ? 0 :  totalAverageViewDuration/count;
+};
+
+const getYoutubeEQSScore = async (userData) => {
+  try {
+    const response = await fetch("https://n5qthtqcoxts3m2gftclxqfvee0chgau.lambda-url.eu-west-2.on.aws/", {
+      method: 'POST',
+      body: JSON.stringify({
+        ...userData
+      })
+    });
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
+
+const getInstagramEQSScore = async (userData) => {
+  try {
+    const response = await fetch("https://iseuy5s5vboych7i2vwmbj2w4e0vkxsy.lambda-url.eu-west-2.on.aws/", {
+      method: 'POST',
+      body: JSON.stringify({
+        ...userData
+      })
+    });
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
+
+const getYoutubeEQSText = async (userData,eqs) => {
+  try {
+    const response = await fetch("https://crdax4rvilnivs5of7lak6r7qe0sffpk.lambda-url.eu-west-2.on.aws/", {
+      method: 'POST',
+      body: JSON.stringify({
+        "pastWeekData":userData,
+        "engagementMetrics":eqs
+      })
+    });
+
+    const data = await response.json();
+    return data.content[0].text;
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+const getInstagramEQSText = async (userData,eqs) => {
+  try {
+    const response = await fetch("https://744cjowgnl3q2b6oepxplzkaqq0dcsan.lambda-url.eu-west-2.on.aws/", {
+      method: 'POST',
+      body: JSON.stringify({
+        "pastWeekData":userData,
+        "engagementMetrics":eqs
+      })
+    });
+
+    const data = await response.json();
+    return data.content[0].text;
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+const EQSNormalizedFunction = (value) => {
+  return (Math.log(value) / (Math.log(value) + Math.log(5))).toFixed(2)*100;
+}
+
+const pastDaysData = (data, start, end) => {
+  const dailyData = data.daily;
+  const lastFetched = new Date(data.lastFetched);
+  const pastDays = {};
+  for (let i = start; i < end; i++) {
+    const dateKey = new Date(
+      lastFetched.getTime() - i * 24 * 60 * 60 * 1000
+    ).toISOString().split("T")[0];
+    if (dailyData[dateKey]) {
+      pastDays[dateKey] = dailyData[dateKey];
+    }
+  }
+  return pastDays;
+};
+
 
 function DashBoard({ store }) {
-  const { youtubeData, setYoutubeData } = useYoutubeData();
+  const { youtubeData, eqsText, setEQSText, setYoutubeData, setYoutubeCalculatedData, setEQS, eqs } = useYoutubeData();
   const [ selectedValue , setSelectedValue ] = useState('home');
-  const {instagramData} = useInstagramData();
   const { user } = useAuthStore();
   const { toast } = useToast();
-  const { setPostData, setUserData, setDaily, setExtraMetrics, setDemographicData, setStoryData, setLastFetched } = useInstagramData();
-
+  const { instagramData, instagramEQS, setInstagramEQS, setInstagramEQSText, setInstagramCalculatedData, setPostData, setUserData, setDaily, setExtraMetrics, setDemographicData, setStoryData, setLastFetched } = useInstagramData();
   const fetchInstagramBusinessAccount = async (userAccessToken) => {
+    if(!userAccessToken)return
     try {
       const region = "eu-west-2";
       const credentials = {
@@ -501,7 +704,8 @@ function DashBoard({ store }) {
     };
   } 
   
-  async function fetchDataManually(userAccessToken){ 
+  async function fetchDataManually(userAccessToken){
+    if(!userAccessToken)return
     console.log('Fetching YouTube Analytics');
     const endDate = new Date().toISOString().split('T')[0];
     try {
@@ -637,6 +841,77 @@ function DashBoard({ store }) {
       console.log('youtube data fetched')
   }, []);
 
+  useEffect(() => {
+    if(Object.keys(instagramData).length){
+    async function updateInstagramEQSData() {
+        const lastWeekData = pastDaysData( instagramData, 0, 7 )
+        const thisWeekEQSScore = await getInstagramEQSScore( lastWeekData );
+        const lastWeekEQSScore = await getInstagramEQSScore( pastDaysData( instagramData, 7, 14 ) );
+        const percentageChange = EQSNormalizedFunction(thisWeekEQSScore.eqsScore) - EQSNormalizedFunction(lastWeekEQSScore.eqsScore)
+        setInstagramEQS({eqsPercentage: EQSNormalizedFunction(thisWeekEQSScore.eqsScore), eqsPercentageChange: percentageChange});
+        console.log('Instagram EQS Data Updated',instagramEQS);
+        const eqsText = await getYoutubeEQSText( lastWeekData, thisWeekEQSScore );
+        setInstagramEQSText(eqsText);
+    }
+  updateInstagramEQSData();
+    }
+  const percentageChangeFollowers = calculateFollowersChange(instagramData);
+  const totalImpressions = calculateTotalImpressions(instagramData, 7);
+  const totalImpressionsLastWeek = calculateTotalImpressions(instagramData, 14);
+  const percentageChangeImpressions = totalImpressionsLastWeek ? (((totalImpressions - totalImpressionsLastWeek) / totalImpressionsLastWeek) * 100).toFixed(2) : 0;
+  const totalReach = calculateTotalReach(instagramData, 7);
+  const totalReachLastWeek = calculateTotalReach(instagramData, 14);
+  const percentageChangeReach = totalReachLastWeek ? (((totalReach - totalReachLastWeek) / totalReachLastWeek) * 100).toFixed(2) : 0;
+  const topCountry = calculateTopCountry(instagramData.demographicData);
+  const numberOfDaysOfData = Object.keys(instagramData.daily).length;
+
+  setInstagramCalculatedData({
+      totalImpressions,
+      totalReach,
+      percentageChangeReach,
+      percentageChangeImpressions,
+      percentageChangeFollowers,
+      topCountry,
+      numberOfDaysOfData
+  });
+  },[instagramData]);
+
+  useEffect(() => {
+    // round to 2 decimal places
+  if(Object.keys(youtubeData).length){
+  async function updateYoutubeEQSData() {
+      const lastWeekData = pastDaysData( youtubeData, 0, 7 )
+      const thisWeekEQSScore = await getYoutubeEQSScore( lastWeekData );
+      const lastWeekEQSScore = await getYoutubeEQSScore( pastDaysData( youtubeData, 7, 14 ) );
+      const percentageChange = EQSNormalizedFunction(thisWeekEQSScore.eqs) - EQSNormalizedFunction(lastWeekEQSScore.eqs)
+      setEQS({eqsPercentage: EQSNormalizedFunction(thisWeekEQSScore.eqs), eqsPercentageChange: percentageChange});
+      const eqsText = await getYoutubeEQSText( lastWeekData, thisWeekEQSScore );
+      // setEQSText(eqsText);
+      console.log('EQS Data Updated');
+    }
+  updateYoutubeEQSData();
+  const totalViewsThisWeek = calculateLastDaysViews( youtubeData, 7 );
+  const totalViewsLastWeek = calculateLastDaysViews( youtubeData, 14 ) - totalViewsThisWeek;
+  const percentageChangeViews = totalViewsLastWeek === 0 ? 0 : (((totalViewsThisWeek - totalViewsLastWeek) / totalViewsLastWeek) * 100).toFixed(2 );
+  const totalWatchTime = calculateTotalWatchTime( youtubeData, 7 );
+  const totalWatchTimeLastWeek = calculateTotalWatchTime( youtubeData, 14 ) - totalWatchTime;
+  const percentageChangeWatchTime = totalWatchTimeLastWeek === 0 ? 0 : (((totalWatchTime - totalWatchTimeLastWeek) / totalWatchTimeLastWeek) * 100).toFixed(2 );
+  const lastWeekSubscribers = calculateTotalSubscribers( youtubeData );
+  const percentageChangeSubscribers = lastWeekSubscribers === 0 ? 0 : (((youtubeData.channel.statistics.subscriberCount - lastWeekSubscribers) / lastWeekSubscribers) * 100).toFixed(2 );
+  const lastWeekAverageViewDuration = calculateAverageViewDuration( youtubeData, 7, 14 );
+  const averageViewDuration = calculateAverageViewDuration( youtubeData, 0, 7 );
+  const percentageChangeAverageViewDuration = lastWeekAverageViewDuration === 0 ? 0 : (((averageViewDuration - lastWeekAverageViewDuration) / lastWeekAverageViewDuration) * 100).toFixed(2 );
+  setYoutubeCalculatedData({
+      totalViewsThisWeek,
+      percentageChangeViews,
+      totalWatchTime,
+      percentageChangeWatchTime,
+      percentageChangeSubscribers,
+      averageViewDuration,
+      percentageChangeAverageViewDuration,
+  });
+  }
+  }, [youtubeData]);
 
   return (
     <div className="flex flex-col">

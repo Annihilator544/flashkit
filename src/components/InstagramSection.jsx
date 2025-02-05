@@ -20,6 +20,7 @@ import { SidebarTrigger } from "./ui/sidebar";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion";
 import Navbar from "./Navbar";
 import NavbarLeftComponent from "./NavbarLeftComponent";
+import InstagramStats from "./InstagramStats";
 
 function formatDate(date) {
   const options = {
@@ -46,83 +47,70 @@ const labelMap = {
   total_interactions: "Total Interactions",
 };
 
-const calculateFollowersChange = (data) => {
-  const date = new Date(new Date().getTime() -  1 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
-  const pastWeek = new Date(new Date().getTime() - 8 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
-  const followersToday = data.daily[date]?.follower_count || 0;
-  const followersLastWeek = data.daily[pastWeek]?.follower_count || 0;
-  const followersChange = followersToday - followersLastWeek;
-  const percentageChange = ((followersChange / followersLastWeek) * 100).toFixed(2);
-  return percentageChange;
-};
+function InstagramSection () {
+    const { instagramData, instagramCalculatedData, instagramEQSText } = useInstagramData();
 
-function calculateTotalImpressions(data, days) {
-  let totalImpressions = 0;
-  for (let i = 1; i <= days; i++) {
-    const day = new Date(new Date().getTime() - i * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
-    totalImpressions += data.daily[day]?.impressions || 0;
-  }
-  return totalImpressions;
-}
-
-function calculateTotalReach(data, days) {
-  let totalReach = 0;
-  for (let i = 1; i <= days; i++) {
-    const day = new Date(new Date().getTime() - i * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
-    totalReach += data.daily[day]?.reach || 0;
-  }
-  return totalReach;
-} 
-
-function calculateTopCountry(data) {
-  let maxCountryCode = null;
-  let maxTotal = 0;
+    const headingsMap = {
+      "Follower Growth": {
+        value: "follower-growth",
+        iconType: "triangle",
+      },
+      "Engagement Rate": {
+        value: "engagement-rate",
+        iconType: "LucideEqual",
+      },
+      "Audience": {
+        value: "audience",
+        iconType: "LucideUsers",
+      },
+      "Content Insights": {
+        value: "content-insights",
+        iconType: "LucideHash",
+      },
+    };
+    //remove the first 1. from the text
+    const text = instagramEQSText.replace(/^\d+\.\s/, "");
+    // Split the text by each insight section (look for lines like: "1. Some Heading")
+    // This will give us an array of sections (each representing one block of insight data).
+    const sections = text.split(/\n\d+\.\s/).map(s => s.trim()).filter(Boolean);
+    // Parse each section to extract:
+    // 1) heading  (e.g. "Follower Growth")
+    // 2) subtitle (e.g. "Steady Upward Trajectory")
+    // 3) bulletPoints (everything under "Insights:\n- ...")
+    const parsedData = sections.map(section => {
+      const lines = section.split("\n").map(line => line.trim()).filter(Boolean);
+      // First line is the heading (e.g. "Follower Growth")
+      const heading = lines[0];
+      // Find the subtitle line (should start with "Subtitle:" according to the text format)
+      const subtitleLine = lines.find(l => l.startsWith("Subtitle:"));
+      const subtitle = subtitleLine ? subtitleLine.replace("Subtitle:", "").trim() : "";
   
-  for (const [countryCode, stats] of Object.entries(data)) {
-    const total = stats.engaged_audience_demographics + stats.reached_audience_demographics + stats.follower_demographics;
-    if (total > maxTotal) {
-      maxTotal = total;
-      maxCountryCode = countryCode;
-    }
-  }
+      // Find where "Insights:" starts and gather bullet points after that
+      const insightsIndex = lines.findIndex(l => l.startsWith("Insights:"));
+      let bulletPoints = [];
+      if (insightsIndex !== -1 && insightsIndex < lines.length - 1) {
+        bulletPoints = lines
+          .slice(insightsIndex + 1)
+          .filter(l => l.startsWith("-"))
+          .map(l => l.replace(/^-/, "").trim());
+      }
   
-  const maxCountryName = countryNames[maxCountryCode];
-  return maxCountryName;
-}
-
-function InstagramSection (){
-    const { instagramData } = useInstagramData();
-
-    const [ instagramCalculatedData, setInstagramCalculatedData ] = useState({
-        percentageChangeFollowers: 0,
-        totalImpressions: 0,
-        percentageChangeImpressions: 0,
-        totalReach: 0,
-        percentageChangeReach: 0,
-        topCountry: '',
-        numberOfDaysOfData: 0
+      return { heading, subtitle, bulletPoints };
     });
-    useEffect(() => {
-    const percentageChangeFollowers = calculateFollowersChange(instagramData);
-    const totalImpressions = calculateTotalImpressions(instagramData, 7);
-    const totalImpressionsLastWeek = calculateTotalImpressions(instagramData, 14);
-    const percentageChangeImpressions = totalImpressionsLastWeek ? (((totalImpressions - totalImpressionsLastWeek) / totalImpressionsLastWeek) * 100).toFixed(2) : 0;
-    const totalReach = calculateTotalReach(instagramData, 7);
-    const totalReachLastWeek = calculateTotalReach(instagramData, 14);
-    const percentageChangeReach = totalReachLastWeek ? (((totalReach - totalReachLastWeek) / totalReachLastWeek) * 100).toFixed(2) : 0;
-    const topCountry = calculateTopCountry(instagramData.demographicData);
-    const numberOfDaysOfData = Object.keys(instagramData.daily).length;
-    
-    setInstagramCalculatedData({
-        totalImpressions,
-        totalReach,
-        percentageChangeReach,
-        percentageChangeImpressions,
-        percentageChangeFollowers,
-        topCountry,
-        numberOfDaysOfData
-    });
-    },[instagramData]);
+  
+    // Match each heading to our map and build final data
+    const mappedData = parsedData.map(item => {
+      const matchKey = Object.keys(headingsMap).find(h => h.toLowerCase() === item.heading.toLowerCase());
+      if (!matchKey) return null;
+  
+      return {
+        ...headingsMap[matchKey],
+        heading: matchKey,
+        subHeading: item.subtitle,
+        bulletPoints: item.bulletPoints
+      };
+    }).filter(Boolean);
+
     return (
         <>
             <header className="flex shrink-0 h-10 items-center gap-2 transition-[width,height] ease-linear justify-end mb-2 max-md:justify-between">
@@ -137,68 +125,11 @@ function InstagramSection (){
                 <h1 className="flex gap-2 mb-2 text-2xl font-light text-black"><img src={instagramSvg} alt="youtube" className="h-6 my-auto"/>Instagram Analytics</h1>
                 <p className="text-base text-secondary">Uncover Key Insights to Boost Your Instagram Performance</p>
             </div>
-            {localStorage.getItem("instagramAccessToken") 
+            {!localStorage.getItem("instagramAccessToken") 
             ?
             <div className="flex flex-col gap-10 p-2">
               <h1 className="text-2xl font-semibold">Insights</h1>
-              <Card>
-                <CardContent className="flex flex-row gap-4 p-4 max-md:flex-col">
-                  <div className="flex flex-col gap-2 max-md:justify-center max-md:items-center">
-                    <CircularProgress currentScore={79} startColor="#BD65F6" endColor="#FEB559" />
-                    <div className="flex gap-1 mx-auto text-sm font-medium"><p className="text-[#34C759] flex">+20%<LucideArrowUpRight className="w-4 h-4 mt-auto"/></p><p className="text-secondary"> than last week</p></div>
-                  </div>
-                  <Separator orientation="vertical" className="max-md:hidden"/>
-                  <Separator orientation="horizontal" className="md:hidden"/>
-                  <div className="flex md:flex-1">
-                    <div className="flex flex-col flex-1 gap-2 ">
-                        <Card className="border-none rounded-lg shadow-none ">
-                            <CardContent className="flex flex-col flex-1 gap-1 p-2">
-                            <div className="flex gap-2 text-sm font-medium text-secondary Inter">Total Followers</div>
-                            <div className="flex justify-between">
-                            <p className="my-auto text-3xl font-semibold ">{instagramData.userData.followers_count}</p>
-                            <div className="flex flex-col mt-auto text-sm font-medium">
-                                <p className={`${instagramCalculatedData.percentageChangeFollowers > 0 ? "text-[#34C759]": instagramCalculatedData.percentageChangeFollowers === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{instagramCalculatedData.percentageChangeFollowers}% {instagramCalculatedData.percentageChangeFollowers > 0 ? <LucideArrowUpRight className="w-4 h-4 mt-auto"/> : instagramCalculatedData.percentageChangeFollowers === 0 ? <></> : <LucideArrowDownLeft className="w-4 h-4 mt-auto"/>}</p>
-                                <p className="ml-auto text-secondary max-md:hidden"> than last week</p></div>
-                            </div>
-                            </CardContent>
-                        </Card>
-                        <Separator orientation="horizontal"/>
-                        <Card className="border-none rounded-lg shadow-none ">
-                            <CardContent className="flex flex-col flex-1 gap-1 p-2">
-                            <div className="flex gap-2 text-sm font-medium text-secondary Inter">Total Impressions</div>
-                            <div className="flex justify-between">
-                            <p className="my-auto text-3xl font-semibold ">{instagramCalculatedData.totalImpressions}</p>
-                            <div className="flex flex-col mt-auto text-sm font-medium">
-                                <p className={`${instagramCalculatedData.percentageChangeImpressions > 0 ? "text-[#34C759]": instagramCalculatedData.percentageChangeImpressions === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{instagramCalculatedData.percentageChangeImpressions}%{instagramCalculatedData.percentageChangeImpressions > 0 ? <LucideArrowUpRight className="w-4 h-4 mt-auto"/> : instagramCalculatedData.percentageChangeImpressions === 0 ? <></> : <LucideArrowDownLeft className="w-4 h-4 mt-auto"/>}</p>
-                                <p className="ml-auto text-secondary max-md:hidden"> than last week</p></div>
-                            </div>
-                            </CardContent>
-                        </Card>
-                        </div>
-                        <Separator orientation="vertical"/>
-                        <div className="flex flex-col flex-1 gap-2">
-                        <Card className="border-none rounded-lg shadow-none ">
-                            <CardContent className="flex flex-col flex-1 gap-1 p-2">
-                            <div className="flex gap-2 text-sm font-medium text-secondary Inter">Total Reach</div>
-                            <div className="flex justify-between">
-                            <p className="my-auto text-3xl font-semibold ">{instagramCalculatedData.totalReach}</p>
-                            <div className="flex flex-col mt-auto text-sm font-medium">
-                                <p className={`${instagramCalculatedData.percentageChangeReach > 0 ? "text-[#34C759]": instagramCalculatedData.percentageChangeReach === 0 ? "text-[#FF9500]": "text-[#FF3B30]"} ml-auto flex`}>{instagramCalculatedData.percentageChangeReach}%{instagramCalculatedData.percentageChangeReach > 0 ? <LucideArrowUpRight className="w-4 h-4 mt-auto"/> : instagramCalculatedData.percentageChangeReach === 0 ? <></> : <LucideArrowDownLeft className="w-4 h-4 mt-auto"/>}</p>
-                                <p className="ml-auto text-secondary max-md:hidden"> than last week</p></div>
-                            </div>
-                            </CardContent>
-                        </Card>
-                        <Separator orientation="horizontal"/>
-                        <Card className="border-none rounded-lg shadow-none ">
-                            <CardContent className="flex flex-col flex-1 gap-1 p-2">
-                            <div className="flex gap-2 text-sm font-medium text-secondary Inter">Top Country</div>
-                            <p className="my-auto text-3xl font-semibold ">{instagramCalculatedData.topCountry}</p>
-                            </CardContent>
-                        </Card>
-                  </div>
-                  </div>
-                </CardContent>
-              </Card>
+              <InstagramStats/>
               <div>
                 <div className="flex flex-col flex-1 gap-4 mt-3">
                   <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1">
@@ -234,94 +165,31 @@ function InstagramSection (){
                   <p className="text-sm text-secondary ">Tailored tips to boost your YouTube growth.</p>
                 </CardHeader>
                 <CardContent className="grid grid-cols-2 gap-4 max-md:grid-cols-1 ">
-                <Accordion type="single" collapsible >
-                  <AccordionItem value="follower-growth" className="border-none ">
-                    <AccordionTrigger>
-                      <div className="flex flex-row gap-2">
-                        <div className="p-2 bg-[#f6f8f9] rounded-lg flex h-10 w-10 items-center justify-center">
-                          <img src={triangle} alt="triangle" className="h-2" />
-                        </div>
-                        <div>
-                          <div className="text-xs font-medium text-left text-secondary">Follower Growth</div>
-                          <div className="text-sm font-semibold">Growth is down this week</div>
-                        </div>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <ul className="mt-2 ml-4 text-gray-600 list-disc">
-                        <li>Post 3 videos per week targeting high-performing topics</li>
-                        <li>Optimize thumbnails and titles for higher click-through rates</li>
-                        <li>Collaborate with influencers in your niche</li>
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-                <Accordion type="single" collapsible>
-                  <AccordionItem value="engagement-rate" className="border-none ">
-                    <AccordionTrigger>
-                      <div className="flex flex-row gap-2">
-                        <div className="p-2 bg-[#f6f8f9] rounded-lg flex h-10 w-10 items-center justify-center">
-                          <LucideEqual className="h-4 w-4 text-[#FF9500]" />
-                        </div>
-                        <div>
-                          <div className="text-xs font-medium text-left text-secondary">Engagement Rate</div>
-                          <div className="text-sm font-semibold">Engagement is steady</div>
-                        </div>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <ul className="mt-2 ml-4 text-gray-600 list-disc">
-                        <li>Host a Q&A or create polls to boost interaction</li>
-                        <li>Reply to at least 50% of comments within 24 hours</li>
-                        <li>Add clear CTAs in your videos and descriptions</li>
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-                <Accordion type="single" collapsible>
-                  <AccordionItem value="audience-age"  className="border-none ">
-                    <AccordionTrigger>
-                      <div className="flex flex-row gap-2">
-                        <div className="p-2 bg-[#f6f8f9] rounded-lg flex h-10 w-10 items-center justify-center">
-                          <LucideUsers className="w-4 h-4" />
-                        </div>
-                        <div>
-                          <div className="text-xs font-medium text-left text-secondary">Audience Age</div>
-                          <div className="text-sm font-semibold">Younger viewers dominating</div>
-                        </div>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <ul className="mt-2 ml-4 text-gray-600 list-disc">
-                        <li>Create fast-paced content tailored for younger viewers</li>
-                        <li>Use trending memes to make your videos relatable</li>
-                        <li>Promote videos on Instagram and TikTok for broader reach</li>
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-                <Accordion type="single" collapsible>
-                  <AccordionItem value="trending-content-insights" className="border-none ">
-                    <AccordionTrigger>
-                      <div className="flex flex-row gap-2">
-                        <div className="p-2 bg-[#f6f8f9] rounded-lg flex h-10 w-10 items-center justify-center">
-                          <LucideHash className="h-4 w-4 text-[#409BFF]" />
-                        </div>
-                        <div>
-                          <div className="text-xs font-medium text-left text-secondary">Trending Content Insights</div>
-                          <div className="text-sm font-semibold">Try new topics</div>
-                        </div>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <ul className="mt-2 ml-4 text-gray-600 list-disc">
-                        <li>Make videos on trending topics relevant to your niche</li>
-                        <li>Use trending hashtags and optimized tags for better visibility</li>
-                        <li>Include "reaction" or "how-to" themes tied to the trends</li>
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
+                {mappedData.map((item, index) => (
+                    <Accordion type="single" collapsible key={index}>
+                      <AccordionItem value={item.value} className="border-none">
+                        <AccordionTrigger>
+                          <div className="flex flex-row gap-2">
+                            <div className="p-2 bg-[#f6f8f9] rounded-lg flex h-10 w-10 items-center justify-center">
+                              {item.iconType === "triangle" && <img src={triangle} alt="triangle" className="h-2" />}
+                              {item.iconType === "LucideEqual" && <LucideEqual className="h-4 w-4 text-[#FF9500]" />}
+                              {item.iconType === "LucideUsers" && <LucideUsers className="w-4 h-4" />}
+                              {item.iconType === "LucideHash" && <LucideHash className="h-4 w-4 text-[#409BFF]" />}
+                            </div>
+                            <div>
+                              <div className="text-xs font-medium text-left text-secondary">{item.heading}</div>
+                              <div className="text-sm font-semibold">{item.subHeading}</div>
+                            </div>
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent>
+                          <ul className="mt-2 ml-4 text-gray-600 list-disc">
+                            {item.bulletPoints.map((point, i) => <li key={i}>{point}</li>)}
+                          </ul>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
+                  ))}
                 </CardContent>
               </Card>
               <Card className="flex-1 bg-[#f6f8f9] shadow-md">

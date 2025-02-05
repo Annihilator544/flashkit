@@ -36,13 +36,15 @@ import { TabsList, TabsTrigger } from "./ui/tabs";
 import YoutubeSvg from "../assets/youtube.svg"
 import instagramSvg from "../assets/instagram.svg"
 import NavbarLeftComponent from "./NavbarLeftComponent";
+import InstagramStats from "./InstagramStats";
+import YoutubeSection from "./YoutubeSection";
+import YoutubeStats from "./YoutubeStats";
+import InstagramContent from "./InstagramContent";
+import YoutubeContent from "./YoutubeContent";
 
-function HomeSection({ store }) {
+function HomeSection({ store}) {
     const { user } = useAuthStore();
-    const { Engagement, setEngagement } = useEngagementData();
     const [selected, setSelected] = useState("Instagram");
-    const [loading, setLoading] = useState(false);
-    const { youtubeData } = useYoutubeData();
       
     const [open, setOpen] = useState(false)
     useEffect(() => {
@@ -56,9 +58,7 @@ function HomeSection({ store }) {
       document.addEventListener("keydown", down)
       return () => document.removeEventListener("keydown", down)
     }, [])
-    useEffect(()=>{
-      console.log(selected)
-    },[selected])
+
     return (
         <>  
             <header className="flex shrink-0 h-10 items-center gap-2 transition-[width,height] ease-linear justify-between mb-2">
@@ -151,8 +151,8 @@ function HomeSection({ store }) {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        <SelectItem value="Instagram"><div className="flex gap-2"><Instagram className="h-5"/>Instagram </div></SelectItem>
-                        <SelectItem value="Youtube"><div className="flex gap-2"><Youtube className="h-5"/>Youtube</div></SelectItem>
+                        <SelectItem value="Instagram"><span className="flex gap-2"><img src={instagramSvg} alt="Instagram Logo" className=""/>Instagram</span></SelectItem>
+                        <SelectItem value="Youtube"><span className="flex gap-2"><img src={YoutubeSvg} alt="youtube Logo" className=""/>Youtube</span></SelectItem>
                       </SelectGroup>
                     </SelectContent>
                   </Select>
@@ -160,8 +160,7 @@ function HomeSection({ store }) {
                 {/* {localStorage.getItem("flashkitPlan") === "FLASHKITSOCIAL" ? 
                 <> */}
                 <div className="flex flex-wrap gap-2 max-md:flex-col">
-                    <div className="gap-2 max-md:grid max-md:grid-cols-2 md:flex">
-                      <Card className="flex items-center justify-center md:h-52 md:aspect-square drop-shadow-sm">
+                      <Card className="flex items-center justify-center drop-shadow-sm">
                           <CardContent className="flex flex-col gap-2 p-5 px-12 my-auto">
                               <Avatar className= "w-20 h-20 m-auto">
                               {user&&user.photoURL ? <AvatarImage src={user.photoURL} /> :
@@ -173,63 +172,13 @@ function HomeSection({ store }) {
                               <div className="text-[#E1A100] bg-[#fdf5e1] text-center font-semibold flex pr-2 py-[2px] rounded-sm mx-auto"><LucideAward className="h-4 my-auto"/>Gold</div>
                           </CardContent>
                       </Card>
-                      <Card className="flex items-center justify-center md:aspect-square md:h-52 drop-shadow-sm">
-                          <CardContent className="flex flex-col gap-2 p-2 h-fit">
-                                {Engagement && typeof Engagement ==='object' && Object.keys(Engagement).length > 0 ?<CircularProgress score={Engagement.engagementMetrics.score * 10} startColor="#FE5655" endColor="#89D0F7"/> : <CircularProgress /> }
-                                {/* <p className="text-2xl font-semibold ">{Engagement && typeof Engagement ==='object' && Object.keys(Engagement).length > 0 ? Engagement.engagementMetrics.score * 10 : 79} %</p> */}
-                                {/* {youtubeData && typeof data === 'object' && Object.keys(youtubeData).length > 0 ?<Button className={"w-full" + loading ? " opacity-90 ":""} onClick={()=>getEQSScore(youtubeData)}>{loading ? "Loading ...":" Generate EQS Score"}</Button> : <></>} */}
-                                <div className="flex gap-1 mx-auto mb-5 text-sm font-medium"><p className="text-[#34C759] flex">+20%<LucideArrowUpRight className="w-4 h-4 mt-auto"/></p><p className="text-secondary"> than last week</p></div>
-                          </CardContent>
-                      </Card>
-                    </div>
-                    <Card className= "flex flex-1 p-0 border-none ">
-                        <CardContent className="grid flex-1 grid-cols-2 grid-rows-2 gap-2 p-0">
-                        <Card className=" bg-gradient-to-r from-[#E2F2FF] to-[#FFF3F3] rounded-lg drop-shadow-sm">
-                            <CardContent className="flex flex-col flex-1 gap-2 p-4 max-md:p-2">
-                            <div className="flex gap-2 text-xs font-semibold text-secondary Inter">Total Followers</div>
-                            <div className="flex justify-between">
-                            <p className="my-auto text-3xl font-semibold ">23K</p>
-                            <div className="flex flex-col text-sm font-medium">
-                                <p className="text-[#FF3B30] ml-auto flex max-md:mt-auto">-0.4% <LucideArrowDownLeft className="w-4 h-4 mt-auto"/></p>
-                                <p className="ml-auto text-secondary max-md:hidden"> than last week</p></div>
-                            </div>
-                            </CardContent>
-                        </Card>
-                        <Card className=" bg-gradient-to-r from-[#E2F2FF] to-[#FFF3F3] rounded-lg drop-shadow-sm">
-                            <CardContent className="flex flex-col flex-1 gap-2 p-4 max-md:p-2">
-                            <div className="flex gap-2 text-xs font-semibold text-secondary Inter">Daily Engagements</div>
-                            <div className="flex justify-between">
-                            <p className="my-auto text-3xl font-semibold ">23K</p>
-                            <div className="flex flex-col text-sm font-medium">
-                                <p className="text-[#FF9500] ml-auto flex max-md:mt-auto">0%</p>
-                                <p className="ml-auto text-secondary max-md:hidden"> than last week</p></div>
-                            </div>
-                            </CardContent>
-                        </Card>
-                        <Card className=" bg-gradient-to-r from-[#E2F2FF] to-[#FFF3F3] rounded-lg drop-shadow-sm">
-                            <CardContent className="flex flex-col flex-1 gap-2 p-4 max-md:p-2">
-                            <div className="flex gap-2 text-xs font-semibold text-secondary Inter">Total Engagement</div>
-                            <div className="flex justify-between">
-                            <p className="my-auto text-3xl font-semibold ">23K</p>
-                            <div className="flex flex-col text-sm font-medium">
-                                <p className="text-[#FF3B30] ml-auto flex max-md:mt-auto">-0.4% <LucideArrowDownLeft className="w-4 h-4 mt-auto"/></p>
-                                <p className="ml-auto text-secondary max-md:hidden"> than last week</p></div>
-                            </div>
-                            </CardContent>
-                        </Card>
-                        <Card className=" bg-gradient-to-r from-[#E2F2FF] to-[#FFF3F3] rounded-lg drop-shadow-sm">
-                            <CardContent className="flex flex-col flex-1 gap-2 p-4 max-md:p-2">
-                            <div className="flex gap-2 text-xs font-semibold text-secondary Inter">Total Followers</div>
-                            <div className="flex justify-between">
-                            <p className="my-auto text-3xl font-semibold ">23K</p>
-                            <div className="flex flex-col text-sm font-medium">
-                                <p className="text-[#34C759] ml-auto flex max-md:mt-auto">+18% <LucideArrowUpRight className="w-4 h-4 mt-auto"/></p>
-                                <p className="ml-auto text-secondary max-md:hidden"> than last week</p></div>
-                            </div>
-                            </CardContent>
-                        </Card>
-                        </CardContent>
-                    </Card>
+                      {
+                        selected === "Instagram" ?
+                      <InstagramStats className="flex-1"/>:
+                       selected === "Youtube" ?
+                       <YoutubeStats className="flex-1"/>:
+                        <></>
+                      }
                 </div>
                 <div className="">
                 <ShineBorder
@@ -241,7 +190,17 @@ function HomeSection({ store }) {
                     <p className="text-[#151212] mr-auto flex gap-1 font-semibold text-base"><LucideSparkles className="h-4 my-auto"/> AI Growth Insights</p>
                     <p className="text-[#252C32] text-base mr-auto">Post on Thursdays at 5-7 PM for better reach. Use hashtags like #Inspiration and #Style!</p>
                   </div>
-                  <Button className="bg-[#409BFF] h-11">Discover More</Button>
+                  <TabsList className="p-0 text-black bg-white shadow-none cursor-pointer hover:bg-none active:bg-none hover:text-black active:text-black active:shadow-none">
+                  {selected==="Instagram" ?
+                  <TabsTrigger value="instagram" className="p-0 cursor-pointer hover:text-black hover:shadow-none active:text-black active:shadow-none data-[state=active]:text-black data-[state=active]:drop-shadow-none">
+                    <Button className="bg-[#409BFF] h-11">Discover More</Button>
+                  </TabsTrigger>
+                  : selected==="Youtube" ? 
+                  <TabsTrigger value="youtube" className="p-0 cursor-pointer hover:text-black hover:shadow-none active:text-black active:shadow-none data-[state=active]:text-black data-[state=active]:drop-shadow-none">
+                    <Button className="bg-[#FF2853] h-11">Discover More</Button>
+                    </TabsTrigger>
+                    : <></>}
+                  </TabsList>
                 </ShineBorder>
                 </div>
                 {/* <div className="grid grid-cols-[60%,40%] gap-6 bg-[#f6f8f9] rounded-xl border p-6">
@@ -272,30 +231,12 @@ function HomeSection({ store }) {
                     </RadioGroup>
                 </div>
                 </div> */}
-                <Card className="flex flex-col gap-4 bg-[#f6f8f9]">
-                    <CardHeader className="flex-row justify-between pb-0">
-                        <CardTitle className="text-lg font-semibold">Top content by reach</CardTitle>
-                    </CardHeader>
-                    <CardContent className="grid gap-2 md:grid-cols-4">
-                    {Array.from({ length: 4 }).map((_, index) => (
-                        <Card key={index} className="overflow-hidden">
-                            <CardContent className="p-0 h-[200px] bg-[#e3e3e3] justify-center flex overflow-hidden">
-                                    <img src="https://images.unsplash.com/photo-1733592688551-5ba7804a9634" alt="placeholder" className="max-h-full my-auto " />
-                            </CardContent>
-                            <CardFooter className="flex-col p-4 ">
-                                <p className="mr-auto text-xs font-semibold ">Post caption</p>
-                                <p className=" text-secondary text-xs mr-auto mt-[6px]">Sun, Oct 13 9:00am</p>
-                                <div className="flex justify-between w-full mt-3 mr-auto max-w-56">
-                                    <div className="flex gap-1 text-xs"><LucideHeart className="w-3 h-3 my-auto text-red-600" fill="red"/> <p>23k</p></div>
-                                    <div className="flex gap-1 text-xs"><LucideMessageSquare className="w-3 h-3 my-auto text-blue-500" fill="#409bff"/> <p>129</p></div>
-                                    <div className="flex gap-1 text-xs"><LucideTrendingUp className="w-3 h-3 my-auto text-green-500"/> <p>1.3k</p></div>
-                                    <div className="flex gap-1 text-xs"><LucideSend className="w-3 h-3 my-auto text-blue-800"/> <p>435</p></div>
-                                </div>
-                            </CardFooter>
-                        </Card>
-                        ))}
-                    </CardContent>
-                </Card>
+                {selected === "Instagram" ?
+                <InstagramContent/>:
+                selected === "Youtube" ?
+                <YoutubeContent/>:
+                <></>
+                }
                 <div className="">
                   <div className="flex flex-col justify-between mb-10">
                   <p className="mt-10 text-lg font-semibold ">Recent Projects</p>
