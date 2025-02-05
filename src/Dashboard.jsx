@@ -616,10 +616,22 @@ function DashBoard({ store }) {
       window.history.pushState({}, document.title, window.location.pathname);
     }
       const instagramToken = localStorage.getItem('instagramAccessToken');
+      if(!instagramToken){
+        toast({
+          title: "Instagram Disconnected ",
+          description: "Please log in again.",
+          action: <Button onClick={()=>{setSelectedValue("settings")}} size="sm" variant="destructive">Login</Button>,});
+      }
       console.log('instagram data fetching')
       fetchInstagramBusinessAccount(instagramToken);
       console.log('instagram data fetched')
       const youtubeToken = localStorage.getItem('youtubeAccessToken');
+      if(!youtubeToken){
+        toast({
+          title: "YouTube Disconnected",
+          description: "Please log in again.",
+          action: <Button onClick={()=>{setSelectedValue("settings")}} size="sm" variant="destructive">Login</Button>,});
+      }
       console.log('youtube data fetching')
       fetchDataManually(youtubeToken);
       console.log('youtube data fetched')
@@ -631,7 +643,7 @@ function DashBoard({ store }) {
       <div className="flex">
       <Tabs className="flex flex-1 " value={selectedValue} onValueChange={setSelectedValue}>
         <SidebarLayout>
-        <div className=" flex">
+        <div className="flex ">
             <TabsContent value="home" className="flex-1 p-4 pt-2 overflow-y-auto min-h-data-[state=active]:flex data-[state=active]:flex-col">
               <HomeSection store={store}/>
             </TabsContent>
@@ -640,7 +652,7 @@ function DashBoard({ store }) {
             </TabsContent>
             <TabsContent value="instagram" className="flex-1 p-4 pt-2 overflow-y-auto min-h-screen data-[state=active]:flex data-[state=active]:flex-col">
               <InstagramSection />
-            {/* <p className=" text-3xl font-semibold">Instagram Analytics</p>
+            {/* <p className="text-3xl font-semibold ">Instagram Analytics</p>
             {instagramData && instagramData.userData.id ?
             <Card>
               <CardHeader className="flex-row justify-between">
@@ -649,45 +661,45 @@ function DashBoard({ store }) {
                 </CardTitle>
               </CardHeader>
               <CardContent className="flex gap-4">
-                <Avatar className="h-12 w-12 rounded-lg">
+                <Avatar className="w-12 h-12 rounded-lg">
                   <AvatarImage src={instagramData.userData.profile_picture_url} />
                   <AvatarFallback>IG</AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col">
-                  <p className="font-semibold text-lg">@{instagramData.userData.username}</p>
-                  <p className="text-secondary text-sm">{instagramData.userData.biography}</p>
+                  <p className="text-lg font-semibold">@{instagramData.userData.username}</p>
+                  <p className="text-sm text-secondary">{instagramData.userData.biography}</p>
                 </div>
                 </CardContent>
             </Card>
             : <></> }
             <div>
-              <p className="text-secondary font-medium text-lg">Overview</p>
+              <p className="text-lg font-medium text-secondary">Overview</p>
               <div className="flex gap-5 mt-3">
                   <Card className="flex shadow-md">
                     <CardContent className="pt-6">
                       <p className="text-lg font-semibold">Total Followers</p>
                       <p className="text-3xl font-semibold">{instagramData.userData.followers_count}</p>
-                      <div className="flex text-sm font-medium gap-1 mt-6"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
+                      <div className="flex gap-1 mt-6 text-sm font-medium"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
                     </CardContent>
                   </Card>
                   <Card className="flex shadow-md">
                     <CardContent className="pt-6">
                       <p className="text-lg font-semibold">Total Follows</p>
                       <p className="text-3xl font-semibold">{instagramData.userData.follows_count}</p>
-                      <div className="flex text-sm font-medium gap-1 mt-6"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
+                      <div className="flex gap-1 mt-6 text-sm font-medium"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
                     </CardContent>
                   </Card>
                   <Card className="flex shadow-md">
                     <CardContent className="pt-6">
                       <p className="text-lg font-semibold">Post Count</p>
                       <p className="text-3xl font-semibold">{instagramData.userData.media_count}</p>
-                      <div className="flex text-sm font-medium gap-1 mt-6"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
+                      <div className="flex gap-1 mt-6 text-sm font-medium"><p className="text-[#34C759]">+20%</p><p className="text-secondary"> than last week</p></div>
                     </CardContent>
                   </Card>
               </div>
             </div>
             <div>
-                <p className="text-secondary font-medium text-lg mb-3">Top Content</p>
+                <p className="mb-3 text-lg font-medium text-secondary">Top Content</p>
                 {instagramData && <InstagramContentCarousel CarouselItems={instagramData.posts} />}
             </div> */}
             </TabsContent>
