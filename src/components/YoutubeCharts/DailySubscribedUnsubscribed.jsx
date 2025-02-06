@@ -16,6 +16,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "../ui/chart";
+import { useYoutubeData } from "store/use-youtube-data";
 
 const chartConfig = {
   views: {
@@ -49,9 +50,11 @@ function convertDateFormat(date) {
   return new Date(date).toLocaleDateString("en-US", options).replace(",", "");
 }
 
-const DialySubscribedUnsubscribed = ({ youtubeData, percentageChangeViews }) => {
+const DialySubscribedUnsubscribed = () => {
+  const { youtubeData, youtubeCalculatedData } = useYoutubeData();
+  const percentageChangeViews = youtubeCalculatedData.percentageChangeViews;
   // Prepare data for the chart
-  const chartData = Object.keys(youtubeData.daily)
+  const chartData = Object.keys(youtubeData.daily||{})
     .slice(-7)
     .sort((a, b) => new Date(a) - new Date(b))
     .map((date) => ({
@@ -67,7 +70,7 @@ const DialySubscribedUnsubscribed = ({ youtubeData, percentageChangeViews }) => 
     const formatedDateWeekAgo = formatDate(dateWeekAgo);
 
   return (
-    <Card className=" flex flex-col flex-1 bg-[#f6f8f9] shadow-md">
+    chartData.length ?<Card className=" flex flex-col flex-1 bg-[#f6f8f9] shadow-md">
       <CardHeader>
         <CardTitle className="text-[#252C32] font-semibold text-lg">View Metrics</CardTitle>
         <CardDescription>{`${formatedDateWeekAgo} to ${formatedDate}`}</CardDescription>
@@ -182,6 +185,7 @@ const DialySubscribedUnsubscribed = ({ youtubeData, percentageChangeViews }) => 
         </div>
       </CardFooter>
     </Card>
+    :<></>
   );
 };
 

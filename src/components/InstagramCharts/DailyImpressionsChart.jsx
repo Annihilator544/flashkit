@@ -31,7 +31,7 @@ const DailyImpressionsChart = () => {
   }));
 
   return (
-    <ChartContainer config={chartConfig}>
+    chartData.length ?<ChartContainer config={chartConfig}>
       <BarChart
         accessibilityLayer
         data={chartData}
@@ -77,6 +77,7 @@ const DailyImpressionsChart = () => {
         </Bar>
       </BarChart>
     </ChartContainer>
+    :<></>
   );
 };
 

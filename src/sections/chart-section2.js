@@ -21,6 +21,13 @@ import DailyCommentsChart from '../components/YoutubeCharts/DailyCommentsChart';
 import DailyLikeShareDislikeChart from '../components/YoutubeCharts/DailyLikeShareDislikeChart';
 import DailySubscribedUnsubscribedChart from '../components/YoutubeCharts/DailySubscribedUnsubscribedChart';
 import DailyWatchMetricsChart from '../components/YoutubeCharts/DailyWatchMetricsChart';
+import DailyCommentsYoutube from '../components/YoutubeCharts/DailyComments';
+import DailyFollower from '../components/InstagramCharts/DailyFollowers';
+import DailyLikeShareDislikeYoutube from '../components/YoutubeCharts/DailyLikeShareDislike';
+import DailyImpressions from '../components/InstagramCharts/DailyImpressions';
+import DailyReach from '../components/InstagramCharts/DailyReach';
+import Demographics from '../components/InstagramCharts/Demographics';
+import DialySubscribedUnsubscribed from '../components/YoutubeCharts/DailySubscribedUnsubscribed';
 
 
 const ChartWrapper = observer(({ children, store, name }) => {
@@ -85,29 +92,29 @@ export const ChartSection = {
   Panel: observer(({ store }) => {
     return (
       <div className="overflow-y-auto h-full flex flex-col gap-2">
-        <ChartWrapper store={store} name="Radar">
-          <DailyCommentsChart />
-        </ChartWrapper>
-        <ChartWrapper store={store} name="Area">
-          <DailyFollowerChart />
-        </ChartWrapper>
-        <ChartWrapper store={store} name="Radial">
-          <DailyLikeShareDislikeChart />
-        </ChartWrapper>
-        <ChartWrapper store={store} name="Bar">
-        <DailyImpressionsChart />
-        </ChartWrapper>
-        <ChartWrapper store={store} name="Insights">
-          <DailyReachChart />
-        </ChartWrapper>
-        <ChartWrapper store={store} name="Line">
-          <DemographicsChart />
-        </ChartWrapper>
         <ChartWrapper store={store} name="Monthly Engagement">
           <MonthlyEngagementChart />
         </ChartWrapper>
         <ChartWrapper store={store} name="Radar">
-          <DailySubscribedUnsubscribedChart />
+          <DailyCommentsYoutube />
+        </ChartWrapper>
+        <ChartWrapper store={store} name="Area">
+          <DailyFollower />
+        </ChartWrapper>
+        <ChartWrapper store={store} name="Radial">
+          <DailyLikeShareDislikeYoutube />
+        </ChartWrapper>
+        <ChartWrapper store={store} name="Bar">
+          <DailyImpressions />
+        </ChartWrapper>
+        <ChartWrapper store={store} name="Insights">
+          <DailyReach />
+        </ChartWrapper>
+        <ChartWrapper store={store} name="Line">
+          <Demographics />
+        </ChartWrapper>
+        <ChartWrapper store={store} name="Radar">
+          <DialySubscribedUnsubscribed />
         </ChartWrapper>
         <ChartWrapper store={store} name="Radar">
           <DailyWatchMetricsChart />

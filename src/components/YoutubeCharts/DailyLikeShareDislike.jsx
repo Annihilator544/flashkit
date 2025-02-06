@@ -15,6 +15,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "../ui/chart";
+import { useYoutubeData } from "store/use-youtube-data";
 
 const chartConfig = {
   likes: {
@@ -48,9 +49,10 @@ function convertDateFormat(date) {
   return new Date(date).toLocaleDateString("en-US", options).replace(",", "");
 }
 
-const DailyLikeShareDislikeYoutube = ({ youtubeData }) => {
+const DailyLikeShareDislikeYoutube = () => {
+  const { youtubeData } = useYoutubeData();
   // Prepare data for the chart
-  const chartData = Object.keys(youtubeData.daily)
+  const chartData = Object.keys(youtubeData.daily||{})
     .slice(-7)
     .sort((a, b) => new Date(a) - new Date(b))
     .map((date) => ({
@@ -66,7 +68,7 @@ const DailyLikeShareDislikeYoutube = ({ youtubeData }) => {
     const formatedDateWeekAgo = formatDate(dateWeekAgo);
 
   return (
-    <Card className="flex-1 bg-[#f6f8f9] shadow-md flex flex-col">
+    chartData.length ?<Card className="flex-1 bg-[#f6f8f9] shadow-md flex flex-col">
       <CardHeader>
         <CardTitle className="text-[#252C32] font-semibold text-lg">Likes, Shares, and Dislikes</CardTitle>
         <CardDescription>{`${formatedDateWeekAgo} to ${formatedDate}`}</CardDescription>
@@ -109,6 +111,7 @@ const DailyLikeShareDislikeYoutube = ({ youtubeData }) => {
         </div>
       </CardFooter>
     </Card>
+    : <></>
   );
 };
 

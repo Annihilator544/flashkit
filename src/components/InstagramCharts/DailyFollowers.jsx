@@ -17,6 +17,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "../ui/chart";
+import { useInstagramData } from "store/use-instagram-data";
 
 const chartConfig = {
   followers: {
@@ -41,7 +42,10 @@ function convertDateFormat(date) {
   return new Date(date).toLocaleDateString("en-US", options).replace(",", "");
 }
 
-const DailyFollower = ({ followerData, percentageChangeFollowers, numberOfDaysOfData, className }) => {
+const DailyFollower = ({ className }) => {
+  const { instagramData, instagramCalculatedData } = useInstagramData();
+  const followerData = instagramData.daily;
+  const percentageChangeFollowers = instagramCalculatedData.percentageChangeFollowers;
   // Prepare data for the chart
   const chartData = Object.keys(followerData).slice(-7).map((date) => ({
     date: convertDateFormat(date), // X-axis value
@@ -54,7 +58,7 @@ const DailyFollower = ({ followerData, percentageChangeFollowers, numberOfDaysOf
   const formatedDateWeekAgo = formatDate(dateWeekAgo);
 
   return (
-    <Card className={`flex flex-col flex-1 bg-[#f6f8f9] shadow-md ${className}`}>
+    chartData.length ?<Card className={`flex flex-col flex-1 bg-[#f6f8f9] shadow-md ${className}`}>
       <CardHeader>
         <CardTitle className="text-[#252C32] font-semibold text-lg">Follower Growth</CardTitle>
         <CardDescription>
@@ -123,6 +127,7 @@ const DailyFollower = ({ followerData, percentageChangeFollowers, numberOfDaysOf
         </div>
       </CardFooter>
     </Card>
+    :<></>
   );
 };
 

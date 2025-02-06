@@ -164,12 +164,12 @@ function YoutubeSection () {
               <div>
                 <div className="flex flex-col flex-1 gap-4 mt-3">
                   <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1">
-                    <DailyWatchMetrics youtubeData={youtubeData}/>
-                    <DialySubscribedUnsubscribed youtubeData={youtubeData} percentageChangeViews={youtubeCalculatedData.percentageChangeViews}/>
+                    <DailyWatchMetrics/>
+                    <DialySubscribedUnsubscribed />
                   </div>
                   <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1">
-                    <DailyLikeShareDislikeYoutube youtubeData={youtubeData}/>
-                    <DailyCommentsYoutube youtubeData={youtubeData} percentageChangeSubscribers={youtubeCalculatedData.percentageChangeSubscribers}/>
+                    <DailyLikeShareDislikeYoutube/>
+                    <DailyCommentsYoutube />
                   </div>
                 </div>
               </div>

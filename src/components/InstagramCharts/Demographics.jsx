@@ -20,6 +20,7 @@ import {
   ChartTooltipContent,
 } from "../ui/chart";
 import countryNames from "../../lib/InstagramCountries";
+import { useInstagramData } from "store/use-instagram-data";
 
 const chartConfig = {
   demographics: {
@@ -44,7 +45,9 @@ const CustomTooltip = ({ active, payload }) => {
   return null;
 };
 
-const Demographics = ({ demographicData }) => {
+const Demographics = () => {
+  const { instagramData } = useInstagramData();
+  const demographicData = instagramData.demographicData;
   // Aggregate total contributions for each country
   const totalContributions = Object.entries(demographicData).map(
     ([country, values]) => ({
@@ -63,7 +66,7 @@ const Demographics = ({ demographicData }) => {
       fill: chartConfig.chartColors[index % chartConfig.chartColors.length],
     }));
   return (
-    <Card className=" flex flex-col flex-1 bg-[#f6f8f9] shadow-md">
+    topCountries.length ?<Card className=" flex flex-col flex-1 bg-[#f6f8f9] shadow-md">
       <CardHeader>
         <CardTitle className="text-[#252C32] font-semibold text-lg">Demographics</CardTitle>
         <CardDescription>Lifetime Data</CardDescription>
@@ -150,6 +153,7 @@ const Demographics = ({ demographicData }) => {
         </div>
       </CardFooter>
     </Card>
+    :<></>
   );
 };
 

@@ -27,7 +27,7 @@ const DailyFollowerChart = () => {
   }));
 
   return (
-    <ChartContainer config={chartConfig}>
+    chartData.length ?<ChartContainer config={chartConfig}>
       <LineChart
         accessibilityLayer
         data={chartData}
@@ -58,6 +58,7 @@ const DailyFollowerChart = () => {
         />
       </LineChart>
     </ChartContainer>
+    :<></>
   );
 };
 

@@ -33,7 +33,7 @@ const DemographicsChart = () => {
     }));
 
   return (
-    <ChartContainer config={chartConfig}>
+    topCountries.length ? <ChartContainer config={chartConfig}>
       <PieChart>
         <ChartTooltip
           cursor={false}
@@ -79,6 +79,7 @@ const DemographicsChart = () => {
         />
       </PieChart>
     </ChartContainer>
+    :<></>
   );
 };
 

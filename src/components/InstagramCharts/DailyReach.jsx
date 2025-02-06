@@ -17,6 +17,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "../ui/chart";
+import { useInstagramData } from "store/use-instagram-data";
 
 const chartConfig = {
   reach: {
@@ -40,8 +41,11 @@ function convertDateFormat(date) {
   };
   return new Date(date).toLocaleDateString("en-US", options).replace(",", "");
 }
-const DailyReach = ({ reachData, percentageChangeReach, numberOfDaysOfData }) => {
+const DailyReach = () => {
   // Prepare data for the chart
+  const { instagramData, instagramCalculatedData } = useInstagramData();
+  const reachData = instagramData.daily;
+  const percentageChangeReach = instagramCalculatedData.percentageChangeReach;
   const chartData = Object.keys(reachData).slice(-7).map((date) => ({
     date: convertDateFormat(date), // X-axis value
     reach: reachData[date].reach, // Y-axis value
@@ -53,7 +57,7 @@ const DailyReach = ({ reachData, percentageChangeReach, numberOfDaysOfData }) =>
   const formatedDateWeekAgo = formatDate(dateWeekAgo);
 
   return (
-    <Card className=" flex flex-col flex-1 bg-[#f6f8f9] shadow-md">
+    chartData.length ?<Card className=" flex flex-col flex-1 bg-[#f6f8f9] shadow-md">
       <CardHeader>
         <CardTitle className="text-[#252C32] font-semibold text-lg">Reach</CardTitle>
         <CardDescription>
@@ -136,6 +140,7 @@ const DailyReach = ({ reachData, percentageChangeReach, numberOfDaysOfData }) =>
         </div>
       </CardFooter>
     </Card>
+    :<></>
   );
 };
 

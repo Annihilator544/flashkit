@@ -46,7 +46,7 @@ import { ChartContainer } from "../ui/chart";
       Object.keys(youtubeData).length ? setChartData(transformData(youtubeData.monthly).slice(-6)) : setChartData(monthlyData);
     },[youtubeData]);  
     return (
-      <Card className="flex-1 bg-inherit border-none shadow-none">
+      chartData.length ?<Card className="flex-1 bg-inherit border-none shadow-none">
         <CardContent className="p-0 ">
         <ChartContainer
           config={chartConfig}
@@ -81,5 +81,6 @@ import { ChartContainer } from "../ui/chart";
         </CardFooter>
         : <></>}
       </Card>
+      :<></>
     );
   }

@@ -37,7 +37,7 @@ const DailyCommentsChart = () => {
   const { youtubeData } = useYoutubeData();
 
   // Prepare data for the chart
-  const chartData = Object.keys(youtubeData.daily)
+  const chartData = Object.keys(youtubeData.daily||{})
     .slice(-7)
     .sort((a, b) => new Date(a) - new Date(b))
     .map((date) => ({
@@ -48,7 +48,7 @@ const DailyCommentsChart = () => {
     }));
 
   return (
-    <ChartContainer config={chartConfig}>
+    chartData.length ?<ChartContainer config={chartConfig}>
       <LineChart data={chartData}>
         <CartesianGrid vertical={false} />
         <XAxis
@@ -87,6 +87,7 @@ const DailyCommentsChart = () => {
         />
       </LineChart>
     </ChartContainer>
+    :<></>
   );
 };
 

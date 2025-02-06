@@ -28,7 +28,7 @@ const DailyReachChart = () => {
   }));
 
   return (
-    <ChartContainer config={chartConfig}>
+    chartData.length ?<ChartContainer config={chartConfig}>
       <AreaChart
         accessibilityLayer
         data={chartData}
@@ -69,6 +69,7 @@ const DailyReachChart = () => {
         />
       </AreaChart>
     </ChartContainer>
+    :<></>
   );
 };
 

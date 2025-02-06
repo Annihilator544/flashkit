@@ -133,12 +133,12 @@ function InstagramSection () {
               <div>
                 <div className="flex flex-col flex-1 gap-4 mt-3">
                   <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1">
-                    <DailyFollower followerData={instagramData.daily} percentageChangeFollowers={instagramCalculatedData.percentageChangeFollowers} numberOfDaysOfData={instagramCalculatedData.numberOfDaysOfData}/>
-                    <DailyImpressions impressionsData={instagramData.daily} percentageChangeImpressions={instagramCalculatedData.percentageChangeImpressions} numberOfDaysOfData={instagramCalculatedData.numberOfDaysOfData}/>
+                    <DailyFollower/>
+                    <DailyImpressions/>
                   </div>
                   <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1">
-                    <DailyReach reachData={instagramData.daily} percentageChangeReach={instagramCalculatedData.percentageChangeReach} numberOfDaysOfData={instagramCalculatedData.numberOfDaysOfData}/>
-                    <Demographics demographicData={instagramData.demographicData}/>
+                    <DailyReach />
+                    <Demographics/>
                   </div>
                   <Card className="flex-1 bg-[#f6f8f9] rounded-lg shadow-md">
                     <CardHeader>
