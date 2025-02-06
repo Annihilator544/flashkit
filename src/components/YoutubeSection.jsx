@@ -156,7 +156,7 @@ function YoutubeSection () {
                 <h1 className="flex gap-2 mb-2 text-2xl font-light text-black"><img src={youtubeSvg} alt="youtube" className="h-6 my-auto"/>Youtube Analytics</h1>
                 <p className="text-base text-secondary">Uncover Key Insights to Boost Your Youtube Performance</p>
             </div>
-            {!localStorage.getItem("youtubeAccessToken")
+            {localStorage.getItem("youtubeAccessToken")
             ?
             <div className="flex flex-col gap-10 p-2">
               <h1 className="text-2xl font-semibold">Insights</h1>

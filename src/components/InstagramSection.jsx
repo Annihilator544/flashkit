@@ -125,7 +125,7 @@ function InstagramSection () {
                 <h1 className="flex gap-2 mb-2 text-2xl font-light text-black"><img src={instagramSvg} alt="youtube" className="h-6 my-auto"/>Instagram Analytics</h1>
                 <p className="text-base text-secondary">Uncover Key Insights to Boost Your Instagram Performance</p>
             </div>
-            {!localStorage.getItem("instagramAccessToken") 
+            {localStorage.getItem("instagramAccessToken") 
             ?
             <div className="flex flex-col gap-10 p-2">
               <h1 className="text-2xl font-semibold">Insights</h1>

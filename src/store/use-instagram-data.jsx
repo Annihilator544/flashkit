@@ -22,7 +22,7 @@ export const useInstagramData = create(
         yearly: {},
         extraMetrics: {},
         demographicData: {},
-        lastFetched: ''
+        lastFetched: new Date()
     },
     instagramCalculatedData: {
         totalImpressions: 0,

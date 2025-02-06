@@ -848,13 +848,12 @@ function DashBoard({ store }) {
         const thisWeekEQSScore = await getInstagramEQSScore( lastWeekData );
         const lastWeekEQSScore = await getInstagramEQSScore( pastDaysData( instagramData, 7, 14 ) );
         const percentageChange = EQSNormalizedFunction(thisWeekEQSScore.eqsScore) - EQSNormalizedFunction(lastWeekEQSScore.eqsScore)
-        setInstagramEQS({eqsPercentage: EQSNormalizedFunction(thisWeekEQSScore.eqsScore), eqsPercentageChange: percentageChange});
-        console.log('Instagram EQS Data Updated',instagramEQS);
+        setInstagramEQS({eqsPercentage: EQSNormalizedFunction(thisWeekEQSScore.eqsScore)||0, eqsPercentageChange: percentageChange||0});
+        console.log('Instagram EQS Data Updated');
         const eqsText = await getYoutubeEQSText( lastWeekData, thisWeekEQSScore );
         setInstagramEQSText(eqsText);
     }
   updateInstagramEQSData();
-    }
   const percentageChangeFollowers = calculateFollowersChange(instagramData);
   const totalImpressions = calculateTotalImpressions(instagramData, 7);
   const totalImpressionsLastWeek = calculateTotalImpressions(instagramData, 14);
@@ -874,6 +873,7 @@ function DashBoard({ store }) {
       topCountry,
       numberOfDaysOfData
   });
+}
   },[instagramData]);
 
   useEffect(() => {
@@ -884,7 +884,8 @@ function DashBoard({ store }) {
       const thisWeekEQSScore = await getYoutubeEQSScore( lastWeekData );
       const lastWeekEQSScore = await getYoutubeEQSScore( pastDaysData( youtubeData, 7, 14 ) );
       const percentageChange = EQSNormalizedFunction(thisWeekEQSScore.eqs) - EQSNormalizedFunction(lastWeekEQSScore.eqs)
-      setEQS({eqsPercentage: EQSNormalizedFunction(thisWeekEQSScore.eqs), eqsPercentageChange: percentageChange});
+      setEQS({eqsPercentage: EQSNormalizedFunction(thisWeekEQSScore.eqs)||0, eqsPercentageChange: percentageChange||0});
+      console.log('YouTube EQS Data Updated');
       const eqsText = await getYoutubeEQSText( lastWeekData, thisWeekEQSScore );
       setEQSText(eqsText);
       console.log('EQS Data Updated');
