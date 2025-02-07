@@ -143,6 +143,9 @@ function calculateDemographicsData(engagementData, reachedData, followerData) {
 }
 
 const calculateFollowersChange = (data) => {
+  if (!data?.lastFetched || isNaN(new Date(data.lastFetched).getTime())) {
+    return 0;
+  }
   const date = new Date(new Date(data.lastFetched).getTime() -  1 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
   const pastWeek = new Date(new Date(data.lastFetched).getTime() - 8 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
   const followersToday = data?.daily[date]?.follower_count || 0;
@@ -153,6 +156,9 @@ const calculateFollowersChange = (data) => {
 };
 
 function calculateTotalImpressions(data, days) {
+  if (!data?.lastFetched || isNaN(new Date(data.lastFetched).getTime())) {
+    return 0;
+  }
   let totalImpressions = 0;
   for (let i = 1; i <= days; i++) {
     const day = new Date(new Date(data.lastFetched).getTime() - i * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
@@ -162,6 +168,9 @@ function calculateTotalImpressions(data, days) {
 }
 
 function calculateTotalReach(data, days) {
+  if (!data?.lastFetched || isNaN(new Date(data.lastFetched).getTime())) {
+    return 0;
+  }
   let totalReach = 0;
   for (let i = 1; i <= days; i++) {
     const day = new Date(new Date(data.lastFetched).getTime() - i * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
@@ -187,6 +196,9 @@ function calculateTopCountry(data) {
 }
 
 const calculateLastDaysViews = (data, days) => {
+  if (!data?.lastFetched || isNaN(new Date(data.lastFetched).getTime())) {
+    return 0;
+  }
   const dailyData = data.daily;
   const lastFetched = new Date(data.lastFetched);
 
@@ -205,6 +217,9 @@ const calculateLastDaysViews = (data, days) => {
 };
 
 const calculateTotalWatchTime = (data, days) => {
+  if (!data?.lastFetched || isNaN(new Date(data.lastFetched).getTime())) {
+    return 0;
+  }
   const dailyData = data.daily;
   const lastFetched = new Date(data.lastFetched);
 
@@ -223,6 +238,9 @@ const calculateTotalWatchTime = (data, days) => {
 };
 
 const calculateTotalSubscribers = (data) => {
+  if (!data?.lastFetched || isNaN(new Date(data.lastFetched).getTime())) {
+    return 0;
+  }
   const dailyData = data.daily;
   const lastFetched = new Date(data.lastFetched);
   
@@ -259,6 +277,9 @@ const getEQSOneLiner = async (userData,eqs) => {
 
 
 const calculateAverageViewDuration = (data, start, days) => {
+  if (!data?.lastFetched || isNaN(new Date(data.lastFetched).getTime())) {
+    return 0;
+  }
   const dailyData = data.daily;
   const lastFetched = new Date(data.lastFetched);
   let count = 0;
@@ -348,6 +369,9 @@ const EQSNormalizedFunction = (value) => {
 }
 
 const pastDaysData = (data, start, end) => {
+  if (!data?.lastFetched || isNaN(new Date(data.lastFetched).getTime())) {
+    return 0;
+  }
   const dailyData = data.daily;
   const lastFetched = new Date(data.lastFetched);
   const pastDays = {};
