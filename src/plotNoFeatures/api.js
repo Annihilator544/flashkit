@@ -92,15 +92,35 @@ export async function listDesigns() {
 }
 
 export async function listFilteredDesigns( filter , dateFilter) {
-  const list = await listDesigns();
-  if(!filter && !dateFilter){
+  let list = await listDesigns();
+  if(!filter && !Object.keys(dateFilter).length){
     return list;
   }
-  if(filter && dateFilter){
-    return list.filter((design) => design.name.toLowerCase().includes(filter.toLowerCase()) && design.lastModified.includes(dateFilter));
+  if(dateFilter.sort==='newest'){
+    list = list.sort((a, b) => new Date(b.lastModified) - new Date(a.lastModified));
   }
-  if(dateFilter){
-    return list.filter((design) => design.lastModified.includes(dateFilter));
+  else if(dateFilter.sort==='oldest'){
+    list = list.sort((a, b) => new Date(a.lastModified) - new Date(b.lastModified));
+  }
+  if(dateFilter.alphabetical==='asc'){
+    list = list.sort((a, b) => a.name.localeCompare(b.name));
+  }
+  else if(dateFilter.alphabetical==='desc'){
+    list = list.sort((a, b) => b.name.localeCompare(a.name));
+  }
+  if(filter && Object.keys(dateFilter).length){
+    if(dateFilter.startDate === '' || dateFilter.endDate === '')
+      return list.filter((design) => design.name.toLowerCase().includes(filter.toLowerCase()));
+    const startDate = new Date(dateFilter.startDate);
+    const endDate = new Date(dateFilter.endDate);
+    return list.filter((design) => design.name.toLowerCase().includes(filter.toLowerCase()) && design.lastModified >= startDate.toISOString() && design.lastModified <= endDate.toISOString());
+  }
+  if(Object.keys(dateFilter).length){
+    if(dateFilter.startDate === '' || dateFilter.endDate === '')
+      return list;
+    const startDate = new Date(dateFilter.startDate);
+    const endDate = new Date(dateFilter.endDate);
+    return list.filter((design) => design.lastModified >= startDate.toISOString() && design.lastModified <= endDate.toISOString());
   }
   return list.filter((design) => design.name.toLowerCase().includes(filter.toLowerCase()));
 }

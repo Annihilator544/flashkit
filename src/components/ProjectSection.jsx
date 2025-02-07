@@ -5,10 +5,13 @@ import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import projectSvg from "../assets/project.svg";
 import { useEffect, useState } from "react";
 import {
+  LucideArrowDownZA,
+  LucideArrowUpZA,
   LucideBell,
   LucideCopy,
   LucideFilter,
   LucideFolderOpen,
+  LucideLoader2,
   LucideMoreVertical,
   LucidePlus,
   LucideSearch,
@@ -43,6 +46,7 @@ import { nanoid } from "nanoid";
 import { SidebarTrigger } from "./ui/sidebar";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import NavbarLeftComponent from "./NavbarLeftComponent";
+import { startAfter } from "firebase/firestore";
 
 // Category filters
 const categories = [
@@ -54,31 +58,15 @@ const categories = [
 /* -----------------------------------------
    Shared Dashboard Projects: Recent Designs
    ----------------------------------------- */
-const DashboardProjects = observer(({ store, addFiles, fileDirectory, filterKey, filterDate }) => {
-  const project = useProject();
-  const [designsLoadings, setDesignsLoading] = useState(false);
-  const [designs, setDesigns] = useState([]);
-
-  const loadDesigns = async () => {
-    setDesignsLoading(true);
-    const list = await api.listFilteredDesigns(filterKey, filterDate);
-    setDesigns(list);
-    setDesignsLoading(false);
-  };
-
-  const handleProjectDelete = ({ id }) => {
-    setDesigns(designs.filter((design) => design.id !== id));
-    api.deleteDesign({ id });
-  };
-
-  const handleProjectDuplicate = async ({ id }) => {
-    await api.duplicateDesign({ id });
-    await loadDesigns();
-  };
-
-  useEffect(() => {
-    loadDesigns();
-  }, [project.cloudEnabled, project.designsLength, filterKey, filterDate]);
+const DashboardProjects = observer(({ 
+  store, 
+  addFiles, 
+  fileDirectory, 
+  handleProjectDelete,
+  handleProjectDuplicate,
+  designs,
+  designsLoadings,
+}) => {
 
   return (
     <div className="flex flex-col flex-wrap w-full">
@@ -464,49 +452,38 @@ const DesignCard2 = observer(({ design, onDelete }) => {
 /* ----------------------------------
    All Designs (Full listing)
    ---------------------------------- */
-const DashboardProjects2 = observer(({ store, addFiles, fileDirectory, filterKey, filterDate }) => {
-  const project = useProject();
-  const [designsLoadings, setDesignsLoading] = useState(false);
-  const [designs, setDesigns] = useState([]);
-  const [selectedDesign, setSelectedDesign] = useState([]);
-
-  const loadDesigns = async () => {
-    setDesignsLoading(true);
-    const list = await api.listFilteredDesigns(filterKey, filterDate);
-    setDesigns(list);
-    setDesignsLoading(false);
-  };
-
-  const handleProjectDelete = ({ id }) => {
-    setDesigns(designs.filter((design) => design.id !== id));
-    api.deleteDesign({ id });
-  };
-
-  const handleProjectDuplicate = async ({ id }) => {
-    await api.duplicateDesign({ id });
-    await loadDesigns();
-  };
-
-  const handleMultipleDelete = async () => {
-    const ids = Array.from(selectedDesign, (d) => d.id);
-    await api.deleteMultipleDesigns({ ids });
-    await loadDesigns();
-  };
-
-  useEffect(() => {
-    loadDesigns();
-  }, [project.cloudEnabled, project.designsLength, filterKey, filterDate]);
+const DashboardProjects2 = observer(({ 
+  store, 
+  addFiles, 
+  fileDirectory,  
+  handleProjectDelete, 
+  handleProjectDuplicate, 
+  handleMultipleDelete, 
+  designs, 
+  designsLoadings, 
+  selectedDesign, 
+  setSelectedDesign,
+  deleting
+}) => {
 
   return (
     <div className="flex flex-col flex-wrap">
-      <div className="flex justify-between">
+      <div className="flex justify-between mb-4">
         <p className="mb-3 text-lg font-semibold">Designs</p>
         {selectedDesign.length > 0 && (
+          deleting ?(
           <Button
-            onClick={handleMultipleDelete}
+            onClick={()=>{}}
+          >
+            <LucideLoader2 className={`h-7 w-7 animate-spin p-1`}/> Deleting...
+          </Button>
+          ): (
+          <Button
+            onClick={()=>handleMultipleDelete(selectedDesign)}
           >
             Delete Selected
           </Button>
+          )
         )}
       </div>
       <div className="md:flex md:gap-2 md:flex-wrap max-md:grid max-md:grid-cols-2 max-md:gap-2">
@@ -606,6 +583,7 @@ function ProjectSection({ store }) {
   const [fileDirectory, setFileDirectory] = useState([]);
   const [newProjectName, setNewProjectName] = useState("");
   const { user } = useAuthStore();
+
   const region = "eu-west-2";
   const credentials = {
     accessKeyId: process.env.REACT_APP_DYNAMO_DB_AWS_ACCESS_KEY_ID,
@@ -618,8 +596,44 @@ function ProjectSection({ store }) {
 
   // Filtering states
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchDate, setSearchDate] = useState("");
+  const [searchDate, setSearchDate] = useState({
+    startDate: "",
+    endDate: "",
+    sort: "",
+    alphabetical:""
+  });
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const project = useProject();
+  const [designsLoadings, setDesignsLoading] = useState(false);
+  const [designs, setDesigns] = useState([]);
+  const [selectedDesign, setSelectedDesign] = useState([]);
+  const [deleting, setDeleting] = useState(false);
+  
+  const loadDesigns = async () => {
+    setDesignsLoading(true);
+    const list = await api.listFilteredDesigns(searchTerm, searchDate);
+    setDesigns(list);
+    setDesignsLoading(false);
+  };
+
+  const handleProjectDelete = ({ id }) => {
+    setDesigns(designs.filter((design) => design.id !== id));
+    api.deleteDesign({ id });
+  };
+
+  const handleProjectDuplicate = async ({ id }) => {
+    await api.duplicateDesign({ id });
+    await loadDesigns();
+  };
+
+  const handleMultipleDelete = async (selectedDesign) => {
+    setDeleting(true);
+    const ids = Array.from(selectedDesign, (d) => d.id);
+    await api.deleteMultipleDesigns({ ids });
+    await loadDesigns();
+    setSelectedDesign([]);
+    setDeleting(false);
+  };
 
   // Filtered list of Folders (Projects) - search only applies to project names
   const filteredFileDirectory = fileDirectory.filter((project) =>
@@ -724,6 +738,10 @@ function ProjectSection({ store }) {
     await saveFileDirectory(user.uid, updatedDirectory);
   }
 
+  useEffect(() => {
+    loadDesigns();
+  }, [project.cloudEnabled, project.designsLength, searchTerm, searchDate]);
+
   return (
     <div className="flex flex-col">
       <header className="flex shrink-0 h-10 items-center gap-2 transition-[width,height] ease-linear justify-end mb-2">
@@ -796,16 +814,48 @@ function ProjectSection({ store }) {
             Filters
           </Button>
           </PopoverTrigger>
-          <PopoverContent className="p-4 bg-white rounded-md shadow-md">
-            <div className="flex flex-col gap-2">
-              <p className="text-sm font-semibold">Filter by</p>
-              <div className="flex flex-col gap-2">
+          <PopoverContent className="p-4 bg-white rounded-md shadow-md min-w-fit">
+            <div className="flex flex-col gap-4">
+              <div className="flex justify-between">
+              <p className="text-sm font-semibold my-auto">Filter by</p>
+              <Button variant="outline"
+              onClick={() => {
+                setSearchTerm("");
+                setSearchDate({ startDate: "", endDate: "", sort: "", alphabetical: "" });
+              }}
+              >
+                clear all
+              </Button>
+              </div>
+              <div className="flex align-center gap-2">
                 <Input
                   type="date"
-                  value={searchDate}
-                  onChange={(e) => setSearchDate(e.target.value)}
+                  value={searchDate.startDate}
+                  onChange={(e) => setSearchDate((prev) => ({ ...prev, startDate: e.target.value }))}
+                />
+                <p className="my-auto">to</p>
+                <Input
+                  type="date"
+                  value={searchDate.endDate}
+                  onChange={(e) => setSearchDate((prev) => ({ ...prev, endDate: e.target.value }))}
                 />
                 </div>
+            {/* buttons to toggle alphabetical sorting and newest oldest design */}
+            <div className="flex flex-col gap-2">
+              <Button
+                onClick={() => setSearchDate((prev) => ({ ...prev, sort: prev.sort === "newest" ? "oldest" : "newest" }))}
+              >
+                {searchDate.sort === "asc" ? "Newest" : "Oldest"}
+              </Button>
+              <Button
+                onClick={() => setSearchDate((prev) => ({ ...prev, alphabetical: prev.alphabetical === "asc" ? "desc" : "asc" }))}
+                className="flex gap-2"
+              >
+              Alphabetical Sort 
+                {searchDate.alphabetical === "asc" ? <LucideArrowUpZA/> : <LucideArrowDownZA/>}
+              </Button>
+            </div>
+            
             </div>
           </PopoverContent>
           </Popover>
@@ -820,8 +870,12 @@ function ProjectSection({ store }) {
             store={store}
             addFiles={addFilesToProject}
             fileDirectory={fileDirectory}
-            filterKey={searchTerm}
-            filterDate={searchDate}
+            handleProjectDelete={handleProjectDelete}
+            handleProjectDuplicate={handleProjectDuplicate}
+            designs={designs}
+            designsLoadings={designsLoadings}
+            selectedDesign={selectedDesign}
+            setSelectedDesign={setSelectedDesign}
           />
         </div>
       )}
@@ -890,8 +944,14 @@ function ProjectSection({ store }) {
             store={store}
             addFiles={addFilesToProject}
             fileDirectory={fileDirectory}
-            filterKey={searchTerm}
-            filterDate={searchDate}
+            handleProjectDelete={handleProjectDelete}
+            handleProjectDuplicate={handleProjectDuplicate}
+            handleMultipleDelete={handleMultipleDelete}
+            designs={designs}
+            designsLoadings={designsLoadings}
+            selectedDesign={selectedDesign}
+            setSelectedDesign={setSelectedDesign}
+            deleting={deleting}
           />
         </div>
       )}

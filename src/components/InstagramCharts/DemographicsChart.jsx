@@ -10,7 +10,7 @@ const chartConfig = {
   chartColors: ["#D300C5", "#5806E0", "#FF6BF5", "#FF5A5F", "#6A0DAD"],
 };
 
-const DemographicsChart = () => {
+const DemographicsChart = ({ outerRadius = 80}) => {
   const { instagramData } = useInstagramData();
   const demographicData = instagramData.demographicData;
 
@@ -75,7 +75,7 @@ const DemographicsChart = () => {
           nameKey="country"
           cx="50%"
           cy="50%"
-          outerRadius={80}
+          outerRadius={outerRadius}
         />
       </PieChart>
     </ChartContainer>

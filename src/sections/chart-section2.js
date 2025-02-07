@@ -28,6 +28,7 @@ import DailyImpressions from '../components/InstagramCharts/DailyImpressions';
 import DailyReach from '../components/InstagramCharts/DailyReach';
 import Demographics from '../components/InstagramCharts/Demographics';
 import DialySubscribedUnsubscribed from '../components/YoutubeCharts/DailySubscribedUnsubscribed';
+import DailyWatchMetrics from '../components/YoutubeCharts/DailyWatchMetrics';
 
 
 const ChartWrapper = observer(({ children, store, name }) => {
@@ -95,9 +96,6 @@ export const ChartSection = {
         <ChartWrapper store={store} name="Monthly Engagement">
           <MonthlyEngagementChart />
         </ChartWrapper>
-        <ChartWrapper store={store} name="Radar">
-          <DailyCommentsYoutube />
-        </ChartWrapper>
         <ChartWrapper store={store} name="Area">
           <DailyFollower />
         </ChartWrapper>
@@ -111,13 +109,16 @@ export const ChartSection = {
           <DailyReach />
         </ChartWrapper>
         <ChartWrapper store={store} name="Line">
-          <Demographics />
+          <Demographics chartSection={true} />
         </ChartWrapper>
         <ChartWrapper store={store} name="Radar">
           <DialySubscribedUnsubscribed />
         </ChartWrapper>
         <ChartWrapper store={store} name="Radar">
-          <DailyWatchMetricsChart />
+          <DailyWatchMetrics />
+        </ChartWrapper>
+        <ChartWrapper store={store} name="Radar">
+          <DailyCommentsYoutube />
         </ChartWrapper>
       </div>
     );

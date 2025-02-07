@@ -41,10 +41,13 @@ import YoutubeSection from "./YoutubeSection";
 import YoutubeStats from "./YoutubeStats";
 import InstagramContent from "./InstagramContent";
 import YoutubeContent from "./YoutubeContent";
+import { useInstagramData } from "store/use-instagram-data";
 
 function HomeSection({ store}) {
     const { user } = useAuthStore();
     const [selected, setSelected] = useState("Instagram");
+    const { instagramOneLiner } = useInstagramData();
+    const { youtubeOneLiner } = useYoutubeData();
       
     const [open, setOpen] = useState(false)
     useEffect(() => {
@@ -188,7 +191,7 @@ function HomeSection({ store}) {
                 >
                   <div className="flex flex-col mr-auto">
                     <p className="text-[#151212] mr-auto flex gap-1 font-semibold text-base"><LucideSparkles className="h-4 my-auto"/> AI Growth Insights</p>
-                    <p className="text-[#252C32] text-base mr-auto">Post on Thursdays at 5-7 PM for better reach. Use hashtags like #Inspiration and #Style!</p>
+                    <p className="text-[#252C32] text-base mr-auto">{selected==="Instagram" ? instagramOneLiner : selected==="Youtube" ? youtubeOneLiner: <></>}</p>
                   </div>
                   <TabsList className="p-0 text-black bg-white shadow-none cursor-pointer hover:bg-none active:bg-none hover:text-black active:text-black active:shadow-none">
                   {selected==="Instagram" ?

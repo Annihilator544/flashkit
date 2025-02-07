@@ -38,6 +38,8 @@ export const useInstagramData = create(
         eqsPercentageChange: 0,
     },
     instagramEQSText: "",
+    instagramOneLiner: "",
+    setInstagramOneLiner: (data) => set({instagramOneLiner: data}),
     setInstagramEQS: (data) => set({instagramEQS: data}),
     setInstagramEQSText: (data) => set({instagramEQSText: data}),
     setPostData: (posts) => set((state) => ({ instagramData: { ...state.instagramData, posts : posts } })),

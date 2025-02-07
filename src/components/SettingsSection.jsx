@@ -105,19 +105,21 @@ function SettingsSection() {
                 <p className="font-medium text-secondary">Personalise your experience and upload a photo and details</p>
               </CardHeader>
               <CardContent>
-                <div className="flex items-center justify-start gap-4 pb-6">
+                <div className="flex items-center justify-start gap-4 pb-6 ">
                   <Avatar className= "w-20 h-20 my-auto">
                     {user&&user.photoURL ? <AvatarImage src={user.photoURL} /> :
                     <AvatarImage src="https://github.com/shadcn.png" />
                     }
                     <AvatarFallback>CN</AvatarFallback>
                   </Avatar>
+                  <div className="flex max-md:flex-col md:gap-4 max-md:gap-2">
                   <Button variant="outline" className=""><LucideCamera className="h-4 my-auto mr-1"/> Upload Image</Button>
                   <Button variant="outline" className=""> Remove Image</Button>
+                  </div>
                 </div>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                      <div className="flex gap-4">
+                      <div className="flex gap-4 max-md:flex-col ">
                         <FormField
                         control={form.control}
                         name="firstname"
@@ -186,7 +188,7 @@ function SettingsSection() {
               <CardContent>
                 <Form {...formPassword}>
                     <form onSubmit={formPassword.handleSubmit(onSubmit)} className="space-y-4">
-                      <div className="flex gap-4 mb-6">
+                      <div className="flex gap-4 mb-6 max-md:flex-col">
                         <FormField
                           control={formPassword.control}
                           name="password"

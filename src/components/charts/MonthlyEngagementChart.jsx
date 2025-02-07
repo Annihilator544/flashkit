@@ -1,5 +1,5 @@
   import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
-  import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
+  import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
   import { useYoutubeData } from "store/use-youtube-data";
   import { useEffect, useState } from "react";
 import { ChartContainer } from "../ui/chart";
@@ -46,7 +46,11 @@ import { ChartContainer } from "../ui/chart";
       Object.keys(youtubeData).length ? setChartData(transformData(youtubeData.monthly).slice(-6)) : setChartData(monthlyData);
     },[youtubeData]);  
     return (
-      chartData.length ?<Card className="flex-1 bg-inherit border-none shadow-none">
+      chartData.length ?<Card className="flex-1 border-none shadow-none">
+      <CardHeader>
+              <CardTitle className="text-[#252C32] font-semibold text-lg">Views, Subscribers</CardTitle>
+              <CardDescription>Past 6 months</CardDescription>
+            </CardHeader>
         <CardContent className="p-0 ">
         <ChartContainer
           config={chartConfig}
@@ -79,7 +83,11 @@ import { ChartContainer } from "../ui/chart";
         <CardFooter>
           Connect Your Youtube Account to see insights
         </CardFooter>
-        : <></>}
+        : <CardFooter className="flex flex-col gap-1 items-start mt-auto">
+        <p className="text-secondary text-sm">
+          Track the number of views, subscribers received over the past 6 months
+        </p>
+      </CardFooter>}
       </Card>
       :<></>
     );

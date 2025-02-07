@@ -240,6 +240,23 @@ const calculateTotalSubscribers = (data) => {
   return lastWeekSubscribers;
 };
 
+const getEQSOneLiner = async (userData,eqs) => {
+  try {
+    const response = await fetch("https://pkuirym7cu6nbbyke3f7ortkpu0xnzvb.lambda-url.eu-west-2.on.aws/", {
+      method: 'POST',
+      body: JSON.stringify({
+        "pastWeekData":userData,
+        "engagementMetrics":eqs
+      })
+    });
+
+    const data = await response.json();
+    return data.content[0].text;
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
 
 const calculateAverageViewDuration = (data, start, days) => {
   const dailyData = data.daily;
@@ -347,11 +364,11 @@ const pastDaysData = (data, start, end) => {
 
 
 function DashBoard({ store }) {
-  const { youtubeData, eqsText, setEQSText, setYoutubeData, setYoutubeCalculatedData, setEQS, eqs } = useYoutubeData();
+  const { youtubeData, eqsText, setYoutubeOneLiner, setEQSText, setYoutubeData, setYoutubeCalculatedData, setEQS, eqs } = useYoutubeData();
   const [ selectedValue , setSelectedValue ] = useState('home');
   const { user } = useAuthStore();
   const { toast } = useToast();
-  const { instagramData, instagramEQS, setInstagramEQS, setInstagramEQSText, setInstagramCalculatedData, setPostData, setUserData, setDaily, setExtraMetrics, setDemographicData, setStoryData, setLastFetched } = useInstagramData();
+  const { instagramData, setInstagramOneLiner , setInstagramEQS, setInstagramEQSText, setInstagramCalculatedData, setPostData, setUserData, setDaily, setExtraMetrics, setDemographicData, setStoryData, setLastFetched } = useInstagramData();
   const fetchInstagramBusinessAccount = async (userAccessToken) => {
     if(!userAccessToken)return
     
@@ -855,6 +872,8 @@ function DashBoard({ store }) {
         console.log('Instagram EQS Data Updated');
         const eqsText = await getYoutubeEQSText( lastWeekData, thisWeekEQSScore );
         setInstagramEQSText(eqsText);
+        const EQSOneLiner = await getEQSOneLiner( lastWeekData, thisWeekEQSScore );
+        setInstagramOneLiner(EQSOneLiner);
     }
   updateInstagramEQSData();
   const percentageChangeFollowers = calculateFollowersChange(instagramData);
@@ -891,7 +910,8 @@ function DashBoard({ store }) {
       console.log('YouTube EQS Data Updated');
       const eqsText = await getYoutubeEQSText( lastWeekData, thisWeekEQSScore );
       setEQSText(eqsText);
-      console.log('EQS Data Updated');
+      const EQSOneLiner = await getEQSOneLiner( lastWeekData, thisWeekEQSScore );
+      setYoutubeOneLiner(EQSOneLiner);
     }
   updateYoutubeEQSData();
   const totalViewsThisWeek = calculateLastDaysViews( youtubeData, 7 );

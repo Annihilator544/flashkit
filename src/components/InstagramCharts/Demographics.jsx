@@ -45,7 +45,7 @@ const CustomTooltip = ({ active, payload }) => {
   return null;
 };
 
-const Demographics = () => {
+const Demographics = ( {chartSection=false} ) => {
   const { instagramData } = useInstagramData();
   const demographicData = instagramData.demographicData;
   // Aggregate total contributions for each country
@@ -118,7 +118,7 @@ const Demographics = () => {
               nameKey="country"
               cx="50%"
               cy="50%"
-              outerRadius={120}
+              outerRadius={chartSection ?50 : 120}
               className="max-md:hidden"
             />
             <Pie
@@ -127,7 +127,7 @@ const Demographics = () => {
               nameKey="country"
               cx="50%"
               cy="50%"
-              outerRadius={70}
+              outerRadius={chartSection ?40 : 70}
               className="md:hidden"
             />
           </PieChart>

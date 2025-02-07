@@ -16,6 +16,8 @@ export const useYoutubeData = create(
         eqsPercentageChange: 0,
     },
     eqsText: "",
+    youtubeOneLiner: "",
+    setYoutubeOneLiner: (data) => set({youtubeOneLiner: data}),
     setEQS: (data) => set({eqs: data}),
     setEQSText: (data) => set({eqsText: data}),
     setYoutubeData: (data) => set({youtubeData: data}),
