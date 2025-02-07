@@ -20,7 +20,6 @@ function TemplateSection({ store }) {
   const categorySizes = {
     "Instagram Posts": "1080x1080",
     "Instagram Story": "1080x1920",
-    "Facebook Posts": "1200x630",
     "Facebook Covers": "851x315",
     "Facebook Ad": "1200x628",
     "YouTube Thumbnail": "1280x720",

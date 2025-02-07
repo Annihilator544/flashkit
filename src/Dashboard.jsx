@@ -144,7 +144,7 @@ function calculateDemographicsData(engagementData, reachedData, followerData) {
 
 const calculateFollowersChange = (data) => {
   const date = new Date(new Date(data.lastFetched).getTime() -  1 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
-  const pastWeek = new Date(new Date().getTime(data.lastFetched) - 8 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+  const pastWeek = new Date(new Date(data.lastFetched).getTime() - 8 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
   const followersToday = data?.daily[date]?.follower_count || 0;
   const followersLastWeek = data?.daily[pastWeek]?.follower_count || 0;
   const followersChange = followersToday - followersLastWeek;
