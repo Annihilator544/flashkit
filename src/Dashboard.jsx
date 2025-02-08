@@ -182,7 +182,7 @@ function calculateTotalReach(data, days) {
 function calculateTopCountry(data) {
   let maxCountryCode = null;
   let maxTotal = 0;
-  
+  if(Object.keys(data).length === 0) return null;
   for (const [countryCode, stats] of Object.entries(data)) {
     const total = stats.engaged_audience_demographics + stats.reached_audience_demographics + stats.follower_demographics;
     if (total > maxTotal) {

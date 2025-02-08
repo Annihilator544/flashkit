@@ -145,7 +145,7 @@ const DesignCard = observer(({ design, onDelete, onDuplicate, addFiles, fileDire
             <Spinner />
           </div>
         )}
-        <div className="absolute top-2 left-2">
+        <div className={`absolute top-2 left-2 md:hidden group-hover:block`}>
           <Input type="checkbox" className="w-6 h-6 rounded-2xl" onClick={(e)=>e.stopPropagation()} onChange={(e) => onSelected(e.target.checked)} />
         </div>
         <div
