@@ -908,7 +908,6 @@ function DashBoard({ store }) {
   const totalReachLastWeek = calculateTotalReach(instagramData, 14);
   const percentageChangeReach = totalReachLastWeek ? (((totalReach - totalReachLastWeek) / totalReachLastWeek) * 100).toFixed(2) : 0;
   const topCountry = calculateTopCountry(instagramData.demographicData);
-  const numberOfDaysOfData = Object.keys(instagramData.daily).length;
 
   setInstagramCalculatedData({
       totalImpressions,
@@ -916,8 +915,7 @@ function DashBoard({ store }) {
       percentageChangeReach,
       percentageChangeImpressions,
       percentageChangeFollowers,
-      topCountry,
-      numberOfDaysOfData
+      topCountry,  
   });
 }
   },[instagramData]);
