@@ -3,7 +3,7 @@ import logo from '../assets/logo.png';
 
 function Footer ({className}) {
   return (
-    <footer>
+    <footer className="max-md:hidden">
         <div className={'grid grid-cols-3 p-24 bg-white '+ className}>
             <div className=' text-lg'>
                 <div className='flex gap-2 my-auto'>

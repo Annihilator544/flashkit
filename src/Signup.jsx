@@ -110,12 +110,12 @@ const Signup = () => {
     }
 
   return (
-    <div className='grid grid-cols-2 h-screen'>
-        <div className=' bg-gradient-to-r from-[#A0D0EA] to-[#6CC2F1]  flex-1 flex flex-col  rounded-r-[50px] SignUp'>
+    <div className='grid grid-cols-2 h-screen max-md:grid-cols-1'>
+        <div className=' bg-gradient-to-r from-[#A0D0EA] to-[#6CC2F1]  flex-1 flex flex-col  rounded-r-[50px] SignUp max-md:hidden'>
                 
         </div>
-        <div className='flex flex-col flex-1 overflow-y-auto'>
-            <div className='flex flex-col justify-center align-middle w-[50%] m-auto'>
+        <div className='flex flex-col flex-1 overflow-y-auto max-md:py-5'>
+            <div className='flex flex-col justify-center align-middle w-[50%] max-md:w-[90%] m-auto'>
                 <img src={logo} alt='logo' className='h-12 mr-auto mb-10'/>
                 <p className='text-2xl font-medium nter'>Get Started !</p>
                 <p className='text-base font-normal text-secondary mb-10'>Create a new account!</p>

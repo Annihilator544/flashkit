@@ -9,7 +9,7 @@ function FAQ() {
   return (
     <>
         <Navbar/>
-        <Card className="flex flex-col p-6 mx-52 my-16">
+        <Card className="flex flex-col p-6 max-md:p-2 max-md:rounded-none md:mx-52 md:my-16">
             <CardHeader className="items-center pb-4">
                 <CardTitle className="text-3xl font-bold">Flashkit FAQ</CardTitle>
                 <CardDescription className="text-sm text-muted-foreground">

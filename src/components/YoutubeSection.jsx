@@ -267,7 +267,7 @@ function YoutubeSection () {
             :
             <div className="flex flex-col items-center justify-center flex-1 gap-4 ">
                 <img src={connectAccount} alt="" className=" h-60" /> 
-                <h1 className="text-2xl font-semibold">Connect Your Youtube Account</h1>
+                <h1 className="text-2xl max-md:text-xl font-semibold">Connect Your Youtube Account</h1>
                 <p className="text-center text-secondary">Get started by connecting your Youtube account to view insights.</p>
                 <TabsList className="p-0 bg-white border-none">
                   <TabsTrigger value="settings" className="p-0 bg-white border-none">

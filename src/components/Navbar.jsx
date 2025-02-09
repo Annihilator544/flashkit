@@ -3,7 +3,7 @@ import logo from '../assets/logo.svg';
 
 function Navbar (){
     return(
-        <div className="flex h-[10vh] border-b-black border-b-[1px] px-20 justify-between">
+        <div className="flex h-[10vh] border-b-black border-b-[1px] md:px-20 max-md:px-1 justify-between">
             <Link to='/' className=' hover:no-underline my-auto'>
                 <div className='flex gap-2 my-auto'>
                     <img src={logo} alt="logo" className=' h-[40px]' />

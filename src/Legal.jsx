@@ -6,7 +6,7 @@ function Legal() {
   return (
     <>
       <Navbar /> 
-        <Card className="flex flex-col p-6 mx-52 my-16">
+        <Card className="flex flex-col p-6 max-md:p-2 md:mx-52 md:my-16 max-md:my-4 rounded-none">
             <CardHeader className="items-center pb-4">
                 <CardTitle className="text-3xl font-bold">Flashkit User Licence Agreement</CardTitle>
                 <CardDescription className="text-sm text-muted-foreground">
@@ -116,7 +116,7 @@ function Legal() {
                 </section>
             </CardContent>
         </Card>
-        <Card className="flex flex-col p-6 mx-52 my-16">
+        <Card className="flex flex-col p-6 max-md:p-2 md:mx-52 md:my-16 max-md:my-4 rounded-none">
             <CardHeader className="items-center pb-4">
                 <CardTitle className="text-3xl font-bold">Flashkit Intellectual Property Policy</CardTitle>
                 <CardDescription className="text-sm text-muted-foreground">
@@ -213,7 +213,7 @@ function Legal() {
                 </section>
             </CardContent>
         </Card>
-        <Card className="flex flex-col p-6 mx-52 my-16">
+        <Card className="flex flex-col p-6 max-md:p-2 md:mx-52 md:my-16 max-md:my-4 rounded-none">
             <CardHeader className="items-center pb-4">
                 <CardTitle className="text-3xl font-bold">FlashKit Data Processing Agreement (DPA)</CardTitle>
                 <CardDescription className="text-sm text-muted-foreground">

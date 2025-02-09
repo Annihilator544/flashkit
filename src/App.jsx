@@ -201,7 +201,7 @@ const App = observer(({ store }) => {
   React.useEffect(() => {
     const arr = document.getElementsByClassName('polotno-page-container')
     const children = document.createElement('div');
-    children.className = 'plotnocovertookaverylongtimebutitworksnow absolute z-[1] md:h-4 md:w-60 bg-[#e8e8e8] md:bottom-0 md:right-0 max-md:bottom-[75px] max-md:right-0 max-md:h-5 max-md:w-44';
+    children.className = 'plotnocovertookaverylongtimebutitworksnow absolute z-[1] md:h-4 md:w-60 bg-[#e8e8e8] md:bottom-0 md:right-0 max-md:bottom-[2px] max-md:right-0 max-md:h-5 max-md:w-44';
     for (let i = 0; i < arr.length; i++) {
       if (!arr[i].querySelector(`.plotnocovertookaverylongtimebutitworksnow`)) {
         arr[i].appendChild(children.cloneNode(true));
