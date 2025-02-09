@@ -314,7 +314,9 @@ export async function saveDesign({ storeJSON, preview, name, id }) {
 
 export const getPreview = async ({ id }) => {
   const preview = await readFile(`designs/${id}.jpg`);
+  if(preview instanceof Blob){
   return URL.createObjectURL(preview);
+  }
 };
 
 // const batchCall = (asyncFunction) => {

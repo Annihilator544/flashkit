@@ -21,6 +21,8 @@ import SignUp from './assets/SignUp.svg';
 import { useAuthStore } from 'store/use-auth-data';
 import GoogleButton from './assets/GoogleButton.svg';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { toast } from './hooks/use-toast';
+import localforage from 'localforage';
 
 const formSchema = z.object({
     username: z.string().min(3,{message:"Username should be minimum 3 letters"}).max(100),
@@ -64,6 +66,7 @@ const Signup = () => {
             });
             setUser(user);
             if(localStorage.getItem("valid")){
+                localforage.clear()
                 navigate("/dashboard")
             }
             else{
@@ -74,7 +77,10 @@ const Signup = () => {
             const errorMessage = error.message;
             console.log(errorMessage);
             if(errorMessage.includes("auth/email-already-in-use")) { 
-                alert("Email already exists")
+                toast({
+                    title: "User already exists",
+                    description: "Please log in with your credentials",
+                    });
                 // relocate to login page
                 navigate("/login")
             }
@@ -100,6 +106,7 @@ const Signup = () => {
             setUser(user);
             // await signIn(user.email, null, true);
             if(localStorage.getItem("valid")){
+                localforage.clear()
                 navigate("/dashboard")
             }
             else{

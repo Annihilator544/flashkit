@@ -40,7 +40,7 @@ export function NavUser() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <div
-              className="flex gap-2 md:w-40 ">
+              className="flex gap-2 md:w-40 truncate ">
               <Avatar className="h-8 w-8 rounded-full">
                     {user&&user.photoURL ? <AvatarImage src={user.photoURL} /> :
                         <AvatarImage src="https://github.com/shadcn.png" />

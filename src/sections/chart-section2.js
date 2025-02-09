@@ -93,6 +93,8 @@ export const ChartSection = {
   Panel: observer(({ store }) => {
     return (
       <div className="overflow-y-auto h-full flex flex-col gap-2">
+      {localStorage.getItem('instagramAccessToken') && localStorage.getItem('youtubeAccessToken') ? (
+        <>
         <ChartWrapper store={store} name="Monthly Engagement">
           <MonthlyEngagementChart />
         </ChartWrapper>
@@ -120,6 +122,46 @@ export const ChartSection = {
         <ChartWrapper store={store} name="Radar">
           <DailyCommentsYoutube />
         </ChartWrapper>
+        </>
+      ) : localStorage.getItem('instagramAccessToken') ? (
+        <>
+        <ChartWrapper store={store} name="Area">
+          <DailyFollower />
+        </ChartWrapper>
+        <ChartWrapper store={store} name="Bar">
+          <DailyImpressions />
+        </ChartWrapper>
+        <ChartWrapper store={store} name="Insights">
+          <DailyReach />
+        </ChartWrapper>
+        <ChartWrapper store={store} name="Line">
+          <Demographics chartSection={true} />
+        </ChartWrapper>
+        </>
+      ) : localStorage.getItem('youtubeAccessToken') ? (
+        <>
+        <ChartWrapper store={store} name="Monthly Engagement">
+          <MonthlyEngagementChart />
+        </ChartWrapper>
+        <ChartWrapper store={store} name="Radial">
+          <DailyLikeShareDislikeYoutube />
+        </ChartWrapper>
+        <ChartWrapper store={store} name="Radar">
+          <DialySubscribedUnsubscribed />
+        </ChartWrapper>
+        <ChartWrapper store={store} name="Radar">
+          <DailyWatchMetrics />
+        </ChartWrapper>
+        <ChartWrapper store={store} name="Radar">
+          <DailyCommentsYoutube />
+        </ChartWrapper>
+        </>
+      ) : (
+        <div className="flex flex-col items-center justify-center h-full">
+          <h2 className="text-lg font-semibold">Connect your Instagram and Youtube account to view charts</h2>
+        </div>
+      )}
+
       </div>
     );
   }),

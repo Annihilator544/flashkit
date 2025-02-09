@@ -19,6 +19,7 @@ import { Button } from './components/ui/button';
 import { SelectSeparator } from './components/ui/select';
 import GoogleButton from './assets/GoogleButton.svg';
 import { useAuthStore } from 'store/use-auth-data';
+import localforage from 'localforage';
 
 const formSchema = z.object({
     email: z.string().email(),
@@ -37,13 +38,13 @@ const Login = () => {
     })
 
     async function onSubmit(values) {
-        console.log(values)
         await signInWithEmailAndPassword(auth, values.email, values.password)
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
             setUser(user)
             if(localStorage.getItem("valid")){
+                localforage.clear()
                 navigate("/dashboard")
             }
             else{
@@ -69,6 +70,7 @@ const Login = () => {
             const user = result.user;
             setUser(user);
             if(localStorage.getItem("valid")){
+                localforage.clear()
                 navigate("/dashboard")
             }
             else{
