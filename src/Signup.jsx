@@ -65,13 +65,8 @@ const Signup = () => {
                 displayName: values.username,
             });
             setUser(user);
-            if(localStorage.getItem("valid")){
-                localforage.clear()
-                navigate("/dashboard")
-            }
-            else{
-                navigate("/secret")
-            }
+            localforage.clear()
+            navigate("/onboarding")
         } catch (error) {
             const errorCode = error.code;
             const errorMessage = error.message;
@@ -105,13 +100,8 @@ const Signup = () => {
             // }
             setUser(user);
             // await signIn(user.email, null, true);
-            if(localStorage.getItem("valid")){
-                localforage.clear()
-                navigate("/dashboard")
-            }
-            else{
-                navigate("/secret")
-            } // Redirect to dashboard or appropriate page after successful sign-in
+            localforage.clear()
+            navigate("/onboarding")
         } catch (error) {
             const errorCode = error.code;
             const errorMessage = error.message;

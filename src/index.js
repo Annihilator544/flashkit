@@ -25,6 +25,7 @@ import { Toaster } from './components/ui/toaster';
 import Legal from 'Legal';
 import FAQ from 'FAQ';
 import AboutUs from 'AboutUs';
+import Onboarding from 'Onboarding';
 
 // if (window.location.host !== 'studio.polotno.com') {
 //   console.log(
@@ -139,8 +140,8 @@ const router = createBrowserRouter([
     element: <Billing />,
   },
   {
-    path: "/secret",
-    element: <Secret />,
+    path: "/onboarding",
+    element: <Onboarding />,
   }
 ]);
 

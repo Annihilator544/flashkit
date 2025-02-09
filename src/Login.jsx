@@ -43,13 +43,8 @@ const Login = () => {
             // Signed in
             const user = userCredential.user;
             setUser(user)
-            if(localStorage.getItem("valid")){
-                localforage.clear()
-                navigate("/dashboard")
-            }
-            else{
-                navigate("/secret")
-            }
+            localforage.clear()
+            navigate("/dashboard")
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -69,13 +64,8 @@ const Login = () => {
             const result = await signInWithPopup(auth, provider);
             const user = result.user;
             setUser(user);
-            if(localStorage.getItem("valid")){
-                localforage.clear()
-                navigate("/dashboard")
-            }
-            else{
-                navigate("/secret")
-            } // Redirect to dashboard or appropriate page after successful sign-in
+            localforage.clear()
+            navigate("/dashboard")
         } catch (error) {
             const errorCode = error.code;
             const errorMessage = error.message;
