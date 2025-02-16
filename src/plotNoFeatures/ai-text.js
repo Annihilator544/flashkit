@@ -62,50 +62,51 @@ export const AIWriteMenu = observer(({ store }) => {
   }
 
   return (
-    <Popover
-      disabled={!hasSelection}
-      content={
-        <Menu>
-          <MenuItem
-            text="Rewrite"
-            onClick={() => {
-              rewriteText('rewrite');
-            }}
-          />
-          <MenuItem
-            text="Shorten"
-            onClick={() => {
-              rewriteText('shorten');
-            }}
-          />
-          <MenuItem
-            text="Continue writing"
-            onClick={() => {
-              rewriteText('continue');
-            }}
-          />
-          <MenuItem
-            text="Proofread"
-            onClick={() => {
-              rewriteText('proofread');
-            }}
-          />
-          <MenuItem text="Tone">
-            {TONES.map((tone) => (
-              <MenuItem
-                key={tone.text}
-                text={tone.text}
-                onClick={() => {
-                  rewriteText('tone', tone.text);
-                }}
-              />
-            ))}
-          </MenuItem>
-        </Menu>
-      }
-      position={Position.BOTTOM}
-    >
-      <Button icon={<Clean />} minimal text="AI write" />
-    </Popover>
+    // <Popover
+    //   disabled={!hasSelection}
+    //   content={
+    //     <Menu>
+    //       <MenuItem
+    //         text="Rewrite"
+    //         onClick={() => {
+    //           rewriteText('rewrite');
+    //         }}
+    //       />
+    //       <MenuItem
+    //         text="Shorten"
+    //         onClick={() => {
+    //           rewriteText('shorten');
+    //         }}
+    //       />
+    //       <MenuItem
+    //         text="Continue writing"
+    //         onClick={() => {
+    //           rewriteText('continue');
+    //         }}
+    //       />
+    //       <MenuItem
+    //         text="Proofread"
+    //         onClick={() => {
+    //           rewriteText('proofread');
+    //         }}
+    //       />
+    //       <MenuItem text="Tone">
+    //         {TONES.map((tone) => (
+    //           <MenuItem
+    //             key={tone.text}
+    //             text={tone.text}
+    //             onClick={() => {
+    //               rewriteText('tone', tone.text);
+    //             }}
+    //           />
+    //         ))}
+    //       </MenuItem>
+    //     </Menu>
+    //   }
+    //   position={Position.BOTTOM}
+    // >
+    //   <Button icon={<Clean />} minimal text="AI wrte" />
+    // </Popover>
+    <></>
   );
 });
