@@ -77,7 +77,7 @@ function FAQ() {
                     <div>
                         <p className="font-medium">Is Flashkit free to use?</p>
                         <p>
-                        Flashkit is a paid platform, but as an early adopter, you’ll get exclusive benefits! We’re offering a 1-week free trial and a special launch price of £7.99 per month for the first six months.
+                        Flashkit is a paid platform, but as an early adopter, you’ll get exclusive benefits! We’re offering a 1-week free trial and a special launch price of £4.99 per month for the first six months.
                         </p>
                     </div>
                     <div>

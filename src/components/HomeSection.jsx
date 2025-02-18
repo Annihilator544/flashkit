@@ -145,7 +145,7 @@ function HomeSection({ store}) {
             <div className="flex flex-col gap-10 p-2 max-md:p-0">
               <div className=" text-[#252C32] flex justify-between">
                 <div>
-                  <p className="text-2xl font-semibold">Welcome back <span className="break-all ">{user&&user.displayName&&user.displayName.split(" ")[0]} </span> !</p>
+                  <p className="text-2xl font-semibold">Welcome back <span className="break-all ">{user&&user.displayName&&user.displayName.split(" ")[0]+'!'} </span></p>
                   <p className="text-base font-normal ">Your latest social media performance </p>
                 </div>
                 <Select value={selected} onValueChange={setSelected} className="w-[180px]">
