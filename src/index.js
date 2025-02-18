@@ -26,6 +26,7 @@ import Legal from 'Legal';
 import FAQ from 'FAQ';
 import AboutUs from 'AboutUs';
 import Onboarding from 'Onboarding';
+import Payments from 'Payments';
 
 // if (window.location.host !== 'studio.polotno.com') {
 //   console.log(
@@ -134,6 +135,10 @@ const router = createBrowserRouter([
   {
     path: "/public",
     element: <PublicView  store={store} />,
+  },
+  {
+    path: "/payments",
+    element: <ProtectedRoute><Payments/></ProtectedRoute>,
   },
   {
     path: "/billing",
