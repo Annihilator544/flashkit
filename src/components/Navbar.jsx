@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import logo from '../assets/logo.svg';
+import { Button } from './ui/button';
 
 function Navbar (){
     return(
@@ -12,7 +13,7 @@ function Navbar (){
             </Link>
             <div className='Rethink flex gap-7 font-normal text-lg my-auto'>
                 <Link to='/login' className=' hover:no-underline'>
-                    <button className='bg-[#ff847c] text-white px-4 py-[4px] rounded-full font-bold'>Sign in</button>
+                    <Button className=' px-6  rounded-full font-bold'>Sign in</Button>
                 </Link>
             </div>
         </div>

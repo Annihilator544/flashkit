@@ -135,10 +135,10 @@ const router = createBrowserRouter([
     path: "/public",
     element: <PublicView  store={store} />,
   },
-  {
-    path: "/billing",
-    element: <Billing />,
-  },
+  // {
+  //   path: "/billing",
+  //   element: <Billing />,
+  // },
   {
     path: "/onboarding",
     element: <Onboarding />,
