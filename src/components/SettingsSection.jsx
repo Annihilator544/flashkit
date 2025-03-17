@@ -15,26 +15,44 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { Slider } from "./ui/slider";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { SidebarTrigger } from "./ui/sidebar";
 import { NavUser } from "./nav-user";
 import NavbarLeftComponent from "./NavbarLeftComponent";
 import DashboardHeader from "./DashboardHeader";
+import { getAuth, updateProfile } from "firebase/auth";
+import { useToast } from "../hooks/use-toast";
+import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
 function SettingsSection() {
-    const { Engagement } = useEngagementData();
+    const ref = useRef(null);
+    const [uploadedImage, setUploadedImage] = useState(null);
+    const handleFileChange = (e) => {
+      const file = e.target.files?.[0];
+      if (file) {
+        setUploadedImage({
+          type: file.type,
+          name: file.name,
+          file: file,
+          url: URL.createObjectURL(file)
+        });
+      }
+      e.target.value = null;
+    };
     const { user} = useAuthStore();
+    const auth = getAuth();
+    const { toast } = useToast();
     const [selectedCard, setSelectedCard] = useState("card1")
     const formSchema = z.object({
-        firstname: z.string().min(3,{message:"Username should be minimum 3 letters"}).max(100),
-        lastname: z.string().min(3,{message:"Username should be minimum 3 letters"}).max(100),
-        language: z.string({required_error: "Please select a language to display.",})
+        username: z.union([
+          z.string().length(0), // allow empty string
+          z.string().min(3, { message: "Username should be minimum 3 letters" }).max(100)
+        ]),
       })
     const form = useForm({
             resolver: zodResolver(formSchema),
             defaultValues: {
-            firstname: "",
-            lastname: "",
+            username: "",
             },
         })
     const formSchemaPassword = z.object({
@@ -56,10 +74,77 @@ function SettingsSection() {
             confirmPassword: "",
             },
         })
-    
-    async function onSubmit(values) {
+    async function onSubmitProfile(values) {
         try {
+          if(uploadedImage && auth.currentUser){
+            const bucketNamePersonal = 'flashkitpersonalbucket';
+            const s3Client = new S3Client({
+                  region: 'eu-west-2', // e.g., 'us-east-1'
+                  credentials: {
+                    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+                    secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+                  }
+                });
+            const command = new PutObjectCommand({
+              Bucket: bucketNamePersonal,
+              Key: `${user.uid}/profile/${uploadedImage.name}`,
+              Body: uploadedImage.file,
+              ContentType: uploadedImage.type,
+            });
+            await s3Client.send(command);
+            if(values.username){
+            await updateProfile(auth.currentUser, {
+              displayName: values.username,
+              photoURL: `https://${bucketNamePersonal}.s3.eu-west-2.amazonaws.com/${user.uid}/profile/${uploadedImage.name}`
+              })
+              
+           toast({
+            title: "Profile Updated",
+            description: "Your Image and Display Name has been updated successfully",
+            variant: "success"
+            });
+            }
+            else{
+              await updateProfile(auth.currentUser, {
+                  photoURL: `https://${bucketNamePersonal}.s3.eu-west-2.amazonaws.com/${user.uid}/profile/${uploadedImage.name}`
+              })
+              toast({
+                title: "Profile Updated",
+                description: "Your Image has been updated successfully",
+                variant: "success"
+                });
+            }
+          }
+          else if(values.username){
+            await updateProfile(auth.currentUser, {
+              displayName: values.username,
+            })
+            toast({
+                title: "Profile Updated",
+                description: "Your Display Name has been updated successfully",
+                variant: "success"
+                });
+          }
         } catch (error) {
+          console.error(error);
+        } finally {
+          formPassword.reset();
+        }
+    }
+    async function onSubmitPassword(values) {
+        try {
+          await updateProfile(auth.currentUser, {
+            password: values.password,
+          })
+          toast({
+                title: "Password Updated",
+                description: "Your password has been updated successfully",
+                variant: "success"
+                });
+        } catch (error) {
+          console.error(error);
+        } finally {
+          formPassword.reset();
         }
     }
   return (
@@ -107,70 +192,40 @@ function SettingsSection() {
               <CardContent>
                 <div className="flex items-center justify-start gap-4 pb-6 ">
                   <Avatar className= "w-20 h-20 my-auto">
-                    {user&&user.photoURL ? <AvatarImage src={user.photoURL} /> :
+                    {user&&user.photoURL ? uploadedImage?.url ? <AvatarImage src={uploadedImage?.url} /> : <AvatarImage src={user.photoURL} /> :
                     <AvatarImage src="https://github.com/shadcn.png" />
                     }
                     <AvatarFallback>CN</AvatarFallback>
                   </Avatar>
                   <div className="flex max-md:flex-col md:gap-4 max-md:gap-2">
-                  <Button variant="outline" className=""><LucideCamera className="h-4 my-auto mr-1"/> Upload Image</Button>
-                  <Button variant="outline" className=""> Remove Image</Button>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    ref={ref}
+                    className="hidden"
+                    onInput={handleFileChange}
+                  />
+                  <Button variant="outline" onClick={()=>ref?.current?.click()} className=""><LucideCamera className="h-4 my-auto mr-1"/> Upload Image</Button>
+                  <Button variant="outline" onClick={()=>setUploadedImage(null)} className=""> Remove Image</Button>
                   </div>
                 </div>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                    <form onSubmit={form.handleSubmit(onSubmitProfile)} className="space-y-4">
                       <div className="flex gap-4 max-md:flex-col ">
                         <FormField
                         control={form.control}
-                        name="firstname"
+                        name="username"
                         render={({ field }) => (
                             <FormItem className="">
-                            <FormLabel>First name</FormLabel>
+                            <FormLabel>User name</FormLabel>
                             <FormControl>
-                                <Input placeholder="First name" type="text" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                            </FormItem>
-                        )}
-                        />
-                        <FormField
-                        control={form.control}
-                        name="lastname"
-                        render={({ field }) => (
-                            <FormItem className="">
-                            <FormLabel>Last name</FormLabel>
-                            <FormControl>
-                                <Input placeholder="Last name" type="text" {...field} />
+                                <Input placeholder="User name" type="text" {...field} />
                             </FormControl>
                             <FormMessage />
                             </FormItem>
                         )}
                         />
                       </div>
-                        <FormField
-                          control={form.control}
-                          name="language"
-                          render={({ field }) => (
-                            <FormItem className="max-w-[250px]">
-                              <FormLabel>Language</FormLabel>
-                              <Select onValueChange={field.onChange} defaultValue={field.value} >
-                                <FormControl>
-                                  <SelectTrigger>
-                                    <SelectValue placeholder="Language" />
-                                  </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                  <SelectItem value="en">English</SelectItem>
-                                  <SelectItem value="fr">French</SelectItem>
-                                  <SelectItem value="id">Indonesian</SelectItem>
-                                  <SelectItem value="ru">Russian</SelectItem>
-                                  <SelectItem value="pt">Portugese</SelectItem>
-                                </SelectContent>
-                              </Select>
-                              <FormMessage />
-                            </FormItem>
-                            )}
-                        />
                         <Button type="submit" className="bg-[#409BFF] mr-2">Save Changes</Button>
                         <Button variant="outline">Discard</Button>
                     </form>
@@ -187,7 +242,7 @@ function SettingsSection() {
               </CardHeader>
               <CardContent>
                 <Form {...formPassword}>
-                    <form onSubmit={formPassword.handleSubmit(onSubmit)} className="space-y-4">
+                    <form onSubmit={formPassword.handleSubmit(onSubmitPassword)} className="space-y-4">
                       <div className="flex gap-4 mb-6 max-md:flex-col">
                         <FormField
                           control={formPassword.control}
