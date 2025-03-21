@@ -69,7 +69,7 @@ function InstagramSection () {
       },
     };
     //remove the first 1. from the text
-    const text = instagramEQSText.replace(/^\d+\.\s/, "");
+    const text = instagramEQSText??''.replace(/^\d+\.\s/, "");
     // Split the text by each insight section (look for lines like: "1. Some Heading")
     // This will give us an array of sections (each representing one block of insight data).
     const sections = text.split(/\n\d+\.\s/).map(s => s.trim()).filter(Boolean);

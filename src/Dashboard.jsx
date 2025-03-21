@@ -269,7 +269,7 @@ const getEQSOneLiner = async (userData,eqs) => {
     });
 
     const data = await response.json();
-    return data.content[0].text;
+    return data.content[0].text??"";
   } catch (error) {
     console.error('Error:', error);
   }
@@ -341,7 +341,7 @@ const getYoutubeEQSText = async (userData,eqs) => {
     });
 
     const data = await response.json();
-    return data.content[0].text;
+    return data.content[0].text??"";
   } catch (error) {
     console.error('Error:', error);
   }
@@ -396,7 +396,6 @@ function DashBoard({ store }) {
   const fetchInstagramBusinessAccount = async (userAccessToken) => {
     if(!userAccessToken)return
     
-    console.log('Fetching Instagram Business Account',userAccessToken);
     try {
     //   const region = "eu-west-2";
     //   const credentials = {
