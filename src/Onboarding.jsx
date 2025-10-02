@@ -96,8 +96,8 @@ function Onboarding() {
 
   return (
     <div className='grid grid-cols-2 h-screen max-md:grid-cols-1'>
-        <div className='flex-1 flex flex-col rounded-r-[50px] LogIn max-md:hidden overflow-hidden'>
-            <img src={logIn} alt='logIn' className=' h-full cover'/>
+        <div className='flex-1 flex flex-col rounded-r-[50px] max-md:hidden overflow-hidden'>
+            <img src={logIn} alt='logIn' className=' h-full object-cover object-left-top '/>
         </div>
         {onboardingStep === 1 ? <div className='flex flex-col flex-1 overflow-y-auto'>
             <div className='flex flex-col justify-center align-middle w-[80%] max-md:w-[90%] m-auto'>
