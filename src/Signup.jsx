@@ -113,7 +113,7 @@ const Signup = () => {
   return (
     <div className='grid grid-cols-2 h-screen max-md:grid-cols-1'>
         <div className='flex-1 flex flex-col rounded-r-[50px] LogIn max-md:hidden overflow-hidden'>
-            <img src={logIn} alt='logIn' className=' h-full mr-auto'/>
+            <img src={logIn} alt='logIn' className=' h-full cover'/>
         </div>
         <div className='flex flex-col flex-1 overflow-y-auto max-md:py-5'>
             <div className='flex flex-col justify-center align-middle w-[50%] max-md:w-[90%] m-auto'>
