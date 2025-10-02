@@ -415,11 +415,11 @@ const SidebarMenuItem = React.forwardRef(({ className, ...props }, ref) => (
 SidebarMenuItem.displayName = "SidebarMenuItem"
 
 const sidebarMenuButtonVariants = cva(
-  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md px-2 py-1 text-left text-sm outline-none ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-[#ffffff] active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:font-normal data-[state=open]:hover:bg-[#ffffff] data-[state=open]:hover:text-sidebar-accent-foreground data-[state=open]:bg-[#ffffff] data-[state=open]:text-[#fe5655] group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 ",
+  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md px-2 py-1 text-left text-sm outline-none ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-[#ffffff] active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:font-normal data-[state=open]:hover:bg-[#ffffff] data-[state=open]:hover:text-sidebar-accent-foreground data-[state=open]:bg-[#ffffff] data-[state=open]:text-[#004b8c] group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 ",
   {
     variants: {
       variant: {
-        default: "hover:bg-[#ffffff] data-[state=open]:drop-shadow data-[state=open]:hover:drop-shadow-md hover:drop-shadow-md hover:text-[#fe5655] focus:outline-none focus-visible:outline-none focus-visible:ring-0",
+        default: "hover:bg-[#ffffff] data-[state=open]:drop-shadow data-[state=open]:hover:drop-shadow-md hover:drop-shadow-md hover:text-[#004b8c] focus:outline-none focus-visible:outline-none focus-visible:ring-0",
         outline:
           "bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]",
       },

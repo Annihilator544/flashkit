@@ -1,5 +1,5 @@
 import { LucideFacebook, LucideGithub, LucideInstagram, LucidePlayCircle, LucideTwitter } from 'lucide-react';
-import logo from './assets/logo.svg';
+import logo from './assets/logoNew.png';
 import Landing1 from './assets/Landing1.svg';
 import Landing2 from './assets/Landing2.svg';
 import Landing3 from './assets/Landing3.svg';
@@ -24,7 +24,7 @@ function Landing() {
                     <p className='text-lg my-10 '>Empower your content creation with our all-in-one social media kit, designed to help you craft visually stunning posts and monitor your performance instantly.</p>
                     <div className=' flex gap-7 my-2'>
                         <Link to='/signup' className=' hover:no-underline'>
-                            <button className='bg-[#ff847c] text-white px-4 border-transparent  py-2 rounded-full font-bold'>Create Account</button>
+                            <button className='bg-[#004b8c] text-white px-4 border-transparent  py-2 rounded-full font-bold'>Create Account</button>
                         </Link>
                         <Link to='/canvas' className=' hover:no-underline'>
                             <button className=' text-black px-4 border-[1px] border-black  py-2 rounded-full font-bold flex gap-2'><LucidePlayCircle/><p className='my-auto'>View Demo</p></button>
@@ -50,7 +50,7 @@ function Landing() {
                     <img src={Landing2} alt="Landing2" className='' />
                 </div>
                 <div className='bg-white flex flex-col gap-10 py-20 px-16'>
-                    <p className='text-[#ff847c] text-lg font-medium'>SOCIAL MEDIA KIT</p>
+                    <p className='text-[#004b8c] text-lg font-medium'>SOCIAL MEDIA KIT</p>
                     <p className='text-5xl font-bold'>Showcase your influence</p>
                     <p className='text-lg max-w-[70%]'>Discover over 100+ templates tailored for 20+ inluencer A markets. Choose the perfect design that represents you and your brand.</p>
                     <button className=' text-black px-4 border-[1px] border-black max-w-fit py-2 rounded-full font-bold flex gap-2'><LucidePlayCircle/><p className='my-auto'>View Demo</p></button>

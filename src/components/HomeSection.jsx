@@ -104,7 +104,7 @@ function HomeSection({ store}) {
                 <CommandGroup heading="Suggestions">
                 <TabsList className="flex flex-col w-full p-0 text-black bg-white hover:text-black">
                   <CommandItem onSelect={()=>window.location.href="/canvas?id=create_new_design"}>
-                    <div  className=" rounded-sm bg-[#fe5655]">
+                    <div  className=" rounded-sm bg-[#004b8c]">
                         <LucidePlus size={10} fill="#fff"  color="#fff" className=''/>
                     </div>
                     <p className="text-sidebar-foreground Inter">
@@ -141,7 +141,7 @@ function HomeSection({ store}) {
             </CommandDialog>
             <NavbarLeftComponent/>
             </header>
-            <DashboardHeader title={"Explore Flashkit"} buttonText={"Explore Flashkit"} bottomSection={true}/>
+            <DashboardHeader title={"Dashboard"} buttonText={"Dashboard"} bottomSection={true}/>
             <div className="flex flex-col gap-10 p-2 max-md:p-0">
               <div className=" text-[#252C32] flex justify-between">
                 <div>

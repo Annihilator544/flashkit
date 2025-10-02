@@ -6,7 +6,7 @@ import { LucideBell, LucideSearch, LucideSettings } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "components/ui/avatar"
 import { useAuthStore } from "store/use-auth-data"
 import { Input } from "components/ui/input"
-import logo from '../assets/logo.svg';
+import logo from '../assets/logoNew.png';
 import { Link } from "react-router-dom"
  
 export default function SidebarLayout({ children }) {

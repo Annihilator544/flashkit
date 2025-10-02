@@ -43,7 +43,7 @@
       --sidebar-primary: 240 5.9% 10%;
       --sidebar-primary-foreground: 0 0% 98%;
       --sidebar-accent: 0%,0%,100%;
-      --sidebar-accent-foreground: 3, 87%, 64%;
+      --sidebar-accent-foreground: 208, 99%, 27%;
       --sidebar-border: 220 13% 91%;
       --sidebar-ring: 3, 87%, 64%;
     }
@@ -91,7 +91,7 @@
     }
     body {
       @apply bg-background text-foreground;
-      --tw-ring-color: #f35b54;
+      --tw-ring-color: #004b8c;
     }
   }
 

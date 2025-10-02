@@ -110,7 +110,7 @@ const ChatWidget = () => {
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
                 placeholder="Type your message..."
-                className="flex-1 p-2 border rounded-lg focus:outline-none focus:border-[#ff847c]"
+                className="flex-1 p-2 border rounded-lg focus:outline-none focus:border-[#004b8c]"
               />
               <button
                 onClick={sendMessage}

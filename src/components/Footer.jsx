@@ -1,5 +1,5 @@
 import { LucideFacebook, LucideGithub, LucideInstagram, LucideTwitter } from "lucide-react";
-import logo from '../assets/logo.svg';
+import logo from '../assets/logoNew.png';
 import { Link } from "react-router-dom";
 
 function Footer ({className}) {
@@ -12,16 +12,16 @@ function Footer ({className}) {
                 </div>
                 <p className=' text-lg'>The Influencer kit, Trusted since 2024</p>
                 <div className=' flex gap-4 mt-20'>
-                    <div className=' p-2 border-[#D4D4D8] border-2 rounded-full w-fit text-black hover:text-white hover:border-transparent hover:bg-[#ff847c]'>
+                    <div className=' p-2 border-[#D4D4D8] border-2 rounded-full w-fit text-black hover:text-white hover:border-transparent hover:bg-[#004b8c]'>
                         <LucideTwitter className='' />
                     </div>
-                    <div className=' p-2 border-[#D4D4D8] border-2 rounded-full w-fit text-black hover:text-white hover:border-transparent hover:bg-[#ff847c]'>
+                    <div className=' p-2 border-[#D4D4D8] border-2 rounded-full w-fit text-black hover:text-white hover:border-transparent hover:bg-[#004b8c]'>
                         <LucideFacebook className='' />
                     </div>
-                    <div className=' p-2 border-[#D4D4D8] border-2 rounded-full w-fit  hover:text-white hover:border-transparent hover:bg-[#ff847c]'>
+                    <div className=' p-2 border-[#D4D4D8] border-2 rounded-full w-fit  hover:text-white hover:border-transparent hover:bg-[#004b8c]'>
                         <LucideInstagram className='' />
                     </div>
-                    <div className=' p-2 border-[#D4D4D8] border-2 rounded-full w-fit text-black hover:text-white hover:border-transparent hover:bg-[#ff847c]'>
+                    <div className=' p-2 border-[#D4D4D8] border-2 rounded-full w-fit text-black hover:text-white hover:border-transparent hover:bg-[#004b8c]'>
                         <LucideGithub className='' />
                     </div>
                 </div>

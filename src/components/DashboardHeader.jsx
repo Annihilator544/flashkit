@@ -24,15 +24,15 @@ const DashboardHeader = ({ title, buttonText, bottomSection }) => {
       {/* Tools Grid */}
       {bottomSection ?
       <div className="grid grid-cols-5 gap-4 mb-8 md:grid-cols-10">
-        <ToolButton icon={<FileText />} label="Doc" color="text-cyan-500" />
-        <ToolButton icon={<Layout />} label="Canvas" color="text-green-500" />
-        <ToolButton icon={<Image />} label="Graphics" color="text-orange-500" />
-        <ToolButton icon={<Share2 />} label="Share" color="text-pink-500" />
-        <ToolButton icon={<Film />} label="Video" color="text-purple-500" />
-        <ToolButton icon={<FileText />} label="Media Kit" color="text-indigo-500" />
-        <ToolButton icon={<Instagram />} label="Instagram" color="text-pink-500" />
-        <ToolButton icon={<Layout />} label="Custom" color="text-gray-500" />
-        <ToolButton icon={<Upload />} label="Upload" color="text-slate-500" />
+        <ToolButton icon={<FileText />} label="Doc" color="text-cyan-800" />
+        <ToolButton icon={<Layout />} label="Canvas" color="text-green-800" />
+        <ToolButton icon={<Image />} label="Graphics" color="text-orange-800" />
+        <ToolButton icon={<Share2 />} label="Share" color="text-pink-800" />
+        <ToolButton icon={<Film />} label="Video" color="text-purple-800" />
+        <ToolButton icon={<FileText />} label="Media Kit" color="text-indigo-800" />
+        <ToolButton icon={<Instagram />} label="Instagram" color="text-pink-800" />
+        <ToolButton icon={<Layout />} label="Custom" color="text-gray-800" />
+        <ToolButton icon={<Upload />} label="Upload" color="text-slate-800" />
         <ToolButton icon={<MoreHorizontal />} label="More" color="text-gray-700" />
       </div>
       :

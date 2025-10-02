@@ -196,7 +196,7 @@ export const MyDesignsSection = {
   name: 'Add Design',
   Tab: (props) => (
     <SectionTab name="Add Design" {...props}>
-      <div  className="bg-[#f35b54] max-md:p-[2px] md:p-1 max-md:m-auto md:rounded-lg max-md:rounded-sm ">
+      <div  className="bg-[#004b8c] max-md:p-[2px] md:p-1 max-md:m-auto md:rounded-lg max-md:rounded-sm ">
         <LucidePlus size={16} fill="#fff"  color="#fff" className='md:hidden'/>
         <LucidePlus size={20} fill="#fff"  color="#fff" className='max-md:hidden'/>
       </div>

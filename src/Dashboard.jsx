@@ -11,7 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./components/ui/avatar";
 
 import PieChartDisplay from "./components/charts/PieChartDisplay";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectSeparator, SelectTrigger, SelectValue } from "./components/ui/select";
-import logo from "./assets/logo.svg" 
+import logo from "./assets/logoNew.png" 
 import ConnectAccount from "./components/ConnectAccount";
 import { YoutubeMonthly } from "./components/charts/YoutubeMonthly";
 import { useYoutubeData } from "store/use-youtube-data";

@@ -1,4 +1,4 @@
-import logo from '../assets/logo.png';
+import logo from '../assets/logoNewMini.png';
 
 export const LogoSection = {
   name: 'logo',

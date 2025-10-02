@@ -34,8 +34,8 @@ import { TabsList, TabsTrigger } from "./ui/tabs"
 import { Collapsible, CollapsibleTrigger } from "./ui/collapsible"
 import { CollapsibleContent } from "@radix-ui/react-collapsible"
 import { Badge } from "./ui/badge"
-import logo from "../assets/logo.png"
-import flashkit from "../assets/flashkit.png"
+import logo from "../assets/logoNewMini.png"
+import flashkit from "../assets/logoNew.png"
 import flashkitPro from "../assets/flashkitPro.png"
 import flashkitSocial from "../assets/flashkitSocial.png"
 import YoutubeSvg from "../assets/youtube.svg"
@@ -75,7 +75,7 @@ import { Link } from "react-router-dom"
                         <SidebarMenuButton
                         className="data-[state=open]:bg-sidebar-accent hover:bg-inherit data-[state=open]:text-sidebar-accent-foreground active:bg-inherit group-data-[collapsible=icon]:gap-0 gap-1 h-10 p-0 px-2">
                         <div
-                            className="flex items-center group-data-[collapsible=icon]:justify-center justify-end rounded-lg text-sidebar-primary-foreground">
+                            className="items-center hidden group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center justify-end rounded-lg text-sidebar-primary-foreground">
                             <img src={logo} alt="Logo" className="h-5 w-5 group-data-[collapsible=icon]:h-4 group-data-[collapsible=icon]:w-4" />
                         </div>
                         <div className="flex justify-between flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden my-auto">
@@ -84,7 +84,7 @@ import { Link } from "react-router-dom"
                             : localStorage.getItem("flashkitPlan") === "FLASHKITSOCIAL" ?
                             <img src={flashkitSocial} alt="flashkit logo" className="h-5" />
                             : <img src={flashkitPro} alt="flashkit logo" className="h-5" /> } */}
-                           <img src={flashkit} alt="flashkit logo" className="h-[16px] my-auto" />
+                           <img src={flashkit} alt="flashkit logo" className="h-[18px] my-auto" />
                            <SidebarTrigger className="group-data-[collapsible=icon]:hidden max-md:hidden"/>
                         </div>
                         </SidebarMenuButton>
@@ -98,7 +98,7 @@ import { Link } from "react-router-dom"
                         </TabsTrigger>
                         <SidebarMenuItem className="">
                                 <SidebarMenuButton onClick={()=>window.location.href="/canvas?id=create_new_design"}>
-                                <div  className=" p-[2px] rounded-sm bg-[#fe5655]">
+                                <div  className=" p-[2px] rounded-sm bg-[#004b8c]">
                                     <LucidePlus size={14} fill="#fff"  color="#fff" className=''/>
                                 </div>
                                 <p className="text-sidebar-foreground Inter">

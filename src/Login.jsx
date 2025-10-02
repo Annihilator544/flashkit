@@ -2,7 +2,8 @@ import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './firebase';
-import logo from './assets/logo.svg'
+import logo from './assets/logoNew.png'
+import logIn from './assets/LogIn.png'  
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -75,13 +76,12 @@ const Login = () => {
 
   return (
     <div className='grid grid-cols-2 h-screen max-md:grid-cols-1'>
-        <div className=' bg-gradient-to-r from-[#A0D0EA] to-[#6CC2F1]  flex-1 flex flex-col  rounded-r-[50px] LogIn max-md:hidden'>
-                
+        <div className='flex-1 flex flex-col rounded-r-[50px] LogIn max-md:hidden overflow-hidden'>
+            <img src={logIn} alt='logIn' className=' h-full mr-auto'/>
         </div>
         <div className='flex flex-col flex-1 overflow-y-auto'>
             <div className='flex flex-col justify-center align-middle w-[50%] max-md:w-[90%] m-auto'>
             <img src={logo} alt='logo' className=' h-12 mr-auto mb-10'/>
-                <p className='text-2xl font-medium Inter'>Log In</p>
                 <p className='text-base font-normal text-secondary mb-10'>Please login to continue to your account</p>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
