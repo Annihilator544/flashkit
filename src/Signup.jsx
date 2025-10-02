@@ -111,7 +111,7 @@ const Signup = () => {
     }
 
   return (
-    <div className='grid grid-cols-2 h-screen max-md:grid-cols-1'>
+    <div className='grid grid-cols-[60%,40%] h-screen max-md:grid-cols-1'>
         <div className='flex-1 flex flex-col rounded-r-[50px] max-md:hidden overflow-hidden'>
             <img src={logIn} alt='logIn' className=' h-full object-cover object-left-top '/>
         </div>
