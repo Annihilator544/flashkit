@@ -71,7 +71,7 @@ const ChatWidget = () => {
         <div className="absolute bottom-16 right-0 w-96 h-[500px] bg-white rounded-lg shadow-xl flex flex-col">
           {/* Header */}
           <div className="p-4 bg-gradient-to-r from-[#E4F0FA] to-[#9DD3FF] stops-[#9DD3FF] text-black font-extralight rounded-t-lg">
-            <h3 className="font-medium">Flashkit AI</h3>
+            <h3 className="font-medium">Contevio AI</h3>
           </div>
 
           {/* Messages */}
