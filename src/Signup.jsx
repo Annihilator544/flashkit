@@ -111,12 +111,9 @@ const Signup = () => {
     }
 
   return (
-    <div className='grid grid-cols-[60%,40%] h-screen max-md:grid-cols-1'>
-        <div className='flex-1 flex flex-col rounded-r-[50px] max-md:hidden overflow-hidden'>
-            <img src={logIn} alt='logIn' className=' h-full object-cover object-left-top '/>
-        </div>
+    <div className='grid h-screen'>
         <div className='flex flex-col flex-1 overflow-y-auto max-md:py-5'>
-            <div className='flex flex-col justify-center align-middle w-[50%] max-md:w-[90%] m-auto'>
+            <div className='flex flex-col justify-center align-middle w-[30%] max-md:w-[90%] m-auto'>
                 <img src={logo} alt='logo' className='h-12 mr-auto mb-10'/>
                 <p className='text-base font-normal text-secondary mb-10'>Create a new account!</p>
                 <Form {...form}>

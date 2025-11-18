@@ -172,7 +172,7 @@ function HomeSection({ store}) {
                               <AvatarFallback>CN</AvatarFallback>
                               </Avatar>
                               <span className="flex mx-auto text-xs font-semibold truncate">{user&&user.displayName ? user.displayName : ""}</span>
-                              <div className="text-[#E1A100] bg-[#fdf5e1] text-center font-semibold flex pr-2 py-[2px] rounded-sm mx-auto"><LucideAward className="h-4 my-auto"/>Gold</div>
+                              {/* <div className="text-[#E1A100] bg-[#fdf5e1] text-center font-semibold flex pr-2 py-[2px] rounded-sm mx-auto"><LucideAward className="h-4 my-auto"/>Gold</div> */}
                           </CardContent>
                       </Card>
                       {
