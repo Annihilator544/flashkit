@@ -31,7 +31,7 @@ function TemplateSection({ store }) {
   useEffect(() => {
     const size = categorySizes[selectedCategory];
     fetch(
-      `https://api.polotno.com/api/get-templates?size=${size}&query=${searchQuery}&per_page=10&page=1&KEY=iRIwFHCuH539pYGokN6n`
+      `https://api.polotno.com/api/get-templates?size=${size}&query=${searchQuery}&per_page=10&page=1&KEY=XuzosjZpEvwWqpBBclWK`
     )
       .then((res) => res.json())
       .then((res) => {

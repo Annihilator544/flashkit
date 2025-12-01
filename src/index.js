@@ -41,7 +41,7 @@ import Onboarding from 'Onboarding';
 
 unstable_setAnimationsEnabled(true);
 
-const store = createStore({ key: 'iRIwFHCuH539pYGokN6n' });
+const store = createStore({ key: 'XuzosjZpEvwWqpBBclWK' });
 window.store = store;
 store.addPage();
 
